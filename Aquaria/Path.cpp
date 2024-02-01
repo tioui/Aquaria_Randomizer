@@ -319,6 +319,10 @@ void Path::refreshScript()
 	{
 		pathType = PATH_SETENT;
 	}
+	else if (label == "check")
+	{
+		pathType = PATH_CHECK;
+	}
 	else if (label == "current")
 	{
 		pathType = PATH_CURRENT;

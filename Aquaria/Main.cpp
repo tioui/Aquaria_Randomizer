@@ -19,7 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include <iostream>
+
 #include "DSQ.h"
+#include "../Randomizer/Randomizer.h"
+
+
 
 
 #ifdef BBGE_BUILD_WINDOWS
@@ -83,10 +88,19 @@ static void CheckConfig(void)
 
 	extern "C" int main(int argc,char *argv[])
 	{
+        Randomizer *lRandomizer = NULL;
 		std::string dsqParam = ""; // fileSystem
 		std::string extraDataDir = "";
 
 		const char *envPath = 0;
+        if (argc >= 5 && strncmp(argv[1], "--name", 6) && strncpy(argv[3], "--server", 8)) {
+            lRandomizer = new Randomizer(argv[2], argv[4]);
+        } else {
+            std::cout << "Error: No name and server";
+            std::cout << "Usage: " << argv[0] << "--name YourName --server ServerIP:Port";
+            lRandomizer = new Randomizer("", "");
+        }
+
 #ifdef BBGE_BUILD_UNIX
 		envPath = getenv("AQUARIA_DATA_PATH");
 		if (envPath)
@@ -107,7 +121,7 @@ static void CheckConfig(void)
         CheckConfig();
 
         {
-            DSQ dsql(dsqParam, extraDataDir);
+            DSQ dsql(dsqParam, extraDataDir, lRandomizer);
             dsql.init();
             dsql.main();
             dsql.shutdown();

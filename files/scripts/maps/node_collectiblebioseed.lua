@@ -22,7 +22,7 @@ if not v then v = {} end
 dofile("scripts/include/nodecollectibletemplate.lua")
 
 function init(me)
-	v.commonInit(me, "CollectibleBioSeed", FLAG_COLLECTIBLE_BIOSEED)
+	v.commonInit(me, "CollectibleBioSeed", FLAG_COLLECTIBLE_INHOME_BIOSEED)
 end
 
 function update(me, dt)

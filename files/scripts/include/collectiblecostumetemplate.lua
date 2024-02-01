@@ -107,7 +107,3 @@ function activate(me)
 		end
 	end
 end
-
-function exitState(me, state)
-	v.commonExitState(me, state)
-end

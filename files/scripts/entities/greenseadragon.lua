@@ -93,13 +93,16 @@ end
 function dieNormal(me)
 
 	if chance(5) then
-		spawnIngredient("SpicyRoll", entity_getPosition(me))
+		spawnIngredient("PlantLeaf", entity_getPosition(me))
+		spawnIngredient("FishOil", entity_getPosition(me))
+		spawnIngredient("SpicyMeat", entity_getPosition(me))
 	else
 		if chance(10) then
 			spawnIngredient("SpecialBulb", entity_getPosition(me))
 		else
 			if chance(10) then
-				spawnIngredient("Poultice", entity_getPosition(me))
+				spawnIngredient("PlantLeaf", entity_getPosition(me))
+				spawnIngredient("PlantLeaf", entity_getPosition(me))
 			else
 				for i=1,3,1 do
 					spawnIngredient("PlantLeaf", entity_getPosition(me))

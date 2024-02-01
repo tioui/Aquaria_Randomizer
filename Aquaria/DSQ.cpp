@@ -157,10 +157,12 @@ Vector savesz;
 	#define APPNAME "Aquaria"
 #endif
 
-DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir)
+DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir, Randomizer *aRandomizer)
 : Core(fileSystem, extraDataDir, LR_MAX, APPNAME, PARTICLE_AMOUNT_DEFAULT, "Aquaria")
 {
 	dsq = this;
+
+	randomizer = aRandomizer;
 
 	cutscene_bg = 0;
 	cutscene_text = 0;

@@ -42,6 +42,9 @@ extern "C"
 
 #include "../BBGE/MathFunctions.h"
 
+#include "../Randomizer/Randomizer.h"
+
+
 // Define this to 1 to check types of pointers passed to functions,
 // and warn if a type mismatch is detected. In this case,
 // the pointer is treated as NULL, to avoid crashing or undefined behavior.
@@ -840,6 +843,15 @@ static int loadFile_helper(lua_State *L, const char *fn)
 	return luaL_loadfile(L, fn);
 #endif
 }
+
+luaFunc(randomizerCheck)
+{
+	debugLog("Activating check:");
+	debugLog(getString(L, 1));
+	dsq->randomizer->activateCheck(getString(L, 1));
+	luaReturnNil();
+}
+
 
 luaFunc(dofile_caseinsensitive)
 {
@@ -3014,7 +3026,6 @@ luaFunc(getNearestNodeByType)
 	float x = lua_tonumber(L, 1);
 	float y = lua_tonumber(L, 2);
 	int type = lua_tointeger(L, 3);
-
 	luaReturnPtr(dsq->game->getNearestPath(Vector(x,y), (PathType)type));
 }
 
@@ -10402,6 +10413,8 @@ static const struct {
 
 	luaRegister(getPerformanceCounter),
 	luaRegister(getPerformanceFreq),
+	luaRegister(randomizerCheck),
+	
 
 
 
@@ -10693,6 +10706,7 @@ static const struct {
 	luaConstant(PATH_GEM),
 	luaConstant(PATH_SETING),
 	luaConstant(PATH_SETENT),
+	luaConstant(PATH_CHECK),
 
 	// Entity Types
 	luaConstant(ET_AVATAR),
@@ -10914,7 +10928,44 @@ static const struct {
 	{"FLAG_COLLECTIBLE_STONEHEAD",			529},
 	{"FLAG_COLLECTIBLE_STARFISH",			530},
 	{"FLAG_COLLECTIBLE_BLACKPEARL",			531},
+	{"FLAG_COLLECTIBLE_INHOME_SONGCAVE",			550},
+	{"FLAG_COLLECTIBLE_INHOME_ENERGYTEMPLE",		551},
+	{"FLAG_COLLECTIBLE_INHOME_ENERGYSTATUE",		552},
+	{"FLAG_COLLECTIBLE_INHOME_ENERGYBOSS",			553},
+	{"FLAG_COLLECTIBLE_INHOME_NAIJACAVE",			554},
+	{"FLAG_COLLECTIBLE_INHOME_CRABCOSTUME",		555},
+	{"FLAG_COLLECTIBLE_INHOME_JELLYPLANT",			556},
+	{"FLAG_COLLECTIBLE_INHOME_MITHALASPOT",		557},
+	{"FLAG_COLLECTIBLE_INHOME_SEAHORSECOSTUME",	558},
+	{"FLAG_COLLECTIBLE_INHOME_CHEST",				559},
+	{"FLAG_COLLECTIBLE_INHOME_BANNER",				560},
+	{"FLAG_COLLECTIBLE_INHOME_MITHALADOLL",		561},
+	{"FLAG_COLLECTIBLE_INHOME_WALKERBABY",			562},
+	{"FLAG_COLLECTIBLE_INHOME_SEEDBAG",			563},
+	{"FLAG_COLLECTIBLE_INHOME_ARNASSISTATUE",		564},
+	{"FLAG_COLLECTIBLE_INHOME_GEAR",				565},
+	{"FLAG_COLLECTIBLE_INHOME_SUNKEY",				566},
+	{"FLAG_COLLECTIBLE_INHOME_URCHINCOSTUME",		567},
+	{"FLAG_COLLECTIBLE_INHOME_TEENCOSTUME",		568},
+	{"FLAG_COLLECTIBLE_INHOME_MUTANTCOSTUME",		569},
+	{"FLAG_COLLECTIBLE_INHOME_JELLYCOSTUME",		570},
+	{"FLAG_COLLECTIBLE_INHOME_MITHALANCOSTUME",	571},
+	{"FLAG_COLLECTIBLE_INHOME_ANEMONESEED",		572},
+	{"FLAG_COLLECTIBLE_INHOME_BIOSEED",			573},
+	{"FLAG_COLLECTIBLE_INHOME_TURTLEEGG",			574},
+	{"FLAG_COLLECTIBLE_INHOME_SKULL",				575},
+	{"FLAG_COLLECTIBLE_INHOME_TRIDENTHEAD",		576},
+	{"FLAG_COLLECTIBLE_INHOME_SPORESEED",			577},
+	{"FLAG_COLLECTIBLE_INHOME_UPSIDEDOWNSEED",		578},
+	{"FLAG_COLLECTIBLE_INHOME_STONEHEAD",			579},
+	{"FLAG_COLLECTIBLE_INHOME_STARFISH",			580},
+	{"FLAG_COLLECTIBLE_INHOME_BLACKPEARL",			581},
+	{"FLAG_COLLECTIBLE_INHOME_BLASTER",			582},
+	{"FLAG_COLLECTIBLE_INHOME_NAUTILUS",			583},
+	{"FLAG_COLLECTIBLE_INHOME_DUMBO",			584},
+	{"FLAG_COLLECTIBLE_INHOME_PIRANHA",			585},
 	luaConstant(FLAG_COLLECTIBLE_END),
+
 
 	luaConstant(FLAG_PET_ACTIVE),
 	luaConstant(FLAG_PET_NAMESTART),

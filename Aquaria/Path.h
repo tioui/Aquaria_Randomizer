@@ -53,7 +53,8 @@ enum PathType
 	PATH_SETING			= 12,
 	PATH_SETENT			= 13,
 	PATH_ZOOM			= 14,
-	PATH_MAX
+	PATH_CHECK			= 15,
+	PATH_MAX            = 16
 };
 
 enum LocalWarpType

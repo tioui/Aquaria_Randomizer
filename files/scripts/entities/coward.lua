@@ -119,18 +119,51 @@ function dieNormal(me)
 	if v.drop == 1 then
 
 	if chance(1) then
-		spawnIngredient("LoafOfLife", entity_x(me), entity_y(me))
+		spawnIngredient("FishOil", entity_x(me), entity_y(me))
+		spawnIngredient("SeaLoaf", entity_x(me), entity_y(me))
+		spawnIngredient("RukhEgg", entity_x(me), entity_y(me))
+		spawnIngredient("EelOil", entity_x(me), entity_y(me))
+		spawnIngredient("SpecialBulb", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("SmallEye", entity_x(me), entity_y(me))
+		spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+		spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("EelOil", entity_x(me), entity_y(me))
+		spawnIngredient("SpiderEgg", entity_x(me), entity_y(me))
+		spawnIngredient("SharkFin", entity_x(me), entity_y(me))
+		spawnIngredient("TurtleMeat", entity_x(me), entity_y(me))
+		spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+		spawnIngredient("SharkFin", entity_x(me), entity_y(me))
+		spawnIngredient("TurtleMeat", entity_x(me), entity_y(me))
+		spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+		spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 	else
 		if chance(10) then
-			spawnIngredient("PlumpPerogi", entity_x(me), entity_y(me))
+			spawnIngredient("Mushroom", entity_x(me), entity_y(me))
+			spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
+			spawnIngredient("EelOil", entity_x(me), entity_y(me))
+			spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+			spawnIngredient("CrabMeat", entity_x(me), entity_y(me))
 		else
 			if chance(20) then
-				spawnIngredient("HotBorscht", entity_x(me), entity_y(me))
+				spawnIngredient("RedBulb", entity_x(me), entity_y(me))
+				spawnIngredient("RedBerry", entity_x(me), entity_y(me))
+				spawnIngredient("FishMeat", entity_x(me), entity_y(me))
+				spawnIngredient("EelOil", entity_x(me), entity_y(me))
 			else
 				if chance(30) then
-					spawnIngredient("ArcanePoultice", entity_x(me), entity_y(me))
+					spawnIngredient("EelOil", entity_x(me), entity_y(me))
+					spawnIngredient("SpecialBulb", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 				else
-					spawnIngredient("VeggieCake", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+					spawnIngredient("EelOil", entity_x(me), entity_y(me))
+					spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
 				end
 			end
 		end

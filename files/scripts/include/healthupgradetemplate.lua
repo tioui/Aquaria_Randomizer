@@ -113,17 +113,18 @@ function update(me, dt)
 			playSfx("HealthUpgrade-Collect")
 			spawnParticleEffect("HealthUpgradeReceived", entity_getPosition(me))
 			setFlag(FLAG_HEALTHUPGRADES + v.myID, 1)
-			upgradeHealth()
+--			upgradeHealth()
 			setSceneColor(1, 1, 1, 4)
 			entity_idle(getNaija())
 			watch(3)
+			randomizerCheck("health_egg_"..(v.myID+1))
 			
-			if isFlag(FLAG_FIRSTHEALTHUPGRADE, 0) then
-				voice("Naija_HealthUpgrade")
-				setFlag(FLAG_FIRSTHEALTHUPGRADE, 1)
-			else
-				voice("naija_healthupgrade2")
-			end
+--			if isFlag(FLAG_FIRSTHEALTHUPGRADE, 0) then
+--				voice("Naija_HealthUpgrade")
+--				setFlag(FLAG_FIRSTHEALTHUPGRADE, 1)
+--			else
+--				voice("naija_healthupgrade2")
+--			end
 			entity_delete(me)
 		end
 	elseif entity_isState(me, STATE_OPEN) and not entity_isAnimating(me) then

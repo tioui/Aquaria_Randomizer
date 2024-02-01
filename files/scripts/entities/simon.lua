@@ -90,11 +90,11 @@ function init(me)
 end
 
 function postInit(me)
-	if entity_isFlag(me, 1) then
+--	if entity_isFlag(me, 1) then
 		-- FormUpgradeEnergy2
-		local ent = createEntity("upgrade-wok", "", entity_getPosition(me))
-		entity_setWeight(ent, v.idolWeight)
-	end
+--		local ent = createEntity("upgrade-wok", "", entity_getPosition(me))
+--		entity_setWeight(ent, v.idolWeight)
+--	end
 end
 
 function update(me, dt)
@@ -147,10 +147,7 @@ function enterState(me)
 		musicVolume(1, 1)
 		if entity_isFlag(me, 0) then
 			playSfx("secret")
-			local ent = createEntity("upgrade-wok", "", entity_getPosition(me))
-			entity_alpha(ent, 0)
-			entity_alpha(ent, 1, 0.2)
-			entity_setWeight(ent, v.idolWeight)
+			randomizerCheck("beating_simon")
 			entity_setFlag(me, 1)
 		else
 			playSfx("secret")

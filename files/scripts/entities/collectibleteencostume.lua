@@ -26,3 +26,12 @@ dofile("scripts/include/collectiblecostumetemplate.lua")
 function init(me)
 	v.commonInit2(me, "Collectibles/teen-costume", FLAG_COLLECTIBLE_TEENCOSTUME, "TEEN")
 end
+
+function exitState(me, state)
+	if entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTEDINHOUSE) then
+		randomizerCheck("collect_teen_costume")
+	end
+
+	v.commonExitState(me, state)
+end
+

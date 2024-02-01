@@ -112,6 +112,9 @@ function enterState(me, state)
 end
 
 function exitState(me, state)
+	if entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTEDINHOUSE) then
+		randomizerCheck("collect_blaster")
+	end
 	if entity_isState(me, STATE_HATCH) then
 		--entity_soundFreq(me, "BlasterLaugh", 1.5)
 		playSfx("blasterlaugh")

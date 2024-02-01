@@ -35,9 +35,9 @@ function init(me)
 			if not d then
 				local s = randRange(1,100)
 				if s == 1 then
-					v.commonInit(me, "", "HealingPoultice")
+					v.commonInit(me, "", "JellyOil")
 				elseif s < 7 then
-					v.commonInit(me, "", "LeafPoultice")
+					v.commonInit(me, "", "PlantLeaf")
 				else
 
 				local r = randRange(1, 7)

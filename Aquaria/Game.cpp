@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../BBGE/RoundedRect.h"
 #include "../BBGE/SimpleIStringStream.h"
 
+#include "../Randomizer/Randomizer.h"
+
 #include "Game.h"
 #include "GridRender.h"
 #include "WaterSurfaceRender.h"
@@ -1126,7 +1128,8 @@ Ingredient *Game::spawnIngredient(const std::string &ing, const Vector &pos, int
 		if (nocasecmp(ing, "poultice")==0)
 			use = "LeafPoultice";
 
-		IngredientData *d = dsq->continuity.getIngredientDataByName(use);
+		IngredientData *not_randomized_data = dsq->continuity.getIngredientDataByName(use);
+		IngredientData *d = dsq->randomizer->getRandomizedIngredientData(not_randomized_data);
 		if (d)
 		{
 			i = new Ingredient(pos, d);
@@ -1159,7 +1162,8 @@ Ingredient *Game::spawnIngredient(const std::string &ing, const Vector &pos, int
 
 void Game::spawnIngredientFromEntity(Entity *ent, IngredientData *data)
 {
-	Ingredient *i = new Ingredient(ent->position, data);
+	IngredientData *d = dsq->randomizer->getRandomizedIngredientData(data);
+	Ingredient *i = new Ingredient(ent->position, d);
 	ingredients.push_back(i);
 	establishEntity(i);
 	//addRenderObject(i, LR_ENTITIES);
@@ -4551,6 +4555,7 @@ bool Game::loadSceneXML(std::string scene)
 		Path *path = new Path;
 		path->name = pathXml->Attribute("name");
 		stringToLower(path->name);
+
 		/*
 		if (pathXml->Attribute("active"))
 		{
@@ -4582,7 +4587,6 @@ bool Game::loadSceneXML(std::string scene)
 			{
 				path->pathShape = (PathShape)atoi(nodeXml->Attribute("shape"));
 			}
-
 			path->nodes.push_back(node);
 			nodeXml = nodeXml->NextSiblingElement("Node");
 		}
@@ -7381,7 +7385,7 @@ void Game::onCook()
 		}
 	}
 	
-	if(!data)
+	if(!r || !data || !r->isKnown())
 	{
 		dsq->sound->playSfx("Denied");
 		data = dsq->continuity.getIngredientDataByName("SeaLoaf");
@@ -7545,7 +7549,7 @@ void Game::onCook()
 
 		dsq->continuity.setFlag(FLAG_COOKS, dsq->continuity.getFlag(FLAG_COOKS)+1);
 
-		if (r)
+		if (r && r->isKnown())
 		{
 			dsq->continuity.learnRecipe(r);
 			if (haveLeftovers)

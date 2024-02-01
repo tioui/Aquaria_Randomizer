@@ -105,16 +105,16 @@ function v.commonEnterState(me, state)
 		
 		overrideZoom(0)
 		
-		if v.isCostume then
-			setControlHint(getStringBank(224), 0, 0, 0, 8, "gui/icon-treasures")
-		else
-			if isFlag(FLAG_HINT_COLLECTIBLE, 0) then
-				setControlHint(getStringBank(222), 0, 0, 0, 8)
-				setFlag(FLAG_HINT_COLLECTIBLE, 1)
-			else
-				setControlHint(getStringBank(223), 0, 0, 0, 8, "gui/icon-treasures")
-			end
-		end
+--		if v.isCostume then
+--			setControlHint(getStringBank(224), 0, 0, 0, 8, "gui/icon-treasures")
+--		else
+--			if isFlag(FLAG_HINT_COLLECTIBLE, 0) then
+--				setControlHint(getStringBank(222), 0, 0, 0, 8)
+--				setFlag(FLAG_HINT_COLLECTIBLE, 1)
+--			else
+--				setControlHint(getStringBank(223), 0, 0, 0, 8, "gui/icon-treasures")
+--			end
+--		end
 		v.incut = false
 	elseif entity_isState(me, STATE_COLLECTED) then	
 		debugLog("COLLECTED, fading OUT alpha")

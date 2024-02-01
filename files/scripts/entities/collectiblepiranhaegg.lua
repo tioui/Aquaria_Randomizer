@@ -108,6 +108,9 @@ function enterState(me, state)
 end
 
 function exitState(me, state)
+	if entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTEDINHOUSE) then
+		randomizerCheck("collect_piranha")
+	end
 	if entity_isState(me, STATE_HATCH) then
 		
 		setFlag(FLAG_PET_PIRANHA, 1)

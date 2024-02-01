@@ -195,7 +195,8 @@ end
 
 function dieNormal(me)
 	if chance(90) then
-		spawnIngredient("ButterySeaLoaf", entity_x(me), entity_y(me))
+		spawnIngredient("FishOil", entity_x(me), entity_y(me))
+		spawnIngredient("SeaLoaf", entity_x(me), entity_y(me))
 	end
 end
 

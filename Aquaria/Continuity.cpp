@@ -105,6 +105,7 @@ int Continuity::indexOfIngredientData(const IngredientData* data) const
 
 #define FOR_INGREDIENTDATA(x) for (int x = 0; x < ingredientData.size(); x++)
 
+
 IngredientData *Continuity::getIngredientDataByName(const std::string &name)
 {
 	FOR_INGREDIENTDATA(i)

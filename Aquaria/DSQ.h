@@ -46,6 +46,7 @@ using namespace tinyxml2;
 // this is defined.)
 //#define AQUARIA_SAVE_MAPVIS_RAW
 
+class Randomizer;
 class Game;
 class DebugFont;
 class ProfRender;
@@ -855,7 +856,10 @@ const int FLAG_SECRET02	= 235;
 const int FLAG_SECRET03 = 236;
 
 const int FLAG_COLLECTIBLE_START = 500;
-const int FLAG_COLLECTIBLE_END = 600;
+const int FLAG_COLLECTIBLE_END = 540;
+
+
+
 
 /*
 const int FLAG_PET_NAUTILUS		= 601;
@@ -1245,7 +1249,7 @@ enum NagType
 class DSQ : public Core
 {
 public:
-	DSQ(const std::string& fileSystem, const std::string& extraDataDir);
+	DSQ(const std::string& fileSystem, const std::string& extraDataDir, Randomizer * randomizer);
 	~DSQ();
 
 	void init();
@@ -1256,6 +1260,8 @@ public:
 	void toggleBlackBars(bool on, float t=0);
 
 	void setCursor(CursorType type);
+
+	Randomizer *randomizer;
 
 	Quad *cursor, *cursorGlow, *cursorBlinker;
 	Quad *overlay, *tfader, *overlay2, *overlay3, *overlayRed;

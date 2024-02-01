@@ -175,6 +175,9 @@ end
 
 function dieNormal(me)
 	if chance(25) then
-		spawnIngredient("LeechingPoultice", entity_x(me), entity_y(me))
+		spawnIngredient("GlowingEgg", entity_x(me), entity_y(me))
+		spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 	end
 end

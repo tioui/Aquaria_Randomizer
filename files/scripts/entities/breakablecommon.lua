@@ -26,6 +26,7 @@ v.file = ""
 
 v.entToSpawn = ""
 v.ingToSpawn = ""
+v.check = ""
 v.amount = 0
 
 v.breakSound = ""
@@ -70,6 +71,11 @@ function v.commonInit(me, fle, cr, h, num, snd, ignoreSets, stimes, svol)
 			if n2 ~= 0 and node_isEntityIn(n2, me) then
 				v.entToSpawn = node_getContent(n2)
 				v.amount = node_getAmount(n2)	if v.amount == 0 then v.amount = 1 end
+			else
+				local n3 = getNearestNodeByType(entity_x(me), entity_y(me), PATH_CHECK)
+				if n3 ~= 0 then
+					v.check = node_getContent(n3)
+				end
 			end
 		end
 	end
@@ -91,7 +97,7 @@ end
 function enterState(me)
 	if entity_isState(me, STATE_IDLE) then
 	elseif entity_isState(me, STATE_DEAD) then
-		if v.ingToSpawn ~= "" or v.entToSpawn ~= "" then
+		if v.ingToSpawn ~= "" or v.entToSpawn ~= "" or v.check ~= "" then
 			playSfx("secret", 0, 0.7)
 		end
 	elseif entity_isState(me, STATE_DEATHSCENE) then
@@ -115,6 +121,8 @@ function enterState(me)
 			for i=1,v.amount do
 				createEntity(v.entToSpawn, "", entity_x(me), entity_y(me))
 			end
+		elseif v.check ~= "" then
+			randomizerCheck(v.check)
 		end
 		entity_alpha(me, 0, 0.1)
 		entity_setStateTime(me, 0.1)

@@ -140,11 +140,18 @@ function update(me, dt)
 
 				local p = randRange(1, 100)
 				if p >= 1 and p <= 2 then
-					spawnIngredient("LeechingPoultice", entity_x(me), entity_y(me))
+					spawnIngredient("GlowingEgg", entity_x(me), entity_y(me))
+					spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 				elseif p >= 3 and p <= 4 then
-					spawnIngredient("SightPoultice", entity_x(me), entity_y(me))
+					spawnIngredient("SmallEye", entity_x(me), entity_y(me))
+					spawnIngredient("JellyOil", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 				elseif p >= 5 and p <= 25 then
-					spawnIngredient("LeafPoultice", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 				elseif p <= 40 then
 					spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
 				end
