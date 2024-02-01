@@ -1,0 +1,18 @@
+[submodule "Randomizer/subprojects/apclientpp"]
+	path = Randomizer/subprojects/apclientpp
+	url = https://github.com/black-sliver/apclientpp.git
+[submodule "Randomizer/subprojects/wswrap"]
+	path = Randomizer/subprojects/wswrap
+	url = https://github.com/black-sliver/wswrap.git
+[submodule "Randomizer/subprojects/json"]
+	path = Randomizer/subprojects/json
+	url = https://github.com/nlohmann/json.git
+[submodule "Randomizer/subprojects/valijson"]
+	path = Randomizer/subprojects/valijson
+	url = https://github.com/tristanpenman/valijson.git
+[submodule "Randomizer/subprojects/websocketpp"]
+	path = Randomizer/subprojects/websocketpp
+	url = https://github.com/zaphoyd/websocketpp.git
+[submodule "Randomizer/subprojects/asio"]
+	path = Randomizer/subprojects/asio
+	url = https://github.com/chriskohlhoff/asio.git
