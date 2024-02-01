@@ -23,3 +23,5 @@ bin/*
 *.diff
 
 !.gitignore
+!.gitmodules
+!.github

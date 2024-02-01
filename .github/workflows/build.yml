@@ -1,0 +1,26 @@
+# Github Actions script used to build aquaria randomizer.
+# LICENSE: MIT
+name: Aquaria randomizer build
+
+on: [push]
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
+      - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: git submodule update --init
+      - run: echo "Checkout done."
+      - run: echo "Instaling development package..."
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl1.2-dev
+      - run: echo "Developpement package installed..."
+      - run: echo "Compiling..."
+      - run: |
+          mkdir ${{ github.workspace }}/build
+          cd ${{ github.workspace }}/build
+          cmake ..
+          make
+      - run: echo "Compiling done."
