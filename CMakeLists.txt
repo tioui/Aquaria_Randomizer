@@ -22,6 +22,12 @@ ELSE(WIN32)
     SET(WIN32_TRUE FALSE)
 ENDIF(WIN32)
 
+IF(MSYS)
+    SET(WIN32_TRUE TRUE)
+ELSE(MSYS)
+    SET(WIN32_TRUE FALSE)
+ENDIF(MSYS)
+
 # if no build type was provided, set a default one
 IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug, RelWithDebInfo, Release)" FORCE)
@@ -198,7 +204,7 @@ if(NOT SDL_FOUND)
         else(AQUARIA_USE_SDL2)
             set(SDL_LIBRARY "${SDLDIR}/lib/macosx/libSDL-1.2.0.dylib;${SDLDIR}/lib/macosx/libSDLmain.a")
         endif(AQUARIA_USE_SDL2)
-    elseif(WIN32)
+	elseif(WIN32_TRUE)
         set(SDL_INCLUDE_DIR "${SDLDIR}/include" CACHE PATH "SDL include directory" FORCE)
         message(STATUS "Using internal copy of SDL")
         if(AQUARIA_USE_SDL2)
@@ -221,7 +227,7 @@ if(NOT AQUARIA_INTERNAL_OPENAL)
     find_package(OpenAL)
 endif(NOT AQUARIA_INTERNAL_OPENAL)
 if (NOT OPENAL_FOUND)
-    if(WIN32)
+	if(WIN32_TRUE)
         set(OPENALDIR "${EXTLIBDIR}/AL")
         set(OPENAL_INCLUDE_DIR "${OPENALDIR}/include" CACHE PATH "OpenAL include directory" FORCE)
         message(STATUS "Using internal copy of OpenAL")
@@ -632,17 +638,17 @@ SET_SOURCE_FILES_PROPERTIES(
     PROPERTIES COMPILE_FLAGS "-DFTGL_LIBRARY_STATIC"
 )
 
-IF(WIN32)
+IF(WIN32_TRUE)
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "crypt32"
+		PROPERTIES COMPILE_FLAGS "-D__USE_W32_SOCKETS"
 	)
-ELSE(WIN32)
+ELSE(WIN32_TRUE)
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
 		PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
 	)
-ENDIF(WIN32)
+ENDIF(WIN32_TRUE)
 SET(OGGVORBIS_SRCS
     ${LIBOGGDIR}/src/bitwise.c
     ${LIBOGGDIR}/src/framing.c
