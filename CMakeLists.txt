@@ -232,9 +232,9 @@ if (NOT OPENAL_FOUND)
         set(OPENAL_INCLUDE_DIR "${OPENALDIR}/include" CACHE PATH "OpenAL include directory" FORCE)
         message(STATUS "Using internal copy of OpenAL")
         set(OPENAL_LIBRARY "${OPENALDIR}/lib/win32/OpenAL32.lib" CACHE FILEPATH "Where the OpenAL library can be found" FORCE)
-    else(WIN32)
+	else(WIN32_TRUE)
         message(SEND_ERROR "We don't have a prebuilt OpenAL for this platform.")
-    endif(WIN32)
+	endif(WIN32_TRUE)
 endif (NOT OPENAL_FOUND)
 
 ### TinyXML2
