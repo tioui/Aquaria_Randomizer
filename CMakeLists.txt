@@ -24,8 +24,6 @@ ENDIF(WIN32)
 
 IF(MSYS)
     SET(WIN32_TRUE TRUE)
-ELSE(MSYS)
-    SET(WIN32_TRUE FALSE)
 ENDIF(MSYS)
 
 # if no build type was provided, set a default one
@@ -375,7 +373,7 @@ IF(MACOSX)
 ENDIF(MACOSX)
 
 IF(WIN32)
-    ADD_DEFINITIONS(-DBBGE_BUILD_WINDOWS=1)
+	ADD_DEFINITIONS(-DBBGE_BUILD_WINDOWS=1)
     SET(EXETYPE WIN32)
     SET(OPTIONAL_SRCS ${OPTIONAL_SRCS} aquaria.rc)
 ENDIF(WIN32)
@@ -387,20 +385,24 @@ IF(UNIX AND NOT HAIKU)
 ENDIF()
 
 IF(CMAKE_COMPILER_IS_GNUCC)
-    ADD_DEFINITIONS(-pipe -fsigned-char)
+	#ADD_DEFINITIONS(-pipe -fsigned-char)
     #ADD_DEFINITIONS(-Wall)
 
     # See if -fno-stack-protector is available to us.
     # It doesn't seem to work well, and it adds bulk to the binary.
     CHECK_C_COMPILER_FLAG("-fno-stack-protector" AQUARIA_GCC_HAS_STACKPROT)
     IF(AQUARIA_GCC_HAS_STACKPROT)
-        ADD_DEFINITIONS(-fno-stack-protector)
+        # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
+        # Exceptions are not used, excluding support for release builds adds less bulk as well.
+        set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -O2" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -O2 -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
+	ELSE(AQUARIA_GCC_HAS_STACKPROT)
+        # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
+        # Exceptions are not used, excluding support for release builds adds less bulk as well.
+        set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char -O2" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -O2 -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
     ENDIF(AQUARIA_GCC_HAS_STACKPROT)
 
-    # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
-    # Exceptions are not used, excluding support for release builds adds less bulk as well.
-    set(CMAKE_C_FLAGS_RELEASE "-O2" CACHE STRING "Flags used for release builds" FORCE)
-    set(CMAKE_CXX_FLAGS_RELEASE "-O2 -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
 
     # !!! FIXME: probably not safe long-term.
     # CMake mailing list had this hack for getting rid of -rdynamic:
@@ -618,6 +620,10 @@ SET_SOURCE_FILES_PROPERTIES(
     PROPERTIES COMPILE_FLAGS "-fpermissive"
 )
 ENDIF()
+SET_SOURCE_FILES_PROPERTIES(
+	${BBGEDIR}/Core.cpp
+    PROPERTIES COMPILE_FLAGS "-fpermissive"
+)
 
 SET(FTGL_SRCS
     ${FTGLSRCDIR}/FTCharmap.cpp
@@ -639,9 +645,14 @@ SET_SOURCE_FILES_PROPERTIES(
 )
 
 IF(WIN32_TRUE)
+	add_custom_target(
+	   openssl
+	   COMMAND ./Configure mingw --cross-compile-prefix=i686-w64-mingw32- && make
+	   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl
+	)
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "-D__USE_W32_SOCKETS -fexceptions -DASIO_STANDALONE -lssl -lcrypto -Wno-deprecated-declarations "
+		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include"
 	)
 ELSE(WIN32_TRUE)
 	SET_SOURCE_FILES_PROPERTIES(
@@ -780,7 +791,7 @@ IF(AQUARIA_USE_VFS)
 ENDIF(AQUARIA_USE_VFS)
 
 IF(WIN32)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "ws2_32 crypt32")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lpthread -Wl,-Bstatic  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libssl.a -lmswsock -Wl,-Bstatic -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -Wl,-Bstatic -lcrypt32 -Wl,-Bstatic -lws2_32 -Wl,-Bstatic")
 ELSE(WIN32)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
 ENDIF(WIN32)
@@ -842,13 +853,15 @@ ELSE(FTGL_FOUND)
    SET(OPTIONAL_SRCS ${OPTIONAL_SRCS} ${FTGL_SRCS})
 ENDIF(FTGL_FOUND)
 
-ADD_EXECUTABLE(aquaria ${EXETYPE}
+ADD_EXECUTABLE(aquaria_randomizer ${EXETYPE}
 	${RANDOMIZER_SRCS}
     ${AQUARIA_SRCS}
     ${BBGE_SRCS}
     ${OPTIONAL_SRCS}
 )
-TARGET_LINK_LIBRARIES(aquaria ${OPTIONAL_LIBS})
-
+TARGET_LINK_LIBRARIES(aquaria_randomizer ${OPTIONAL_LIBS})
+IF(WIN32_TRUE)
+    add_dependencies(aquaria_randomizer openssl)
+ENDIF(WIN32_TRUE)
 # end of CMakeLists.txt ...
 

@@ -553,7 +553,7 @@ void ModIcon::loadEntry(const ModEntry& entry)
 		useQuad(texToLoad);
 	quad->setWidthHeight(MOD_ICON_SIZE, MOD_ICON_SIZE);
 
-	XMLDocument d;
+	TinyXMLDocument d;
 
 	dsq->mod.loadModXML(&d, entry.path);
 

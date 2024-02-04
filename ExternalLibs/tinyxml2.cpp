@@ -493,7 +493,7 @@ bool XMLUtil::ToDouble( const char* str, double* value )
 }
 
 
-char* XMLDocument::Identify( char* p, XMLNode** node )
+char* TinyXMLDocument::Identify( char* p, XMLNode** node )
 {
     XMLNode* returnNode = 0;
     char* start = p;
@@ -563,7 +563,7 @@ char* XMLDocument::Identify( char* p, XMLNode** node )
 }
 
 
-bool XMLDocument::Accept( XMLVisitor* visitor ) const
+bool TinyXMLDocument::Accept( XMLVisitor* visitor ) const
 {
     if ( visitor->VisitEnter( *this ) ) {
         for ( const XMLNode* node=FirstChild(); node; node=node->NextSibling() ) {
@@ -578,7 +578,7 @@ bool XMLDocument::Accept( XMLVisitor* visitor ) const
 
 // --------- XMLNode ----------- //
 
-XMLNode::XMLNode( XMLDocument* doc ) :
+XMLNode::XMLNode( TinyXMLDocument* doc ) :
     _document( doc ),
     _parent( 0 ),
     _firstChild( 0 ), _lastChild( 0 ),
@@ -912,7 +912,7 @@ char* XMLText::ParseDeep( char* p, StrPair* )
 }
 
 
-XMLNode* XMLText::ShallowClone( XMLDocument* doc ) const
+XMLNode* XMLText::ShallowClone( TinyXMLDocument* doc ) const
 {
     if ( !doc ) {
         doc = _document;
@@ -937,7 +937,7 @@ bool XMLText::Accept( XMLVisitor* visitor ) const
 
 // --------- XMLComment ---------- //
 
-XMLComment::XMLComment( XMLDocument* doc ) : XMLNode( doc )
+XMLComment::XMLComment( TinyXMLDocument* doc ) : XMLNode( doc )
 {
 }
 
@@ -959,7 +959,7 @@ char* XMLComment::ParseDeep( char* p, StrPair* )
 }
 
 
-XMLNode* XMLComment::ShallowClone( XMLDocument* doc ) const
+XMLNode* XMLComment::ShallowClone( TinyXMLDocument* doc ) const
 {
     if ( !doc ) {
         doc = _document;
@@ -983,7 +983,7 @@ bool XMLComment::Accept( XMLVisitor* visitor ) const
 
 // --------- XMLDeclaration ---------- //
 
-XMLDeclaration::XMLDeclaration( XMLDocument* doc ) : XMLNode( doc )
+XMLDeclaration::XMLDeclaration( TinyXMLDocument* doc ) : XMLNode( doc )
 {
 }
 
@@ -1006,7 +1006,7 @@ char* XMLDeclaration::ParseDeep( char* p, StrPair* )
 }
 
 
-XMLNode* XMLDeclaration::ShallowClone( XMLDocument* doc ) const
+XMLNode* XMLDeclaration::ShallowClone( TinyXMLDocument* doc ) const
 {
     if ( !doc ) {
         doc = _document;
@@ -1030,7 +1030,7 @@ bool XMLDeclaration::Accept( XMLVisitor* visitor ) const
 
 // --------- XMLUnknown ---------- //
 
-XMLUnknown::XMLUnknown( XMLDocument* doc ) : XMLNode( doc )
+XMLUnknown::XMLUnknown( TinyXMLDocument* doc ) : XMLNode( doc )
 {
 }
 
@@ -1053,7 +1053,7 @@ char* XMLUnknown::ParseDeep( char* p, StrPair* )
 }
 
 
-XMLNode* XMLUnknown::ShallowClone( XMLDocument* doc ) const
+XMLNode* XMLUnknown::ShallowClone( TinyXMLDocument* doc ) const
 {
     if ( !doc ) {
         doc = _document;
@@ -1210,7 +1210,7 @@ void XMLAttribute::SetAttribute( float v )
 
 
 // --------- XMLElement ---------- //
-XMLElement::XMLElement( XMLDocument* doc ) : XMLNode( doc ),
+XMLElement::XMLElement( TinyXMLDocument* doc ) : XMLNode( doc ),
     _closingType( 0 ),
     _rootAttribute( 0 )
 {
@@ -1529,7 +1529,7 @@ char* XMLElement::ParseDeep( char* p, StrPair* strPair )
 
 
 
-XMLNode* XMLElement::ShallowClone( XMLDocument* doc ) const
+XMLNode* XMLElement::ShallowClone( TinyXMLDocument* doc ) const
 {
     if ( !doc ) {
         doc = _document;
@@ -1580,8 +1580,8 @@ bool XMLElement::Accept( XMLVisitor* visitor ) const
 }
 
 
-// --------- XMLDocument ----------- //
-XMLDocument::XMLDocument( bool processEntities, Whitespace whitespace ) :
+// --------- TinyXMLDocument ----------- //
+TinyXMLDocument::TinyXMLDocument( bool processEntities, Whitespace whitespace ) :
     XMLNode( 0 ),
     _writeBOM( false ),
     _processEntities( processEntities ),
@@ -1595,7 +1595,7 @@ XMLDocument::XMLDocument( bool processEntities, Whitespace whitespace ) :
 }
 
 
-XMLDocument::~XMLDocument()
+TinyXMLDocument::~TinyXMLDocument()
 {
     DeleteChildren();
     delete [] _charBuffer;
@@ -1619,7 +1619,7 @@ XMLDocument::~XMLDocument()
 }
 
 
-void XMLDocument::Clear()
+void TinyXMLDocument::Clear()
 {
     DeleteChildren();
 
@@ -1632,7 +1632,7 @@ void XMLDocument::Clear()
 }
 
 
-XMLElement* XMLDocument::NewElement( const char* name )
+XMLElement* TinyXMLDocument::NewElement( const char* name )
 {
     XMLElement* ele = new (_elementPool.Alloc()) XMLElement( this );
     ele->_memPool = &_elementPool;
@@ -1641,7 +1641,7 @@ XMLElement* XMLDocument::NewElement( const char* name )
 }
 
 
-XMLComment* XMLDocument::NewComment( const char* str )
+XMLComment* TinyXMLDocument::NewComment( const char* str )
 {
     XMLComment* comment = new (_commentPool.Alloc()) XMLComment( this );
     comment->_memPool = &_commentPool;
@@ -1650,7 +1650,7 @@ XMLComment* XMLDocument::NewComment( const char* str )
 }
 
 
-XMLText* XMLDocument::NewText( const char* str )
+XMLText* TinyXMLDocument::NewText( const char* str )
 {
     XMLText* text = new (_textPool.Alloc()) XMLText( this );
     text->_memPool = &_textPool;
@@ -1659,7 +1659,7 @@ XMLText* XMLDocument::NewText( const char* str )
 }
 
 
-XMLDeclaration* XMLDocument::NewDeclaration( const char* str )
+XMLDeclaration* TinyXMLDocument::NewDeclaration( const char* str )
 {
     XMLDeclaration* dec = new (_commentPool.Alloc()) XMLDeclaration( this );
     dec->_memPool = &_commentPool;
@@ -1668,7 +1668,7 @@ XMLDeclaration* XMLDocument::NewDeclaration( const char* str )
 }
 
 
-XMLUnknown* XMLDocument::NewUnknown( const char* str )
+XMLUnknown* TinyXMLDocument::NewUnknown( const char* str )
 {
     XMLUnknown* unk = new (_commentPool.Alloc()) XMLUnknown( this );
     unk->_memPool = &_commentPool;
@@ -1677,7 +1677,7 @@ XMLUnknown* XMLDocument::NewUnknown( const char* str )
 }
 
 /*
-XMLError XMLDocument::LoadFile( const char* filename )
+XMLError TinyXMLDocument::LoadFile( const char* filename )
 {
     Clear();
     FILE* fp = 0;
@@ -1698,7 +1698,7 @@ XMLError XMLDocument::LoadFile( const char* filename )
 }
 
 
-XMLError XMLDocument::LoadFile( FILE* fp )
+XMLError TinyXMLDocument::LoadFile( FILE* fp )
 {
     Clear();
 
@@ -1740,7 +1740,7 @@ XMLError XMLDocument::LoadFile( FILE* fp )
 }
 */
 
-XMLError XMLDocument::SaveFile( const char* filename, bool compact )
+XMLError TinyXMLDocument::SaveFile( const char* filename, bool compact )
 {
     FILE* fp = 0;
 #if defined(_MSC_VER) && (_MSC_VER >= 1400 )
@@ -1759,7 +1759,7 @@ XMLError XMLDocument::SaveFile( const char* filename, bool compact )
 }
 
 
-XMLError XMLDocument::SaveFile( FILE* fp, bool compact )
+XMLError TinyXMLDocument::SaveFile( FILE* fp, bool compact )
 {
     XMLPrinter stream( fp, compact );
     Print( &stream );
@@ -1767,7 +1767,7 @@ XMLError XMLDocument::SaveFile( FILE* fp, bool compact )
 }
 
 
-XMLError XMLDocument::Parse( const char* p, size_t len )
+XMLError TinyXMLDocument::Parse( const char* p, size_t len )
 {
 	const char* start = p;
     Clear();
@@ -1796,7 +1796,7 @@ XMLError XMLDocument::Parse( const char* p, size_t len )
 }
 
 
-void XMLDocument::Print( XMLPrinter* streamer ) const
+void TinyXMLDocument::Print( XMLPrinter* streamer ) const
 {
     XMLPrinter stdStreamer( stdout );
     if ( !streamer ) {
@@ -1806,7 +1806,7 @@ void XMLDocument::Print( XMLPrinter* streamer ) const
 }
 
 
-void XMLDocument::SetError( XMLError error, const char* str1, const char* str2 )
+void TinyXMLDocument::SetError( XMLError error, const char* str1, const char* str2 )
 {
     _errorID = error;
     _errorStr1 = str1;
@@ -1814,7 +1814,7 @@ void XMLDocument::SetError( XMLError error, const char* str1, const char* str2 )
 }
 
 
-void XMLDocument::PrintError() const
+void TinyXMLDocument::PrintError() const
 {
     if ( _errorID ) {
         static const int LEN = 20;
@@ -1828,7 +1828,7 @@ void XMLDocument::PrintError() const
             TIXML_SNPRINTF( buf2, LEN, "%s", _errorStr2 );
         }
 
-        printf( "XMLDocument error id=%d str1=%s str2=%s\n",
+        printf( "TinyXMLDocument error id=%d str1=%s str2=%s\n",
                 _errorID, buf1, buf2 );
     }
 }
@@ -2140,7 +2140,7 @@ void XMLPrinter::PushUnknown( const char* value )
 }
 
 
-bool XMLPrinter::VisitEnter( const XMLDocument& doc )
+bool XMLPrinter::VisitEnter( const TinyXMLDocument& doc )
 {
     _processEntities = doc.ProcessEntities();
     if ( doc.HasBOM() ) {

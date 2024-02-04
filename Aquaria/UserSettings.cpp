@@ -34,7 +34,7 @@ void UserSettings::save()
 {
 	//initInputCodeMap();
 
-	XMLDocument doc;
+	TinyXMLDocument doc;
 	{
 		XMLElement *xml_version = doc.NewElement("Version");
 		{
@@ -312,7 +312,7 @@ void UserSettings::load(bool doApply, const std::string &overrideFile)
 		filename = userSettingsFilename;
 #endif
 
-	XMLDocument doc;
+	TinyXMLDocument doc;
 	if(readXML(filename, doc) != XML_SUCCESS)
 	{
 		errorLog("UserSettings: Malformed XML, continuing with defaults");

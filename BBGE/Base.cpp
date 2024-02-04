@@ -539,7 +539,7 @@ char *readFile(const std::string& path, unsigned long *size_ret)
 	return buffer;
 }
 
-tinyxml2::XMLError readXML(const std::string& fn, tinyxml2::XMLDocument& doc)
+tinyxml2::XMLError readXML(const std::string& fn, tinyxml2::TinyXMLDocument& doc)
 {
 	unsigned long sz = 0;
 	char *buf = readFile(fn, &sz);
@@ -548,9 +548,9 @@ tinyxml2::XMLError readXML(const std::string& fn, tinyxml2::XMLDocument& doc)
 	return err;
 }
 
-tinyxml2::XMLDocument *readXML(const std::string& fn, tinyxml2::XMLError *perr /* = 0 */, bool keepEmpty /* = false */)
+tinyxml2::TinyXMLDocument *readXML(const std::string& fn, tinyxml2::XMLError *perr /* = 0 */, bool keepEmpty /* = false */)
 {
-	tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument();
+	tinyxml2::TinyXMLDocument *doc = new tinyxml2::TinyXMLDocument();
 	tinyxml2::XMLError err = readXML(fn, *doc);
 	if(perr)
 		*perr = err;

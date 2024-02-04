@@ -2077,7 +2077,7 @@ void DSQ::loadModsCallback(const std::string &filename, intptr_t param)
 	m.path = name;
 	m.id = dsq->modEntries.size();
 
-	XMLDocument d;
+	TinyXMLDocument d;
 	if(!Mod::loadModXML(&d, name))
 	{
 		std::ostringstream os;

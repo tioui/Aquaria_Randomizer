@@ -249,7 +249,7 @@ void ModDL::NotifyModlist(ModlistRequest *rq, NetEvent ev, size_t recvd, size_t 
 
 bool ModDL::ParseModXML(const std::string& fn, bool allowChaining)
 {
-	XMLDocument xml;
+	TinyXMLDocument xml;
 	if(readXML(fn, xml) != XML_SUCCESS)
 	{
 		debugLog("Failed to parse downloaded XML: " + fn);

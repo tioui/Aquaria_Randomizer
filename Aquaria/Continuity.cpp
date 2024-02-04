@@ -1256,7 +1256,7 @@ void Continuity::loadIntoSongBank(const std::string &file)
 	if(!exists(file))
 		return;
 
-	XMLDocument doc;
+	TinyXMLDocument doc;
 	XMLError err = readXML(file, doc);
 	if(err == XML_ERROR_EMPTY_DOCUMENT)
 		return;
@@ -2384,7 +2384,7 @@ void Continuity::saveFile(int slot, Vector position, unsigned char *scrShotData,
 
 	dsq->user.save();
 
-	XMLDocument doc;
+	TinyXMLDocument doc;
 
 	XMLElement *version = doc.NewElement("Version");
 	{
@@ -2721,7 +2721,7 @@ std::string Continuity::getSaveFileName(int slot, const std::string &pfix)
 	return os.str();
 }
 
-void Continuity::loadFileData(int slot, XMLDocument &doc)
+void Continuity::loadFileData(int slot, TinyXMLDocument &doc)
 {
 	std::string teh_file = dsq->continuity.getSaveFileName(slot, "aqs");
 	if(!exists(teh_file))
@@ -2755,7 +2755,7 @@ void Continuity::loadFile(int slot)
 {
 	dsq->user.save();
 
-	XMLDocument doc;
+	TinyXMLDocument doc;
 	loadFileData(slot, doc);
 
 	XMLElement *startData = doc.FirstChildElement("StartData");

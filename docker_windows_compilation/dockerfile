@@ -1,0 +1,12 @@
+FROM ubuntu:22.04
+COPY src /src
+RUN mkdir /src/build && apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
+		g++-mingw-w64-i686 \
+		gcc-mingw-w64-i686 \
+		build-essential \
+		mingw-w64 \
+		cmake && \
+    update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
+WORKDIR /src/build
+CMD /bin/bash -c "cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 .. && make VERBOSE=1 && mv /src/build/aquaria.exe /output/"
+

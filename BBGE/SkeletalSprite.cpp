@@ -32,15 +32,15 @@ std::string SkeletalSprite::skinPath					= "skins/";
 
 std::string SkeletalSprite::secondaryAnimationPath		= "";
 
-static std::map<std::string, XMLDocument*> skelCache;
+static std::map<std::string, TinyXMLDocument*> skelCache;
 
-static XMLDocument *_retrieveSkeletalXML(const std::string& name, bool keepEmpty)
+static TinyXMLDocument *_retrieveSkeletalXML(const std::string& name, bool keepEmpty)
 {
-	std::map<std::string, XMLDocument*>::iterator it = skelCache.find(name);
+	std::map<std::string, TinyXMLDocument*>::iterator it = skelCache.find(name);
 	if(it != skelCache.end())
 		return it->second;
 
-	XMLDocument *doc = readXML(name, NULL, keepEmpty);
+	TinyXMLDocument *doc = readXML(name, NULL, keepEmpty);
 	if(doc)
 		skelCache[name] = doc;
 
@@ -49,7 +49,7 @@ static XMLDocument *_retrieveSkeletalXML(const std::string& name, bool keepEmpty
 
 void SkeletalSprite::clearCache()
 {
-	for(std::map<std::string, XMLDocument*>::iterator it = skelCache.begin(); it != skelCache.end(); ++it)
+	for(std::map<std::string, TinyXMLDocument*>::iterator it = skelCache.begin(); it != skelCache.end(); ++it)
 		delete it->second;
 	skelCache.clear();
 }
@@ -871,7 +871,7 @@ bool SkeletalSprite::saveSkeletal(const std::string &fn)
 	}
 
 	int i = 0;
-	XMLDocument *xml = _retrieveSkeletalXML(file, true);
+	TinyXMLDocument *xml = _retrieveSkeletalXML(file, true);
 	xml->Clear();
 
 	XMLElement *animationLayers = xml->NewElement("AnimationLayers");
@@ -1184,7 +1184,7 @@ void SkeletalSprite::loadSkin(const std::string &fn)
 		errorLog("Could not load skin[" + file + "] - File not found.");
 		return;
 	}
-	XMLDocument *d = _retrieveSkeletalXML(file, false);
+	TinyXMLDocument *d = _retrieveSkeletalXML(file, false);
 	if(!d)
 	{
 		errorLog("Could not load skin[" + file + "] - Malformed XML.");
@@ -1319,7 +1319,7 @@ void SkeletalSprite::loadSkeletal(const std::string &fn)
 
 	file = core->adjustFilenameCase(file);
 
-	XMLDocument *xml = _retrieveSkeletalXML(file, false);
+	TinyXMLDocument *xml = _retrieveSkeletalXML(file, false);
 	if(!xml)
 	{
 		filenameLoaded = "";

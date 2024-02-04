@@ -4204,7 +4204,7 @@ bool Game::loadSceneXML(std::string scene)
 		dsq->screenMessage(s);
 		return false;
 	}
-	XMLDocument doc;
+	TinyXMLDocument doc;
 	if(readXML(fn, doc) != XML_SUCCESS)
 	{
 		dsq->screenMessage("Could not load scene [" + fn + "] - Malformed XML");
@@ -4217,7 +4217,7 @@ bool Game::loadSceneXML(std::string scene)
 	}
 	if (!saveFile)
 	{
-		saveFile = new XMLDocument();
+		saveFile = new TinyXMLDocument();
 	}
 
 	addProgress();
@@ -5341,7 +5341,7 @@ bool Game::saveScene(std::string scene)
 
 	std::string fn = getSceneFilename(scene);
 
-	XMLDocument saveFile;
+	TinyXMLDocument saveFile;
 
 	// hackish: Deep-clone XML doc
 	{

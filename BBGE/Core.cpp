@@ -90,7 +90,7 @@ void Core::initIcon()
 
 	HWND hwnd = wminfo.info.win.window;
 
-	::SetClassLong(hwnd, GCL_HICON, (LONG) icon_windows);
+	::SetClassLong(hwnd, GCLP_HICON, (LONG) icon_windows);
 #endif
 }
 

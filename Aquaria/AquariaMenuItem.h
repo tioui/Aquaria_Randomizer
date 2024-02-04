@@ -113,7 +113,7 @@ public:
 
 	bool mbDown;
 
-	static std::string getSaveDescription(const XMLDocument &doc);
+	static std::string getSaveDescription(const TinyXMLDocument &doc);
 
 protected:
 	void onUpdate(float dt);

@@ -40,7 +40,7 @@ public:
 
 	void update(float dt);
 
-	XMLDocument file;
+	TinyXMLDocument file;
 
 	std::vector <CutsceneMarker> markers;
 

@@ -83,7 +83,7 @@ bool Mod::isEditorBlocked()
 	return blockEditor;
 }
 
-bool Mod::loadModXML(XMLDocument *d, std::string modName)
+bool Mod::loadModXML(TinyXMLDocument *d, std::string modName)
 {
 	return readXML((baseModPath + modName + ".xml").c_str(), *d) == XML_SUCCESS;
 
@@ -109,7 +109,7 @@ void Mod::load(const std::string &p)
 
 	setActive(true);
 	
-	XMLDocument d;
+	TinyXMLDocument d;
 	loadModXML(&d, p);
 	
 	XMLElement *mod = d.FirstChildElement("AquariaMod");

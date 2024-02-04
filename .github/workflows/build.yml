@@ -5,6 +5,27 @@ name: Aquaria randomizer build
 on: [push]
 
 jobs:
+  build-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
+      - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: git submodule update --init
+      - run: echo "Checkout done."
+      - run: echo "Instaling development package..."
+      - run: sudo apt-get install g++-mingw-w64-i686 gcc-mingw-w64-i686 build-essential mingw-w64 cmake
+      - run: sudo update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
+      - run: echo "Developpement package installed..."
+      - run: echo "Compiling..."
+      - run: |
+          mkdir ${{ github.workspace }}/build
+          cd ${{ github.workspace }}/build
+          cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 ..
+          cmake ..
+          make
+      - run: echo "Compiling done."
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:

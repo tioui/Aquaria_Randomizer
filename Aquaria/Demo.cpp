@@ -78,7 +78,7 @@ void Demo::save(const std::string &name)
 	std::string filename = "" + name + ".demo";
 
 	/*
-	XMLDocument doc;
+	TinyXMLDocument doc;
 
 	// UNFINISHED
 	for (int i = 0; i < frames.size(); i++)
@@ -103,7 +103,7 @@ void Demo::load(const std::string &name)
 	// UNFINISHED
 	std::string filename = "" + name + ".demo";
 
-	//XMLDocument doc;
+	//TinyXMLDocument doc;
 	//doc.LoadFile(filename.c_str());
 
 	//doc.FirstChildElement("");

@@ -287,7 +287,7 @@ public:
 	void shutdown();
 	bool isShuttingDown();
 
-	static bool loadModXML(XMLDocument *d, std::string modName);
+	static bool loadModXML(TinyXMLDocument *d, std::string modName);
 	static ModType getTypeFromXML(XMLElement *xml);
 
 	WorldMapRevealMethod mapRevealMethod;
@@ -944,7 +944,7 @@ public:
 	void		setStringFlag(std::string flag, std::string v);
 
 	void saveFile(int slot, Vector position=Vector(0,0,0), unsigned char *scrShotData=0, int scrShotWidth=0, int scrShotHeight=0);
-	void loadFileData(int slot, XMLDocument &doc);
+	void loadFileData(int slot, TinyXMLDocument &doc);
 	void loadFile(int slot);
 
 	void castSong(int num);

@@ -723,7 +723,7 @@ public:
 
 	void setParallaxTextureCoordinates(Quad *q, float speed);
 
-	XMLDocument *saveFile;
+	TinyXMLDocument *saveFile;
 
 	Vector positionToAvatar;
 	float getCoverage(Vector pos, int sampleArea = 5);
