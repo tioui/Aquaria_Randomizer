@@ -23,7 +23,6 @@ jobs:
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
           cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 ..
-          cmake ..
           make
       - run: echo "Compiling done."
   build-ubuntu:
@@ -36,12 +35,12 @@ jobs:
       - run: git submodule update --init
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
-      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl1.2-dev
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
-          cmake ..
+          cmake -DAQUARIA_USE_SDL2=1 ..
           make
       - run: echo "Compiling done."
