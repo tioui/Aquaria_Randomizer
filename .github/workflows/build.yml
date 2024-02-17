@@ -15,6 +15,7 @@ jobs:
       - run: git submodule update --init
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
+      - run: sudo apt-get update
       - run: sudo apt-get install g++-mingw-w64-i686 gcc-mingw-w64-i686 build-essential mingw-w64 cmake
       - run: sudo update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
       - run: echo "Developpement package installed..."
@@ -35,6 +36,7 @@ jobs:
       - run: git submodule update --init
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
+      - run: sudo apt-get update
       - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
