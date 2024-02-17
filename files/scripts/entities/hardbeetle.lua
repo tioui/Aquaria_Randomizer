@@ -112,17 +112,6 @@ end
 
 function dieNormal(me)
 	if chance(100) then
-		spawnIngredient("JellyOil", entity_getPosition(me))
-		spawnIngredient("PlantLeaf", entity_getPosition(me))
-		spawnIngredient("PlantLeaf", entity_getPosition(me))
-		spawnIngredient("FishMeat", entity_getPosition(me))
-		spawnIngredient("SwordfishSteak", entity_getPosition(me))
-		spawnIngredient("SpicyMeat", entity_getPosition(me))
-		spawnIngredient("FishMeat", entity_getPosition(me))
-		spawnIngredient("PlantLeaf", entity_getPosition(me))
-		spawnIngredient("FishOil", entity_getPosition(me))
-		spawnIngredient("JellyOil", entity_getPosition(me))
-		spawnIngredient("FishOil", entity_getPosition(me))
-		spawnIngredient("SmallEgg", entity_getPosition(me))
+		spawnIngredient("DivineSoup", entity_getPosition(me))
 	end
 end

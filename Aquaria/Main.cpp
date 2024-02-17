@@ -20,9 +20,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <iostream>
+#include <filesystem>
 
 #include "DSQ.h"
-#include "../Randomizer/Randomizer.h"
+#include "../Randomizer/RandomizerLocal.h"
 
 
 
@@ -89,16 +90,24 @@ static void CheckConfig(void)
 	extern "C" int main(int argc,char *argv[])
 	{
         Randomizer *lRandomizer = NULL;
-		std::string dsqParam = ""; // fileSystem
-		std::string extraDataDir = "";
+        std::string dsqParam = ""; // fileSystem
+        std::string extraDataDir = "";
+        std::string appImageExtraDir = "";
 
 		const char *envPath = 0;
+        const char *appImageDir = 0;
         if (argc >= 5 && strncmp(argv[1], "--name", 6) && strncpy(argv[3], "--server", 8)) {
-            lRandomizer = new Randomizer(argv[2], argv[4]);
+            // TODO: Creating Archipelago Randomizer
+        } else if (argc > 1) {
+            lRandomizer = new RandomizerLocal(argv[1]);
+            if (lRandomizer->hasError()) {
+                std::cerr << lRandomizer->getErrorMessage();
+                exit(1);
+            }
         } else {
-            std::cout << "Error: No name and server";
-            std::cout << "Usage: " << argv[0] << "--name YourName --server ServerIP:Port";
-            lRandomizer = new Randomizer("", "");
+            std::cout << "Usage: " << argv[0] << " <local filename>\n";
+            std::cout << "Usage: " << argv[0] << " --name <Name> --server <ServerIP:Port>\n";
+            exit(1);
         }
 
 #ifdef BBGE_BUILD_UNIX
@@ -107,6 +116,12 @@ static void CheckConfig(void)
 		{
 			dsqParam = envPath;
 		}
+        appImageDir = getenv("APPIMAGE");
+        if (appImageDir)
+        {
+            std::filesystem::path appImagePath = appImageDir;
+            appImageExtraDir = appImagePath.parent_path();
+        }
 #endif
 #ifdef AQUARIA_DEFAULT_DATA_DIR
 		if(!envPath)
@@ -121,7 +136,7 @@ static void CheckConfig(void)
         CheckConfig();
 
         {
-            DSQ dsql(dsqParam, extraDataDir, lRandomizer);
+            DSQ dsql(dsqParam, extraDataDir, appImageExtraDir, lRandomizer);
             dsql.init();
             dsql.main();
             dsql.shutdown();

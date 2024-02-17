@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>Aquaria Randomizer generator</title>
+    </head>
+    <body>
+    <div class="container" style="width: 540px;">
+        <h1 class="text-center">Generating Aquaria randomizer</h1>
+        <p>Ingredients randomization: <select id="ingredient">
+            <option value="no">No ingredient randomization</option>
+            <option value="common" selected="selected">Randomize only common ingredients</option>
+            <option value="all">Randomize every ingredient*</option>
+        </select></p>
+        <p>*Note that randomizing every ingredient can make recipe difficult to make
+            (for example, if Plant Leaf is swap with Red Bulb).</p>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Generate...</a>
+        </div>
+    </div>
+
+
+    <script src="generator.js"></script>
+    </body>
+</html>
+

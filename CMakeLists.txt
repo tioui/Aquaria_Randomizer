@@ -420,7 +420,8 @@ ENDIF(HAVE_STRCASECMP)
 
 # Randomizer source code
 SET(RANDOMIZER_SRCS
-	${RANDOMIZERDIR}/Randomizer.cpp
+        ${RANDOMIZERDIR}/Randomizer.cpp
+        ${RANDOMIZERDIR}/RandomizerLocal.cpp
 )
 
 
@@ -791,7 +792,7 @@ IF(AQUARIA_USE_VFS)
 ENDIF(AQUARIA_USE_VFS)
 
 IF(WIN32)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lpthread -Wl,-Bstatic  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libssl.a -lmswsock -Wl,-Bstatic -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -Wl,-Bstatic -lcrypt32 -Wl,-Bstatic -lws2_32 -Wl,-Bstatic")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lpthread -static  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -lcrypt32 -lws2_32")
 ELSE(WIN32)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
 ENDIF(WIN32)

@@ -1128,8 +1128,7 @@ Ingredient *Game::spawnIngredient(const std::string &ing, const Vector &pos, int
 		if (nocasecmp(ing, "poultice")==0)
 			use = "LeafPoultice";
 
-		IngredientData *not_randomized_data = dsq->continuity.getIngredientDataByName(use);
-		IngredientData *d = dsq->randomizer->getRandomizedIngredientData(not_randomized_data);
+		IngredientData *d = dsq->continuity.getIngredientDataByName(use);
 		if (d)
 		{
 			i = new Ingredient(pos, d);

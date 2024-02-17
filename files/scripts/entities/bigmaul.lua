@@ -125,20 +125,13 @@ end
 function dieNormal(me)
 	local p = randRange(1, 100)
 	if p <= 10 then -- 10%
-		spawnIngredient("RubberyMeat", entity_x(me), entity_y(me))
-		spawnIngredient("FishOil", entity_x(me), entity_y(me))
-		spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
+		spawnIngredient("ToughCake", entity_x(me), entity_y(me))
 	elseif p > 10 and p <= 30 then -- 20%
-		spawnIngredient("SmallEye", entity_x(me), entity_y(me))
-		spawnIngredient("FishOil", entity_x(me), entity_y(me))
-		spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
+		spawnIngredient("TastyCake", entity_x(me), entity_y(me))
 	elseif p > 30 and p <= 40 then -- 10%
 		spawnIngredient("RubberyMeat", entity_x(me), entity_y(me))
 	elseif p > 40 and p <= 45 then -- 5%
-		spawnIngredient("EelOil", entity_x(me), entity_y(me))
-		spawnIngredient("SpecialBulb", entity_x(me), entity_y(me))
-		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
-		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+		spawnIngredient("ArcanePoultice", entity_x(me), entity_y(me))
 	end
 end
 

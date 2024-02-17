@@ -3757,7 +3757,7 @@ luaFunc(spawnIngredient)
 	int times = lua_tointeger(L, 4);
 	if (times == 0) times = 1;
 	bool out = getBool(L, 5);
-	Entity *e = dsq->game->spawnIngredient(getString(L, 1), Vector(lua_tonumber(L, 2), lua_tonumber(L, 3)), times, out);
+	Entity *e = dsq->randomizer->spawnIngredient(getString(L, 1), Vector(lua_tonumber(L, 2), lua_tonumber(L, 3)), times, out);
 
 	luaReturnPtr(e);
 }

@@ -2,17 +2,25 @@
 ==================
 
 > [!WARNING]
-> Warning: This project is a work in progress. It is not working yet.
+> Warning: this project is presently in beta.
 
 This repository is a clone of the Aquaria game repository
 (https://github.com/AquariaOSE/Aquaria) and has been modified to be used as
-a MultiWorld Randomizer.
+a Randomizer.
+
+Generating a local randomize JSON file
+--------------------------------------
+
+An HTML page that can generate randomize JSON file can be found in the `Randomizer_generator/local` directory.
+
+Alternatively, you can use the online generator [here](https://tioui.com/aquaria_randomizer_generator/).
+
 
 What are the current checks managed by the randomizer
 -----------------------------------------------------
 
-For now, every Sing bulbs, Mithalas urns and Sunken City crates are the
-checks.
+For now, every Sing bulbs, Mithalas urns, Sunken City crates, collectable treasures
+and the third cooking plate are the checks.
 
 > [!NOTE] 
 > Note that every recipes in the randomizer can be found in the checks.
@@ -48,7 +56,65 @@ What it the modifications done to the game
 - Replacing a 4 Eel Oils bulb in the final boss area by a Loaf Of Life.
 - Every recipe dropped by ennemy has been replace by the ingredients of the recipe.
 
+Compilation
+===========
 
+Compilation on Linux Ubuntu
+---------------------------
+
+First, be sure to have the needed libraries
+```bash
+sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev git
+```
+
+Then, clone the project with the --recursive flag some place
+
+```bash
+git clone --recursive https://github.com/tioui/Aquaria_Randomizer.git
+cd Aquaria_Randomizer
+```
+
+Then, launch the compilation.
+
+```bash
+mkdir build
+cd build
+cmake -DAQUARIA_USE_SDL2=1 ..
+make
+```
+
+The executable will be the `aquaria_randomizer` executable.
+
+Compilation on Windows
+----------------------
+
+Good luck with that! If you succeed, tell me. I accept pull request.
+
+Compilation on Mac OS X
+-----------------------
+
+I don't know. If you succeed, tell me. I accept pull request.
+
+Installation
+============
+
+To install the executable you need an official Aquaria installation directory. The installation will
+occured in the official Aquaria directory.
+
+1. Copy the `aquaria_randomizer` executable in the official Aquaria directory (in the root);
+```bash
+cp -p build/aquaria_randomizer /path/to/aquaria/dir/
+```
+2. Copy the `files` directory as an `override`
+```bash
+cp -rp files /path/to/aquaria/dir/override
+```
+
+You should now be able to launch the randomizer with
+```bash
+cd /path/to/aquaria/dir
+./aquaria_randomizer aquaria_randomized.json
+```
 
 Original Aquaria README
 =======================

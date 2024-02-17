@@ -147,18 +147,13 @@ end
 
 function dieNormal(me)
 	if chance(10) then
-		spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
-		spawnIngredient("FishMeat", entity_x(me), entity_y(me))
-		spawnIngredient("FishOil", entity_x(me), entity_y(me))
+		spawnIngredient("VeggieSoup", entity_x(me), entity_y(me))
 	else
 		if chance(20) then
-			spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
-			spawnIngredient("FishOil", entity_x(me), entity_y(me))
-			spawnIngredient("SmallEgg", entity_x(me), entity_y(me))
+			spawnIngredient("VeggieCake", entity_x(me), entity_y(me))
 		else
 			if chance(50) then
-				spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
-				spawnIngredient("PlantLeaf", entity_x(me), entity_y(me))
+				spawnIngredient("Poultice", entity_x(me), entity_y(me))
 			end
 		end
 	end

@@ -120,7 +120,7 @@ function update(me, dt)
 					playSfx("secret")
 					bone_alpha(v.ing, 0)
 					for i=1,v.amount do
-						i = spawnIngredient(v.ingToSpawn, entity_x(me), entity_y(me), 1, (i==1))
+						spawnIngredient(v.ingToSpawn, entity_x(me), entity_y(me), 1, (i==1))
 					end
 					v.ingToSpawn = 0
 				end
