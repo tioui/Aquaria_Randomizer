@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>Générateur de Randomizer d'Aquaria</title>
+    </head>
+    <body>
+    <div class="container" style="width: 540px;">
+        <h1 class="text-center">Générer un randomizer d'Aquaria</h1>
+        <p>Randomiser les ingrédients: <select id="ingredient">
+            <option value="no">Aucune randomisation d'ingrédients</option>
+            <option value="common" selected="selected">Randomiser seulement les ingrédients communs</option>
+            <option value="all">Randomiser tous les ingrédients*</option>
+        </select></p>
+        <p>*À noter que randomiser tous les ingrédients peut rendre la création de recette difficile.
+            (par exemple, si les Plant Leaf sont échangés avec les Red Bulb).</p>
+        <p>Randomiser les repas: <select id="dish">
+            <option value="no">Aucune randomisation de repas</option>
+            <option value="all" selected="selected">Randomiser les repas**</option>
+        </select></p>
+        <p>**À noter que les repas ne peuvent pas apparaître sans avoir été préalablement apris par des checks.</p>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Générer...</a>
+        </div>
+        <p>&nbsp</p>
+        <p>The english generator is <a href="index.html">here</a>.</p>
+    </div>
+    <script src="generator.js"></script>
+    </body>
+</html>
+

@@ -9,8 +9,8 @@ class Randomizer {
      */
     constructor(aVersion) {
         this.version = aVersion;
-        this.ingredientReplacement = [];
-        for(let i = 0; i < 26; i = i + 1) {
+        this.ingredientReplacement = []; // 26 base ingredients and 50 dishs
+        for(let i = 0; i < 76; i = i + 1) {
             this.ingredientReplacement.push(i);
         }
         this.checksReplacement = [];
@@ -20,28 +20,35 @@ class Randomizer {
     }
 
     /**
-     * Randomize the ingredientReplacement array.
+     * Randomize the ingredient part of the ingredientReplacement array.
      */
     randomizeIngredientReplacement(aCommons){
-        let lSkip = 0;
+        let lSkip = 50;
         if (aCommons){
-            lSkip = 3;
+            lSkip = lSkip + 3;
         }
-        this.randomizeArray(this.ingredientReplacement, lSkip);
+        this.randomizeArray(this.ingredientReplacement, 0, lSkip);
+    }
+
+    /**
+     * Randomize the dish part of the ingredientReplacement array.
+     */
+    randomizeDishReplacement(){
+        this.randomizeArray(this.ingredientReplacement, 26, 0);
     }
 
     /**
      * Randomize the checksReplacement array.
      */
     randomizeCheckReplacement(){
-        this.randomizeArray(this.checksReplacement, 0);
+        this.randomizeArray(this.checksReplacement, 0, 0);
     }
 
     /**
      * Randomize an array
      * @param aArray The array to randomize
      */
-    randomizeArray(aArray, aSkip) {
+    randomizeArray(aArray, aSkipBefore, aSkipAfter) {
         for (let i = aArray.length - 1 - aSkip; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [aArray[i], aArray[j]] = [aArray[j], aArray[i]];
@@ -56,11 +63,14 @@ class Randomizer {
 function generateRandomizer(aPage) {
     let lRandomizer = new Randomizer(0);
     lRandomizer.randomizeCheckReplacement();
-
-    if ($('#ingredient').val() === "common") {
+    let lIngredientOption = $('#ingredient');
+    if (lIngredientOption.val() === "common") {
         lRandomizer.randomizeIngredientReplacement(true);
-    } else if ($('#ingredient').val() === "all") {
+    } else if (lIngredientOption.val() === "all") {
         lRandomizer.randomizeIngredientReplacement(false);
+    }
+    if ($('#dish').val() === "all") {
+        lRandomizer.randomizeDishReplacement();
     }
     var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lRandomizer));
     aPage.setAttribute("href", "data:"+data);

@@ -85,6 +85,13 @@ public:
       */
      Entity *spawnIngredient(const std::string &ingredient, const Vector &position, int times, int out);
 
+    /**
+     * Spawn a ingredient from an entity.
+     * @param entity The entity that spawn the ingredient
+     * @param ingredientData The ingredient to spawn
+     */
+    void spawnIngredientFromEntity(Entity *aEntity, IngredientData *ingredientData);
+
 protected:
 
     /**
@@ -196,15 +203,16 @@ private:
      * Spawn a recipe dish from an entity.
      * @param entity The entity that spawn the recipe dish
      * @param recipe The recipe to spawn
+     * @param ingredientData The ingredient that represent the recipe
      */
-    void spawnRecipeFromEntity(Entity *entity, Recipe *recipe);
+    void spawnRecipeFromEntity(Entity *entity, Recipe *recipe, IngredientData *ingredientData);
 
     /**
-     * Spawn a ingredient from an entity.
-     * @param entity The entity that spawn the ingredient
-     * @param ingredientData The ingredient to spawn
+     * Retreive a random ingredient of a certain type (or of any type)
+     * @param aType The Type of the ingredient (or any type if nothing)
+     * @return the ingredient
      */
-    void spawnIngredientFromEntity(Entity *aEntity, IngredientData *ingredientData);
+    ingredient_t *getRandomIngredient(IngredientType aType);
 
 //		/**
 //		 * The name of the multiworld randomizer user
@@ -215,7 +223,6 @@ private:
 //		 * The name of the multiworld randomizer server and port
 //		 */
 //		std::string server;
-
 };
 
 const int FLAG_COLLECTIBLE_INHOME_SONGCAVE = 2550;

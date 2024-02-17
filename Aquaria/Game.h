@@ -706,6 +706,7 @@ public:
 	void togglePause(bool v);
 
 	Ingredient* spawnIngredient(const std::string &ing, const Vector &pos, int times=1, int out=0);
+    void spawnIngredientFromEntityRandomized(Entity *ent, IngredientData *data);
 	void spawnIngredientFromEntity(Entity *ent, IngredientData *data);
 
 	Ingredient *getNearestIngredient(const Vector &pos, int radius);

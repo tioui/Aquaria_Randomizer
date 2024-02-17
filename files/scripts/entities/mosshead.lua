@@ -153,7 +153,7 @@ function dieNormal(me)
 			spawnIngredient("VeggieCake", entity_x(me), entity_y(me))
 		else
 			if chance(50) then
-				spawnIngredient("Poultice", entity_x(me), entity_y(me))
+				spawnIngredient("LeafPoultice", entity_x(me), entity_y(me))
 			end
 		end
 	end

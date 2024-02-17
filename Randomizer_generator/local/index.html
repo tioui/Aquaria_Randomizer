@@ -11,16 +11,23 @@
     <body>
     <div class="container" style="width: 540px;">
         <h1 class="text-center">Generating Aquaria randomizer</h1>
-        <p>Ingredients randomization: <select id="ingredient">
+        <p>Ingredient randomization: <select id="ingredient">
             <option value="no">No ingredient randomization</option>
             <option value="common" selected="selected">Randomize only common ingredients</option>
             <option value="all">Randomize every ingredient*</option>
         </select></p>
         <p>*Note that randomizing every ingredient can make recipe difficult to make
             (for example, if Plant Leaf is swap with Red Bulb).</p>
+        <p>Dish randomization: <select id="dish">
+            <option value="no">No dish randomization</option>
+            <option value="all" selected="selected">Randomize dish drop**</option>
+        </select></p>
+        <p>**Note that dish drop only work when the dish recipe has been learned from checks.</p>
         <div class="text-center">
             <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Generate...</a>
         </div>
+        <p>&nbsp</p>
+        <p>Le générateur en français est <a href="index_fr.html">ici</a>.</p>
     </div>
 
 

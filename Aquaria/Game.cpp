@@ -1159,13 +1159,18 @@ Ingredient *Game::spawnIngredient(const std::string &ing, const Vector &pos, int
 	return i;
 }
 
+void Game::spawnIngredientFromEntityRandomized(Entity *ent, IngredientData *data)
+{
+    IngredientData *d = dsq->randomizer->getRandomizedIngredientData(data);
+    Ingredient *i = new Ingredient(ent->position, d);
+    ingredients.push_back(i);
+    establishEntity(i);
+    //addRenderObject(i, LR_ENTITIES);
+}
+
 void Game::spawnIngredientFromEntity(Entity *ent, IngredientData *data)
 {
-	IngredientData *d = dsq->randomizer->getRandomizedIngredientData(data);
-	Ingredient *i = new Ingredient(ent->position, d);
-	ingredients.push_back(i);
-	establishEntity(i);
-	//addRenderObject(i, LR_ENTITIES);
+	dsq->randomizer->spawnIngredientFromEntity(ent, data);
 }
 
 Game::Game() : StateObject()

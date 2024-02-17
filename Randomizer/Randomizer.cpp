@@ -39,38 +39,90 @@ Randomizer::Randomizer() {
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     initialiseChecks();
+    initialiseIngredients();
 }
 
 /**
  * Initialize the ingredients vector
  */
 void Randomizer::initialiseIngredients() {
-    ingredients->push_back({"plantleaf", IT_LEAF});
-    ingredients->push_back({"crabmeat", IT_MEAT});
-    ingredients->push_back({"fishmeat", IT_MEAT});
-    ingredients->push_back({"spicymeat", IT_MEAT});
-    ingredients->push_back({"rottenmeat", IT_MEAT});
-    ingredients->push_back({"rubberymeat", IT_MEAT});
-    ingredients->push_back({"turtlemeat", IT_MEAT});
-    ingredients->push_back({"swordfishsteak", IT_MEAT});
-    ingredients->push_back({"fishoil", IT_OIL});
-    ingredients->push_back({"jellyoil", IT_OIL});
-    ingredients->push_back({"eeloil", IT_OIL});
-    ingredients->push_back({"smallbone", IT_BONE});
-    ingredients->push_back({"smallegg", IT_EGG});
-    ingredients->push_back({"glowingegg", IT_EGG});
-    ingredients->push_back({"spideregg", IT_EGG});
-    ingredients->push_back({"smalleye", IT_PART});
-    ingredients->push_back({"sharkfin", IT_PART});
-    ingredients->push_back({"smalltentacle", IT_TENTACLE});
-    ingredients->push_back({"redberry", IT_BERRY});
-    ingredients->push_back({"mushroom", IT_MUSHROOM});
-    ingredients->push_back({"rainbowmushroom", IT_MUSHROOM});
-    ingredients->push_back({"icechunk", IT_ICECHUNK});
-    ingredients->push_back({"plantbulb", IT_BULB});
-    ingredients->push_back({"specialbulb", IT_BULB});
-    ingredients->push_back({"rukhegg", IT_EGG});
-    ingredients->push_back({"redbulb", IT_BULB});
+    ingredients->push_back({"PlantLeaf", IT_LEAF});
+    ingredients->push_back({"TurtleMeat", IT_MEAT});
+    ingredients->push_back({"SwordfishSteak", IT_MEAT});
+    ingredients->push_back({"CrabMeat", IT_MEAT});
+    ingredients->push_back({"FishMeat", IT_MEAT});
+    ingredients->push_back({"RubberyMeat", IT_MEAT});
+    ingredients->push_back({"SpicyMeat", IT_MEAT});
+    ingredients->push_back({"RottenMeat", IT_MEAT});
+    ingredients->push_back({"FishOil", IT_OIL});
+    ingredients->push_back({"JellyOil", IT_OIL});
+    ingredients->push_back({"EelOil", IT_OIL});
+    ingredients->push_back({"SmallBone", IT_BONE});
+    ingredients->push_back({"SmallEgg", IT_EGG});
+    ingredients->push_back({"SmallEgg", IT_EGG});
+    ingredients->push_back({"RukhEgg", IT_EGG});
+    ingredients->push_back({"GlowingEgg", IT_EGG});
+    ingredients->push_back({"SpiderEgg", IT_EGG});
+    ingredients->push_back({"SmallEye", IT_PART});
+    ingredients->push_back({"SharkFin", IT_PART});
+    ingredients->push_back({"SmallTentacle", IT_TENTACLE});
+    ingredients->push_back({"RedBerry", IT_BERRY});
+    ingredients->push_back({"PlantBulb", IT_BULB});
+    ingredients->push_back({"SpecialBulb", IT_BULB});
+    ingredients->push_back({"RedBulb", IT_BULB});
+    ingredients->push_back({"Mushroom", IT_MUSHROOM});
+    ingredients->push_back({"RainbowMushroom", IT_MUSHROOM});
+    ingredients->push_back({"IceChunk", IT_ICECHUNK});
+    ingredients->push_back({"HotSoup", IT_SOUP});
+    ingredients->push_back({"HeartySoup", IT_SOUP});
+    ingredients->push_back({"DivineSoup", IT_SOUP});
+    ingredients->push_back({"LongLifeSoup", IT_SOUP});
+    ingredients->push_back({"SharkFinSoup", IT_SOUP});
+    ingredients->push_back({"SpicySoup", IT_SOUP});
+    ingredients->push_back({"ColdSoup", IT_SOUP});
+    ingredients->push_back({"RainbowSoup", IT_SOUP});
+    ingredients->push_back({"ColdBorscht", IT_SOUP});
+    ingredients->push_back({"HotBorscht", IT_SOUP});
+    ingredients->push_back({"TurtleSoup", IT_SOUP});
+    ingredients->push_back({"PoisonSoup", IT_SOUP});
+    ingredients->push_back({"HeartySoup", IT_SOUP});
+    ingredients->push_back({"MagicSoup", IT_SOUP});
+    ingredients->push_back({"RoyalSoup", IT_SOUP});
+    ingredients->push_back({"VeggieSoup", IT_SOUP});
+    ingredients->push_back({"SeaLoaf", IT_LOAF});
+    ingredients->push_back({"ButterySeaLoaf", IT_LOAF});
+    ingredients->push_back({"RottenLoaf", IT_LOAF});
+    ingredients->push_back({"VedhaSeaCrisp", IT_LOAF});
+    ingredients->push_back({"PoisonLoaf", IT_LOAF});
+    ingredients->push_back({"LoafOfLife", IT_LOAF});
+    ingredients->push_back({"SeaCake", IT_CAKE});
+    ingredients->push_back({"TastyCake", IT_CAKE});
+    ingredients->push_back({"VeggieCake", IT_CAKE});
+    ingredients->push_back({"CrabCake", IT_CAKE});
+    ingredients->push_back({"LegendaryCake", IT_CAKE});
+    ingredients->push_back({"RottenCake", IT_CAKE});
+    ingredients->push_back({"SwampCake", IT_CAKE});
+    ingredients->push_back({"ToughCake", IT_CAKE});
+    ingredients->push_back({"SpecialCake", IT_CAKE});
+    ingredients->push_back({"HealingPoultice", IT_POULTICE});
+    ingredients->push_back({"LeafPoultice", IT_POULTICE});
+    ingredients->push_back({"ArcanePoultice", IT_POULTICE});
+    ingredients->push_back({"SightPoultice", IT_POULTICE});
+    ingredients->push_back({"LeechingPoultice", IT_POULTICE});
+    ingredients->push_back({"Vedha'sCure-All", IT_POULTICE});
+    ingredients->push_back({"DumboIceCream", IT_ICECREAM});
+    ingredients->push_back({"IceCream", IT_ICECREAM});
+    ingredients->push_back({"VeggieIceCream", IT_ICECREAM});
+    ingredients->push_back({"BerryIceCream", IT_ICECREAM});
+    ingredients->push_back({"HandRoll", IT_ROLL});
+    ingredients->push_back({"TastyRoll", IT_ROLL});
+    ingredients->push_back({"SpiderRoll", IT_ROLL});
+    ingredients->push_back({"SpicyRoll", IT_ROLL});
+    ingredients->push_back({"VolcanoRoll", IT_ROLL});
+    ingredients->push_back({"LeadershipRoll", IT_ROLL});
+    ingredients->push_back({"Perogi", IT_PEROGI});
+    ingredients->push_back({"PlumpPerogi", IT_PEROGI});
+    ingredients->push_back({"Zuuna'sPerogi", IT_PEROGI});
 }
 
 
@@ -439,6 +491,26 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
 }
 
 /**
+ * Retreive a random ingredient of a certain type (or of any type)
+ * @param aType The Type of the ingredient (or any type if nothing)
+ * @return the ingredient
+ */
+ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHING) {
+    std::vector<ingredient_t *> lIngredients;
+    ingredient_t *lIngredient = nullptr;
+    for (auto lIterator = ingredients->begin(); lIterator != ingredients->end(); ++lIterator) {
+        if (aType == IT_ANYTHING || aType == lIterator->category) {
+            lIngredients.push_back(lIterator.base());
+        }
+    }
+    if (!lIngredients.empty()) {
+        lIngredient = &(ingredients->at(rand()%ingredients->size()));
+    }
+    assert(lIngredient && "getRandomIngredient: The ingredient is not valid");
+    return lIngredient;
+}
+
+/**
  * Spawn a number of recipe dish at a position in space, at a certain time.
  * @param aRecipe The recipe to spawn
  * @param aPosition At what position to spawn the ingredients
@@ -448,57 +520,28 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
  */
 Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int aTimes, int aOut) {
     Entity *lResult = nullptr;
-    if (aRecipe && aRecipe->isKnown()) {
-        lResult = dsq->game->spawnIngredient(aRecipe->result, aPosition, aTimes, aOut);
+    if (aRecipe->result == "PoisonLoaf") {
+        lResult = spawnIngredient("RottenMeat", aPosition,
+                                             aTimes * 2, aOut);
     } else {
-        if (aRecipe->result == "PoisonLoaf") {
-            lResult = dsq->game->spawnIngredient("rottenmeat", aPosition,
-                                                 aTimes * 2, aOut);
-        } else {
-            for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
-                std::string lName = aRecipe->names.at(j).name;
-                transform(lName.begin(), lName.end(), lName.begin(), ::tolower);
-                int lIndex = -1;
-                for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
-                    if (ingredients->at(i).name == lName) {
-                        lIndex = i;
-                    }
-                }
-                if (lIndex >= 0) {
-                    int lRandomizedIndex = -1;
-                    lRandomizedIndex = ingredientReplacement->at(lIndex);
-                    lResult = spawnIngredient(ingredients->at(lRandomizedIndex).name,
-                                              aPosition, aTimes * aRecipe->names.at(j).amount, aOut);
-                } else {
-                    lResult = spawnIngredient(lName, aPosition,
-                                              aTimes * aRecipe->names.at(j).amount, aOut);
+        for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
+            int lIndex = -1;
+            for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
+                if (ingredients->at(i).name == aRecipe->names.at(j).name) {
+                    lIndex = i;
                 }
             }
-            for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
-                std::string lName;
-                if (aRecipe->types.at(j).type == IT_MEAT) { lName = "fishmeat"; }
-                else if (aRecipe->types.at(j).type == IT_EGG) { lName = "smallegg"; }
-                else if (aRecipe->types.at(j).type == IT_OIL) { lName = "fishoil"; }
-                else if (aRecipe->types.at(j).type == IT_EGG) { lName = "smallegg"; }
-                else if (aRecipe->types.at(j).type == IT_BERRY) { lName = "redberry"; }
-                else if (aRecipe->types.at(j).type == IT_MUSHROOM) { lName = "mushroom"; }
-                else if (aRecipe->types.at(j).type == IT_BULB) { lName = "plantbulb"; }
-                else if (aRecipe->types.at(j).type == IT_TENTACLE) { lName = "smalltentacle"; }
-                else if (aRecipe->types.at(j).type == IT_ICECHUNK) { lName = "icechunk"; }
-                else if (aRecipe->types.at(j).type == IT_PART) { lName = "smalleye"; }
-                else if (aRecipe->types.at(j).type == IT_SOUP) { lName = "hotsoup"; }
-                else if (aRecipe->types.at(j).type == IT_CAKE) { lName = "seacake"; }
-                else if (aRecipe->types.at(j).type == IT_ICECREAM) { lName = "icecream"; }
-                else if (aRecipe->types.at(j).type == IT_LOAF) { lName = "sealoaf"; }
-                else if (aRecipe->types.at(j).type == IT_PEROGI) { lName = "perogi"; }
-                else if (aRecipe->types.at(j).type == IT_POULTICE) { lName = "leafpoultice"; }
-                else if (aRecipe->types.at(j).type == IT_ROLL) { lName = "handroll"; }
-                else { lName = "plantleaf"; }
-                lResult = spawnIngredient(lName, aPosition,
-                                          aTimes * aRecipe->names.at(j).amount, aOut);
-            }
+            assert((lIndex != -1) && "spawnRecipe: The ingredient is not valid");
+            lResult = spawnIngredient(aRecipe->names.at(j).name, aPosition,
+                                      aTimes * aRecipe->names.at(j).amount, aOut);
+        }
+        for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
+            ingredient_t *lIngredient = getRandomIngredient(aRecipe->types.at(j).type);
+            lResult = spawnIngredient(lIngredient->name, aPosition,
+                                      aTimes * aRecipe->names.at(j).amount, aOut);
         }
     }
+    return lResult;
 }
 
 /**
@@ -513,31 +556,24 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
     Entity *lResult = nullptr;
     std::string lIngredientName = aIngredient;
     if (nocasecmp(lIngredientName, "poultice")==0)
-        lIngredientName = "leafpoultice";
-    transform(lIngredientName.begin(), lIngredientName.end(), lIngredientName.begin(), ::tolower);
-    int lIndex = -1;
-    for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
-        if (ingredients->at(i).name == lIngredientName) {
-            lIndex = i;
-        }
-    }
-    if (lIndex == -1) {
+        lIngredientName = "LeafPoultice";
+    IngredientData *lIngredientDataBeforeRandomize = dsq->continuity.getIngredientDataByName(lIngredientName);
+    IngredientData *lIngredientData = getRandomizedIngredientData(lIngredientDataBeforeRandomize);
+    if (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND ) {
+        lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
+    } else {
         std::vector<Recipe> lRecipes = dsq->continuity.recipes;
         Recipe * lRecipe = nullptr;
-        int lIndexRecipe = -1;
-        for (int i = 0; lIndexRecipe < 0 && i < lRecipes.size(); i = i + 1) {
-            std::string lRecipeName = lRecipes.at(i).result;
-            transform(lRecipeName.begin(), lRecipeName.end(), lRecipeName.begin(), ::tolower);
-            if (lRecipeName == lIngredientName) {
+        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
+            if (nocasecmp(lRecipes.at(i).result, lIngredientData->name)==0) {
                 lRecipe = &lRecipes.at(i);
             }
         }
-        lResult = spawnRecipe(lRecipe, aPosition, aTimes, aOut);
-    } else {
-        int lRandomizedIndex = -1;
-        lRandomizedIndex = ingredientReplacement->at(lIndex);
-        lResult = dsq->game->spawnIngredient(ingredients->at(lRandomizedIndex).name,
-                                             aPosition, aTimes, aOut);
+        if (lRecipe->isKnown()) {
+            lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
+        } else {
+            lResult = spawnRecipe(lRecipe, aPosition, aTimes, aOut);
+        }
     }
     return lResult;
 }
@@ -546,57 +582,33 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
  * Spawn a recipe desi from an entity.
  * @param entity The entity that spawn the recipe dish
  * @param recipe The recipe to spawn
+ * @param aIngredientData The ingredient that represent the recipe
  */
-void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe) {
-    IngredientData * lData = dsq->continuity.getIngredientDataByName(aRecipe->result);
-    if (aRecipe && aRecipe->isKnown()) {
-        dsq->game->spawnIngredientFromEntity(aEntity, lData);
+void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, IngredientData *aIngredientData) {
+    if (aRecipe->result == "PoisonLoaf") {
+        IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName("RottenMeat");
+        spawnIngredientFromEntity(aEntity, lIngredientData);
+        spawnIngredientFromEntity(aEntity, lIngredientData);
     } else {
-        if (aRecipe->result == "PoisonLoaf") {
-            lData = dsq->continuity.getIngredientDataByName("rottenmeat");
-            dsq->game->spawnIngredientFromEntity(aEntity, lData);
-        } else {
-            for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
-                std::string lName = aRecipe->names.at(j).name;
-                transform(lName.begin(), lName.end(), lName.begin(), ::tolower);
-                int lIndex = -1;
-                for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
-                    if (ingredients->at(i).name == lName) {
-                        lIndex = i;
-                    }
-                }
-                if (lIndex >= 0) {
-                    int lRandomizedIndex = -1;
-                    lRandomizedIndex = ingredientReplacement->at(lIndex);
-                    lData = dsq->continuity.getIngredientDataByName(ingredients->at(lRandomizedIndex).name);
-                    spawnIngredientFromEntity(aEntity, lData);
-                } else {
-                    lData = dsq->continuity.getIngredientDataByName(lName);
-                    spawnIngredientFromEntity(aEntity, lData);
+        for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
+            int lIndex = -1;
+            for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
+                if (ingredients->at(i).name == aRecipe->names.at(j).name) {
+                    lIndex = i;
                 }
             }
-            for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
-                std::string lName;
-                if (aRecipe->types.at(j).type == IT_MEAT) { lName = "fishmeat"; }
-                else if (aRecipe->types.at(j).type == IT_EGG) { lName = "smallegg"; }
-                else if (aRecipe->types.at(j).type == IT_OIL) { lName = "fishoil"; }
-                else if (aRecipe->types.at(j).type == IT_EGG) { lName = "smallegg"; }
-                else if (aRecipe->types.at(j).type == IT_BERRY) { lName = "redberry"; }
-                else if (aRecipe->types.at(j).type == IT_MUSHROOM) { lName = "mushroom"; }
-                else if (aRecipe->types.at(j).type == IT_BULB) { lName = "plantbulb"; }
-                else if (aRecipe->types.at(j).type == IT_TENTACLE) { lName = "smalltentacle"; }
-                else if (aRecipe->types.at(j).type == IT_ICECHUNK) { lName = "icechunk"; }
-                else if (aRecipe->types.at(j).type == IT_PART) { lName = "smalleye"; }
-                else if (aRecipe->types.at(j).type == IT_SOUP) { lName = "hotsoup"; }
-                else if (aRecipe->types.at(j).type == IT_CAKE) { lName = "seacake"; }
-                else if (aRecipe->types.at(j).type == IT_ICECREAM) { lName = "icecream"; }
-                else if (aRecipe->types.at(j).type == IT_LOAF) { lName = "sealoaf"; }
-                else if (aRecipe->types.at(j).type == IT_PEROGI) { lName = "perogi"; }
-                else if (aRecipe->types.at(j).type == IT_POULTICE) { lName = "leafpoultice"; }
-                else if (aRecipe->types.at(j).type == IT_ROLL) { lName = "handroll"; }
-                else { lName = "plantleaf"; }
-                lData = dsq->continuity.getIngredientDataByName(lName);
-                spawnIngredientFromEntity(aEntity, lData);
+            assert((lIndex != -1) && "spawnRecipeFromEntity: The ingredient is not valid");
+            IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName(aRecipe->names.at(j).name);
+            for (int i = 0; i < aRecipe->names.at(j).amount; i = i + 1) {
+                spawnIngredientFromEntity(aEntity, lIngredientData);
+            }
+
+        }
+        for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
+            ingredient_t *lIngredient = getRandomIngredient(aRecipe->types.at(j).type);
+            IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName(lIngredient->name);
+            for (int i = 0; i < aRecipe->types.at(j).amount; i = i + 1) {
+                spawnIngredientFromEntity(aEntity, lIngredientData);
             }
         }
     }
@@ -609,28 +621,22 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe) {
  */
 void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIngredientData)
 {
-    std::string lIngredientName = aIngredientData->name;
-    transform(lIngredientName.begin(), lIngredientName.end(), lIngredientName.begin(), ::tolower);
-    int lIndex = -1;
-    for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
-        if (ingredients->at(i).name == lIngredientName) {
-            lIndex = i;
-        }
-    }
-    if (lIndex == -1) {
+    IngredientData *lIngredientData = getRandomizedIngredientData(aIngredientData);
+    if (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND ) {
+        dsq->game->spawnIngredientFromEntityRandomized(aEntity, lIngredientData);
+    } else {
         std::vector<Recipe> lRecipes = dsq->continuity.recipes;
         Recipe * lRecipe = nullptr;
-        int lIndexRecipe = -1;
-        for (int i = 0; lIndexRecipe < 0 && i < lRecipes.size(); i = i + 1) {
-            std::string lRecipeName = lRecipes.at(i).result;
-            transform(lRecipeName.begin(), lRecipeName.end(), lRecipeName.begin(), ::tolower);
-            if (lRecipeName == lIngredientName) {
+        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
+            if (nocasecmp(lRecipes.at(i).result, lIngredientData->name)==0) {
                 lRecipe = &lRecipes.at(i);
             }
         }
-        spawnRecipeFromEntity(aEntity, lRecipe);
-    } else {
-        dsq->game->spawnIngredientFromEntity(aEntity, getRandomizedIngredientData(aIngredientData));
+        if (lRecipe->isKnown()) {
+            dsq->game->spawnIngredientFromEntityRandomized(aEntity,lIngredientData);
+        } else {
+            spawnRecipeFromEntity(aEntity,lRecipe, lIngredientData);
+        }
     }
 
 }

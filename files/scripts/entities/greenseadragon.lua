@@ -99,7 +99,7 @@ function dieNormal(me)
 			spawnIngredient("SpecialBulb", entity_getPosition(me))
 		else
 			if chance(10) then
-				spawnIngredient("Poultice", entity_getPosition(me))
+				spawnIngredient("LeafPoultice", entity_getPosition(me))
 			else
 				for i=1,3,1 do
 					spawnIngredient("PlantLeaf", entity_getPosition(me))
