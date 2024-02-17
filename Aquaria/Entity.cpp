@@ -886,7 +886,7 @@ void Entity::doDeathEffects(float manaBallEnergy, bool die)
 
 	if (ingredientData)
 	{
-		dsq->game->spawnIngredientFromEntity(this, ingredientData);
+		dsq->randomizer->spawnIngredientFromEntity(this, ingredientData);
 	}
 }
 

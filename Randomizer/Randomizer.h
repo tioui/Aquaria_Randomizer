@@ -192,6 +192,20 @@ private:
      */
     Entity *spawnRecipe(Recipe *recipe, const Vector &position, int times, int out);
 
+    /**
+     * Spawn a recipe dish from an entity.
+     * @param entity The entity that spawn the recipe dish
+     * @param recipe The recipe to spawn
+     */
+    void spawnRecipeFromEntity(Entity *entity, Recipe *recipe);
+
+    /**
+     * Spawn a ingredient from an entity.
+     * @param entity The entity that spawn the ingredient
+     * @param ingredientData The ingredient to spawn
+     */
+    void spawnIngredientFromEntity(Entity *aEntity, IngredientData *ingredientData);
+
 //		/**
 //		 * The name of the multiworld randomizer user
 //		 */
