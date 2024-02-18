@@ -860,9 +860,11 @@ ADD_EXECUTABLE(aquaria_randomizer ${EXETYPE}
     ${BBGE_SRCS}
     ${OPTIONAL_SRCS}
 )
-TARGET_LINK_LIBRARIES(aquaria_randomizer ${OPTIONAL_LIBS})
+
+TARGET_LINK_LIBRARIES(aquaria_randomizer "${OPTIONAL_LIBS}")
 IF(WIN32_TRUE)
     add_dependencies(aquaria_randomizer openssl)
+    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
 ENDIF(WIN32_TRUE)
 # end of CMakeLists.txt ...
 

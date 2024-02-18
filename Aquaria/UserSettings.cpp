@@ -315,7 +315,7 @@ void UserSettings::load(bool doApply, const std::string &overrideFile)
 	TinyXMLDocument doc;
 	if(readXML(filename, doc) != XML_SUCCESS)
 	{
-		errorLog("UserSettings: Malformed XML, continuing with defaults");
+		//errorLog("UserSettings: Malformed XML, continuing with defaults");
 		doc.Clear(); // just in case
 	}
 

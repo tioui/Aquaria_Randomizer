@@ -142,7 +142,7 @@ DSQ *dsq = 0;
 
 const bool isReleaseCandidate	= false;
 const bool isFinalCandidate		= false;
-const bool isGoldMaster			= true;
+const bool isGoldMaster			= false;
 
 int setInpGrab = -1;
 
@@ -823,13 +823,13 @@ void DSQ::setVersionLabelText()
 #endif
 
 	std::ostringstream os;
-	os << "Aquaria";
+	os << "Aquaria Randomizer";
 
 #ifdef AQUARIA_DEMO
 	os << " Demo";
 #endif
 	
-	os << " v" << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_REVISION;
+	os << " v" << VERSION_MAJOR << "." << VERSION_MINOR;
 	
 	if (!isFinalCandidate && !isGoldMaster && VERSION_BETA)
 	{
