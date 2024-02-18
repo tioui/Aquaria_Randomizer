@@ -5,8 +5,12 @@ RUN mkdir /src/build && apt-get update && apt-get install -y --no-install-recomm
 		gcc-mingw-w64-i686 \
 		build-essential \
 		mingw-w64 \
-		cmake && \
+		cmake \
+		zip && \
     update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
 WORKDIR /src/build
-CMD /bin/bash -c "cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 .. && make VERBOSE=1 && mv /src/build/aquaria_randomizer.exe /output/"
+CMD /bin/bash -c "cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 .. && make VERBOSE=1 && mkdir /output/Aquaria_Randomizer && mv /src/build/aquaria_randomizer.exe /output/Aquaria_Randomizer/ && mv /src/files /output/Aquaria_Randomizer/override && mv /src/ExternalLibs/SDL2/lib/win32/SDL2.dll /output/Aquaria_Randomizer/ && mv /src/ExternalLibs/AL/lib/win32/*.dll /output/Aquaria_Randomizer/ && cd /output && zip -r Aquaria_Randomizer_Windows.zip Aquaria_Randomizer && rm -rf /output/Aquaria_Randomizer"
+
+
+
 
