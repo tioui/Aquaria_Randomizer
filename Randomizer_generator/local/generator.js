@@ -49,11 +49,12 @@ class Randomizer {
      * @param aArray The array to randomize
      */
     randomizeArray(aArray, aSkipBefore, aSkipAfter) {
-        for (let i = aArray.length - 1 - aSkip; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+        for (let i = aArray.length - 1 - aSkipAfter; i > aSkipBefore; i--) {
+            const j = Math.floor(Math.random() * ((i + 1) - aSkipBefore)) + aSkipBefore;
             [aArray[i], aArray[j]] = [aArray[j], aArray[i]];
         }
     }
+
 }
 
 /**
