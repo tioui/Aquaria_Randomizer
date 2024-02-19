@@ -16,8 +16,9 @@
 *.tmp
 *.aps
 temp/*
-build/*
-build_debug/*
+build
+build_debug
+build_docker_windows
 bin/*
 
 *.patch
