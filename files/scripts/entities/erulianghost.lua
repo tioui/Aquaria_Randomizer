@@ -53,8 +53,12 @@ function enterState(me)
 	end
 end
 
+
 function exitState(me)
 end
 
 function hitSurface(me)
+end
+
+function update(me, dt)
 end
