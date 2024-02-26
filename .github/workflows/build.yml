@@ -26,6 +26,19 @@ jobs:
           cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 ..
           make
       - run: echo "Compiling done."
+      - run: echo "Packaging..."
+      - run: |
+          cd ${{ github.workspace }}
+          mkdir aquaria_randomizer
+          cp -p ${{ github.workspace }}/build/aquaria_randomizer aquaria_randomizer/
+          cp -rp files aquaria_randomizer/override
+          tar cvfz aquaria_randomizer.tar.gz aquaria_randomizer
+      - name: 'Upload artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-artefact
+          path: ${{ github.workspace }}/aquaria_randomizer.tar.gz
+          retention-days: 5
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
