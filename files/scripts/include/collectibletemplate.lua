@@ -59,9 +59,6 @@ function v.commonUpdate(me, dt)
 				e = getNextEntity()
 			end
 		end
-		if entity_isEntityInRange(me, getNaija(), 96) then
-			entity_setState(me, STATE_COLLECT, 6)
-		end
 	end
 end
 
@@ -70,53 +67,7 @@ v.incut = false
 function v.commonEnterState(me, state)
 	if v.incut then return end
 	
-	if entity_isState(me, STATE_COLLECT) then
-		v.incut = true
-		entity_idle(getNaija())
-		entity_flipToEntity(getNaija(), me)
-		cam_toEntity(me)
-		
-		overrideZoom(1.2, 7)
-		musicVolume(0.1, 3)
-		
-		setSceneColor(1, 0.9, 0.5, 3)
-		
-		spawnParticleEffect("treasure-glow", entity_x(me), entity_y(me))
-		
-		playSfx("low-note1", 0, 0.4)
-		playSfx("low-note5", 0, 0.4)
-		watch(3)
-		
-		setFlag(v.myFlag, 1)
-		entity_setPosition(me, entity_x(me), entity_y(me)-100, 3, 0, 0, 1)
-		entity_scale(me, 1.2, 1.2, 3)
-		--playSfx("secret")
-		playSfx("Collectible")
-		
-		
-		watch(3)
-		
-		playSfx("secret", 0, 0.5)
-		cam_toEntity(getNaija())
-		
-		musicVolume(1, 2)
-		
-		setSceneColor(1, 1, 1, 1)
-		
-		overrideZoom(0)
-		
---		if v.isCostume then
---			setControlHint(getStringBank(224), 0, 0, 0, 8, "gui/icon-treasures")
---		else
---			if isFlag(FLAG_HINT_COLLECTIBLE, 0) then
---				setControlHint(getStringBank(222), 0, 0, 0, 8)
---				setFlag(FLAG_HINT_COLLECTIBLE, 1)
---			else
---				setControlHint(getStringBank(223), 0, 0, 0, 8, "gui/icon-treasures")
---			end
---		end
-		v.incut = false
-	elseif entity_isState(me, STATE_COLLECTED) then	
+	if entity_isState(me, STATE_COLLECTED) then	
 		debugLog("COLLECTED, fading OUT alpha")
 		entity_alpha(me, 0, 1)
 	elseif entity_isState(me, STATE_COLLECTEDINHOUSE) then
@@ -125,11 +76,3 @@ function v.commonEnterState(me, state)
 	end
 end
 
-function v.commonExitState(me, state)
-	if entity_isState(me, STATE_COLLECT) then
-		entity_alpha(me, 0, 1)
-		spawnParticleEffect("Collect", entity_x(me), entity_y(me))
-		--clearControlHint()
-		entity_setState(me, STATE_COLLECTED)
-	end
-end

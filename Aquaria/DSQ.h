@@ -323,7 +323,7 @@ struct Song
 	int script;
 };
 
-const int MAX_FLAGS				= 1024;
+const int MAX_FLAGS				= 1400;
 
 enum AuraType
 {
@@ -861,12 +861,12 @@ const int FLAG_COLLECTIBLE_END = 540;
 
 
 
-/*
+
 const int FLAG_PET_NAUTILUS		= 601;
 const int FLAG_PET_DUMBO		= 602;
 const int FLAG_PET_BLASTER		= 603;
 const int FLAG_PET_PIRANHA		= 604;
-*/
+
 
 struct PetData
 {

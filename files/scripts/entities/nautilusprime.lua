@@ -64,9 +64,7 @@ function init(me)
 	setupBasicEntity(
 	me,
 	"",						-- texture
-	-- #Removed#
-	--40,								-- health
-	1,								-- health
+	40,								-- health
 	1,								-- manaballamount
 	1,								-- exp
 	1,								-- money
@@ -143,8 +141,7 @@ function update(me, dt)
 	]]--
 	
 	if entity_getHealth(me) < 15 and not v.beserk then
-		-- #Removed#
-		--v.beserk = true
+		v.beserk = true
 		bone_setColor(v.shell, 1, 0.5, 0.5, 0.5)
 	end
 	if entity_hasTarget(me) then

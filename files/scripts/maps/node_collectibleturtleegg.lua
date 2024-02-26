@@ -22,7 +22,7 @@ if not v then v = {} end
 dofile("scripts/include/nodecollectibletemplate.lua")
 
 function init(me)
-	v.commonInit(me, "CollectibleTurtleEgg", FLAG_COLLECTIBLE_INHOME_TURTLEEGG)
+	v.commonInit(me, "CollectibleTurtleEgg", FLAG_COLLECTIBLE_TURTLEEGG)
 end
 
 function update(me, dt)

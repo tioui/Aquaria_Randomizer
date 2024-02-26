@@ -40,8 +40,4 @@ function enterState(me, state)
 end
 
 function exitState(me, state)
-	if entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTEDINHOUSE) then
-		randomizerCheck("collect_sun_key")
-	end
-	v.commonExitState(me, state)
 end

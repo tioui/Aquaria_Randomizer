@@ -1368,8 +1368,9 @@ bool RenderObject::setTexture(const std::string &n)
 		return false;
 	}
 
-	if(texture && name == texture->name)
-		return true; // no texture change
+    // #MODIFIED#
+	//if(texture && name == texture->name)
+	//	return true; // no texture change
 
 	TextureLoadResult res = TEX_FAILED;
 	CountedPtr<Texture> tex = core->addTexture(name, &res);

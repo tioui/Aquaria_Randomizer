@@ -22,7 +22,7 @@ if not v then v = {} end
 dofile("scripts/include/nodecollectibletemplate.lua")
 
 function init(me)
-	v.commonInit(me, "CollectibleSeedBag", FLAG_COLLECTIBLE_INHOME_SEEDBAG)
+	v.commonInit(me, "CollectibleSeedBag", FLAG_COLLECTIBLE_SEEDBAG)
 end
 
 function update(me, dt)

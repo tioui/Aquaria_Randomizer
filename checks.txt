@@ -17,209 +17,210 @@ Plan checks:
 	- Every songs
 
 Bulb checks:
-	- turtlecave:146 -> bulb_turtlecave -> poultice 3 ->  Turtle cave, bulb in bubble cliff
-	- openwater02:144 -> bulb_openwater_tl_1 -> handroll -> Open water top left area, bulb under the rock in the right path
-	- openwater02:150 -> bulb_openwater_tl_2 -> veggiesoup -> Open water top left area, bulb under the rock in the left path
-	- openwater02:168 -> bulb_openwater_tl_3 -> butterysealoaf -> Open water top left area, bulb to the right of the save cristal
-	- openwater03:93 -> bulb_openwater_tr_1 -> healingpoultice -> Open water top right area, bulb in the small path before Mithalas
-	- openwater03:114 -> bulb_openwater_tr_2 -> sealoaf 2 -> Open water top right area, bulb in the path from the left entrance
-	- openwater03:120 -> bulb_openwater_tr_3 -> spicyroll -> Open water top right area, bulb in the clearing close to the bottom exit
-	- openwater03:132 -> bulb_openwater_tr_4 -> spicymeat 2 -> Open water top right area, bulb in the big clearing close to the save cristal
-	- openwater03:135 -> bulb_openwater_tr_5 -> crabcake -> Open water top right area, bulb in the big clearing to the top exit
-	- openwater03:147 -> bulb_openwater_tr_6 -> spicyroll -> Open water top right area, bulb in the turtle room
-	- openwater04:187 -> bulb_openwater_bl_1 -> leadershiproll 2 -> Open water bottom left area, bulb inside the downest fish pass
-	- openwater04:193 -> bulb_openwater_bl_2 -> healingpoultice 2 -> Open water bottom left area, bulb behind the chomper fish
-	- openwater05:9 -> bulb_skeleton_path_1 -> tastycake -> Open water skeleton path, bulb close to the right exit
-	- openwater05:16 -> bulb_skeleton_path_2 -> perogi -> Open water skeleton path, bulb behind the chomper fish
-	- openwater06:75 -> bulb_arnassi_1 -> tastyrool -> Arnassi Ruins, bulb in the right part
-	- openwater06:78 -> bulb_arnassi_2 -> specialbulb -> Arnassi Ruins, bulb in the left part
-	- openwater06:81 -> bulb_arnassi_3 -> specialcake -> Arnassi Ruins, bulb in the center part
-	- sunwormtest:42 -> bulb_sunworm_1 -> plantleaf 3 -> Sun Worm path, first path bulb
-	- sunwormtest:39 -> bulb_sunworm_2 -> turtlesoup -> Sun Worm path, second path bulb
-	- sunwormtest:48 -> bulb_sunworm_3 -> specialcake -> Sun Worm path, first cliff bulb
-	- sunwormtest:45 -> bulb_sunworm_4 -> specialbulb -> Sun Worm path, second cliff bulb
-	- trainingcave:120 -> bulb_tutorial_1 -> handroll -> Tutorial cave, center part bulb
-	- trainingcave:126 -> bulb_tutorial_2 -> hotsoup -> Tutorial cave, right part bulb
-	- trainingcave:129 -> bulb_tutorial_3 -> heartysoup -> Tutorial cave, bulb under the rock at the end of the path
-	- abyss01:54 -> bulb_abyss_l_1 -> coldborscht -> Abyss left area, bulb in hidden path room
-	- abyss01:60 -> bulb_abyss_l_2 -> healingpoultice 2 -> Abyss left area, bulb in the right part
-	- abyss01:81 -> bulb_abyss_l_3 -> sightpoultice -> Abyss left area, bulb in the bottom fich pass
-	- energytemple01:112 -> bulb_energy_temple_1_1 -> poultice -> Energy temple first area, bulb in the bottom room blocked by a rock
-	- energytemple03:51 -> bulb_energy_temple_2_1 -> spicyroll -> Energy temple second area, bulb under the rock
-	- energytemple04:60 -> bulb_energy_temple_3_1 -> plantleaf 2 -> Energy temple third area, bulb in the bottom path
-	- mithalas01:311 -> bulb_mithalas_city_01 -> spicyroll -> Mithalas city, one of the bulbs in the left city part
-	- mithalas01:314 -> bulb_mithalas_city_02 -> spicymeat 2 -> Mithalas city, bulb in the right part
-	- mithalas01:317 -> bulb_mithalas_city_03 -> vedhaseacrisp -> Mithalas city, one of the bulbs at the end of the top path
-	- mithalas01:320 -> bulb_mithalas_city_04 -> heartysoup -> Mithalas city, bulb at the top of the city
-	- mithalas01:326 -> bulb_mithalas_city_05 -> healingpoultice -> Mithalas city, one of the bulb in a broken home
-	- mithalas01:329 -> bulb_mithalas_city_06 -> vedhaseacrisp -> Mithalas city, one of the bulbs in the left city part
-	- mithalas01:332 -> bulb_mithalas_city_07 -> rottenloaf 8 -> Mithalas city, bulb in the top path
-	- mithalas01:335 -> bulb_mithalas_city_08 -> rottenmeat 8 -> Mithalas city, bulb in the bottom left part
-	- mithalas01:338 -> bulb_mithalas_city_09 -> smalltentacle 2 -> Mithalas city, bulb in one of the homes
-	- mithalas01:341 -> bulb_mithalas_city_10 -> seacake -> Mithalas city, bulb in one of the homes
-	- mithalas01:344 -> bulb_mithalas_city_11 -> smallbone 3 -> Mithalas city, one of the bulbs at the end of the top path
-	- mithalas01:323 -> bulb_mithalas_city_12 -> handroll -> Mithalas city, one of the bulb in a broken home
-	- mithalas02:136 -> bulb_cathedral_l_2 -> heartysoup -> Mithalas cathedral left area, bulb in the flesh hole
-	- boilerroom:85 -> bulb_boilerroom_1 -> spicyroll -> Sunken city, bulb on the top of the boss area (boiler room)
-	- forest02:154 -> bulb_forest_tl_1 -> seacake -> Kelp Forest top left area, bulb in the bottom left clearing
-	- forest02:157 -> bulb_forest_tl_2 -> spicyroll -> Kelp Forest top left area, bulb in the path down from the top left clearing
-	- forest02:163 -> bulb_forest_tl_3 -> leechingpoultice -> Kelp Forest top left area, bulb in the top left clearing
-	- forest02:184 -> bulb_forest_tl_4 -> redbulb 2 -> Kelp Forest top left area, bulb in the center path
-	- forest03:52 -> bulb_forest_tr_1 -> spiderroll -> Kelp Forest top right area, bulb under the rock in the right path
-	- forest03:58 -> bulb_forest_tr_2 -> veggiecake -> Kelp Forest top right area, bulb at the left of the center clearing
-	- forest03:61 -> bulb_forest_tr_3 -> swampcake -> Kelp Forest top right area, bulb in the top fish pass
-	- forest03:64 -> bulb_forest_tr_4 -> sharkfinsoup -> Kelp Forest top right area, bulb in the left path's big room
-	- forest03:67 -> bulb_forest_tr_5 -> healingpoultice -> Kelp Forest top right area, bulb in the left path's small room
-	- forest03:70 -> bulb_forest_tr_6 -> redbulb 2 -> Kelp Forest top right area, bulb at the top of the center clearing
-	- forest04:165 -> bulb_forest_bl_1 -> spiderroll -> Kelp Forest bottom left area, bulb close to the spirit cristals
-	- tree02:81 -> bulb_forest_boss_room_1 -> handroll -> Kelp Forest boss room, bulb at the bottom of the area
-	- forestspritecave:69 -> bulb_forest_sprite_cave_1 -> leechingpoultice -> Kelp Forest sprite cave, bulb inside the fish pass
-	- forestspritecave:75 -> bulb_forest_sprite_cave_2 -> veggiesoup -> Kelp Forest sprite cave, bulb in the second room
-	- mainarea:188 -> bulb_home_water_1 -> smallegg 2 -> Home water, bulb below the big fish
-	- mainarea:191 -> bulb_home_water_2 -> poultice -> Home water, bulb in the path bellow Nautilus Prime
-	- mainarea:194 -> bulb_home_water_3 -> poultice -> Home water, bulb in the little room above the big fish
-	- mainarea:197 -> bulb_home_water_4 -> plantleaf 3 -> Home water, bulb in the end of the left path from the tutorial cave
-	- mainarea:200 -> bulb_home_water_5 -> redbulb 2 -> Home water, bulb in the top left path
-	- mainarea:215 -> bulb_home_water_6 -> hotsoup -> Home water, bulb in the bottom left room
-	- mainarea:218 -> bulb_home_water_7 -> fishmeat 2 -> Home water, bulb close to the Naija's home
-	- mainarea:224 -> bulb_home_water_8 -> seacake -> Home water, bulb under the rock in the left path from the tutorial cave
-	- final02:48 -> bulb_final_l_1 -> arcanepoultice -> Final left area, one of the bulb in the top face room
-	- final02:51 -> bulb_final_l_2 -> divinesoup -> Final left area, bulb bellow the water stream
-	- final02:54 -> bulb_final_l_3 -> spicyroll -> Final left area, bulb in the top path to the top face room
-	- final02:57 -> bulb_final_l_4 -> volcanoroll -> Final left area, one of the bulb in the top face room
-	- final02:60 -> bulb_final_l_5 -> arcanepoultice -> Final left area, bulb in the bottom face room
-	- songcave:102 -> bulb_song_cave_1 -> specialbulb -> Song cave, bulb in the top left part
-	- songcave:105 -> bulb_song_cave_2 -> handroll -> Song cave, bulb in the big anemone room
-	- songcave:132 -> bulb_song_cave_3 -> eeloil 2 -> Song cave, bulb in the path to the singing statues
-	- songcave:141 -> bulb_song_cave_4 -> poultice -> Song cave, bulb under the rock in the path to the singing statues
-	- songcave:144 -> bulb_song_cave_5 -> hotsoup -> Song cave, bulb under the rock close to the song door
-	- veil01:174 -> bulb_veil_tl_1 -> spicysoup -> The veil top left area, bulb hidden behind the blocking rock
-	- veil01:177 -> bulb_veil_tl_2 -> longlifesoup -> The veil top left area, bulb inside the fish pass
-	- veil01:183 -> bulb_veil_tl_3 -> hotsoup 2 -> The veil top left area, bulb under the rock in the top right path
-	- veil02:131 -> bulb_veil_tr_1 -> sharkfinsoup -> The veil top right area, bulb in the middle of the wall jump cliff
-	- veil02:149 -> bulb_veil_tr_2 -> legendarycake -> The veil top right area, bulb in the top of the fall
-	- veil03:121 -> bulb_veil_b_1 -> swampcake -> The veil bottom area, bulb in the spirit path
-	- veil03:145 -> bulb_veil_b_2 -> swampcake -> The veil bottom area, bulb in the left path
-	- icecave:105 -> bulb_ice_cave_1 -> icecream -> Ice cave, bulb in the room to the right
-	- icecave:111 -> bulb_ice_cave_2 -> berryicecream -> Ice cave, one of the bulbs in the top exit room
-	- icecave:114 -> bulb_ice_cave_3 -> veggieicecream -> Ice cave, one of the bulbs in the top exit room
-	- icecave:108 -> bulb_ice_cave_4 -> dumboicecream -> Ice cave, one of the bulbs in the top exit room
-	- icecave:117 -> bulb_ice_cave_5 -> icecream -> Ice cave, bulbs in the left room
-	- kingjellycave:21 -> bulb_king_jellyfish_cave_1 -> specialbulb -> King Jellyfish cave, bulb in the right path from King Jelly
-	- bubblecave02:221 -> bulb_bubble_cave_1 -> coldsoup -> Bubble cave, bulb in the left cave wall
-	- bubblecave02:230 -> bulb_bubble_cave_2 -> coldborscht -> Bubble cave, bulb in the right cave wall (behind the ice cristal)
-	- suntemple:108 -> bulb_sun_temple_1 -> glowingegg 2 -> Sun temple, first bulb of the stage
-	- suntemple:114 -> bulb_sun_temple_2 -> magicsoup -> Sun temple, bulb on the left part
-	- suntemple:120 -> bulb_sun_temple_3 -> royalsoup -> Sun temple, bulb in the hidden room of the left part
-	- suntemple:126 -> bulb_sun_temple_4 -> leadershiproll -> Sun temple, bulb in the top left part
-	- suntemple:132 -> bulb_sun_temple_5 -> turtlesoup -> Sun temple, bulb in the top right part
-	- suntemple:144 -> bulb_sun_temple_6 -> heartysoup -> Sun temple, bulb at the top of the high dark room
-	- final01:87 -> bulb_final_c_1 -> Zuuna'sperogi -> Final stage main area, bulb on the main path blocking tube
-	- final03:61 -> bulb_final_r_1 -> plumpperogi -> Final stage right area, bulb in the top path to the bottom face room
-	- final03:64 -> bulb_final_r_2 -> arcanepoultice -> Final stage right area, bulb in the bottom face room
-	- final03:67 -> bulb_final_r_3 -> arcanepoultice -> Final stage right area, bulb in the top face room
-	- final04:15 -> bulb_final_b_1 -> longlifesoup -> Final stage bottom area, bulb in the Jelly Zap room
-	- final04:12 -> bulb_final_b_2 -> spicyroll -> Final stage bottom area, bulb in the nautilus room
-	- finalboss:126 -> bulb_final_boss_1 -> Vedha'sCure-All -> Final boss area, one of the bulbs in the turtle room
-	- finalboss:129 -> bulb_final_boss_2 -> loafoflife -> Final boss area, one of the bulbs in the turtle room
-	- finalboss:132 -> bulb_final_boss_3 -> specialbulb -> Final boss area, one of the bulbs in the turtle room
-	- finalboss:111 -> bulb_final_boss_4 -> dumboicecream -> Final boss area, bulb in the boss second form room
-	- naijacave:60 -> bulb_starting_cave_1 -> fishoil -> Starting cave, bulb in the skeleton room
-	- naijacave:63 -> bulb_starting_cave_2 -> smallegg -> Starting cave, bulb in the path left of the skeleton room
-	- abyss03:95 -> bulb_abyss_r_1 -> dumboicecream -> Abyss right area, bulb behind the rock in the bottom left room
-	- abyss03:98 -> bulb_abyss_r_2 -> tastyroll -> Abyss right area, bulb in the middle path
-	- abyss03:101 -> bulb_abyss_r_3 -> healingpoultice -> Abyss right area, bulb behind the rock in the middle path
-	- abyss03:107 -> bulb_abyss_r_4 -> hotborscht -> Abyss right area, bulb in the left green room
-	- cathedral03:192 -> bulb_cathedral_under_ground_1 -> arcanepoultice -> Cathedral under ground, bulb in the center part
-	- cathedral03:207 -> bulb_cathedral_under_ground_2 -> plantleaf -> Cathedral under ground, one of the bulbs in the top left part
-	- cathedral03:204 -> bulb_cathedral_under_ground_3 -> arcanepoultice -> Cathedral under ground, one of the bulbs in the top left part
-	- cathedral03:201 -> bulb_cathedral_under_ground_4 -> redberry -> Cathedral under ground, one of the bulbs in the top left part
-	- cathedral03:216 -> bulb_cathedral_under_ground_5 -> poultice -> Cathedral under ground, bulb close to the save cristal
-	- cathedral03:219 -> bulb_cathedral_under_ground_6 -> arcanepoultice -> Cathedral under ground, bulb in the bottom right path
-	- vedhacave:189 -> bulb_naija_home_1 -> spicyroll -> Naija's home, bulb after the energy door
-	- vedhacave:195 -> bulb_naija_home_2 -> heartysoup -> Naija's home, bulb under the rock at the right of the main path
-	- mermogcave:29 -> bulb_mermog_cave_1 -> leechingpoultice -> Mermog cave, bulb in the left part of the cave
-	- octocave:34 -> bulb_octo_cave_1 -> sightpoultice -> Octo cave, bulb in the path below the octo cave path
+	- 0 -> turtlecave:146 -> bulb_turtlecave -> poultice 3 ->  Turtle cave, bulb in bubble cliff
+	- 1 -> openwater02:144 -> bulb_openwater_tl_1 -> handroll -> Open water top left area, bulb under the rock in the right path
+	- 2 -> openwater02:150 -> bulb_openwater_tl_2 -> veggiesoup -> Open water top left area, bulb under the rock in the left path
+	- 3 -> openwater02:168 -> bulb_openwater_tl_3 -> butterysealoaf -> Open water top left area, bulb to the right of the save cristal
+	- 4 -> openwater03:93 -> bulb_openwater_tr_1 -> healingpoultice -> Open water top right area, bulb in the small path before Mithalas
+	- 5 -> openwater03:114 -> bulb_openwater_tr_2 -> sealoaf 2 -> Open water top right area, bulb in the path from the left entrance
+	- 6 -> openwater03:120 -> bulb_openwater_tr_3 -> spicyroll -> Open water top right area, bulb in the clearing close to the bottom exit
+	- 7 -> openwater03:132 -> bulb_openwater_tr_4 -> spicymeat 2 -> Open water top right area, bulb in the big clearing close to the save cristal
+	- 8 -> openwater03:135 -> bulb_openwater_tr_5 -> crabcake -> Open water top right area, bulb in the big clearing to the top exit
+	- 9 -> openwater03:147 -> bulb_openwater_tr_6 -> spicyroll -> Open water top right area, bulb in the turtle room
+	- 10 -> openwater04:187 -> bulb_openwater_bl_1 -> leadershiproll 2 -> Open water bottom left area, bulb inside the downest fish pass
+	- 11 -> openwater04:193 -> bulb_openwater_bl_2 -> healingpoultice 2 -> Open water bottom left area, bulb behind the chomper fish
+	- 12 -> openwater05:9 -> bulb_skeleton_path_1 -> tastycake -> Open water skeleton path, bulb close to the right exit
+	- 13 -> openwater05:16 -> bulb_skeleton_path_2 -> perogi -> Open water skeleton path, bulb behind the chomper fish
+	- 14 -> openwater06:75 -> bulb_arnassi_1 -> tastyrool -> Arnassi Ruins, bulb in the right part
+	- 15 -> openwater06:78 -> bulb_arnassi_2 -> specialbulb -> Arnassi Ruins, bulb in the left part
+	- 16 -> openwater06:81 -> bulb_arnassi_3 -> specialcake -> Arnassi Ruins, bulb in the center part
+	- 17 -> sunwormtest:42 -> bulb_sunworm_1 -> plantleaf 3 -> Sun Worm path, first path bulb
+	- 18 -> sunwormtest:39 -> bulb_sunworm_2 -> turtlesoup -> Sun Worm path, second path bulb
+	- 19 -> sunwormtest:48 -> bulb_sunworm_3 -> specialcake -> Sun Worm path, first cliff bulb
+	- 20 -> sunwormtest:45 -> bulb_sunworm_4 -> specialbulb -> Sun Worm path, second cliff bulb
+	- 21 -> trainingcave:120 -> bulb_tutorial_1 -> handroll -> Tutorial cave, center part bulb
+	- 22 -> trainingcave:126 -> bulb_tutorial_2 -> hotsoup -> Tutorial cave, right part bulb
+	- 23 -> trainingcave:129 -> bulb_tutorial_3 -> heartysoup -> Tutorial cave, bulb under the rock at the end of the path
+	- 24 -> abyss01:54 -> bulb_abyss_l_1 -> coldborscht -> Abyss left area, bulb in hidden path room
+	- 25 -> abyss01:60 -> bulb_abyss_l_2 -> healingpoultice 2 -> Abyss left area, bulb in the right part
+	- 26 -> abyss01:81 -> bulb_abyss_l_3 -> sightpoultice -> Abyss left area, bulb in the bottom fish pass
+	- 27 -> energytemple01:112 -> bulb_energy_temple_1_1 -> poultice -> Energy temple first area, bulb in the bottom room blocked by a rock
+	- 28 -> energytemple03:51 -> bulb_energy_temple_2_1 -> spicyroll -> Energy temple second area, bulb under the rock
+	- 29 -> energytemple04:60 -> bulb_energy_temple_3_1 -> plantleaf 2 -> Energy temple third area, bulb in the bottom path
+	- 30 -> mithalas01:311 -> bulb_mithalas_city_01 -> spicyroll -> Mithalas city, one of the bulbs in the left city part
+	- 31 -> mithalas01:314 -> bulb_mithalas_city_02 -> spicymeat 2 -> Mithalas city, bulb in the right part
+	- 32 -> mithalas01:317 -> bulb_mithalas_city_03 -> vedhaseacrisp -> Mithalas city, one of the bulbs at the end of the top path
+	- 33 -> mithalas01:320 -> bulb_mithalas_city_04 -> heartysoup -> Mithalas city, bulb at the top of the city
+	- 34 -> mithalas01:326 -> bulb_mithalas_city_05 -> healingpoultice -> Mithalas city, one of the bulb in a broken home
+	- 35 -> mithalas01:329 -> bulb_mithalas_city_06 -> vedhaseacrisp -> Mithalas city, one of the bulbs in the left city part
+	- 36 -> mithalas01:332 -> bulb_mithalas_city_07 -> rottenloaf 8 -> Mithalas city, bulb in the top path
+	- 37 -> mithalas01:335 -> bulb_mithalas_city_08 -> rottenmeat 8 -> Mithalas city, bulb in the bottom left part
+	- 38 -> mithalas01:338 -> bulb_mithalas_city_09 -> smalltentacle 2 -> Mithalas city, bulb in one of the homes
+	- 39 -> mithalas01:341 -> bulb_mithalas_city_10 -> seacake -> Mithalas city, bulb in one of the homes
+	- 40 -> mithalas01:344 -> bulb_mithalas_city_11 -> smallbone 3 -> Mithalas city, one of the bulbs at the end of the top path
+	- 41 -> mithalas01:323 -> bulb_mithalas_city_12 -> handroll -> Mithalas city, one of the bulb in a broken home
+	- 42 -> mithalas02:136 -> bulb_cathedral_l_2 -> heartysoup -> Mithalas cathedral left area, bulb in the flesh hole
+	- 43 -> boilerroom:85 -> bulb_boilerroom_1 -> spicyroll -> Sunken city, bulb on the top of the boss area (boiler room)
+	- 44 -> forest02:154 -> bulb_forest_tl_1 -> seacake -> Kelp Forest top left area, bulb in the bottom left clearing
+	- 45 -> forest02:157 -> bulb_forest_tl_2 -> spicyroll -> Kelp Forest top left area, bulb in the path down from the top left clearing
+	- 46 -> forest02:163 -> bulb_forest_tl_3 -> leechingpoultice -> Kelp Forest top left area, bulb in the top left clearing
+	- 47 -> forest02:184 -> bulb_forest_tl_4 -> redbulb 2 -> Kelp Forest top left area, bulb in the center path
+	- 48 -> forest03:52 -> bulb_forest_tr_1 -> spiderroll -> Kelp Forest top right area, bulb under the rock in the right path
+	- 49 -> forest03:58 -> bulb_forest_tr_2 -> veggiecake -> Kelp Forest top right area, bulb at the left of the center clearing
+	- 50 -> forest03:61 -> bulb_forest_tr_3 -> swampcake -> Kelp Forest top right area, bulb in the top fish pass
+	- 51 -> forest03:64 -> bulb_forest_tr_4 -> sharkfinsoup -> Kelp Forest top right area, bulb in the left path's big room
+	- 52 -> forest03:67 -> bulb_forest_tr_5 -> healingpoultice -> Kelp Forest top right area, bulb in the left path's small room
+	- 53 -> forest03:70 -> bulb_forest_tr_6 -> redbulb 2 -> Kelp Forest top right area, bulb at the top of the center clearing
+	- 54 -> forest04:165 -> bulb_forest_bl_1 -> spiderroll -> Kelp Forest bottom left area, bulb close to the spirit cristals
+	- 55 -> tree02:81 -> bulb_forest_boss_room_1 -> handroll -> Kelp Forest boss room, bulb at the bottom of the area
+	- 56 -> forestspritecave:69 -> bulb_forest_sprite_cave_1 -> leechingpoultice -> Kelp Forest sprite cave, bulb inside the fish pass
+	- 57 -> forestspritecave:75 -> bulb_forest_sprite_cave_2 -> veggiesoup -> Kelp Forest sprite cave, bulb in the second room
+	- 58 -> mainarea:188 -> bulb_home_water_1 -> smallegg 2 -> Home water, bulb below the grouper fish
+	- 59 -> mainarea:191 -> bulb_home_water_2 -> poultice -> Home water, bulb in the path bellow Nautilus Prime
+	- 60 -> mainarea:194 -> bulb_home_water_3 -> poultice -> Home water, bulb in the little room above the grouper fish
+	- 61 -> mainarea:197 -> bulb_home_water_4 -> plantleaf 3 -> Home water, bulb in the end of the left path from the tutorial cave
+	- 62 -> mainarea:200 -> bulb_home_water_5 -> redbulb 2 -> Home water, bulb in the top left path
+	- 63 -> mainarea:215 -> bulb_home_water_6 -> hotsoup -> Home water, bulb in the bottom left room
+	- 64 -> mainarea:218 -> bulb_home_water_7 -> fishmeat 2 -> Home water, bulb close to the Naija's home
+	- 65 -> mainarea:224 -> bulb_home_water_8 -> seacake -> Home water, bulb under the rock in the left path from the tutorial cave
+	- 66 -> final02:48 -> bulb_final_l_1 -> arcanepoultice -> Final left area, one of the bulb in the top face room
+	- 67 -> final02:51 -> bulb_final_l_2 -> divinesoup -> Final left area, bulb bellow the water stream
+	- 68 -> final02:54 -> bulb_final_l_3 -> spicyroll -> Final left area, bulb in the top path to the top face room
+	- 69 -> final02:57 -> bulb_final_l_4 -> volcanoroll -> Final left area, one of the bulb in the top face room
+	- 70 -> final02:60 -> bulb_final_l_5 -> arcanepoultice -> Final left area, bulb in the bottom face room
+	- 71 -> songcave:102 -> bulb_song_cave_1 -> specialbulb -> Song cave, bulb in the top left part
+	- 72 -> songcave:105 -> bulb_song_cave_2 -> handroll -> Song cave, bulb in the big anemone room
+	- 73 -> songcave:132 -> bulb_song_cave_3 -> eeloil 2 -> Song cave, bulb in the path to the singing statues
+	- 74 -> songcave:141 -> bulb_song_cave_4 -> poultice -> Song cave, bulb under the rock in the path to the singing statues
+	- 75 -> songcave:144 -> bulb_song_cave_5 -> hotsoup -> Song cave, bulb under the rock close to the song door
+	- 76 -> veil01:174 -> bulb_veil_tl_1 -> spicysoup -> The veil top left area, bulb hidden behind the blocking rock
+	- 77 -> veil01:177 -> bulb_veil_tl_2 -> longlifesoup -> The veil top left area, bulb inside the fish pass
+	- 78 -> veil01:183 -> bulb_veil_tl_3 -> hotsoup 2 -> The veil top left area, bulb under the rock in the top right path
+	- 79 -> veil02:131 -> bulb_veil_tr_1 -> sharkfinsoup -> The veil top right area, bulb in the middle of the wall jump cliff
+	- 80 -> veil02:149 -> bulb_veil_tr_2 -> legendarycake -> The veil top right area, bulb in the top of the fall
+	- 81 -> veil03:121 -> bulb_veil_b_1 -> swampcake -> The veil bottom area, bulb in the spirit path
+	- 82 -> veil03:145 -> bulb_veil_b_2 -> swampcake -> The veil bottom area, bulb in the left path
+	- 83 -> icecave:105 -> bulb_ice_cave_1 -> icecream -> Ice cave, bulb in the room to the right
+	- 84 -> icecave:111 -> bulb_ice_cave_2 -> berryicecream -> Ice cave, one of the bulbs in the top exit room
+	- 85 -> icecave:114 -> bulb_ice_cave_3 -> veggieicecream -> Ice cave, one of the bulbs in the top exit room
+	- 86 -> icecave:108 -> bulb_ice_cave_4 -> dumboicecream -> Ice cave, one of the bulbs in the top exit room
+	- 87 -> icecave:117 -> bulb_ice_cave_5 -> icecream -> Ice cave, bulbs in the left room
+	- 88 -> kingjellycave:21 -> bulb_king_jellyfish_cave_1 -> specialbulb -> King Jellyfish cave, bulb in the right path from King Jelly
+	- 89 -> bubblecave02:221 -> bulb_bubble_cave_1 -> coldsoup -> Bubble cave, bulb in the left cave wall
+	- 90 -> bubblecave02:230 -> bulb_bubble_cave_2 -> coldborscht -> Bubble cave, bulb in the right cave wall (behind the ice cristal)
+	- 91 -> suntemple:108 -> bulb_sun_temple_1 -> glowingegg 2 -> Sun temple, first bulb of the stage
+	- 92 -> suntemple:114 -> bulb_sun_temple_2 -> magicsoup -> Sun temple, bulb on the left part
+	- 93 -> suntemple:120 -> bulb_sun_temple_3 -> royalsoup -> Sun temple, bulb in the hidden room of the left part
+	- 94 -> suntemple:126 -> bulb_sun_temple_4 -> leadershiproll -> Sun temple, bulb in the top left part
+	- 95 -> suntemple:132 -> bulb_sun_temple_5 -> turtlesoup -> Sun temple, bulb in the top right part
+	- 96 -> suntemple:144 -> bulb_sun_temple_6 -> heartysoup -> Sun temple, bulb at the top of the high dark room
+	- 97 -> final01:87 -> bulb_final_c_1 -> Zuuna'sperogi -> Final stage main area, bulb on the main path blocking tube
+	- 98 -> final03:61 -> bulb_final_r_1 -> plumpperogi -> Final stage right area, bulb in the top path to the bottom face room
+	- 99 -> final03:64 -> bulb_final_r_2 -> arcanepoultice -> Final stage right area, bulb in the bottom face room
+	- 100 -> final03:67 -> bulb_final_r_3 -> arcanepoultice -> Final stage right area, bulb in the top face room
+	- 101 -> final04:15 -> bulb_final_b_1 -> longlifesoup -> Final stage bottom area, bulb in the Jelly Zap room
+	- 102 -> final04:12 -> bulb_final_b_2 -> spicyroll -> Final stage bottom area, bulb in the nautilus room
+	- 103 -> finalboss:126 -> bulb_final_boss_1 -> Vedha'sCure-All -> Final boss area, one of the bulbs in the turtle room
+	- 104 -> finalboss:129 -> bulb_final_boss_2 -> loafoflife -> Final boss area, one of the bulbs in the turtle room
+	- 105 -> finalboss:132 -> bulb_final_boss_3 -> specialbulb -> Final boss area, one of the bulbs in the turtle room
+	- 106 -> finalboss:111 -> bulb_final_boss_4 -> dumboicecream -> Final boss area, bulb in the boss second form room
+	- 107 -> naijacave:60 -> bulb_starting_cave_1 -> fishoil -> Starting cave, bulb in the skeleton room
+	- 108 -> naijacave:63 -> bulb_starting_cave_2 -> smallegg -> Starting cave, bulb in the path left of the skeleton room
+	- 109 -> abyss03:95 -> bulb_abyss_r_1 -> dumboicecream -> Abyss right area, bulb behind the rock in the bottom left room
+	- 110 -> abyss03:98 -> bulb_abyss_r_2 -> tastyroll -> Abyss right area, bulb in the middle path
+	- 111 -> abyss03:101 -> bulb_abyss_r_3 -> healingpoultice -> Abyss right area, bulb behind the rock in the middle path
+	- 112 -> abyss03:107 -> bulb_abyss_r_4 -> hotborscht -> Abyss right area, bulb in the left green room
+	- 113 -> cathedral03:192 -> bulb_cathedral_under_ground_1 -> arcanepoultice -> Cathedral under ground, bulb in the center part
+	- 114 -> cathedral03:207 -> bulb_cathedral_under_ground_2 -> plantleaf -> Cathedral under ground, one of the bulbs in the top left part
+	- 115 -> cathedral03:204 -> bulb_cathedral_under_ground_3 -> arcanepoultice -> Cathedral under ground, one of the bulbs in the top left part
+	- 116 -> cathedral03:201 -> bulb_cathedral_under_ground_4 -> redberry -> Cathedral under ground, one of the bulbs in the top left part
+	- 117 -> cathedral03:216 -> bulb_cathedral_under_ground_5 -> poultice -> Cathedral under ground, bulb close to the save cristal
+	- 118 -> cathedral03:219 -> bulb_cathedral_under_ground_6 -> arcanepoultice -> Cathedral under ground, bulb in the bottom right path
+	- 119 -> vedhacave:189 -> bulb_naija_home_1 -> spicyroll -> Naija's home, bulb after the energy door
+	- 120 -> vedhacave:195 -> bulb_naija_home_2 -> heartysoup -> Naija's home, bulb under the rock at the right of the main path
+	- 121 -> mermogcave:29 -> bulb_mermog_cave_1 -> leechingpoultice -> Mermog cave, bulb in the left part of the cave
+	- 122 -> octocave:34 -> bulb_octo_cave_1 -> sightpoultice -> Octo cave, bulb in the path below the octo cave path
 
 Urn checks:
-	- mithalas01:278 -> urn_mithalas_city_1 -> rottenmeat 2 -> Mithalas city, urn in one of the homes
-	- mithalas01:287 -> urn_mithalas_city_2 -> glowing egg -> Mithalas city, urn in one of the homes
-	- mithalas01:281 -> urn_mithalas_city_3 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
-	- mithalas01:284 -> urn_mithalas_city_4 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
-	- mithalas01:290 -> urn_mithalas_city_5 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
-	- mithalas01:293 -> urn_mithalas_city_6 -> plantleaf 3 -> Mithalas city, Urn in the cathedral flower tube entrance
-	- mithalas01:353 -> urn_mithalas_city_7 -> spicyroll -> Mithalas city, Urn inside an home fish pass
-	- mithalas02:82 -> urn_cathedral_l_1 -> rainbowmushroom -> Mithalas cathedral left area, urn in the bedroom
-	- mithalas02:85 -> urn_cathedral_l_2 -> smallbone 2 -> Mithalas cathedral left area, one of the urns of the single lamp path
-	- mithalas02:88 -> urn_cathedral_l_3 -> rottenmeat -> Mithalas cathedral left area, one of the urns of the single lamp path
-	- mithalas02:91 -> urn_cathedral_l_4 -> fishoil -> Mithalas cathedral left area, urn in the bottom room
-	- mithalas02:94 -> urn_cathedral_l_5 -> rottenmeat -> Mithalas cathedral left area, an urn on the entrance path
-	- mithalas02:97 -> urn_cathedral_l_6 -> rainbowsoup -> Mithalas cathedral left area, an urn on the entrance path
-	- cathedral02:219 -> urn_cathedral_r_01 -> plantleaf -> Mithalas cathedral right area, one of the urns in the top right room
-	- cathedral02:234 -> urn_cathedral_r_02 -> rottencake -> Mithalas cathedral right area, one of the urns in the top right room
-	- cathedral02:237 -> urn_cathedral_r_03 -> toughcake -> Mithalas cathedral right area, one of the urns in the top right room
-	- cathedral02:222 -> urn_cathedral_r_04 -> spicyroll -> Mithalas cathedral right area, urn in the flesh room with flees
-	- cathedral02:228 -> urn_cathedral_r_05 -> rottenmeat -> Mithalas cathedral right area, one of the urns in the bottom right path
-	- cathedral02:225 -> urn_cathedral_r_06 -> plantleaf -> Mithalas cathedral right area, one of the urns in the bottom right path
-	- cathedral02:243 -> urn_cathedral_r_07 -> leechingpoultice -> Mithalas cathedral right area, urn behind the flesh vein
-	- cathedral02:246 -> urn_cathedral_r_08 -> smallbone 3 -> Mithalas cathedral right area, urn in the top right path
-	- cathedral02:249 -> urn_cathedral_r_09 -> plantleaf 2 -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
-	- cathedral02:252 -> urn_cathedral_r_10 -> rottenmeat -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
-	- cathedral02:255 -> urn_cathedral_r_11 -> poisonloaf -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
-	- cathedral02:240 -> urn_cathedral_r_12 -> poisonsoup -> Mithalas cathedral right area, one of the urns in the top right room
-	- openwater03:138 -> urn_openwater_tr_1 -> smallbone 3 -> Open water top right area, one of the urns in the Mithalas exit
-	- openwater03:141 -> urn_openwater_tr_2 -> rottenmeat -> Open water top right area, one of the urns in the Mithalas exit
-	- openwater03:144 -> urn_openwater_tr_3 -> sealoaf -> Open water top right area, one of the urns in the Mithalas exit
+	- 123 -> mithalas01:278 -> urn_mithalas_city_1 -> rottenmeat 2 -> Mithalas city, urn in one of the homes
+	- 124 -> mithalas01:287 -> urn_mithalas_city_2 -> glowing egg -> Mithalas city, urn in one of the homes
+	- 125 -> mithalas01:281 -> urn_mithalas_city_3 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
+	- 126 -> mithalas01:284 -> urn_mithalas_city_4 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
+	- 127 -> mithalas01:290 -> urn_mithalas_city_5 -> rainbowmushroom -> Mithalas city, one of the urns in the city reserve
+	- 128 -> mithalas01:293 -> urn_mithalas_city_6 -> plantleaf 3 -> Mithalas city, Urn in the cathedral flower tube entrance
+	- 129 -> mithalas01:353 -> urn_mithalas_city_7 -> spicyroll -> Mithalas city, Urn inside an home fish pass
+	- 130 -> mithalas02:82 -> urn_cathedral_l_1 -> rainbowmushroom -> Mithalas cathedral left area, urn in the bedroom
+	- 131 -> mithalas02:85 -> urn_cathedral_l_2 -> smallbone 2 -> Mithalas cathedral left area, one of the urns of the single lamp path
+	- 132 -> mithalas02:88 -> urn_cathedral_l_3 -> rottenmeat -> Mithalas cathedral left area, one of the urns of the single lamp path
+	- 133 -> mithalas02:91 -> urn_cathedral_l_4 -> fishoil -> Mithalas cathedral left area, urn in the bottom room
+	- 134 -> mithalas02:94 -> urn_cathedral_l_5 -> rottenmeat -> Mithalas cathedral left area, an urn on the entrance path
+	- 135 -> mithalas02:97 -> urn_cathedral_l_6 -> rainbowsoup -> Mithalas cathedral left area, an urn on the entrance path
+	- 136 -> cathedral02:219 -> urn_cathedral_r_01 -> plantleaf -> Mithalas cathedral right area, one of the urns in the top right room
+	- 137 -> cathedral02:234 -> urn_cathedral_r_02 -> rottencake -> Mithalas cathedral right area, one of the urns in the top right room
+	- 138 -> cathedral02:237 -> urn_cathedral_r_03 -> toughcake -> Mithalas cathedral right area, one of the urns in the top right room
+	- 139 -> cathedral02:222 -> urn_cathedral_r_04 -> spicyroll -> Mithalas cathedral right area, urn in the flesh room with flees
+	- 140 -> cathedral02:228 -> urn_cathedral_r_05 -> rottenmeat -> Mithalas cathedral right area, one of the urns in the bottom right path
+	- 141 -> cathedral02:225 -> urn_cathedral_r_06 -> plantleaf -> Mithalas cathedral right area, one of the urns in the bottom right path
+	- 142 -> cathedral02:243 -> urn_cathedral_r_07 -> leechingpoultice -> Mithalas cathedral right area, urn behind the flesh vein
+	- 143 -> cathedral02:246 -> urn_cathedral_r_08 -> smallbone 3 -> Mithalas cathedral right area, urn in the top right path
+	- 144 -> cathedral02:249 -> urn_cathedral_r_09 -> plantleaf 2 -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
+	- 145 -> cathedral02:252 -> urn_cathedral_r_10 -> rottenmeat -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
+	- 146 -> cathedral02:255 -> urn_cathedral_r_11 -> poisonloaf -> Mithalas cathedral right area, one of the urns in the path behind the flesh vein
+	- 147 -> cathedral02:240 -> urn_cathedral_r_12 -> poisonsoup -> Mithalas cathedral right area, one of the urns in the top right room
+	- 148 -> openwater03:138 -> urn_openwater_tr_1 -> smallbone 3 -> Open water top right area, one of the urns in the Mithalas exit
+	- 149 -> openwater03:141 -> urn_openwater_tr_2 -> rottenmeat -> Open water top right area, one of the urns in the Mithalas exit
+	- 150 -> openwater03:144 -> urn_openwater_tr_3 -> sealoaf -> Open water top right area, one of the urns in the Mithalas exit
 
 Crates (Done):
-	- sunkencity01:152 -> crate_sunkencity_2_1 -> fishoil 3 -> Sunken city second area, crate in the little pipe room
-	- sunkencity01:155 -> crate_sunkencity_2_2 -> mushroom 2 -> Sunken city second area, crate close to the save cristal
-	- sunkencity01:158 -> crate_sunkencity_2_3 -> spicymeat 2 -> Sunken city second area, crate before the bedroom
-	- sunkencity02:39 -> crate_sunkencity_1_1 -> seacake -> Sunken city first area, crate close to the save cristal
-	- sunkencity02:42 -> crate_sunkencity_1_2 -> plantleaf 3 -> Sunken city first area, crate in the left bottom room
+	- 152 -> sunkencity01:152 -> crate_sunkencity_2_1 -> fishoil 3 -> Sunken city second area, crate in the little pipe room
+	- 153 -> sunkencity01:155 -> crate_sunkencity_2_2 -> mushroom 2 -> Sunken city second area, crate close to the save cristal
+	- 154 -> sunkencity01:158 -> crate_sunkencity_2_3 -> spicymeat 2 -> Sunken city second area, crate before the bedroom
+	- 155 -> sunkencity02:39 -> crate_sunkencity_1_1 -> seacake -> Sunken city first area, crate close to the save cristal
+	- 156 -> sunkencity02:42 -> crate_sunkencity_1_2 -> plantleaf 3 -> Sunken city first area, crate in the left bottom room
 
 Wok (Done):
-	- beating_simon -> wok_upgrade -> Beating Simon says
+	- 157 -> beating_simon -> wok_upgrade -> Beating Simon says
 
 Verse eggs (Done):
-	- health_egg_1 -> health_upgrade_1 -> Verse egg on the sunken ship after the fish pass in the Veil bottom area
-	- health_egg_2 -> health_upgrade_2 -> Verse egg in the Kelp forest top left area.
-	- health_egg_3 -> health_upgrade_3 -> Verse egg in the whale.
-	- health_egg_4 -> health_upgrade_4 -> Verse egg of the Song cave.
-	- health_egg_5 -> health_upgrade_5 -> Verse egg when the boss of the bubble cave is beaten
+	- 159 -> health_egg_1 -> health_upgrade_1 -> Verse egg on the sunken ship after the fish pass in the Veil bottom area
+	- 160 -> health_egg_2 -> health_upgrade_2 -> Verse egg in the Kelp forest top left area.
+	- 161 -> health_egg_3 -> health_upgrade_3 -> Verse egg in the whale.
+	- 162 -> health_egg_4 -> health_upgrade_4 -> Verse egg of the Song cave.
+	- 163 -> health_egg_5 -> health_upgrade_5 -> Verse egg when the boss of the bubble cave is beaten
 
 Treasure checks:
-	- collect_anemone -> collectible_anemone -> Collectible behind of the anemone in the song cave
-	- collect_arnassi_statue -> collectible_arnassi_statue -> Collectible in the Arnassi Ruins
-	- collect_mithalas_banner -> collectible_mithalas_banner -> Collectible in the Mithalas cathedral
-	- collect_bio_seed -> collectible_bio_seed -> ???
-	- collect_blackpearl -> collectible_blackpearl -> ???
-	- collect_treasure_chest -> collectible_treasure_chest -> ???
-	- collect_energy_boss -> collectible_energy_boss -> A collectible in the energy temple
-	- collect_energy_statue -> collectible_energy_statue ->  A collectible in the energy temple
-	- collect_golden_gear -> collectible_golden_gear -> ???
-	- collect_jelly_plant -> collectible_jelly_plant -> ???
-	- collect_mithala_doll -> collectible_mithala_doll -> Mithalas city, doll inside an home fish pass
-	- collect_mithala_spot -> collectible_mithala_spot -> ???
-	- collect_big_seed -> collectible_big_seed -> Collectible in the verse cave
-	- collect_seed_bag -> collectible_seed_bag -> ???
-	- collect_skull -> collectible_skull -> ???
-	- collect_jelly_beacon -> collectible_jelly_beacon -> ??
-	- collect_spore_seed -> collectible_spore_seed -> ???
-	- collect_gold_star -> collectible_gold_star -> ???
-	- collect_stone_head -> collectible_stone_head -> ???
-	- collect_sun_key -> collectible_sun_key -> ???
-	- collect_trident_head -> collectible_trident_head -> ???
-	- collect_turtle_egg -> collectible_turtle_egg -> ???
-	- collect_upsidedown_seed -> collectible_upsidedown_seed -> ???
-	- collect_walker -> collectible_walker -> ???
-	- collect_crab_costume -> collectible_crab_costume -> ???
-	- collect_jelly_costume -> collectible_jelly_costume -> ???
-	- collect_mithalan_costume -> collectible_mithalan_costume -> ???
-	- collect_mutant_costume -> collectible_mutant_costume -> ???
-	- collect_seahorse_costume -> collectible_seahorse_costume -> ???
-	- collect_teen_costume -> collectible_teen_costume -> ???
-	- collect_urchin_costume -> collectible_urchin_costume -> ???
-	- collect_blaster -> collectible_blaster -> ???
-	- collect_nautilus -> collectible_nautilus -> ???
-	- collect_piranha -> collectible_piranha -> ???
+	- 164 -> collect_anemone -> collectible_anemone -> Song cave, Anemone seed collectible behind of the big anemone
+	- 165 -> collect_arnassi_statue -> collectible_arnassi_statue -> Arnassi Ruins, Arnassi statue collectible
+	- 166 -> collect_mithalas_banner -> collectible_mithalas_banner -> Mithalas cathedral, Banner Collectible
+	- 167 -> collect_bio_seed -> collectible_bio_seed -> Abyss left area, Glowing seed in the small room with sun beam
+	- 168 -> collect_blackpearl -> collectible_blackpearl -> Kelp forest top right area, Black pearl behind the seawolf
+	- 169 -> collect_treasure_chest -> collectible_treasure_chest -> ???
+	- 170 -> collect_energy_boss -> collectible_energy_boss -> A collectible in the energy temple
+	- 171 -> collect_energy_statue -> collectible_energy_statue ->  A collectible in the energy temple
+	- 172 -> collect_golden_gear -> collectible_golden_gear -> ???
+	- 173 -> collect_jelly_plant -> collectible_jelly_plant -> ???
+	- 174 -> collect_mithala_doll -> collectible_mithala_doll -> Mithalas city, doll inside an home fish pass
+	- 175 -> collect_mithala_spot -> collectible_mithala_spot -> ???
+	- 176 -> collect_big_seed -> collectible_big_seed -> Collectible in the verse cave
+	- 177 -> collect_seed_bag -> collectible_seed_bag -> ???
+	- 178 -> collect_skull -> collectible_skull -> ???
+	- 179 -> collect_jelly_beacon -> collectible_jelly_beacon -> ??
+	- 180 -> collect_spore_seed -> collectible_spore_seed -> ???
+	- 181 -> collect_gold_star -> collectible_gold_star -> ???
+	- 182 -> collect_stone_head -> collectible_stone_head -> ???
+	- 183 -> collect_sun_key -> collectible_sun_key -> ???
+	- 184 -> collect_trident_head -> collectible_trident_head -> ???
+	- 185 -> collect_turtle_egg -> collectible_turtle_egg -> ???
+	- 186 -> collect_upsidedown_seed -> collectible_upsidedown_seed -> ???
+	- 187 -> collect_walker -> collectible_walker -> ???
+	- 188 -> collect_crab_costume -> collectible_crab_costume -> ???
+	- 189 -> collect_jelly_costume -> collectible_jelly_costume -> ???
+	- 190 -> collect_mithalan_costume -> collectible_mithalan_costume -> ???
+	- 191 -> collect_mutant_costume -> collectible_mutant_costume -> ???
+	- 192 -> collect_seahorse_costume -> collectible_seahorse_costume -> ???
+	- 193 -> collect_teen_costume -> collectible_teen_costume -> ???
+	- 194 -> collect_urchin_costume -> collectible_urchin_costume -> ???
+	- 195 -> collect_nautilus -> collectible_nautilus -> ???
+	- 196 -> collect_blaster -> collectible_blaster -> ???
+	- 197 -> collect_nautilus -> collectible_dumbo -> ???
+	- 198 -> collect_piranha -> collectible_piranha -> ???

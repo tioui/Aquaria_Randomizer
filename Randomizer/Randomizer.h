@@ -14,10 +14,10 @@
 
 typedef struct check {
     int flag;
-	std::string id;
-	std::string item;
-	int count;
-	std::string message;
+    std::string id;
+    std::string item;
+    int count;
+    std::string message;
 } check_t;
 
 
@@ -185,9 +185,9 @@ private:
 
     /**
      * Get a new collectible item to activate in the local game
-     * @param aCollectible The collectible item to activate
+     * @param check The collectible check item to activate
      */
-    void receivingCollectible(const std::string& aCollectible);
+    void receivingCollectible(check_t *check);
 
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
@@ -214,53 +214,54 @@ private:
      */
     ingredient_t *getRandomIngredient(IngredientType aType);
 
-//		/**
-//		 * The name of the multiworld randomizer user
-//		 */
-//		std::string name;
+//        /**
+//         * The name of the multiworld randomizer user
+//         */
+//        std::string name;
 //
-//		/**
-//		 * The name of the multiworld randomizer server and port
-//		 */
-//		std::string server;
+//        /**
+//         * The name of the multiworld randomizer server and port
+//         */
+//        std::string server;
 };
 
-const int FLAG_COLLECTIBLE_INHOME_SONGCAVE = 2550;
-const int FLAG_COLLECTIBLE_INHOME_ENERGYTEMPLE = 2551;
-const int FLAG_COLLECTIBLE_INHOME_ENERGYSTATUE = 2552;
-const int FLAG_COLLECTIBLE_INHOME_ENERGYBOSS = 2553;
-const int FLAG_COLLECTIBLE_INHOME_NAIJACAVE = 2554;
-const int FLAG_COLLECTIBLE_INHOME_CRABCOSTUME = 2555;
-const int FLAG_COLLECTIBLE_INHOME_JELLYPLANT = 2556;
-const int FLAG_COLLECTIBLE_INHOME_MITHALASPOT = 2557;
-const int FLAG_COLLECTIBLE_INHOME_SEAHORSECOSTUME = 2558;
-const int FLAG_COLLECTIBLE_INHOME_CHEST = 2559;
-const int FLAG_COLLECTIBLE_INHOME_BANNER = 2560;
-const int FLAG_COLLECTIBLE_INHOME_MITHALADOLL = 2561;
-const int FLAG_COLLECTIBLE_INHOME_WALKERBABY = 2562;
-const int FLAG_COLLECTIBLE_INHOME_SEEDBAG = 2563;
-const int FLAG_COLLECTIBLE_INHOME_ARNASSISTATUE = 2564;
-const int FLAG_COLLECTIBLE_INHOME_GEAR = 2565;
-const int FLAG_COLLECTIBLE_INHOME_SUNKEY = 2566;
-const int FLAG_COLLECTIBLE_INHOME_URCHINCOSTUME = 2567;
-const int FLAG_COLLECTIBLE_INHOME_TEENCOSTUME = 2568;
-const int FLAG_COLLECTIBLE_INHOME_MUTANTCOSTUME = 2569;
-const int FLAG_COLLECTIBLE_INHOME_JELLYCOSTUME = 2570;
-const int FLAG_COLLECTIBLE_INHOME_MITHALANCOSTUME = 2571;
-const int FLAG_COLLECTIBLE_INHOME_ANEMONESEED = 2572;
-const int FLAG_COLLECTIBLE_INHOME_BIOSEED = 2573;
-const int FLAG_COLLECTIBLE_INHOME_TURTLEEGG = 2574;
-const int FLAG_COLLECTIBLE_INHOME_SKULL = 2575;
-const int FLAG_COLLECTIBLE_INHOME_TRIDENTHEAD = 2576;
-const int FLAG_COLLECTIBLE_INHOME_SPORESEED = 2577;
-const int FLAG_COLLECTIBLE_INHOME_UPSIDEDOWNSEED = 2578;
-const int FLAG_COLLECTIBLE_INHOME_STONEHEAD = 2579;
-const int FLAG_COLLECTIBLE_INHOME_STARFISH = 2580;
-const int FLAG_COLLECTIBLE_INHOME_BLACKPEARL = 2581;
-const int FLAG_COLLECTIBLE_INHOME_BLASTER = 2582;
-const int FLAG_COLLECTIBLE_INHOME_NAUTILUS = 2583;
-const int FLAG_COLLECTIBLE_INHOME_DUMBO = 2584;
-const int FLAG_COLLECTIBLE_INHOME_PIRANHA = 2585;
+const int FLAG_COLLECTIBLE_SONGCAVE        = 500;
+const int FLAG_COLLECTIBLE_ENERGYTEMPLE    = 501;
+const int FLAG_COLLECTIBLE_ENERGYSTATUE    = 502;
+const int FLAG_COLLECTIBLE_ENERGYBOSS      = 503;
+const int FLAG_COLLECTIBLE_NAIJACAVE       = 504;
+const int FLAG_COLLECTIBLE_CRABCOSTUME     = 505;
+const int FLAG_COLLECTIBLE_JELLYPLANT      = 506;
+const int FLAG_COLLECTIBLE_MITHALASPOT     = 507;
+const int FLAG_COLLECTIBLE_SEAHORSECOSTUME = 508;
+const int FLAG_COLLECTIBLE_CHEST           = 509;
+const int FLAG_COLLECTIBLE_BANNER          = 510;
+const int FLAG_COLLECTIBLE_MITHALADOLL     = 511;
+const int FLAG_COLLECTIBLE_WALKERBABY      = 512;
+const int FLAG_COLLECTIBLE_SEEDBAG         = 513;
+const int FLAG_COLLECTIBLE_ARNASSISTATUE   = 514;
+const int FLAG_COLLECTIBLE_GEAR            = 515;
+const int FLAG_COLLECTIBLE_SUNKEY          = 516;
+const int FLAG_COLLECTIBLE_URCHINCOSTUME   = 517;
+const int FLAG_COLLECTIBLE_TEENCOSTUME     = 518;
+const int FLAG_COLLECTIBLE_MUTANTCOSTUME   = 519;
+const int FLAG_COLLECTIBLE_JELLYCOSTUME    = 520;
+const int FLAG_COLLECTIBLE_MITHALANCOSTUME = 521;
+const int FLAG_COLLECTIBLE_ANEMONESEED     = 522;
+const int FLAG_COLLECTIBLE_BIOSEED         = 523;
+const int FLAG_COLLECTIBLE_TURTLEEGG       = 524;
+const int FLAG_COLLECTIBLE_SKULL           = 525;
+const int FLAG_COLLECTIBLE_TRIDENTHEAD     = 526;
+const int FLAG_COLLECTIBLE_SPORESEED       = 527;
+const int FLAG_COLLECTIBLE_UPSIDEDOWNSEED  = 528;
+const int FLAG_COLLECTIBLE_STONEHEAD       = 529;
+const int FLAG_COLLECTIBLE_STARFISH        = 530;
+const int FLAG_COLLECTIBLE_BLACKPEARL      = 531;
+const int FLAG_COLLECTIBLE_CRIB            = 532;
+const int FLAG_COLLECTIBLE_BLASTER         = 533;
+const int FLAG_COLLECTIBLE_NAUTILUS        = 534;
+const int FLAG_COLLECTIBLE_DUMBO           = 535;
+const int FLAG_COLLECTIBLE_PIRANHA         = 536;
 
 
 #endif /* end of include guard RANDOMIZER_H */

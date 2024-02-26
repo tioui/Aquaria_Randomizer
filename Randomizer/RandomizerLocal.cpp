@@ -3,7 +3,33 @@
  * @created     : mercredi feb 15, 2024 21:30:04 EST
  * @license     : MIT
  * Class that encapsulate local randomization functionalities
- */
+ *
+ * Todo:
+jellyshock : attempt to call a nil value [???:0] songNoteDone
+        nudi : attempt to call a nil value [???:0] songNoteDone
+        pet_nautilus : attempt to call a nil value [???:0] songNoteDone
+        luaScriptError: Path [naija_bindshell]: songNoteDone : attempt to call a nil value [???:0]
+
+        anemone : attempt to call a nil value [???:0] songNoteDone
+anemone3 : attempt to call a nil value [???:0] songNoteDone
+anemone4 : attempt to call a nil value [???:0] songNoteDone
+anemone : attempt to call a nil value [???:0] songNoteDone
+anemone : attempt to call a nil value [???:0] songNote
+anemone2 : attempt to call a nil value [???:0] songNote
+anemone3 : attempt to call a nil value [???:0] songNote
+anemone : attempt to call a nil value [???:0] songNote
+anemone2 : attempt to call a nil value [???:0] songNote
+luaScriptError: Path [big-anemone]: songNote : attempt to call a nil value [???:0]
+anemone : attempt to call a nil value [???:0] songNoteDone
+anemone2 : attempt to call a nil value [???:0] songNoteDone
+anemone3 : attempt to call a nil value [???:0] songNoteDone
+anemone : attempt to call a nil value [???:0] songNoteDone
+anemone2 : attempt to call a nil value [???:0] songNoteDone
+luaScriptError: Path [big-anemone]: songNoteDone : attempt to call a nil value [???:0]
+
+luaScriptError: jellysmall : postInit : attempt to call a nil value [???:0]
+ aggrohopper: canShotHit function failed
+*/
 
 #include "RandomizerLocal.h"
 #include <fstream>
@@ -32,6 +58,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
 
 }
 
+
 /**
  * Destructor of the object.
  */
@@ -44,12 +71,15 @@ RandomizerLocal::~RandomizerLocal() {
  * @param aCheck The check to activate
  */
 void RandomizerLocal::activateCheck(std::string aCheck) {
-    int lCheckIndex = getCheckIndex(aCheck);
-    check_t *lCheck = getCheckByIndex(lCheckIndex);
+    int lCheckIndex =getCheckIndex(aCheck);
+    int lItemIndex = checksReplacement->at(lCheckIndex);
+
+    check_t *lCheck = getCheckByIndex(lItemIndex);
     if (dsq->continuity.getFlag(lCheck->flag)) {
         dsq->screenMessage("Check already obtained.");
     } else {
         dsq->continuity.setFlag(lCheck->flag, 1);
+
         receivingItem(lCheck->item, lCheck->count);
     }
 

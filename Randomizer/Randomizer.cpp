@@ -130,283 +130,231 @@ void Randomizer::initialiseIngredients() {
  * Initialize every Checks
  */
 void Randomizer::initialiseChecks(){
-    checks->push_back({2001, "bulb_turtlecave","ingredient_poultice",3, "Leaf poultice"});
-    checks->push_back({2002, "bulb_openwater_tl_1","ingredient_handroll",1, "Hand roll"});
-    checks->push_back({2003, "bulb_openwater_tl_2","ingredient_veggiesoup",1, "Veggie soup"});
-    checks->push_back({2004, "bulb_openwater_tl_3","ingredient_butterysealoaf",1, "Buttery sea loaf"});
-    checks->push_back({2005, "bulb_openwater_tr_1","ingredient_healingpoultice",1, "Healing poultice"});
-    checks->push_back({2006, "bulb_openwater_tr_2","ingredient_sealoaf",2, "Sea loaf"});
-    checks->push_back({2007, "bulb_openwater_tr_3","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2008, "bulb_openwater_tr_4","ingredient_spicymeat",2, "Spicy meat"});
-    checks->push_back({2009, "bulb_openwater_tr_5","ingredient_crabcake",1, "Crab cake"});
-    checks->push_back({2010, "bulb_openwater_tr_6","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2011, "bulb_openwater_bl_1","ingredient_leadershiproll",2, "Leadership roll"});
-    checks->push_back({2012, "bulb_openwater_bl_2","ingredient_healingpoultice",2, "Healing poultice"});
-    checks->push_back({2013, "bulb_skeleton_path_1","ingredient_tastycake",1, "Tasty cake"});
-    checks->push_back({2014, "bulb_skeleton_path_2","ingredient_perogi",1, "Perogi"});
-    checks->push_back({2015, "bulb_arnassi_1","ingredient_tastyrool",1, "Tasty roll"});
-    checks->push_back({2016, "bulb_arnassi_2","ingredient_specialbulb",1, "Special bulb"});
-    checks->push_back({2017, "bulb_arnassi_3","ingredient_specialcake",1, "Special cake"});
-    checks->push_back({2018, "bulb_sunworm_1","ingredient_plantleaf",3, "Plant leaf"});
-    checks->push_back({2019, "bulb_sunworm_2","ingredient_turtlesoup",1, "Turtle soup"});
-    checks->push_back({2020, "bulb_sunworm_3","ingredient_specialcake",1, "Special cake"});
-    checks->push_back({2021, "bulb_sunworm_4","ingredient_specialbulb",1, "Special bulb"});
-    checks->push_back({2022, "bulb_tutorial_1","ingredient_handroll",1, "Hand roll"});
-    checks->push_back({2023, "bulb_tutorial_2","ingredient_hotsoup",1, "Hot soup"});
-    checks->push_back({2024, "bulb_tutorial_3","ingredient_heartysoup",1, "Hearty soup"});
-    checks->push_back({2025, "bulb_abyss_l_1","ingredient_coldborscht",1, "Cold borscht"});
-    checks->push_back({2026, "bulb_abyss_l_2","ingredient_healingpoultice",2, "Healing poultice"});
-    checks->push_back({2027, "bulb_abyss_l_3","ingredient_sightpoultice",1, "Sight poultice"});
-    checks->push_back({2028, "bulb_energy_temple_1_1","ingredient_poultice",1, "Leaf poultice"});
-    checks->push_back({2029, "bulb_energy_temple_2_1","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2030, "bulb_energy_temple_3_1","ingredient_plantleaf",2, "Plant leaf"});
-    checks->push_back({2031, "bulb_mithalas_city_01","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2032, "bulb_mithalas_city_02","ingredient_spicymeat",2, "Spicy meat"});
-    checks->push_back({2033, "bulb_mithalas_city_03","ingredient_vedhaseacrisp",1, "Vedha sea crisp"});
-    checks->push_back({2034, "bulb_mithalas_city_04","ingredient_heartysoup",1, "Hearty soup"});
-    checks->push_back({2035, "bulb_mithalas_city_05","ingredient_healingpoultice",1, "Healing poultice"});
-    checks->push_back({2036, "bulb_mithalas_city_06","ingredient_vedhaseacrisp",1, "Vedha sea crisp"});
-    checks->push_back({2037, "bulb_mithalas_city_07","ingredient_rottenloaf",8, "Rotten loaf"});
-    checks->push_back({2038, "bulb_mithalas_city_08","ingredient_rottenmeat",8, "Rotten meat"});
-    checks->push_back({2039, "bulb_mithalas_city_09","ingredient_smalltentacle",2, "Small tentacle"});
-    checks->push_back({2040, "bulb_mithalas_city_10","ingredient_seacake",1, "Sea cake"});
-    checks->push_back({2041, "bulb_mithalas_city_11","ingredient_smallbone",3, "Small bone"});
-    checks->push_back({2042, "bulb_mithalas_city_12","ingredient_handroll",1, "Hand roll"});
-    checks->push_back({2043, "bulb_cathedral_l_2","ingredient_heartysoup",1, "Hearty soup"});
-    checks->push_back({2044, "bulb_boilerroom_1","ingredient_spicyroll",1, "Spicy rool"});
-    checks->push_back({2045, "bulb_forest_tl_1","ingredient_seacake",1, "Sea cake"});
-    checks->push_back({2046, "bulb_forest_tl_2","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2047, "bulb_forest_tl_3","ingredient_leechingpoultice",1, "Leeching poultice"});
-    checks->push_back({2048, "bulb_forest_tl_4","ingredient_redbulb",2, "Red bulb"});
-    checks->push_back({2049, "bulb_forest_tr_1","ingredient_spiderroll",1, "Spider roll"});
-    checks->push_back({2050, "bulb_forest_tr_2","ingredient_veggiecake",1, "Veggie cake"});
-    checks->push_back({2051, "bulb_forest_tr_3","ingredient_swampcake",1, "Swamp cake"});
-    checks->push_back({2052, "bulb_forest_tr_4","ingredient_sharkfinsoup",1, "Shark fin soup"});
-    checks->push_back({2053, "bulb_forest_tr_5","ingredient_healingpoultice",1, "Healing poultice"});
-    checks->push_back({2054, "bulb_forest_tr_6","ingredient_redbulb",2, "Red bulb"});
-    checks->push_back({2055, "bulb_forest_bl_1","ingredient_spiderroll",1, "Spider roll"});
-    checks->push_back({2056, "bulb_forest_boss_room_1","ingredient_handroll",1, "Hand roll"});
-    checks->push_back({2057, "bulb_forest_sprite_cave_1","ingredient_leechingpoultice",1, "Leeching poultice"});
-    checks->push_back({2058, "bulb_forest_sprite_cave_2","ingredient_veggiesoup",1, "Veggie soup"});
-    checks->push_back({2059, "bulb_home_water_1","ingredient_smallegg",2, "Small egg"});
-    checks->push_back({2060, "bulb_home_water_2","ingredient_poultice",1, "Leaf poultice"});
-    checks->push_back({2061, "bulb_home_water_3","ingredient_poultice",1, "Leaf poultice"});
-    checks->push_back({2062, "bulb_home_water_4","ingredient_plantleaf",3, "Plant leaf"});
-    checks->push_back({2063, "bulb_home_water_5","ingredient_redbulb",2, "Red bulb"});
-    checks->push_back({2064, "bulb_home_water_6","ingredient_hotsoup",1, "Hot soup"});
-    checks->push_back({2065, "bulb_home_water_7","ingredient_fishmeat",2, "Fish meat"});
-    checks->push_back({2066, "bulb_home_water_8","ingredient_seacake",1, "Sea cake"});
-    checks->push_back({2067, "bulb_final_l_1","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2068, "bulb_final_l_2","ingredient_divinesoup",1, "Divine soup"});
-    checks->push_back({2069, "bulb_final_l_3","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2070, "bulb_final_l_4","ingredient_volcanoroll",1, "Volcano roll"});
-    checks->push_back({2071, "bulb_final_l_5","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2072, "bulb_song_cave_1","ingredient_specialbulb",1, "Special bulb"});
-    checks->push_back({2073, "bulb_song_cave_2","ingredient_handroll",1, "Hand roll"});
-    checks->push_back({2074, "bulb_song_cave_3","ingredient_eeloil",2, "Eel oil"});
-    checks->push_back({2075, "bulb_song_cave_4","ingredient_poultice",1, "Leaf poultice"});
-    checks->push_back({2076, "bulb_song_cave_5","ingredient_hotsoup",1, "Hot soup"});
-    checks->push_back({2077, "bulb_veil_tl_1","ingredient_spicysoup",1, "Spicy soup"});
-    checks->push_back({2078, "bulb_veil_tl_2","ingredient_longlifesoup",1, "Long life soup"});
-    checks->push_back({2079, "bulb_veil_tl_3","ingredient_hotsoup",2, "Hot soup"});
-    checks->push_back({2080, "bulb_veil_tr_1","ingredient_sharkfinsoup",1, "Shark fin soup"});
-    checks->push_back({2081, "bulb_veil_tr_2","ingredient_legendarycake",1, "Legendary cake"});
-    checks->push_back({2082, "bulb_veil_b_1","ingredient_swampcake",1, "Swamp cake"});
-    checks->push_back({2083, "bulb_veil_b_2","ingredient_swampcake",1, "Swamp cake"});
-    checks->push_back({2084, "bulb_ice_cave_1","ingredient_icecream",1, "Ice cream"});
-    checks->push_back({2085, "bulb_ice_cave_2","ingredient_berryicecream",1, "Berry ice cream"});
-    checks->push_back({2086, "bulb_ice_cave_3","ingredient_veggieicecream",1, "Veggie ice cream"});
-    checks->push_back({2087, "bulb_ice_cave_4","ingredient_dumboicecream",1, "Dumbo ice cream"});
-    checks->push_back({2088, "bulb_ice_cave_5","ingredient_icecream",1, "Ice cream"});
-    checks->push_back({2089, "bulb_king_jellyfish_cave_1","ingredient_specialbulb",1, "Special bulb"});
-    checks->push_back({2090, "bulb_bubble_cave_1","ingredient_coldsoup",1, "Cold soup"});
-    checks->push_back({2091, "bulb_bubble_cave_2","ingredient_coldborscht",1, "Cold borscht"});
-    checks->push_back({2092, "bulb_sun_temple_1","ingredient_glowingegg",2, "Glowing egg"});
-    checks->push_back({2093, "bulb_sun_temple_2","ingredient_magicsoup",1, "Magic soup"});
-    checks->push_back({2094, "bulb_sun_temple_3","ingredient_royalsoup",1, "Royal soup"});
-    checks->push_back({2095, "bulb_sun_temple_4","ingredient_leadershiproll",1, "Leadership roll"});
-    checks->push_back({2096, "bulb_sun_temple_5","ingredient_turtlesoup",1, "Turtle soup"});
-    checks->push_back({2097, "bulb_sun_temple_6","ingredient_heartysoup",1, "Hearty soup"});
-    checks->push_back({2098, "bulb_final_c_1","ingredient_Zuuna'sperogi",1, "Zuuna's perogi"});
-    checks->push_back({2099, "bulb_final_r_1","ingredient_plumpperogi",1, "Plump perogi"});
-    checks->push_back({2100, "bulb_final_r_2","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2101, "bulb_final_r_3","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2102, "bulb_final_b_1","ingredient_longlifesoup",1, "Long life soup"});
-    checks->push_back({2103, "bulb_final_b_2","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2104, "bulb_final_boss_1","ingredient_Vedha'sCure-All",1, "Vedha's Cure-All"});
-    checks->push_back({2105, "bulb_final_boss_2","ingredient_loafoflife",1, "Loaf of life"});
-    checks->push_back({2106, "bulb_final_boss_3","ingredient_specialbulb",1, "Special bulb"});
-    checks->push_back({2107, "bulb_final_boss_4","ingredient_dumboicecream",1, "Dumbo ice cream"});
-    checks->push_back({2108, "bulb_starting_cave_1","ingredient_fishoil",1, "Fish oil"});
-    checks->push_back({2109, "bulb_starting_cave_2","ingredient_smallegg",1, "Small egg"});
-    checks->push_back({2110, "bulb_abyss_r_1","ingredient_dumboicecream",1, "Dumbo ice cream"});
-    checks->push_back({2111, "bulb_abyss_r_2","ingredient_tastyroll",1, "Tasty roll"});
-    checks->push_back({2112, "bulb_abyss_r_3","ingredient_healingpoultice",1, "Healing poultice"});
-    checks->push_back({2113, "bulb_abyss_r_4","ingredient_hotborscht",1, "Hot borscht"});
-    checks->push_back({2114, "bulb_cathedral_under_ground_1","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2115, "bulb_cathedral_under_ground_2","ingredient_plantleaf",1, "Plant leaf"});
-    checks->push_back({2116, "bulb_cathedral_under_ground_3","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2117, "bulb_cathedral_under_ground_4","ingredient_redberry",1, "Red berry"});
-    checks->push_back({2118, "bulb_cathedral_under_ground_5","ingredient_poultice",1, "Leaf poultice"});
-    checks->push_back({2119, "bulb_cathedral_under_ground_6","ingredient_arcanepoultice",1, "Arcane poultice"});
-    checks->push_back({2120, "bulb_naija_home_1","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2121, "bulb_naija_home_2","ingredient_heartysoup",1, "Hearty soup"});
-    checks->push_back({2122, "bulb_mermog_cave_1","ingredient_leechingpoultice",1, "Leeching poultice"});
-    checks->push_back({2123, "bulb_octo_cave_1","ingredient_sightpoultice",1, "Sight poultice"});
-    checks->push_back({2124, "urn_mithalas_city_1","ingredient_rottenmeat",2, "Rotten meat"});
-    checks->push_back({2125, "urn_mithalas_city_2","ingredient_glowingegg",1, "Glowing egg"});
-    checks->push_back({2126, "urn_mithalas_city_3","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
-    checks->push_back({2127, "urn_mithalas_city_4","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
-    checks->push_back({2128, "urn_mithalas_city_5","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
-    checks->push_back({2129, "urn_mithalas_city_6","ingredient_plantleaf",3, "Plant leaf"});
-    checks->push_back({2130, "urn_mithalas_city_7","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2131, "urn_cathedral_l_1","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
-    checks->push_back({2132, "urn_cathedral_l_2","ingredient_smallbone",2, "Small bone"});
-    checks->push_back({2133, "urn_cathedral_l_3","ingredient_rottenmeat",1, "Rotten meat"});
-    checks->push_back({2134, "urn_cathedral_l_4","ingredient_fishoil",1, "Fish oil"});
-    checks->push_back({2135, "urn_cathedral_l_5","ingredient_rottenmeat",1, "Rotten meat"});
-    checks->push_back({2136, "urn_cathedral_l_6","ingredient_rainbowsoup",1, "Rainbow soup"});
-    checks->push_back({2137, "urn_cathedral_r_01","ingredient_plantleaf",1, "Plant leaf"});
-    checks->push_back({2138, "urn_cathedral_r_02","ingredient_rottencake",1, "Rotten cake"});
-    checks->push_back({2139, "urn_cathedral_r_03","ingredient_toughcake",1, "Tough cake"});
-    checks->push_back({2140, "urn_cathedral_r_04","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({2141, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rottem meat"});
-    checks->push_back({2142, "urn_cathedral_r_06","ingredient_plantleaf",1, "Plant leaf"});
-    checks->push_back({2143, "urn_cathedral_r_07","ingredient_leechingpoultice",1, "Leeching poultice"});
-    checks->push_back({2144, "urn_cathedral_r_08","ingredient_smallbone",3, "Small bone"});
-    checks->push_back({2145, "urn_cathedral_r_09","ingredient_plantleaf",2, "Plant leaf"});
-    checks->push_back({2146, "urn_cathedral_r_10","ingredient_rottenmeat",1, "Rotten meat"});
-    checks->push_back({2147, "urn_cathedral_r_11","ingredient_poisonloaf",1, "Poison loaf"});
-    checks->push_back({2148, "urn_cathedral_r_12","ingredient_poisonsoup",1, "Poison soup"});
-    checks->push_back({2149, "urn_openwater_tr_1","ingredient_smallbone",3, "Small bone"});
-    checks->push_back({2150, "urn_openwater_tr_2","ingredient_rottenmeat",1, "Rotten meat"});
-    checks->push_back({2151, "urn_openwater_tr_3","ingredient_sealoaf",1, "Sea loaf"});
-    checks->push_back({2152, "crate_sunkencity_2_1","ingredient_fishoil",3, "Fish oil"});
-    checks->push_back({2153, "crate_sunkencity_2_2","ingredient_mushroom",2, "Mushroom"});
-    checks->push_back({2154, "crate_sunkencity_2_3","ingredient_spicymeat",2, "Spicy meat"});
-    checks->push_back({2155, "crate_sunkencity_1_1","ingredient_seacake",1, "Sea cake"});
-    checks->push_back({2156, "crate_sunkencity_1_2","ingredient_plantleaf",3, "Plant leaf"});
-    checks->push_back({2157, "beating_simon","upgrade_wok",1, "Wok"});
-    checks->push_back({2158, "health_egg_1","upgrade_health_1",1, "Health"});
-    checks->push_back({2159, "health_egg_2","upgrade_health_2",1, "Health"});
-    checks->push_back({2160, "health_egg_3","upgrade_health_3",1, "Health"});
-    checks->push_back({2161, "health_egg_4","upgrade_health_4",1, "Health"});
-    checks->push_back({2162, "health_egg_5","upgrade_health_5",1, "Health"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_ANEMONESEED, "collect_anemone","collectible_anemone",1, "Anemone"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_ARNASSISTATUE, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_BIOSEED, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Bio sead"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_BLACKPEARL, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Treasure chest"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Energy boss"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_ENERGYSTATUE, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_GEAR, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_JELLYPLANT, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_MITHALADOLL, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_MITHALASPOT, "collect_mithala_spot","collectible_mithala_spot",1, "Mithalas spot"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_NAIJACAVE, "collect_big_seed","collectible_big_seed",1, "Big seed"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SEEDBAG, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SKULL, "collect_skull","collectible_skull",1, "Skull"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SONGCAVE, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Spore seed"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden star"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_STONEHEAD, "collect_stone_head","collectible_stone_head",1, "Stone head"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SUNKEY, "collect_sun_key","collectible_sun_key",1, "Sun key"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_TRIDENTHEAD, "collect_trident_head","collectible_trident_head",1, "Trident"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_TURTLEEGG, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Upside down seed"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_WALKERBABY, "collect_walker","collectible_walker",1, "Baby walker"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_JELLYCOSTUME, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutan costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Seahorse costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Teen costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_URCHINCOSTUME, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_BLASTER, "collect_blaster","collectible_blaster",1, "Baby blaster"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_NAUTILUS, "collect_nautilus","collectible_nautilus",1, "Baby nautilus"});
-    checks->push_back({FLAG_COLLECTIBLE_INHOME_PIRANHA, "collect_piranha","collectible_piranha",1, "Baby piranha"});
+    checks->push_back({1101, "bulb_turtlecave","ingredient_leafpoultice",3, "Leaf poultice"});
+    checks->push_back({1102, "bulb_openwater_tl_1","ingredient_handroll",1, "Hand roll"});
+    checks->push_back({1103, "bulb_openwater_tl_2","ingredient_veggiesoup",1, "Veggie soup"});
+    checks->push_back({1104, "bulb_openwater_tl_3","ingredient_butterysealoaf",1, "Buttery sea loaf"});
+    checks->push_back({1105, "bulb_openwater_tr_1","ingredient_healingpoultice",1, "Healing poultice"});
+    checks->push_back({1106, "bulb_openwater_tr_2","ingredient_sealoaf",2, "Sea loaf"});
+    checks->push_back({1107, "bulb_openwater_tr_3","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1108, "bulb_openwater_tr_4","ingredient_spicymeat",2, "Spicy meat"});
+    checks->push_back({1109, "bulb_openwater_tr_5","ingredient_crabcake",1, "Crab cake"});
+    checks->push_back({1110, "bulb_openwater_tr_6","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1111, "bulb_openwater_bl_1","ingredient_leadershiproll",2, "Leadership roll"});
+    checks->push_back({1112, "bulb_openwater_bl_2","ingredient_healingpoultice",2, "Healing poultice"});
+    checks->push_back({1113, "bulb_skeleton_path_1","ingredient_tastycake",1, "Tasty cake"});
+    checks->push_back({1114, "bulb_skeleton_path_2","ingredient_perogi",1, "Perogi"});
+    checks->push_back({1115, "bulb_arnassi_1","ingredient_tastyroll",1, "Tasty roll"});
+    checks->push_back({1116, "bulb_arnassi_2","ingredient_specialbulb",1, "Special bulb"});
+    checks->push_back({1117, "bulb_arnassi_3","ingredient_specialcake",1, "Special cake"});
+    checks->push_back({1118, "bulb_sunworm_1","ingredient_plantleaf",3, "Plant leaf"});
+    checks->push_back({1119, "bulb_sunworm_2","ingredient_turtlesoup",1, "Turtle soup"});
+    checks->push_back({1120, "bulb_sunworm_3","ingredient_specialcake",1, "Special cake"});
+    checks->push_back({1121, "bulb_sunworm_4","ingredient_specialbulb",1, "Special bulb"});
+    checks->push_back({1122, "bulb_tutorial_1","ingredient_handroll",1, "Hand roll"});
+    checks->push_back({1123, "bulb_tutorial_2","ingredient_hotsoup",1, "Hot soup"});
+    checks->push_back({1124, "bulb_tutorial_3","ingredient_heartysoup",1, "Hearty soup"});
+    checks->push_back({1125, "bulb_abyss_l_1","ingredient_coldborscht",1, "Cold borscht"});
+    checks->push_back({1126, "bulb_abyss_l_2","ingredient_healingpoultice",2, "Healing poultice"});
+    checks->push_back({1127, "bulb_abyss_l_3","ingredient_sightpoultice",1, "Sight poultice"});
+    checks->push_back({1128, "bulb_energy_temple_1_1","ingredient_leafpoultice",1, "Leaf poultice"});
+    checks->push_back({1129, "bulb_energy_temple_2_1","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1130, "bulb_energy_temple_3_1","ingredient_plantleaf",2, "Plant leaf"});
+    checks->push_back({1131, "bulb_mithalas_city_01","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1132, "bulb_mithalas_city_02","ingredient_spicymeat",2, "Spicy meat"});
+    checks->push_back({1133, "bulb_mithalas_city_03","ingredient_vedhaseacrisp",1, "Vedha sea crisp"});
+    checks->push_back({1134, "bulb_mithalas_city_04","ingredient_heartysoup",1, "Hearty soup"});
+    checks->push_back({1135, "bulb_mithalas_city_05","ingredient_healingpoultice",1, "Healing poultice"});
+    checks->push_back({1136, "bulb_mithalas_city_06","ingredient_vedhaseacrisp",1, "Vedha sea crisp"});
+    checks->push_back({1137, "bulb_mithalas_city_07","ingredient_rottenloaf",8, "Rotten loaf"});
+    checks->push_back({1138, "bulb_mithalas_city_08","ingredient_rottenmeat",8, "Rotten meat"});
+    checks->push_back({1139, "bulb_mithalas_city_09","ingredient_smalltentacle",2, "Small tentacle"});
+    checks->push_back({1140, "bulb_mithalas_city_10","ingredient_seacake",1, "Sea cake"});
+    checks->push_back({1141, "bulb_mithalas_city_11","ingredient_smallbone",3, "Small bone"});
+    checks->push_back({1142, "bulb_mithalas_city_12","ingredient_handroll",1, "Hand roll"});
+    checks->push_back({1143, "bulb_cathedral_l_2","ingredient_heartysoup",1, "Hearty soup"});
+    checks->push_back({1144, "bulb_boilerroom_1","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1145, "bulb_forest_tl_1","ingredient_seacake",1, "Sea cake"});
+    checks->push_back({1146, "bulb_forest_tl_2","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1147, "bulb_forest_tl_3","ingredient_leechingpoultice",1, "Leeching poultice"});
+    checks->push_back({1148, "bulb_forest_tl_4","ingredient_redbulb",2, "Red bulb"});
+    checks->push_back({1149, "bulb_forest_tr_1","ingredient_spiderroll",1, "Spider roll"});
+    checks->push_back({1150, "bulb_forest_tr_2","ingredient_veggiecake",1, "Veggie cake"});
+    checks->push_back({1151, "bulb_forest_tr_3","ingredient_swampcake",1, "Swamp cake"});
+    checks->push_back({1152, "bulb_forest_tr_4","ingredient_sharkfinsoup",1, "Shark fin soup"});
+    checks->push_back({1153, "bulb_forest_tr_5","ingredient_healingpoultice",1, "Healing poultice"});
+    checks->push_back({1154, "bulb_forest_tr_6","ingredient_redbulb",2, "Red bulb"});
+    checks->push_back({1155, "bulb_forest_bl_1","ingredient_spiderroll",1, "Spider roll"});
+    checks->push_back({1156, "bulb_forest_boss_room_1","ingredient_handroll",1, "Hand roll"});
+    checks->push_back({1157, "bulb_forest_sprite_cave_1","ingredient_leechingpoultice",1, "Leeching poultice"});
+    checks->push_back({1158, "bulb_forest_sprite_cave_2","ingredient_veggiesoup",1, "Veggie soup"});
+    checks->push_back({1159, "bulb_home_water_1","ingredient_smallegg",2, "Small egg"});
+    checks->push_back({1160, "bulb_home_water_2","ingredient_leafpoultice",1, "Leaf poultice"});
+    checks->push_back({1161, "bulb_home_water_3","ingredient_leafpoultice",1, "Leaf poultice"});
+    checks->push_back({1162, "bulb_home_water_4","ingredient_plantleaf",3, "Plant leaf"});
+    checks->push_back({1163, "bulb_home_water_5","ingredient_redbulb",2, "Red bulb"});
+    checks->push_back({1164, "bulb_home_water_6","ingredient_hotsoup",1, "Hot soup"});
+    checks->push_back({1165, "bulb_home_water_7","ingredient_fishmeat",2, "Fish meat"});
+    checks->push_back({1166, "bulb_home_water_8","ingredient_seacake",1, "Sea cake"});
+    checks->push_back({1167, "bulb_final_l_1","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1168, "bulb_final_l_2","ingredient_divinesoup",1, "Divine soup"});
+    checks->push_back({1169, "bulb_final_l_3","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1170, "bulb_final_l_4","ingredient_volcanoroll",1, "Volcano roll"});
+    checks->push_back({1171, "bulb_final_l_5","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1172, "bulb_song_cave_1","ingredient_specialbulb",1, "Special bulb"});
+    checks->push_back({1173, "bulb_song_cave_2","ingredient_handroll",1, "Hand roll"});
+    checks->push_back({1174, "bulb_song_cave_3","ingredient_eeloil",2, "Eel oil"});
+    checks->push_back({1175, "bulb_song_cave_4","ingredient_leafpoultice",1, "Leaf poultice"});
+    checks->push_back({1176, "bulb_song_cave_5","ingredient_hotsoup",1, "Hot soup"});
+    checks->push_back({1177, "bulb_veil_tl_1","ingredient_spicysoup",1, "Spicy soup"});
+    checks->push_back({1178, "bulb_veil_tl_2","ingredient_longlifesoup",1, "Long life soup"});
+    checks->push_back({1179, "bulb_veil_tl_3","ingredient_hotsoup",2, "Hot soup"});
+    checks->push_back({1180, "bulb_veil_tr_1","ingredient_sharkfinsoup",1, "Shark fin soup"});
+    checks->push_back({1181, "bulb_veil_tr_2","ingredient_legendarycake",1, "Legendary cake"});
+    checks->push_back({1182, "bulb_veil_b_1","ingredient_swampcake",1, "Swamp cake"});
+    checks->push_back({1183, "bulb_veil_b_2","ingredient_swampcake",1, "Swamp cake"});
+    checks->push_back({1184, "bulb_ice_cave_1","ingredient_icecream",1, "Ice cream"});
+    checks->push_back({1185, "bulb_ice_cave_2","ingredient_berryicecream",1, "Berry ice cream"});
+    checks->push_back({1186, "bulb_ice_cave_3","ingredient_veggieicecream",1, "Veggie ice cream"});
+    checks->push_back({1187, "bulb_ice_cave_4","ingredient_dumboicecream",1, "Dumbo ice cream"});
+    checks->push_back({1188, "bulb_ice_cave_5","ingredient_icecream",1, "Ice cream"});
+    checks->push_back({1189, "bulb_king_jellyfish_cave_1","ingredient_specialbulb",1, "Special bulb"});
+    checks->push_back({1190, "bulb_bubble_cave_1","ingredient_coldsoup",1, "Cold soup"});
+    checks->push_back({1191, "bulb_bubble_cave_2","ingredient_coldborscht",1, "Cold borscht"});
+    checks->push_back({1192, "bulb_sun_temple_1","ingredient_glowingegg",2, "Glowing egg"});
+    checks->push_back({1193, "bulb_sun_temple_2","ingredient_magicsoup",1, "Magic soup"});
+    checks->push_back({1194, "bulb_sun_temple_3","ingredient_royalsoup",1, "Royal soup"});
+    checks->push_back({1195, "bulb_sun_temple_4","ingredient_leadershiproll",1, "Leadership roll"});
+    checks->push_back({1196, "bulb_sun_temple_5","ingredient_turtlesoup",1, "Turtle soup"});
+    checks->push_back({1197, "bulb_sun_temple_6","ingredient_heartysoup",1, "Hearty soup"});
+    checks->push_back({1198, "bulb_final_c_1","ingredient_Zuuna'sperogi",1, "Zuuna's perogi"});
+    checks->push_back({1199, "bulb_final_r_1","ingredient_plumpperogi",1, "Plump perogi"});
+    checks->push_back({1200, "bulb_final_r_2","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1201, "bulb_final_r_3","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1202, "bulb_final_b_1","ingredient_longlifesoup",1, "Long life soup"});
+    checks->push_back({1203, "bulb_final_b_2","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1204, "bulb_final_boss_1","ingredient_Vedha'sCure-All",1, "Vedha's Cure-All"});
+    checks->push_back({1205, "bulb_final_boss_2","ingredient_loafoflife",1, "Loaf of life"});
+    checks->push_back({1206, "bulb_final_boss_3","ingredient_specialbulb",1, "Special bulb"});
+    checks->push_back({1207, "bulb_final_boss_4","ingredient_dumboicecream",1, "Dumbo ice cream"});
+    checks->push_back({1208, "bulb_starting_cave_1","ingredient_fishoil",1, "Fish oil"});
+    checks->push_back({1209, "bulb_starting_cave_2","ingredient_smallegg",1, "Small egg"});
+    checks->push_back({1210, "bulb_abyss_r_1","ingredient_dumboicecream",1, "Dumbo ice cream"});
+    checks->push_back({1211, "bulb_abyss_r_2","ingredient_tastyroll",1, "Tasty roll"});
+    checks->push_back({1212, "bulb_abyss_r_3","ingredient_healingpoultice",1, "Healing poultice"});
+    checks->push_back({1213, "bulb_abyss_r_4","ingredient_hotborscht",1, "Hot borscht"});
+    checks->push_back({1214, "bulb_cathedral_under_ground_1","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1215, "bulb_cathedral_under_ground_2","ingredient_plantleaf",1, "Plant leaf"});
+    checks->push_back({1216, "bulb_cathedral_under_ground_3","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1217, "bulb_cathedral_under_ground_4","ingredient_redberry",1, "Red berry"});
+    checks->push_back({1218, "bulb_cathedral_under_ground_5","ingredient_leafpoultice",1, "Leaf poultice"});
+    checks->push_back({1219, "bulb_cathedral_under_ground_6","ingredient_arcanepoultice",1, "Arcane poultice"});
+    checks->push_back({1220, "bulb_naija_home_1","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1221, "bulb_naija_home_2","ingredient_heartysoup",1, "Hearty soup"});
+    checks->push_back({1222, "bulb_mermog_cave_1","ingredient_leechingpoultice",1, "Leeching poultice"});
+    checks->push_back({1223, "bulb_octo_cave_1","ingredient_sightpoultice",1, "Sight poultice"});
+    checks->push_back({1224, "urn_mithalas_city_1","ingredient_rottenmeat",2, "Rotten meat"});
+    checks->push_back({1225, "urn_mithalas_city_2","ingredient_glowingegg",1, "Glowing egg"});
+    checks->push_back({1226, "urn_mithalas_city_3","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
+    checks->push_back({1227, "urn_mithalas_city_4","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
+    checks->push_back({1228, "urn_mithalas_city_5","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
+    checks->push_back({1229, "urn_mithalas_city_6","ingredient_plantleaf",3, "Plant leaf"});
+    checks->push_back({1230, "urn_mithalas_city_7","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1231, "urn_cathedral_l_1","ingredient_rainbowmushroom",1, "Rainbow mushroom"});
+    checks->push_back({1232, "urn_cathedral_l_2","ingredient_smallbone",2, "Small bone"});
+    checks->push_back({1233, "urn_cathedral_l_3","ingredient_rottenmeat",1, "Rotten meat"});
+    checks->push_back({1234, "urn_cathedral_l_4","ingredient_fishoil",1, "Fish oil"});
+    checks->push_back({1235, "urn_cathedral_l_5","ingredient_rottenmeat",1, "Rotten meat"});
+    checks->push_back({1236, "urn_cathedral_l_6","ingredient_rainbowsoup",1, "Rainbow soup"});
+    checks->push_back({1237, "urn_cathedral_r_01","ingredient_plantleaf",1, "Plant leaf"});
+    checks->push_back({1238, "urn_cathedral_r_02","ingredient_rottencake",1, "Rotten cake"});
+    checks->push_back({1239, "urn_cathedral_r_03","ingredient_toughcake",1, "Tough cake"});
+    checks->push_back({1240, "urn_cathedral_r_04","ingredient_spicyroll",1, "Spicy roll"});
+    checks->push_back({1241, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rottem meat"});
+    checks->push_back({1242, "urn_cathedral_r_06","ingredient_plantleaf",1, "Plant leaf"});
+    checks->push_back({1243, "urn_cathedral_r_07","ingredient_leechingpoultice",1, "Leeching poultice"});
+    checks->push_back({1244, "urn_cathedral_r_08","ingredient_smallbone",3, "Small bone"});
+    checks->push_back({1245, "urn_cathedral_r_09","ingredient_plantleaf",2, "Plant leaf"});
+    checks->push_back({1246, "urn_cathedral_r_10","ingredient_rottenmeat",1, "Rotten meat"});
+    checks->push_back({1247, "urn_cathedral_r_11","ingredient_poisonloaf",1, "Poison loaf"});
+    checks->push_back({1248, "urn_cathedral_r_12","ingredient_poisonsoup",1, "Poison soup"});
+    checks->push_back({1249, "urn_openwater_tr_1","ingredient_smallbone",3, "Small bone"});
+    checks->push_back({1250, "urn_openwater_tr_2","ingredient_rottenmeat",1, "Rotten meat"});
+    checks->push_back({1251, "urn_openwater_tr_3","ingredient_sealoaf",1, "Sea loaf"});
+    checks->push_back({1252, "crate_sunkencity_2_1","ingredient_fishoil",3, "Fish oil"});
+    checks->push_back({1253, "crate_sunkencity_2_2","ingredient_mushroom",2, "Mushroom"});
+    checks->push_back({1254, "crate_sunkencity_2_3","ingredient_spicymeat",2, "Spicy meat"});
+    checks->push_back({1255, "crate_sunkencity_1_1","ingredient_seacake",1, "Sea cake"});
+    checks->push_back({1256, "crate_sunkencity_1_2","ingredient_plantleaf",3, "Plant leaf"});
+    checks->push_back({1257, "beating_simon","upgrade_wok",1, "Wok"});
+    checks->push_back({1258, "health_egg_1","upgrade_health_1",1, "Health"});
+    checks->push_back({1259, "health_egg_2","upgrade_health_2",1, "Health"});
+    checks->push_back({1260, "health_egg_3","upgrade_health_3",1, "Health"});
+    checks->push_back({1261, "health_egg_4","upgrade_health_4",1, "Health"});
+    checks->push_back({1262, "health_egg_5","upgrade_health_5",1, "Health"});
+    checks->push_back({FLAG_COLLECTIBLE_ANEMONESEED, "collect_anemone","collectible_anemone",1, "Anemone"});
+    checks->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collect_energy_temple","collectible_energy_temple",1, "Krotite hat"});
+    checks->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue"});
+    checks->push_back({FLAG_COLLECTIBLE_BANNER, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
+    checks->push_back({FLAG_COLLECTIBLE_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Bio sead"});
+    checks->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
+    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Treasure chest"});
+    checks->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Energy boss"});
+    checks->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
+    checks->push_back({FLAG_COLLECTIBLE_GEAR, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
+    checks->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
+    checks->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll"});
+    checks->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collect_mithala_spot","collectible_mithala_spot",1, "Mithalas spot"});
+    checks->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collect_big_seed","collectible_big_seed",1, "Big seed"});
+    checks->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
+    checks->push_back({FLAG_COLLECTIBLE_SKULL, "collect_skull","collectible_skull",1, "Skull"});
+    checks->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
+    checks->push_back({FLAG_COLLECTIBLE_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Spore seed"});
+    checks->push_back({FLAG_COLLECTIBLE_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden star"});
+    checks->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collect_stone_head","collectible_stone_head",1, "Stone head"});
+    checks->push_back({FLAG_COLLECTIBLE_SUNKEY, "collect_sun_key","collectible_sun_key",1, "Sun key"});
+    checks->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collect_trident_head","collectible_trident_head",1, "Trident"});
+    checks->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
+    checks->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Upside down egg"});
+    checks->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collect_walker","collectible_walker",1, "Baby walker"});
+    checks->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab costume"});
+    checks->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
+    checks->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan costume"});
+    checks->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutan costume"});
+    checks->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Seahorse costume"});
+    checks->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Teen costume"});
+    checks->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
+    checks->push_back({FLAG_PET_NAUTILUS, "collect_nautilus","collectible_nautilus",1, "Baby nautilus"});
+    checks->push_back({FLAG_PET_BLASTER, "collect_blaster","collectible_blaster",1, "Baby blaster"});
+    checks->push_back({FLAG_PET_DUMBO, "collect_dumbo","collectible_dumbo",1, "Baby dumbo"});
+    checks->push_back({FLAG_PET_PIRANHA, "collect_piranha","collectible_piranha",1, "Baby piranha"});
 }
 
 
 /**
  * Get a new collectible item to activate in the local game
- * @param aCollectible The collectible item to activate
+ * @param aCheck The collectible check item to activate
  */
-void Randomizer::receivingCollectible(const std::string& aCollectible) {
-	if (aCollectible == "anemone"){
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_ANEMONESEED, 1);
-	} else if (aCollectible == "arnassi_statue") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_ARNASSISTATUE, 1);
-	} else if (aCollectible == "mithalas_banner") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_BANNER, 1);
-	} else if (aCollectible == "bio_seed") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_BIOSEED, 1);
-	} else if (aCollectible == "blackpearl") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_BLACKPEARL, 1);
-	} else if (aCollectible == "treasure_chest") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_CHEST, 1);
-	} else if (aCollectible == "energy_boss") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_ENERGYBOSS, 1);
-	} else if (aCollectible == "energy_statue") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_ENERGYSTATUE, 1);
-	} else if (aCollectible == "golden_gear") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_GEAR, 1);
-	} else if (aCollectible == "jelly_plant") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_JELLYPLANT, 1);
-	} else if (aCollectible == "mithala_doll") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_MITHALADOLL, 1);
-	} else if (aCollectible == "mithala_spot") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_MITHALASPOT, 1);
-	} else if (aCollectible == "big_seed") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_NAIJACAVE, 1);
-	} else if (aCollectible == "seed_bag") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SEEDBAG, 1);
-	} else if (aCollectible == "skull") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SKULL, 1);
-	} else if (aCollectible == "jelly_beacon") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SONGCAVE, 1);
-	} else if (aCollectible == "spore_seed") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SPORESEED, 1);
-	} else if (aCollectible == "gold_star") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_STARFISH, 1);
-	} else if (aCollectible == "stone_head") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_STONEHEAD, 1);
-	} else if (aCollectible == "sun_key") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SUNKEY, 1);
-	} else if (aCollectible == "trident_head") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_TRIDENTHEAD, 1);
-	} else if (aCollectible == "turtle_egg") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_TURTLEEGG, 1);
-	} else if (aCollectible == "upsidedown_seed") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_UPSIDEDOWNSEED, 1);
-	} else if (aCollectible == "walker") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_WALKERBABY, 1);
-	} else if (aCollectible == "crab_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_CRABCOSTUME, 1);
-	} else if (aCollectible == "jelly_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_JELLYCOSTUME, 1);
-	} else if (aCollectible == "mithalan_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_MITHALANCOSTUME, 1);
-	} else if (aCollectible == "mutant_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_MUTANTCOSTUME, 1);
-	} else if (aCollectible == "seahorse_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_SEAHORSECOSTUME, 1);
-	} else if (aCollectible == "teen_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_TEENCOSTUME, 1);
-	} else if (aCollectible == "urchin_costume") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_URCHINCOSTUME, 1);
-	} else if (aCollectible == "blaster") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_BLASTER, 1);
-	} else if (aCollectible == "nautilus") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_NAUTILUS, 1);
-	} else if (aCollectible == "dumbo") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_DUMBO, 1);
-	} else if (aCollectible == "piranha") {
-		dsq->continuity.setFlag(FLAG_COLLECTIBLE_INHOME_PIRANHA, 1);
-	} else {
-		assert(false && "The collectible is not valid!");
-	}
+void Randomizer::receivingCollectible(check_t *aCheck) {
+    dsq->continuity.setFlag(aCheck->flag, 1);
+    if (aCheck->flag == FLAG_PET_BLASTER) {
+        dsq->continuity.setFlag(FLAG_COLLECTIBLE_BLASTER, 1);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(30), false, false,
+                                  false, 6, "collectibles/egg-blaster");
+    } else if (aCheck->flag == FLAG_PET_NAUTILUS) {
+        dsq->continuity.setFlag(FLAG_COLLECTIBLE_NAUTILUS, 1);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(33), false, false,
+                                  false, 6, "collectibles/egg-nautilus");
+    } else if (aCheck->flag == FLAG_PET_DUMBO) {
+        dsq->continuity.setFlag(FLAG_COLLECTIBLE_DUMBO, 1);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(32), false, false,
+                                  false, 6, "collectibles/egg-dumbo");
+    } else if (aCheck->flag == FLAG_PET_PIRANHA) {
+        dsq->continuity.setFlag(FLAG_COLLECTIBLE_PIRANHA, 1);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(31), false, false,
+                                  false, 6, "collectibles/egg-piranha");
+    }
+
 }
 
 /**
@@ -425,6 +373,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		std::string lIngredientName = aItem.substr(11);
 		IngredientData *lIngredient = dsq->continuity.getIngredientDataByName(lIngredientName);
 		dsq->continuity.pickupIngredient(lIngredient, aCount);
+        dsq->game->pickupIngredientEffects(lIngredient);
 	} else if (aItem.compare(0, 11, "upgrade_wok") == 0) {
 		lMessageStream << "Upgrade: Wok";
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
@@ -434,8 +383,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
 		check_t * lCheck = getCheckByItem(aItem);
 		lMessageStream << lCheck->message;
-		std::string lCollectible = aItem.substr(12);
-		receivingCollectible(lCollectible);
+		receivingCollectible(lCheck);
 	} else {
 		assert(false && "The receving item is not valid!");
 	}
@@ -504,7 +452,7 @@ ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHIN
         }
     }
     if (!lIngredients.empty()) {
-        lIngredient = &(ingredients->at(rand()%ingredients->size()));
+        lIngredient = lIngredients.at(rand()%lIngredients.size());
     }
     assert(lIngredient && "getRandomIngredient: The ingredient is not valid");
     return lIngredient;
@@ -538,7 +486,7 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
         for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
             ingredient_t *lIngredient = getRandomIngredient(aRecipe->types.at(j).type);
             lResult = spawnIngredient(lIngredient->name, aPosition,
-                                      aTimes * aRecipe->names.at(j).amount, aOut);
+                                      aTimes * aRecipe->types.at(j).amount, aOut);
         }
     }
     return lResult;

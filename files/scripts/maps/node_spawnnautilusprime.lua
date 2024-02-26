@@ -24,7 +24,7 @@ v.nauty = 0
 
 local function spawnEgg(me)
 	local node = getNode("COLLECTIBLENAUTILUSPRIMELOCATION")
-	createEntity("CollectibleNautilusPrime", "", node_x(node), node_y(node))
+	createEntity("collectiblenautilusprimecheck", "", node_x(node), node_y(node))
 end
 
 function init(me)

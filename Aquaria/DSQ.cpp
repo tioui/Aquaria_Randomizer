@@ -2672,7 +2672,7 @@ void DSQ::screenMessage(const std::string &msg)
 	b->alpha = 0;
 	b->alpha.interpolateTo(1, 0.75, 1, 1);
 	b->followCamera= 1;
-	b->setLife(2);
+	b->setLife(4);
 	b->setDecayRate(1);
 	core->getTopStateData()->addRenderObject(b, LR_DEBUG_TEXT);
 
@@ -2747,7 +2747,8 @@ void DSQ::nag(NagType type)
 
 void DSQ::doModSelect()
 {
-	modIsSelected = false;
+    // No mod in the randomizer
+/*	modIsSelected = false;
 
 	dsq->loadMods();
 
@@ -2774,7 +2775,7 @@ void DSQ::doModSelect()
 
 	modIsSelected = false;
 
-	resetTimer();
+	resetTimer();*/
 }
 
 void DSQ::createModSelector()

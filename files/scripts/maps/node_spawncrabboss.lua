@@ -24,7 +24,7 @@ v.mergog = 0
 
 local function spawnEgg(me)
 	local node = getNode("COLLECTIBLECRABCOSTUMELOCATION")
-	createEntity("CollectibleCrabCostume", "", node_x(node), node_y(node))
+	createEntity("collectiblecrabcostumecheck", "", node_x(node), node_y(node))
 end
 
 function init(me)

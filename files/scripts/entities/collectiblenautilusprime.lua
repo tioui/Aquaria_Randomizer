@@ -96,9 +96,6 @@ function enterState(me, state)
 end
 
 function exitState(me, state)
-	if entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTEDINHOUSE) then
-		randomizerCheck("collect_nautilus")
-	end
 	if entity_isState(me, STATE_HATCH) then
 		entity_soundFreq(me, "Nautilus", 1.5)
 		entity_soundFreq(me, "Nautilus", 2)
