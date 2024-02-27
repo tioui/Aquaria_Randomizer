@@ -32,6 +32,8 @@ jobs:
           mkdir aquaria_randomizer
           cp -p ${{ github.workspace }}/build/aquaria_randomizer.exe aquaria_randomizer/
           cp -rp files aquaria_randomizer/override
+          cp ${{ github.workspace }}/ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
+          cp -r ${{ github.workspace }}/ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
@@ -82,6 +84,6 @@ jobs:
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: Release-artefact
+          name: Release-Linux-artefact
           path: ${{ github.workspace }}/Releases
           retention-days: 5

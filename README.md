@@ -34,27 +34,26 @@ What it the modifications done to the game
 ------------------------------------------
 
 - Recipes have to be learned by check before being cooked (by getting dishes).
-- Every dishes can be learn from sing bulbs, Mithalas Urns or Sunken City crates.
-- Ennemies drop only basic ingredients (no dishes).
-- Ennemies that dropped dishes in the normal game now drop the ingredients for this diches.
-- Huggy entity in a sing bulb in Mithalas City has been remove and put behind a rock in OpenWater and the hand roll that was behind this rock has been put in the sing bulb of Mithalas city (the items has been swaped)
+- Every dishes can be learn in checks.
+- Before you get the recipe, ennemies drop ingredients used to create the dish.
+- Once you get the recipe, ennemies can drop the dish.
 - In the veil bottom area, a swamp cake (close to the health upgrade) and a special bulb (in the spirit path) has been swapped.
 - In the Naija's home, there is Fish Oil on the ground instead of Hearty Soup.
-- Adding a poisonloaf in the empty urn in the cathedral right area
-- Replacing the 4 fleas in an urn of the cathedral right area by poison soup
-- Replacing Plant Leafs in a bulb by a Buttery Sea Loaf in the Open Water Top Left area.
-- Replacing the open water skeleton path bulb with 2 baby deep shrimp in it with a Tasty Cake.
-- Replacing the cathedral left area urn with a toad in it with a Rainbow Soup.
-- Replacing the abyss right area bulb with an Hatchet Fish in it with a Tasty roll.
-- Replacing a bulb containing Plant leafs in the Sun Temple by a Magic Soup.
-- Replacing the content of 2 bulbs that contain 2 Plant Leafs in Mithalas City by Vedha Sea Crisp.
-- Replacing one of the icecream bulb in the Ice cave by a Veggie Ice Cream.
-- Replacing one of the icecream bulb in the Ice cave by a Berry Ice Cream.
-- Replacing the Crab Cake bulb in a bulb of the Bubble Cave by a Cold Soup.
-- Replacing a bulb containing 2 plant leafs by a Zuuna's Perogi.
-- Replacing a 4 Plant Leafs bulb in the final boss area by a Vedha's Cure-All
-- Replacing a 4 Eel Oils bulb in the final boss area by a Loaf Of Life.
-- Every recipe dropped by ennemy has been replace by the ingredients of the recipe.
+- Adaptation make to checks so that every dishes are found in checks:
+  - Adding a poisonloaf in the empty urn in the cathedral right area
+  - Replacing the 4 fleas in an urn of the cathedral right area by poison soup
+  - Replacing Plant Leafs in a bulb by a Buttery Sea Loaf in the Open Water Top Left area.
+  - Replacing the open water skeleton path bulb with 2 baby deep shrimp in it with a Tasty Cake.
+  - Replacing the cathedral left area urn with a toad in it with a Rainbow Soup.
+  - Replacing the abyss right area bulb with an Hatchet Fish in it with a Tasty roll.
+  - Replacing a bulb containing Plant leafs in the Sun Temple by a Magic Soup.
+  - Replacing the content of 2 bulbs that contain 2 Plant Leafs in Mithalas City by Vedha Sea Crisp.
+  - Replacing one of the icecream bulb in the Ice cave by a Veggie Ice Cream.
+  - Replacing one of the icecream bulb in the Ice cave by a Berry Ice Cream.
+  - Replacing the Crab Cake bulb in a bulb of the Bubble Cave by a Cold Soup.
+  - Replacing a bulb containing 2 plant leafs by a Zuuna's Perogi.
+  - Replacing a 4 Plant Leafs bulb in the final boss area by a Vedha's Cure-All
+  - Replacing a 4 Eel Oils bulb in the final boss area by a Loaf Of Life.
 
 Compilation
 ===========
