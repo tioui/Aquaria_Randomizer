@@ -34,12 +34,13 @@ jobs:
           cp -rp files aquaria_randomizer/override
           cp ${{ github.workspace }}/ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
           cp -r ${{ github.workspace }}/ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
+          cp -r ${{ github.workspace }}/usersettings.xml aquaria_randomizer/
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
           name: Release-Windows-artefact
           path: ${{ github.workspace }}/aquaria_randomizer
-          retention-days: 5
+          retention-days: 1
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
@@ -63,12 +64,12 @@ jobs:
       - run: echo "Build standard packaging."
       - run: |
           cd ${{ github.workspace }}
-          mkdir aquaria_randomizer
           mkdir Releases
-          cp -p ${{ github.workspace }}/build/aquaria_randomizer aquaria_randomizer/
-          cp -rp files aquaria_randomizer/override
-          tar cfz aquaria_randomizer.tar.gz aquaria_randomizer
-          mv aquaria_randomizer.tar.gz Releases/
+          cp -p build/aquaria_randomizer Releases/
+          cp -rp files Releases/override
+          cp usersettings.xml Releases/
+          cd Releases/
+          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml
       - run: echo "Build appimage packaging."
       - run: |
           cd ${{ github.workspace }}/appimage
@@ -79,6 +80,7 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
           cp -rp ../files AppDir/usr/bin/override
+          cp -rp ../usersettings.xml AppDir/usr/bin/
           ./appimagetool-x86_64.AppImage AppDir/
           cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/
       - name: 'Upload artifact'
@@ -86,4 +88,4 @@ jobs:
         with:
           name: Release-Linux-artefact
           path: ${{ github.workspace }}/Releases
-          retention-days: 5
+          retention-days: 1
