@@ -50,7 +50,7 @@ jobs:
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
       - run: sudo apt-get update
-      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
