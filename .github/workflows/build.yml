@@ -32,12 +32,11 @@ jobs:
           mkdir aquaria_randomizer
           cp -p ${{ github.workspace }}/build/aquaria_randomizer.exe aquaria_randomizer/
           cp -rp files aquaria_randomizer/override
-          zip aquaria_randomizer.zip aquaria_randomizer
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
           name: Release-Windows-artefact
-          path: ${{ github.workspace }}/aquaria_randomizer.zip
+          path: ${{ github.workspace }}/aquaria_randomizer
           retention-days: 5
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -76,6 +75,7 @@ jobs:
           wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
+          cp -p ${{ github.workspace }}/build/aquaria_randomizer ./
           cp -rp ../files AppDir/usr/bin/override
           ./appimagetool-x86_64.AppImage AppDir/
           cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/
