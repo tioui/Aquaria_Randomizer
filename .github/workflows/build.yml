@@ -66,7 +66,7 @@ jobs:
           mkdir Releases
           cp -p ${{ github.workspace }}/build/aquaria_randomizer aquaria_randomizer/
           cp -rp files aquaria_randomizer/override
-          tar xfz aquaria_randomizer.tar.gz aquaria_randomizer
+          tar cfz aquaria_randomizer.tar.gz aquaria_randomizer
           mv aquaria_randomizer.tar.gz Releases/
       - run: echo "Build appimage packaging."
       - run: |
