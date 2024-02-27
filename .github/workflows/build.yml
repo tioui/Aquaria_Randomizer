@@ -70,6 +70,9 @@ jobs:
           cp usersettings.xml Releases/
           cd Releases/
           tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml
+          rm usersettings.xml
+          rm aquaria_randomizer
+          rm -rf override
       - run: echo "Build appimage packaging."
       - run: |
           cd ${{ github.workspace }}/appimage
