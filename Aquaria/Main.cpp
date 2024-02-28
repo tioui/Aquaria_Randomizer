@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 	extern "C" int main(int argc,char *argv[])
 	{
-        Randomizer *lRandomizer = NULL;
+        Randomizer *lRandomizer = nullptr;
         std::string dsqParam = ""; // fileSystem
         std::string extraDataDir = "";
         std::string appImageExtraDir = "";
@@ -101,7 +101,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             dsql.main();
             dsql.shutdown();
         }
-
+        delete(lRandomizer);
 		return (0);
 	}
 

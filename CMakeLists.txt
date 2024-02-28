@@ -407,7 +407,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
 	IF(NOT WIN32_TRUE)
 		set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
-	ENDIF(WIN32_TRUE)
+	ENDIF(NOT WIN32_TRUE)
 
     # !!! FIXME: probably not safe long-term.
     # CMake mailing list had this hack for getting rid of -rdynamic:

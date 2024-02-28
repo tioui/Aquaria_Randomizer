@@ -46,7 +46,7 @@ public:
     /**
      * Destructor of the object
      */
-    ~Randomizer();
+    virtual ~Randomizer();
 
     /**
      * Randomize the IngredientData using ingredient in continuity.
