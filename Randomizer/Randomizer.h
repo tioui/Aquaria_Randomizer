@@ -81,16 +81,19 @@ public:
       * @param position At what position to spawn the ingredient
       * @param times The number of ingredient to spawn
       * @param out Is the entity should spawn now.
+      * @param aRandomized Is aIngredient should be randomized before spawn (default to true)
       * @return The (last) spawned ingredient;
       */
-     Entity *spawnIngredient(const std::string &ingredient, const Vector &position, int times, int out);
+     Entity *spawnIngredient(const std::string &ingredient,
+                             const Vector &position, int times, int out, bool aRandomized = true);
 
     /**
      * Spawn a ingredient from an entity.
      * @param entity The entity that spawn the ingredient
      * @param ingredientData The ingredient to spawn
+     * @param randomized It ingredientData should be randomized before spawning (default true)
      */
-    void spawnIngredientFromEntity(Entity *aEntity, IngredientData *ingredientData);
+    void spawnIngredientFromEntity(Entity *entity, IngredientData *ingredientData, bool randomized = true);
 
 protected:
 
@@ -167,10 +170,6 @@ private:
      */
     std::vector<check_t> *checks;
 
-    /**
-     * Initialize every checks of the randomizer
-     */
-    void initializeChecks();
 
     /**
      * True if an error occured at initialization. False means every thing is fine

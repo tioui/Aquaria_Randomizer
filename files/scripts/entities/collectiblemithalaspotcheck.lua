@@ -24,7 +24,7 @@ if not v then v = {} end
 dofile("scripts/entities/collectiblechecktemplate.lua")
 
 function init(me)
-	v.commonInit(me, "Collectibles/mithalaspot", FLAG_COLLECTIBLE_LOCATION_MITHALASPOT, "collect_mithala_spot")
+	v.commonInit(me, "Collectibles/mithalaspot", FLAG_COLLECTIBLE_LOCATION_MITHALASPOT, "collect_mithalas_pot")
 end
 
 function update(me, dt)

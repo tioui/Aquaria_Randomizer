@@ -125,7 +125,6 @@ void Randomizer::initialiseIngredients() {
     ingredients->push_back({"Zuuna'sPerogi", IT_PEROGI});
 }
 
-
 /**
  * Initialize every Checks
  */
@@ -293,34 +292,34 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1261, "health_egg_4","upgrade_health_4",1, "Health"});
     checks->push_back({1262, "health_egg_5","upgrade_health_5",1, "Health"});
     checks->push_back({FLAG_COLLECTIBLE_ANEMONESEED, "collect_anemone","collectible_anemone",1, "Anemone"});
-    checks->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collect_energy_temple","collectible_energy_temple",1, "Krotite hat"});
+    checks->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collect_energy_temple","collectible_energy_temple",1, "Krotite armor"});
     checks->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue"});
     checks->push_back({FLAG_COLLECTIBLE_BANNER, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
-    checks->push_back({FLAG_COLLECTIBLE_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Bio sead"});
+    checks->push_back({FLAG_COLLECTIBLE_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Glowing seed"});
     checks->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
-    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Treasure chest"});
+    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Old container"});
     checks->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Energy boss"});
     checks->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
     checks->push_back({FLAG_COLLECTIBLE_GEAR, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
     checks->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
     checks->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll"});
-    checks->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collect_mithala_spot","collectible_mithala_spot",1, "Mithalas spot"});
+    checks->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collect_mithalas_pot","collectible_mithalas_pot",1, "Mithalas pot"});
     checks->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collect_big_seed","collectible_big_seed",1, "Big seed"});
     checks->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
-    checks->push_back({FLAG_COLLECTIBLE_SKULL, "collect_skull","collectible_skull",1, "Skull"});
+    checks->push_back({FLAG_COLLECTIBLE_SKULL, "collect_skull","collectible_skull",1, "King's Skull"});
     checks->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
     checks->push_back({FLAG_COLLECTIBLE_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Spore seed"});
-    checks->push_back({FLAG_COLLECTIBLE_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden star"});
+    checks->push_back({FLAG_COLLECTIBLE_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden starfish"});
     checks->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collect_stone_head","collectible_stone_head",1, "Stone head"});
     checks->push_back({FLAG_COLLECTIBLE_SUNKEY, "collect_sun_key","collectible_sun_key",1, "Sun key"});
     checks->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collect_trident_head","collectible_trident_head",1, "Trident"});
     checks->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
     checks->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Upside down egg"});
     checks->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collect_walker","collectible_walker",1, "Baby walker"});
-    checks->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab costume"});
+    checks->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab armor"});
     checks->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
-    checks->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan costume"});
-    checks->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutan costume"});
+    checks->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan dress"});
+    checks->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutant costume"});
     checks->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Seahorse costume"});
     checks->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Teen costume"});
     checks->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
@@ -470,7 +469,7 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
     Entity *lResult = nullptr;
     if (aRecipe->result == "PoisonLoaf") {
         lResult = spawnIngredient("RottenMeat", aPosition,
-                                             aTimes * 2, aOut);
+                                             aTimes * 2, aOut, false);
     } else {
         for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
             int lIndex = -1;
@@ -481,12 +480,12 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
             }
             assert((lIndex != -1) && "spawnRecipe: The ingredient is not valid");
             lResult = spawnIngredient(aRecipe->names.at(j).name, aPosition,
-                                      aTimes * aRecipe->names.at(j).amount, aOut);
+                                      aTimes * aRecipe->names.at(j).amount, aOut, false);
         }
         for (int j = 0; j < aRecipe->types.size(); j = j + 1) {
             ingredient_t *lIngredient = getRandomIngredient(aRecipe->types.at(j).type);
             lResult = spawnIngredient(lIngredient->name, aPosition,
-                                      aTimes * aRecipe->types.at(j).amount, aOut);
+                                      aTimes * aRecipe->types.at(j).amount, aOut, false);
         }
     }
     return lResult;
@@ -498,16 +497,23 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
  * @param aPosition At what position to spawn the ingredient
  * @param aTimes The number of ingredient to spawn
  * @param aOut Is the entity should spawn now.
+ * @param aRandomized Is aIngredient randomized before spawn (default is true)
  * @return The (last) spawned ingredient;
  */
-Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector &aPosition, int aTimes, int aOut) {
+Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector &aPosition, int aTimes, int aOut, bool aRandomized) {
     Entity *lResult = nullptr;
+    IngredientData *lIngredientData;
     std::string lIngredientName = aIngredient;
     if (nocasecmp(lIngredientName, "poultice")==0)
         lIngredientName = "LeafPoultice";
     IngredientData *lIngredientDataBeforeRandomize = dsq->continuity.getIngredientDataByName(lIngredientName);
-    IngredientData *lIngredientData = getRandomizedIngredientData(lIngredientDataBeforeRandomize);
-    if (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND ) {
+    if (aRandomized) {
+        lIngredientData = getRandomizedIngredientData(lIngredientDataBeforeRandomize);
+    } else {
+        lIngredientData = lIngredientDataBeforeRandomize;
+    }
+
+    if (nocasecmp(lIngredientData->name, "SeaLoaf")==0 || (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND)) {
         lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
     } else {
         std::vector<Recipe> lRecipes = dsq->continuity.recipes;
@@ -535,8 +541,8 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
 void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, IngredientData *aIngredientData) {
     if (aRecipe->result == "PoisonLoaf") {
         IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName("RottenMeat");
-        spawnIngredientFromEntity(aEntity, lIngredientData);
-        spawnIngredientFromEntity(aEntity, lIngredientData);
+        spawnIngredientFromEntity(aEntity, lIngredientData, false);
+        spawnIngredientFromEntity(aEntity, lIngredientData, false);
     } else {
         for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
             int lIndex = -1;
@@ -548,7 +554,7 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, Ingred
             assert((lIndex != -1) && "spawnRecipeFromEntity: The ingredient is not valid");
             IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName(aRecipe->names.at(j).name);
             for (int i = 0; i < aRecipe->names.at(j).amount; i = i + 1) {
-                spawnIngredientFromEntity(aEntity, lIngredientData);
+                spawnIngredientFromEntity(aEntity, lIngredientData, false);
             }
 
         }
@@ -556,7 +562,7 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, Ingred
             ingredient_t *lIngredient = getRandomIngredient(aRecipe->types.at(j).type);
             IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName(lIngredient->name);
             for (int i = 0; i < aRecipe->types.at(j).amount; i = i + 1) {
-                spawnIngredientFromEntity(aEntity, lIngredientData);
+                spawnIngredientFromEntity(aEntity, lIngredientData, false);
             }
         }
     }
@@ -566,10 +572,14 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, Ingred
  * Spawn a ingredient from an entity.
  * @param aEntity The entity that spawn the ingredient
  * @param aIngredientData The ingredient to spawn
+ * @param aRandomized Is aIngredientData should be randomized before spawning (default true)
  */
-void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIngredientData)
+void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIngredientData, bool aRandomized)
 {
-    IngredientData *lIngredientData = getRandomizedIngredientData(aIngredientData);
+    IngredientData *lIngredientData = aIngredientData;
+    if (aRandomized) {
+        lIngredientData = getRandomizedIngredientData(aIngredientData);
+    }
     if (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND ) {
         dsq->game->spawnIngredientFromEntityRandomized(aEntity, lIngredientData);
     } else {
@@ -658,5 +668,6 @@ check_t *Randomizer::getCheckByIndex(int aIndex) {
     }
     return lResult;
 }
+
 
 

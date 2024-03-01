@@ -28,7 +28,7 @@ local function spawnItem(me)
 	if node == 0 then
 		debugLog("COULD NOT FIND NODE!")
 	end
-	createEntity("CollectibleDumboEgg", "", node_x(node), node_y(node))
+	createEntity("CollectibleDumboEggCheck", "", node_x(node), node_y(node))
 end
 
 function init(me)

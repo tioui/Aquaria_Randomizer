@@ -3,18 +3,12 @@ Plan checks:
 	- Urns (Done)
 	- Crates (Done)
 	- Every Verse egg (Done)
-		- Song cave
-		- In the whale
-		- Kelp Forest area before the boss
-		- Veil03 Left path end -> ~4400,14500
-		- in the second Bubblecave  area
-	- Treasure (collectible)
-		- Collectible Mithala Doll (Mithalas 01 City inside home fishpass -> ~22550,21990)
-		- Collectible Urchin Costume (Turtle cave Bubble cliff -> ~14425,4090)
-		- Collectible Seedbag (Kelp Forest Sprite Cave second room -> ~7490,7668)
-		- Collectible teen costume (Sunken city Bedroom -> ~10000,4500)
+	- Treasure or collectible (Done)
 	- 3rd cooking plate wok (Simon said) (Done)
-	- Every songs
+	- Li (Not done. Need a little logic)
+	- Every songs (Not done. Need advance logic)
+	- Teleport turtle  (Not done. Need very advance logic)
+
 
 Bulb checks:
 	- 0 -> turtlecave:146 -> bulb_turtlecave -> poultice 3 ->  Turtle cave, bulb in bubble cliff
@@ -38,9 +32,9 @@ Bulb checks:
 	- 18 -> sunwormtest:39 -> bulb_sunworm_2 -> turtlesoup -> Sun Worm path, second path bulb
 	- 19 -> sunwormtest:48 -> bulb_sunworm_3 -> specialcake -> Sun Worm path, first cliff bulb
 	- 20 -> sunwormtest:45 -> bulb_sunworm_4 -> specialbulb -> Sun Worm path, second cliff bulb
-	- 21 -> trainingcave:120 -> bulb_tutorial_1 -> handroll -> Tutorial cave, center part bulb
-	- 22 -> trainingcave:126 -> bulb_tutorial_2 -> hotsoup -> Tutorial cave, right part bulb
-	- 23 -> trainingcave:129 -> bulb_tutorial_3 -> heartysoup -> Tutorial cave, bulb under the rock at the end of the path
+	- 21 -> trainingcave:120 -> bulb_tutorial_1 -> handroll -> Verse cave left area, center part bulb
+	- 22 -> trainingcave:126 -> bulb_tutorial_2 -> hotsoup -> Verse cave left area, right part bulb
+	- 23 -> trainingcave:129 -> bulb_tutorial_3 -> heartysoup -> Verse cave left area, bulb under the rock at the end of the path
 	- 24 -> abyss01:54 -> bulb_abyss_l_1 -> coldborscht -> Abyss left area, bulb in hidden path room
 	- 25 -> abyss01:60 -> bulb_abyss_l_2 -> healingpoultice 2 -> Abyss left area, bulb in the right part
 	- 26 -> abyss01:81 -> bulb_abyss_l_3 -> sightpoultice -> Abyss left area, bulb in the bottom fish pass
@@ -83,11 +77,11 @@ Bulb checks:
 	- 63 -> mainarea:215 -> bulb_home_water_6 -> hotsoup -> Home water, bulb in the bottom left room
 	- 64 -> mainarea:218 -> bulb_home_water_7 -> fishmeat 2 -> Home water, bulb close to the Naija's home
 	- 65 -> mainarea:224 -> bulb_home_water_8 -> seacake -> Home water, bulb under the rock in the left path from the tutorial cave
-	- 66 -> final02:48 -> bulb_final_l_1 -> arcanepoultice -> Final left area, one of the bulb in the top face room
-	- 67 -> final02:51 -> bulb_final_l_2 -> divinesoup -> Final left area, bulb bellow the water stream
-	- 68 -> final02:54 -> bulb_final_l_3 -> spicyroll -> Final left area, bulb in the top path to the top face room
-	- 69 -> final02:57 -> bulb_final_l_4 -> volcanoroll -> Final left area, one of the bulb in the top face room
-	- 70 -> final02:60 -> bulb_final_l_5 -> arcanepoultice -> Final left area, bulb in the bottom face room
+	- 66 -> final02:48 -> bulb_final_l_1 -> arcanepoultice -> The body left area, one of the bulb in the top face room
+	- 67 -> final02:51 -> bulb_final_l_2 -> divinesoup -> The body left area, bulb bellow the water stream
+	- 68 -> final02:54 -> bulb_final_l_3 -> spicyroll -> The body left area, bulb in the top path to the top face room
+	- 69 -> final02:57 -> bulb_final_l_4 -> volcanoroll -> The body left area, one of the bulb in the top face room
+	- 70 -> final02:60 -> bulb_final_l_5 -> arcanepoultice -> The body left area, bulb in the bottom face room
 	- 71 -> songcave:102 -> bulb_song_cave_1 -> specialbulb -> Song cave, bulb in the top left part
 	- 72 -> songcave:105 -> bulb_song_cave_2 -> handroll -> Song cave, bulb in the big anemone room
 	- 73 -> songcave:132 -> bulb_song_cave_3 -> eeloil 2 -> Song cave, bulb in the path to the singing statues
@@ -108,24 +102,24 @@ Bulb checks:
 	- 88 -> kingjellycave:21 -> bulb_king_jellyfish_cave_1 -> specialbulb -> King Jellyfish cave, bulb in the right path from King Jelly
 	- 89 -> bubblecave02:221 -> bulb_bubble_cave_1 -> coldsoup -> Bubble cave, bulb in the left cave wall
 	- 90 -> bubblecave02:230 -> bulb_bubble_cave_2 -> coldborscht -> Bubble cave, bulb in the right cave wall (behind the ice cristal)
-	- 91 -> suntemple:108 -> bulb_sun_temple_1 -> glowingegg 2 -> Sun temple, first bulb of the stage
+	- 91 -> suntemple:108 -> bulb_sun_temple_1 -> glowingegg 2 -> Sun temple, first bulb of the temple
 	- 92 -> suntemple:114 -> bulb_sun_temple_2 -> magicsoup -> Sun temple, bulb on the left part
 	- 93 -> suntemple:120 -> bulb_sun_temple_3 -> royalsoup -> Sun temple, bulb in the hidden room of the left part
 	- 94 -> suntemple:126 -> bulb_sun_temple_4 -> leadershiproll -> Sun temple, bulb in the top left part
 	- 95 -> suntemple:132 -> bulb_sun_temple_5 -> turtlesoup -> Sun temple, bulb in the top right part
 	- 96 -> suntemple:144 -> bulb_sun_temple_6 -> heartysoup -> Sun temple, bulb at the top of the high dark room
-	- 97 -> final01:87 -> bulb_final_c_1 -> Zuuna'sperogi -> Final stage main area, bulb on the main path blocking tube
-	- 98 -> final03:61 -> bulb_final_r_1 -> plumpperogi -> Final stage right area, bulb in the top path to the bottom face room
-	- 99 -> final03:64 -> bulb_final_r_2 -> arcanepoultice -> Final stage right area, bulb in the bottom face room
-	- 100 -> final03:67 -> bulb_final_r_3 -> arcanepoultice -> Final stage right area, bulb in the top face room
-	- 101 -> final04:15 -> bulb_final_b_1 -> longlifesoup -> Final stage bottom area, bulb in the Jelly Zap room
-	- 102 -> final04:12 -> bulb_final_b_2 -> spicyroll -> Final stage bottom area, bulb in the nautilus room
+	- 97 -> final01:87 -> bulb_final_c_1 -> Zuuna'sperogi -> The body main area, bulb on the main path blocking tube
+	- 98 -> final03:61 -> bulb_final_r_1 -> plumpperogi -> The body right area, bulb in the top path to the bottom face room
+	- 99 -> final03:64 -> bulb_final_r_2 -> arcanepoultice -> The body right area, bulb in the bottom face room
+	- 100 -> final03:67 -> bulb_final_r_3 -> arcanepoultice -> The body right area, bulb in the top face room
+	- 101 -> final04:15 -> bulb_final_b_1 -> longlifesoup -> The body bottom area, bulb in the Jelly Zap room
+	- 102 -> final04:12 -> bulb_final_b_2 -> spicyroll -> The body bottom area, bulb in the nautilus room
 	- 103 -> finalboss:126 -> bulb_final_boss_1 -> Vedha'sCure-All -> Final boss area, one of the bulbs in the turtle room
 	- 104 -> finalboss:129 -> bulb_final_boss_2 -> loafoflife -> Final boss area, one of the bulbs in the turtle room
 	- 105 -> finalboss:132 -> bulb_final_boss_3 -> specialbulb -> Final boss area, one of the bulbs in the turtle room
 	- 106 -> finalboss:111 -> bulb_final_boss_4 -> dumboicecream -> Final boss area, bulb in the boss second form room
-	- 107 -> naijacave:60 -> bulb_starting_cave_1 -> fishoil -> Starting cave, bulb in the skeleton room
-	- 108 -> naijacave:63 -> bulb_starting_cave_2 -> smallegg -> Starting cave, bulb in the path left of the skeleton room
+	- 107 -> naijacave:60 -> bulb_starting_cave_1 -> fishoil -> Verse cave right area, bulb in the skeleton room
+	- 108 -> naijacave:63 -> bulb_starting_cave_2 -> smallegg -> Verse cave right area, bulb in the path left of the skeleton room
 	- 109 -> abyss03:95 -> bulb_abyss_r_1 -> dumboicecream -> Abyss right area, bulb behind the rock in the bottom left room
 	- 110 -> abyss03:98 -> bulb_abyss_r_2 -> tastyroll -> Abyss right area, bulb in the middle path
 	- 111 -> abyss03:101 -> bulb_abyss_r_3 -> healingpoultice -> Abyss right area, bulb behind the rock in the middle path
@@ -172,14 +166,14 @@ Urn checks:
 	- 150 -> openwater03:144 -> urn_openwater_tr_3 -> sealoaf -> Open water top right area, one of the urns in the Mithalas exit
 
 Crates (Done):
-	- 152 -> sunkencity01:152 -> crate_sunkencity_2_1 -> fishoil 3 -> Sunken city second area, crate in the little pipe room
-	- 153 -> sunkencity01:155 -> crate_sunkencity_2_2 -> mushroom 2 -> Sunken city second area, crate close to the save cristal
-	- 154 -> sunkencity01:158 -> crate_sunkencity_2_3 -> spicymeat 2 -> Sunken city second area, crate before the bedroom
-	- 155 -> sunkencity02:39 -> crate_sunkencity_1_1 -> seacake -> Sunken city first area, crate close to the save cristal
-	- 156 -> sunkencity02:42 -> crate_sunkencity_1_2 -> plantleaf 3 -> Sunken city first area, crate in the left bottom room
+	- 152 -> sunkencity01:152 -> crate_sunkencity_2_1 -> fishoil 3 -> Sunken city left area, crate in the little pipe room
+	- 153 -> sunkencity01:155 -> crate_sunkencity_2_2 -> mushroom 2 -> Sunken city left area, crate close to the save cristal
+	- 154 -> sunkencity01:158 -> crate_sunkencity_2_3 -> spicymeat 2 -> Sunken city left area, crate before the bedroom
+	- 155 -> sunkencity02:39 -> crate_sunkencity_1_1 -> seacake -> Sunken city right area, crate close to the save cristal
+	- 156 -> sunkencity02:42 -> crate_sunkencity_1_2 -> plantleaf 3 -> Sunken city right area, crate in the left bottom room
 
 Wok (Done):
-	- 157 -> beating_simon -> wok_upgrade -> Beating Simon says
+	- 157 -> beating_simon -> wok_upgrade -> Arnassi Ruins, Beating Simon says
 
 Verse eggs (Done):
 	- 159 -> health_egg_1 -> health_upgrade_1 -> Verse egg on the sunken ship after the fish pass in the Veil bottom area
@@ -190,37 +184,38 @@ Verse eggs (Done):
 
 Treasure checks:
 	- 164 -> collect_anemone -> collectible_anemone -> Song cave, Anemone seed collectible behind of the big anemone
-	- 165 -> collect_arnassi_statue -> collectible_arnassi_statue -> Arnassi Ruins, Arnassi statue collectible
-	- 166 -> collect_mithalas_banner -> collectible_mithalas_banner -> Mithalas cathedral, Banner Collectible
-	- 167 -> collect_bio_seed -> collectible_bio_seed -> Abyss left area, Glowing seed in the small room with sun beam
-	- 168 -> collect_blackpearl -> collectible_blackpearl -> Kelp forest top right area, Black pearl behind the seawolf
-	- 169 -> collect_treasure_chest -> collectible_treasure_chest -> ???
-	- 170 -> collect_energy_boss -> collectible_energy_boss -> A collectible in the energy temple
-	- 171 -> collect_energy_statue -> collectible_energy_statue ->  A collectible in the energy temple
-	- 172 -> collect_golden_gear -> collectible_golden_gear -> ???
-	- 173 -> collect_jelly_plant -> collectible_jelly_plant -> ???
-	- 174 -> collect_mithala_doll -> collectible_mithala_doll -> Mithalas city, doll inside an home fish pass
-	- 175 -> collect_mithala_spot -> collectible_mithala_spot -> ???
-	- 176 -> collect_big_seed -> collectible_big_seed -> Collectible in the verse cave
-	- 177 -> collect_seed_bag -> collectible_seed_bag -> ???
-	- 178 -> collect_skull -> collectible_skull -> ???
-	- 179 -> collect_jelly_beacon -> collectible_jelly_beacon -> ??
-	- 180 -> collect_spore_seed -> collectible_spore_seed -> ???
-	- 181 -> collect_gold_star -> collectible_gold_star -> ???
-	- 182 -> collect_stone_head -> collectible_stone_head -> ???
-	- 183 -> collect_sun_key -> collectible_sun_key -> ???
-	- 184 -> collect_trident_head -> collectible_trident_head -> ???
-	- 185 -> collect_turtle_egg -> collectible_turtle_egg -> ???
-	- 186 -> collect_upsidedown_seed -> collectible_upsidedown_seed -> ???
-	- 187 -> collect_walker -> collectible_walker -> ???
-	- 188 -> collect_crab_costume -> collectible_crab_costume -> ???
-	- 189 -> collect_jelly_costume -> collectible_jelly_costume -> ???
-	- 190 -> collect_mithalan_costume -> collectible_mithalan_costume -> ???
-	- 191 -> collect_mutant_costume -> collectible_mutant_costume -> ???
-	- 192 -> collect_seahorse_costume -> collectible_seahorse_costume -> ???
-	- 193 -> collect_teen_costume -> collectible_teen_costume -> ???
-	- 194 -> collect_urchin_costume -> collectible_urchin_costume -> ???
-	- 195 -> collect_nautilus -> collectible_nautilus -> ???
-	- 196 -> collect_blaster -> collectible_blaster -> ???
-	- 197 -> collect_nautilus -> collectible_dumbo -> ???
-	- 198 -> collect_piranha -> collectible_piranha -> ???
+	- 165 -> collect_energy_temple -> collectible_energy_temple -> Energy temple bottom entry, Krotite armor on the altar
+	- 166 -> collect_arnassi_statue -> collectible_arnassi_statue -> Arnassi Ruins, Arnassi statue at the bottom of the right seahorse path
+	- 167 -> collect_mithalas_banner -> collectible_mithalas_banner -> Mithalas cathedral left area, Blue banner above the main entrance
+	- 168 -> collect_bio_seed -> collectible_bio_seed -> Abyss left area, Glowing seed in the small room with sun beam
+	- 169 -> collect_blackpearl -> collectible_blackpearl -> Kelp forest top right area, Black pearl behind the seawolf
+	- 170 -> collect_treasure_chest -> collectible_treasure_chest -> Kelp forest bottom right area, Old Container in the sunken ship
+	- 171 -> collect_energy_boss -> collectible_energy_boss -> Energy temple, energy boss Tooth
+	- 172 -> collect_energy_statue -> collectible_energy_statue ->  Energy temple first area, Energy Idol inside the fish pass
+	- 173 -> collect_golden_gear -> collectible_golden_gear -> Sun temple, Golden Gear where the gold lubster came from
+	- 174 -> collect_jelly_plant -> collectible_jelly_plant -> Abyss left area, Glowing Plant in the rightest hidden passage
+	- 175 -> collect_mithala_doll -> collectible_mithala_doll -> Mithalas city, Mithalan Doll inside an home fish pass
+	- 176 -> collect_mithalas_pot -> collectible_mithalas_pot -> Mithalas city, pot in the nortern passway
+	- 177 -> collect_big_seed -> collectible_big_seed -> Verse cave right area, Big Seed behind the rock in the path left of the skeleton room
+	- 178 -> collect_seed_bag -> collectible_seed_bag -> Kelp Forest Sprite Cave, Seed bag at the end of the path accross the flower tube
+	- 179 -> collect_skull -> collectible_skull -> Open water skeleton path, King skull between the streams
+	- 180 -> collect_jelly_beacon -> collectible_jelly_beacon -> Song cave, Jelly beacon at the top of the cave
+	- 181 -> collect_spore_seed -> collectible_spore_seed -> Arnassi ruins, Song plant spore on the top of the ruins
+	- 182 -> collect_gold_star -> collectible_gold_star -> The veil top right area, Golden starfish at the bottom right of the bottom pass
+	- 183 -> collect_stone_head -> collectible_stone_head -> The veil bottom area, Stone Head in the left passage to the top area
+	- 184 -> collect_sun_key -> collectible_sun_key -> Sun temple, Sun key in the secret passage in the rightest part of the temple
+	- 185 -> collect_trident_head -> collectible_trident_head -> Mithalas cathedral left area, trident head behind the spirit cristal
+	- 186 -> collect_turtle_egg -> collectible_turtle_egg -> Turtle cave, a Turtle Egg behind the blocking rocks
+	- 187 -> collect_upsidedown_seed -> collectible_upsidedown_seed -> Egg from an upside down jelly
+	- 188 -> collect_walker -> collectible_walker -> Kelp forest bottom left area, Walker baby at the end of the spirit cristal path
+	- 189 -> collect_crab_costume -> collectible_crab_costume -> Arnassi ruins, get a Crab armor by beating the Crabbius Maximus boss
+	- 190 -> collect_jelly_costume -> collectible_jelly_costume -> Abyss left area, Jellyfish Costume after beating King optimus jelly prime
+	- 191 -> collect_mithalan_costume -> collectible_mithalan_costume -> Mithalas cathedral right area, Mithalan Dress in the book shelf after the current
+	- 192 -> collect_mutant_costume -> collectible_mutant_costume -> The body bottom area, Mutant Armor in the secret passage (look at your map)
+	- 193 -> collect_seahorse_costume -> collectible_seahorse_costume -> Arnassi ruins, Seahorse Costume by beating the race
+	- 194 -> collect_teen_costume -> collectible_teen_costume -> Sunken city left area, Girl Costume in the bed room
+	- 195 -> collect_urchin_costume -> collectible_urchin_costume -> Turtle cave, Urchin costume at the very top bubble.
+	- 196 -> collect_nautilus -> collectible_nautilus -> Home water, Baby Nautilus by beating Nautilus Prime
+	- 197 -> collect_blaster -> collectible_blaster -> Energy temple, passage after the boss, blaster egg in the locked room
+	- 198 -> collect_nautilus -> collectible_dumbo -> Octocave, Dumbo Egg by beating the Octopus Prime
+	- 199 -> collect_piranha -> collectible_piranha -> Mermog cave, Baby Piranha by beating Mermog

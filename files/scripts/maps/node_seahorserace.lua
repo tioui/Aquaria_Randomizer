@@ -143,9 +143,9 @@ local function won(me)
 	
 	
 	if v.raceTime < getFlag(FLAG_SEAHORSETIMETOBEAT) then
-		if isFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME, 0) and getEntity("collectibleseahorsecostume") == 0 then
+		if isFlag(FLAG_COLLECTIBLE_LOCATION_SEAHORSECOSTUME, 0) and getEntity("collectibleseahorsecostumecheck") == 0 then
 			local nd = getNode("armorloc")
-			local e = createEntity("collectibleseahorsecostume", "", node_x(nd), node_y(nd))
+			local e = createEntity("collectibleseahorsecostumecheck", "", node_x(nd), node_y(nd))
 			entity_alpha(e, 0)
 			cam_toEntity(e)
 			watch(0.5)

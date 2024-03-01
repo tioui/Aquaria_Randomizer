@@ -14,7 +14,7 @@ class Randomizer {
             this.ingredientReplacement.push(i);
         }
         this.checksReplacement = [];
-        for(let i = 0; i < 198; i = i + 1) {
+        for(let i = 0; i < 199; i = i + 1) {
             this.checksReplacement.push(i);
         }
     }
@@ -57,6 +57,8 @@ class Randomizer {
 
 }
 
+
+
 /**
  * Generate a Randomizer JSON to download
  * @param aPage The web page used to start the download
@@ -77,3 +79,5 @@ function generateRandomizer(aPage) {
     aPage.setAttribute("href", "data:"+data);
     aPage.setAttribute("download", "aquaria_randomized.json");
 }
+
+

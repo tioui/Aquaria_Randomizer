@@ -36,6 +36,7 @@ function v.commonInit(me, gfx, flag, check)
 		entity_alpha(me, 0, 0)
 	else
 		debugLog("setting state not collected")
+		entity_setState(me, STATE_IDLE)
 
 	end	
 	
@@ -60,6 +61,8 @@ function v.commonUpdate(me, dt)
 				e = getNextEntity()
 			end
 		end
+	end
+	if not entity_isState(me, STATE_COLLECT) and not entity_isState(me, STATE_COLLECTED) and isFlag(v.myFlag, 0) then
 		if entity_isEntityInRange(me, getNaija(), 96) then
 			entity_setState(me, STATE_COLLECT, 6)
 		end
