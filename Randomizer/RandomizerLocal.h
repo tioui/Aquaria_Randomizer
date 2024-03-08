@@ -31,7 +31,6 @@ public:
     */
     void activateCheck(std::string check) override;
 
-
 private:
 
     /**

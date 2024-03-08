@@ -154,11 +154,11 @@ Vector savesz;
 #ifdef AQUARIA_DEMO
 	#define APPNAME "Aquaria Demo"
 #else
-	#define APPNAME "Aquaria"
+	#define APPNAME "Aquaria_Randomizer"
 #endif
 
-DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir, Randomizer *aRandomizer)
-: Core(fileSystem, extraDataDir, appImageDir, LR_MAX, APPNAME, PARTICLE_AMOUNT_DEFAULT, "Aquaria")
+DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir, const std::string& userDataSubFolder, Randomizer *aRandomizer)
+: Core(fileSystem, extraDataDir, appImageDir, LR_MAX, APPNAME, PARTICLE_AMOUNT_DEFAULT, userDataSubFolder)
 {
 	dsq = this;
 

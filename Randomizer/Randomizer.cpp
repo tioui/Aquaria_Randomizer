@@ -297,8 +297,8 @@ void Randomizer::initialiseChecks(){
     checks->push_back({FLAG_COLLECTIBLE_BANNER, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
     checks->push_back({FLAG_COLLECTIBLE_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Glowing seed"});
     checks->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
-    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Old container"});
-    checks->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Energy boss"});
+    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Odd container"});
+    checks->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Tooth"});
     checks->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
     checks->push_back({FLAG_COLLECTIBLE_GEAR, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
     checks->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
@@ -308,20 +308,20 @@ void Randomizer::initialiseChecks(){
     checks->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
     checks->push_back({FLAG_COLLECTIBLE_SKULL, "collect_skull","collectible_skull",1, "King's Skull"});
     checks->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
-    checks->push_back({FLAG_COLLECTIBLE_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Spore seed"});
+    checks->push_back({FLAG_COLLECTIBLE_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Song plant spore"});
     checks->push_back({FLAG_COLLECTIBLE_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden starfish"});
     checks->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collect_stone_head","collectible_stone_head",1, "Stone head"});
     checks->push_back({FLAG_COLLECTIBLE_SUNKEY, "collect_sun_key","collectible_sun_key",1, "Sun key"});
     checks->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collect_trident_head","collectible_trident_head",1, "Trident"});
     checks->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
-    checks->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Upside down egg"});
+    checks->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Jelly egg"});
     checks->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collect_walker","collectible_walker",1, "Baby walker"});
     checks->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab armor"});
     checks->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
     checks->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan dress"});
     checks->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutant costume"});
-    checks->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Seahorse costume"});
-    checks->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Teen costume"});
+    checks->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Arnassi Armor"});
+    checks->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Girl costume"});
     checks->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
     checks->push_back({FLAG_PET_NAUTILUS, "collect_nautilus","collectible_nautilus",1, "Baby nautilus"});
     checks->push_back({FLAG_PET_BLASTER, "collect_blaster","collectible_blaster",1, "Baby blaster"});
@@ -667,6 +667,23 @@ check_t *Randomizer::getCheckByIndex(int aIndex) {
         lResult = &(checks->at(aIndex));
     }
     return lResult;
+}
+
+/**
+ * Assign the unique ID for the Randomizer
+ * @param aUid The ID of the Randomizer
+ */
+void Randomizer::setUid(std::string aUid) {
+    uid = std::move(aUid);
+}
+
+
+/**
+ * The unique ID for the Randomizer
+ * @return The ID of the Randomizer
+ */
+std::string Randomizer::getUid() {
+    return uid;
 }
 
 

@@ -95,8 +95,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #endif
 
-        {
-            DSQ dsql(dsqParam, extraDataDir, appImageExtraDir, lRandomizer);
+        if (lRandomizer){
+            DSQ dsql(dsqParam, extraDataDir, appImageExtraDir,
+                     "Aquaria_Randomizer_" + lRandomizer->getUid(), lRandomizer);
             dsql.init();
             dsql.main();
             dsql.shutdown();

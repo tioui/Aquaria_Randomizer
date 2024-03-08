@@ -26,6 +26,322 @@
         <div class="text-center">
             <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Generate...</a>
         </div>
+
+    </div>
+    <div class="container" style="width: 540px;">
+        <h1 class="text-center">Tips</h1>
+        <div class="text-center">
+            <p>Load your json file and select an item to know where you can find it.</p>
+            <select id="tips_item">
+                <option value="collectible_anemone">Collectible Anemone</option>
+                <option value="collectible_arnassi_statue">Collectible Arnassi statue</option>
+                <option value="collectible_big_seed">Collectible Big seed</option>
+                <option value="collectible_bio_seed">Collectible Glowing seed</option>
+                <option value="collectible_blackpearl">Collectible Black pearl</option>
+                <option value="collectible_energy_boss">Collectible Tooth</option>
+                <option value="collectible_energy_statue">Collectible Energy Idol</option>
+                <option value="collectible_gold_star">Collectible Golden starfish</option>
+                <option value="collectible_golden_gear">Collectible gear</option>
+                <option value="collectible_jelly_beacon">Collectible Jelly beacon</option>
+                <option value="collectible_jelly_plant">Collectible Glowing plant</option>
+                <option value="collectible_mithala_doll">Collectible Mithala doll</option>
+                <option value="collectible_mithalas_banner">Collectible Mithalan banner</option>
+                <option value="collectible_mithalas_pot">Collectible Mithalas pot</option>
+                <option value="collectible_seed_bag">Collectible Seed bag</option>
+                <option value="collectible_skull">Collectible King's Skull</option>
+                <option value="collectible_spore_seed">Collectible Song plant spore</option>
+                <option value="collectible_stone_head">Collectible Stone head</option>
+                <option value="collectible_sun_key">Collectible Sun key</option>
+                <option value="collectible_treasure_chest">Collectible Odd container</option>
+                <option value="collectible_trident_head">Collectible Trident</option>
+                <option value="collectible_turtle_egg">Collectible Turtle egg</option>
+                <option value="collectible_upsidedown_seed">Collectible Jelly egg</option>
+                <option value="collectible_crab_costume">Crab armor</option>
+                <option value="collectible_energy_temple">Krotite armor</option>
+                <option value="collectible_jelly_costume">Jelly costume</option>
+                <option value="collectible_mithalan_costume">Mithalan dress</option>
+                <option value="collectible_mutant_costume">Mutant armor</option>
+                <option value="collectible_seahorse_costume">Arnassi Armor</option>
+                <option value="collectible_teen_costume">Girl costume</option>
+                <option value="collectible_urchin_costume">Urchin costume</option>
+                <option value="collectible_walker">Baby walker</option>
+                <option value="collectible_blaster">Baby blaster</option>
+                <option value="collectible_dumbo">Baby dumbo</option>
+                <option value="collectible_nautilus">Baby nautilus</option>
+                <option value="collectible_piranha">Baby piranha</option>
+                <option value="ingredient_Vedha'sCure-All">Vedha's Cure-All</option>
+                <option value="ingredient_Zuuna'sperogi">Zuuna's perogi</option>
+                <option value="ingredient_arcanepoultice">Arcane poultice</option>
+                <option value="ingredient_berryicecream">Berry ice cream</option>
+                <option value="ingredient_butterysealoaf">Buttery sea loaf</option>
+                <option value="ingredient_coldborscht">Cold borscht</option>
+                <option value="ingredient_coldsoup">Cold soup</option>
+                <option value="ingredient_crabcake">Crab cake</option>
+                <option value="ingredient_divinesoup">Divine soup</option>
+                <option value="ingredient_dumboicecream">Dumbo ice cream</option>
+                <option value="ingredient_eeloil">Eel oil</option>
+                <option value="ingredient_fishmeat">Fish meat</option>
+                <option value="ingredient_fishoil">Fish oil</option>
+                <option value="ingredient_glowingegg">Glowing egg</option>
+                <option value="ingredient_handroll">Hand roll</option>
+                <option value="ingredient_healingpoultice">Healing poultice</option>
+                <option value="ingredient_heartysoup">Hearty soup</option>
+                <option value="ingredient_hotborscht">Hot borscht</option>
+                <option value="ingredient_hotsoup">Hot soup</option>
+                <option value="ingredient_icecream">Ice cream</option>
+                <option value="ingredient_leadershiproll">Leadership roll</option>
+                <option value="ingredient_leafpoultice">Leaf poultice</option>
+                <option value="ingredient_leechingpoultice">Leeching poultice</option>
+                <option value="ingredient_legendarycake">Legendary cake</option>
+                <option value="ingredient_loafoflife">Loaf of life</option>
+                <option value="ingredient_longlifesoup">Long life soup</option>
+                <option value="ingredient_magicsoup">Magic soup</option>
+                <option value="ingredient_mushroom">Mushroom</option>
+                <option value="ingredient_perogi">Perogi</option>
+                <option value="ingredient_plantleaf">Plant leaf</option>
+                <option value="ingredient_plumpperogi">Plump perogi</option>
+                <option value="ingredient_poisonloaf">Poison loaf</option>
+                <option value="ingredient_poisonsoup">Poison soup</option>
+                <option value="ingredient_rainbowmushroom">Rainbow mushroom</option>
+                <option value="ingredient_rainbowsoup">Rainbow soup</option>
+                <option value="ingredient_redberry">Red berry</option>
+                <option value="ingredient_redbulb">Red bulb</option>
+                <option value="ingredient_rottencake">Rotten cake</option>
+                <option value="ingredient_rottenloaf">Rotten loaf</option>
+                <option value="ingredient_rottenmeat">Rotten meat</option>
+                <option value="ingredient_royalsoup">Royal soup</option>
+                <option value="ingredient_seacake">Sea cake</option>
+                <option value="ingredient_sealoaf">Sea loaf</option>
+                <option value="ingredient_sharkfinsoup">Shark fin soup</option>
+                <option value="ingredient_sightpoultice">Sight poultice</option>
+                <option value="ingredient_smallbone">Small bone</option>
+                <option value="ingredient_smallegg">Small egg</option>
+                <option value="ingredient_smalltentacle">Small tentacle</option>
+                <option value="ingredient_specialbulb">Special bulb</option>
+                <option value="ingredient_specialcake">Special cake</option>
+                <option value="ingredient_spicymeat">Spicy meat</option>
+                <option value="ingredient_spicyroll">Spicy roll</option>
+                <option value="ingredient_spicysoup">Spicy soup</option>
+                <option value="ingredient_spiderroll">Spider roll</option>
+                <option value="ingredient_swampcake">Swamp cake</option>
+                <option value="ingredient_tastycake">Tasty cake</option>
+                <option value="ingredient_tastyroll">Tasty roll</option>
+                <option value="ingredient_toughcake">Tough cake</option>
+                <option value="ingredient_turtlesoup">Turtle soup</option>
+                <option value="ingredient_vedhaseacrisp">Vedha sea crisp</option>
+                <option value="ingredient_veggiecake">Veggie cake</option>
+                <option value="ingredient_veggieicecream">Veggie ice cream</option>
+                <option value="ingredient_veggiesoup">Veggie soup</option>
+                <option value="ingredient_volcanoroll">Volcano roll</option>
+                <option value="upgrade_health">Health upgrade</option>
+                <option value="upgrade_wok">Wok</option>
+            </select>
+            <br/>
+            <input type="file" id="jsonfile" value="Import" />
+
+            <br/>
+            <a href="#" class="btn btn-primary" onclick="show_tips();">Show tips...</a>
+            <br/>
+            <span name="check_tips" id="bulb_turtlecave" style="display: none">Turtle cave, bulb in bubble cliff.</span>
+            <span name="check_tips" id="bulb_openwater_tl_1" style="display: none">Open water top left area, bulb under the rock in the right path.</span>
+            <span name="check_tips" id="bulb_openwater_tl_2" style="display: none">Open water top left area, bulb under the rock in the left path.</span>
+            <span name="check_tips" id="bulb_openwater_tl_3" style="display: none">Open water top left area, bulb to the right of the save cristal.</span>
+            <span name="check_tips" id="bulb_openwater_tr_1" style="display: none">Open water top right area, bulb in the small path before Mithalas.</span>
+            <span name="check_tips" id="bulb_openwater_tr_2" style="display: none">Open water top right area, bulb in the path from the left entrance.</span>
+            <span name="check_tips" id="bulb_openwater_tr_3" style="display: none">Open water top right area, bulb in the clearing close to the bottom exit.</span>
+            <span name="check_tips" id="bulb_openwater_tr_4" style="display: none">Open water top right area, bulb in the big clearing close to the save cristal.</span>
+            <span name="check_tips" id="bulb_openwater_tr_5" style="display: none">Open water top right area, bulb in the big clearing to the top exit.</span>
+            <span name="check_tips" id="bulb_openwater_tr_6" style="display: none">Open water top right area, bulb in the turtle room.</span>
+            <span name="check_tips" id="bulb_openwater_bl_1" style="display: none">Open water bottom left area, bulb inside the downest fish pass.</span>
+            <span name="check_tips" id="bulb_openwater_bl_2" style="display: none">Open water bottom left area, bulb behind the chomper fish.</span>
+            <span name="check_tips" id="bulb_skeleton_path_1" style="display: none">Open water skeleton path, bulb close to the right exit.</span>
+            <span name="check_tips" id="bulb_skeleton_path_2" style="display: none">Open water skeleton path, bulb behind the chomper fish.</span>
+            <span name="check_tips" id="bulb_arnassi_1" style="display: none">Arnassi Ruins, bulb in the right part.</span>
+            <span name="check_tips" id="bulb_arnassi_2" style="display: none">Arnassi Ruins, bulb in the left part.</span>
+            <span name="check_tips" id="bulb_arnassi_3" style="display: none">Arnassi Ruins, bulb in the center part.</span>
+            <span name="check_tips" id="bulb_sunworm_1" style="display: none">Sun Worm path, first path bulb.</span>
+            <span name="check_tips" id="bulb_sunworm_2" style="display: none">Sun Worm path, second path bulb.</span>
+            <span name="check_tips" id="bulb_sunworm_3" style="display: none">Sun Worm path, first cliff bulb.</span>
+            <span name="check_tips" id="bulb_sunworm_4" style="display: none">Sun Worm path, second cliff bulb.</span>
+            <span name="check_tips" id="bulb_tutorial_1" style="display: none">Verse cave left area, center part bulb.</span>
+            <span name="check_tips" id="bulb_tutorial_2" style="display: none">Verse cave left area, right part bulb.</span>
+            <span name="check_tips" id="bulb_tutorial_3" style="display: none">Verse cave left area, bulb under the rock at the end of the path.</span>
+            <span name="check_tips" id="bulb_abyss_l_1" style="display: none">Abyss left area, bulb in hidden path room.</span>
+            <span name="check_tips" id="bulb_abyss_l_2" style="display: none">Abyss left area, bulb in the right part.</span>
+            <span name="check_tips" id="bulb_abyss_l_3" style="display: none">Abyss left area, bulb in the bottom fish pass.</span>
+            <span name="check_tips" id="bulb_energy_temple_1_1" style="display: none">Energy temple first area, bulb in the bottom room blocked by a rock.</span>
+            <span name="check_tips" id="bulb_energy_temple_2_1" style="display: none">Energy temple second area, bulb under the rock.</span>
+            <span name="check_tips" id="bulb_energy_temple_3_1" style="display: none">Energy temple third area, bulb in the bottom path.</span>
+            <span name="check_tips" id="bulb_mithalas_city_01" style="display: none">Mithalas city, one of the bulbs in the left city part.</span>
+            <span name="check_tips" id="bulb_mithalas_city_02" style="display: none">Mithalas city, bulb in the right part.</span>
+            <span name="check_tips" id="bulb_mithalas_city_03" style="display: none">Mithalas city, one of the bulbs at the end of the top path.</span>
+            <span name="check_tips" id="bulb_mithalas_city_04" style="display: none">Mithalas city, bulb at the top of the city.</span>
+            <span name="check_tips" id="bulb_mithalas_city_05" style="display: none">Mithalas city, one of the bulb in a broken home.</span>
+            <span name="check_tips" id="bulb_mithalas_city_06" style="display: none">Mithalas city, one of the bulbs in the left city part.</span>
+            <span name="check_tips" id="bulb_mithalas_city_07" style="display: none">Mithalas city, bulb in the top path.</span>
+            <span name="check_tips" id="bulb_mithalas_city_08" style="display: none">Mithalas city, bulb in the bottom left part.</span>
+            <span name="check_tips" id="bulb_mithalas_city_09" style="display: none">Mithalas city, bulb in one of the homes.</span>
+            <span name="check_tips" id="bulb_mithalas_city_10" style="display: none">Mithalas city, bulb in one of the homes.</span>
+            <span name="check_tips" id="bulb_mithalas_city_11" style="display: none">Mithalas city, one of the bulbs at the end of the top path.</span>
+            <span name="check_tips" id="bulb_mithalas_city_12" style="display: none">Mithalas city, one of the bulb in a broken home.</span>
+            <span name="check_tips" id="bulb_cathedral_l_2" style="display: none">Mithalas cathedral left area, bulb in the flesh hole.</span>
+            <span name="check_tips" id="bulb_boilerroom_1" style="display: none">Sunken city, bulb on the top of the boss area (boiler room).</span>
+            <span name="check_tips" id="bulb_forest_tl_1" style="display: none">Kelp Forest top left area, bulb in the bottom left clearing.</span>
+            <span name="check_tips" id="bulb_forest_tl_2" style="display: none">Kelp Forest top left area, bulb in the path down from the top left clearing.</span>
+            <span name="check_tips" id="bulb_forest_tl_3" style="display: none">Kelp Forest top left area, bulb in the top left clearing.</span>
+            <span name="check_tips" id="bulb_forest_tl_4" style="display: none">Kelp Forest top left area, bulb in the center path.</span>
+            <span name="check_tips" id="bulb_forest_tr_1" style="display: none">Kelp Forest top right area, bulb under the rock in the right path.</span>
+            <span name="check_tips" id="bulb_forest_tr_2" style="display: none">Kelp Forest top right area, bulb at the left of the center clearing.</span>
+            <span name="check_tips" id="bulb_forest_tr_3" style="display: none">Kelp Forest top right area, bulb in the top fish pass.</span>
+            <span name="check_tips" id="bulb_forest_tr_4" style="display: none">Kelp Forest top right area, bulb in the left path's big room.</span>
+            <span name="check_tips" id="bulb_forest_tr_5" style="display: none">Kelp Forest top right area, bulb in the left path's small room.</span>
+            <span name="check_tips" id="bulb_forest_tr_6" style="display: none">Kelp Forest top right area, bulb at the top of the center clearing.</span>
+            <span name="check_tips" id="bulb_forest_bl_1" style="display: none">Kelp Forest bottom left area, bulb close to the spirit cristals.</span>
+            <span name="check_tips" id="bulb_forest_boss_room_1" style="display: none">Kelp Forest boss room, bulb at the bottom of the area.</span>
+            <span name="check_tips" id="bulb_forest_sprite_cave_1" style="display: none">Kelp Forest sprite cave, bulb inside the fish pass.</span>
+            <span name="check_tips" id="bulb_forest_sprite_cave_2" style="display: none">Kelp Forest sprite cave, bulb in the second room.</span>
+            <span name="check_tips" id="bulb_home_water_1" style="display: none">Home water, bulb below the grouper fish.</span>
+            <span name="check_tips" id="bulb_home_water_2" style="display: none">Home water, bulb in the path bellow Nautilus Prime.</span>
+            <span name="check_tips" id="bulb_home_water_3" style="display: none">Home water, bulb in the little room above the grouper fish.</span>
+            <span name="check_tips" id="bulb_home_water_4" style="display: none">Home water, bulb in the end of the left path from the tutorial cave.</span>
+            <span name="check_tips" id="bulb_home_water_5" style="display: none">Home water, bulb in the top left path.</span>
+            <span name="check_tips" id="bulb_home_water_6" style="display: none">Home water, bulb in the bottom left room.</span>
+            <span name="check_tips" id="bulb_home_water_7" style="display: none">Home water, bulb close to the Naija's home.</span>
+            <span name="check_tips" id="bulb_home_water_8" style="display: none">Home water, bulb under the rock in the left path from the verse cave.</span>
+            <span name="check_tips" id="bulb_final_l_1" style="display: none">The body left area, one of the bulb in the top face room.</span>
+            <span name="check_tips" id="bulb_final_l_2" style="display: none">The body left area, bulb bellow the water stream.</span>
+            <span name="check_tips" id="bulb_final_l_3" style="display: none">The body left area, bulb in the top path to the top face room.</span>
+            <span name="check_tips" id="bulb_final_l_4" style="display: none">The body left area, one of the bulb in the top face room.</span>
+            <span name="check_tips" id="bulb_final_l_5" style="display: none">The body left area, bulb in the bottom face room.</span>
+            <span name="check_tips" id="bulb_song_cave_1" style="display: none">Song cave, bulb in the top left part.</span>
+            <span name="check_tips" id="bulb_song_cave_2" style="display: none">Song cave, bulb in the big anemone room.</span>
+            <span name="check_tips" id="bulb_song_cave_3" style="display: none">Song cave, bulb in the path to the singing statues.</span>
+            <span name="check_tips" id="bulb_song_cave_4" style="display: none">Song cave, bulb under the rock in the path to the singing statues.</span>
+            <span name="check_tips" id="bulb_song_cave_5" style="display: none">Song cave, bulb under the rock close to the song door.</span>
+            <span name="check_tips" id="bulb_veil_tl_1" style="display: none">The veil top left area, bulb hidden behind the blocking rock.</span>
+            <span name="check_tips" id="bulb_veil_tl_2" style="display: none">The veil top left area, bulb inside the fish pass.</span>
+            <span name="check_tips" id="bulb_veil_tl_3" style="display: none">The veil top left area, bulb under the rock in the top right path.</span>
+            <span name="check_tips" id="bulb_veil_tr_1" style="display: none">The veil top right area, bulb in the middle of the wall jump cliff.</span>
+            <span name="check_tips" id="bulb_veil_tr_2" style="display: none">The veil top right area, bulb in the top of the fall.</span>
+            <span name="check_tips" id="bulb_veil_b_1" style="display: none">The veil bottom area, bulb in the spirit path.</span>
+            <span name="check_tips" id="bulb_veil_b_2" style="display: none">The veil bottom area, bulb in the left path.</span>
+            <span name="check_tips" id="bulb_ice_cave_1" style="display: none">Ice cave, bulb in the room to the right.</span>
+            <span name="check_tips" id="bulb_ice_cave_2" style="display: none">Ice cave, one of the bulbs in the top exit room.</span>
+            <span name="check_tips" id="bulb_ice_cave_3" style="display: none">Ice cave, one of the bulbs in the top exit room.</span>
+            <span name="check_tips" id="bulb_ice_cave_4" style="display: none">Ice cave, one of the bulbs in the top exit room.</span>
+            <span name="check_tips" id="bulb_ice_cave_5" style="display: none">Ice cave, bulb in the left room.</span>
+            <span name="check_tips" id="bulb_king_jellyfish_cave_1" style="display: none">King Jellyfish cave, bulb in the right path from King Jelly.</span>
+            <span name="check_tips" id="bulb_bubble_cave_1" style="display: none">Bubble cave, bulb in the left cave wall.</span>
+            <span name="check_tips" id="bulb_bubble_cave_2" style="display: none">Bubble cave, bulb in the right cave wall (behind the ice cristal).</span>
+            <span name="check_tips" id="bulb_sun_temple_1" style="display: none">Sun temple, first bulb of the temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_2" style="display: none">Sun temple, bulb on the left part.</span>
+            <span name="check_tips" id="bulb_sun_temple_3" style="display: none">Sun temple, bulb in the hidden room of the left part.</span>
+            <span name="check_tips" id="bulb_sun_temple_4" style="display: none">Sun temple, bulb in the top left part.</span>
+            <span name="check_tips" id="bulb_sun_temple_5" style="display: none">Sun temple, bulb in the top right part.</span>
+            <span name="check_tips" id="bulb_sun_temple_6" style="display: none">Sun temple, bulb at the top of the high dark room.</span>
+            <span name="check_tips" id="bulb_final_c_1" style="display: none">The body main area, bulb on the main path blocking tube.</span>
+            <span name="check_tips" id="bulb_final_r_1" style="display: none">The body right area, bulb in the top path to the bottom face room.</span>
+            <span name="check_tips" id="bulb_final_r_2" style="display: none">The body right area, bulb in the bottom face room.</span>
+            <span name="check_tips" id="bulb_final_r_3" style="display: none">The body right area, bulb in the top face room.</span>
+            <span name="check_tips" id="bulb_final_b_1" style="display: none">The body bottom area, bulb in the Jelly Zap room.</span>
+            <span name="check_tips" id="bulb_final_b_2" style="display: none">The body bottom area, bulb in the nautilus room.</span>
+            <span name="check_tips" id="bulb_final_boss_1" style="display: none">Final boss area, one of the bulbs in the turtle room.</span>
+            <span name="check_tips" id="bulb_final_boss_2" style="display: none">Final boss area, one of the bulbs in the turtle room.</span>
+            <span name="check_tips" id="bulb_final_boss_3" style="display: none">Final boss area, one of the bulbs in the turtle room.</span>
+            <span name="check_tips" id="bulb_final_boss_4" style="display: none">Final boss area, bulb in the boss second form room.</span>
+            <span name="check_tips" id="bulb_starting_cave_1" style="display: none">Verse cave, bulb in the skeleton room.</span>
+            <span name="check_tips" id="bulb_starting_cave_2" style="display: none">Verse cave, bulb in the path left of the skeleton room.</span>
+            <span name="check_tips" id="bulb_abyss_r_1" style="display: none">Abyss right area, bulb behind the rock in the bottom left room.</span>
+            <span name="check_tips" id="bulb_abyss_r_2" style="display: none">Abyss right area, bulb in the middle path.</span>
+            <span name="check_tips" id="bulb_abyss_r_3" style="display: none">Abyss right area, bulb behind the rock in the middle path.</span>
+            <span name="check_tips" id="bulb_abyss_r_4" style="display: none">Abyss right area, bulb in the left green room.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_1" style="display: none">Cathedral underground, bulb in the center part.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_2" style="display: none">Cathedral underground, one of the bulbs in the top left part.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_3" style="display: none">Cathedral underground, one of the bulbs in the top left part.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_4" style="display: none">Cathedral underground, one of the bulbs in the top left part.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_5" style="display: none">Cathedral underground, bulb close to the save cristal.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_6" style="display: none">Cathedral underground, bulb in the bottom right path.</span>
+            <span name="check_tips" id="bulb_naija_home_1" style="display: none">Naija's home, bulb after the energy door.</span>
+            <span name="check_tips" id="bulb_naija_home_2" style="display: none">Naija's home, bulb under the rock at the right of the main path.</span>
+            <span name="check_tips" id="bulb_mermog_cave_1" style="display: none">Mermog cave, bulb in the left part of the cave.</span>
+            <span name="check_tips" id="bulb_octo_cave_1" style="display: none">Octopus cave, bulb in the path below the octopus cave path.</span>
+            <span name="check_tips" id="urn_mithalas_city_1" style="display: none">Mithalas city, urn in one of the homes.</span>
+            <span name="check_tips" id="urn_mithalas_city_2" style="display: none">Mithalas city, urn in one of the homes.</span>
+            <span name="check_tips" id="urn_mithalas_city_3" style="display: none">Mithalas city, one of the urns in the city reserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_4" style="display: none">Mithalas city, one of the urns in the city reserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_5" style="display: none">Mithalas city, one of the urns in the city reserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_6" style="display: none">Mithalas city, urn in the cathedral flower tube entrance.</span>
+            <span name="check_tips" id="urn_mithalas_city_7" style="display: none">Mithalas city, urn inside a home fish pass.</span>
+            <span name="check_tips" id="urn_cathedral_l_1" style="display: none">Mithalas cathedral left area, urn in the bedroom.</span>
+            <span name="check_tips" id="urn_cathedral_l_2" style="display: none">Mithalas cathedral left area, one of the urns of the single lamp path.</span>
+            <span name="check_tips" id="urn_cathedral_l_3" style="display: none">Mithalas cathedral left area, one of the urns of the single lamp path.</span>
+            <span name="check_tips" id="urn_cathedral_l_4" style="display: none">Mithalas cathedral left area, urn in the bottom room.</span>
+            <span name="check_tips" id="urn_cathedral_l_5" style="display: none">Mithalas cathedral left area, an urn on the entrance path.</span>
+            <span name="check_tips" id="urn_cathedral_l_6" style="display: none">Mithalas cathedral left area, an urn on the entrance path.</span>
+            <span name="check_tips" id="urn_cathedral_r_01" style="display: none">Mithalas cathedral right area, one of the urns in the top right room.</span>
+            <span name="check_tips" id="urn_cathedral_r_02" style="display: none">Mithalas cathedral right area, one of the urns in the top right room.</span>
+            <span name="check_tips" id="urn_cathedral_r_03" style="display: none">Mithalas cathedral right area, one of the urns in the top right room.</span>
+            <span name="check_tips" id="urn_cathedral_r_04" style="display: none">Mithalas cathedral right area, urn in the flesh room with fleas.</span>
+            <span name="check_tips" id="urn_cathedral_r_05" style="display: none">Mithalas cathedral right area, one of the urns in the bottom right path.</span>
+            <span name="check_tips" id="urn_cathedral_r_06" style="display: none">Mithalas cathedral right area, one of the urns in the bottom right path.</span>
+            <span name="check_tips" id="urn_cathedral_r_07" style="display: none">Mithalas cathedral right area, urn behind the flesh vein.</span>
+            <span name="check_tips" id="urn_cathedral_r_08" style="display: none">Mithalas cathedral right area, urn in the top right path.</span>
+            <span name="check_tips" id="urn_cathedral_r_09" style="display: none">Mithalas cathedral right area, one of the urns in the path behind the flesh vein.</span>
+            <span name="check_tips" id="urn_cathedral_r_10" style="display: none">Mithalas cathedral right area, one of the urns in the path behind the flesh vein.</span>
+            <span name="check_tips" id="urn_cathedral_r_11" style="display: none">Mithalas cathedral right area, one of the urns in the path behind the flesh vein.</span>
+            <span name="check_tips" id="urn_cathedral_r_12" style="display: none">Mithalas cathedral right area, one of the urns in the top right room.</span>
+            <span name="check_tips" id="urn_openwater_tr_1" style="display: none">Open water top right area, one of the urns in the Mithalas exit.</span>
+            <span name="check_tips" id="urn_openwater_tr_2" style="display: none">Open water top right area, one of the urns in the Mithalas exit.</span>
+            <span name="check_tips" id="urn_openwater_tr_3" style="display: none">Open water top right area, one of the urns in the Mithalas exit.</span>
+            <span name="check_tips" id="crate_sunkencity_2_1" style="display: none">Sunken city left area, crate in the little pipe room.</span>
+            <span name="check_tips" id="crate_sunkencity_2_2" style="display: none">Sunken city left area, crate close to the save cristal.</span>
+            <span name="check_tips" id="crate_sunkencity_2_3" style="display: none">Sunken city left area, crate before the bedroom.</span>
+            <span name="check_tips" id="crate_sunkencity_1_1" style="display: none">Sunken city right area, crate close to the save cristal.</span>
+            <span name="check_tips" id="crate_sunkencity_1_2" style="display: none">Sunken city right area, crate in the left bottom room.</span>
+            <span name="check_tips" id="beating_simon" style="display: none">Beating Simon says.</span>
+            <span name="check_tips" id="health_egg_1" style="display: none">Verse egg on the sunken ship after the fish pass in the Veil bottom area.</span>
+            <span name="check_tips" id="health_egg_2" style="display: none">Verse egg in the Kelp forest top left area.</span>
+            <span name="check_tips" id="health_egg_3" style="display: none">Verse egg in the whale.</span>
+            <span name="check_tips" id="health_egg_4" style="display: none">Verse egg of the Song cave.</span>
+            <span name="check_tips" id="health_egg_5" style="display: none">Verse egg when Mantis Shrimp Prime in the bubble cave is beaten.</span>
+            <span name="check_tips" id="collect_anemone" style="display: none">Song cave, Anemone seed collectible behind of the big anemone.</span>
+            <span name="check_tips" id="collect_energy_temple" style="display: none">Energy temple bottom entry, Krotite armor on the altar.</span>
+            <span name="check_tips" id="collect_arnassi_statue" style="display: none">Arnassi Ruins, Arnassi statue At the bottom of the right seahorse path.</span>
+            <span name="check_tips" id="collect_mithalas_banner" style="display: none">Mithalas cathedral left area, Blue banner above the main entrance.</span>
+            <span name="check_tips" id="collect_bio_seed" style="display: none">Abyss left area, Glowing seed in the small room with sun beam.</span>
+            <span name="check_tips" id="collect_blackpearl" style="display: none">Kelp forest top right area, Black pearl behind the seawolf.</span>
+            <span name="check_tips" id="collect_treasure_chest" style="display: none">Kelp forest bottom right area, Odd Container in the sunken ship.</span>
+            <span name="check_tips" id="collect_energy_boss" style="display: none">Energy temple, fallen god tooth.</span>
+            <span name="check_tips" id="collect_energy_statue" style="display: none">Energy temple first area, Energy Idol inside the fish pass.</span>
+            <span name="check_tips" id="collect_golden_gear" style="display: none">Sun temple, Golden Gear where the gold lubster came from.</span>
+            <span name="check_tips" id="collect_jelly_plant" style="display: none">Abyss left area, Glowing Plant in the rightest hidden passage.</span>
+            <span name="check_tips" id="collect_mithala_doll" style="display: none">Mithalas city, Doll inside an home fish pass.</span>
+            <span name="check_tips" id="collect_mithalas_pot" style="display: none">Mithalas city, pot in the top passway.</span>
+            <span name="check_tips" id="collect_big_seed" style="display: none">Verse cave right area, Big Seed behind the rock in the path left of the skeleton room.</span>
+            <span name="check_tips" id="collect_seed_bag" style="display: none">Kelp Forest Sprite Cave, Seed bag at the end of the path accross the flower tube.</span>
+            <span name="check_tips" id="collect_skull" style="display: none">Open water skeleton path, King skull between the streams.</span>
+            <span name="check_tips" id="collect_jelly_beacon" style="display: none">Song cave, Jelly beacon at the top of the cave.</span>
+            <span name="check_tips" id="collect_spore_seed" style="display: none">Arnassi ruins, Song plant spore on the top of the ruins.</span>
+            <span name="check_tips" id="collect_gold_star" style="display: none">The veil top right area, Golden starfish at the bottom right of the bottom path.</span>
+            <span name="check_tips" id="collect_stone_head" style="display: none">The veil bottom area, Stone Head in the left passage to the top part.</span>
+            <span name="check_tips" id="collect_sun_key" style="display: none">Sun temple, Sun key in the secret passage in the rightest part of the temple.</span>
+            <span name="check_tips" id="collect_trident_head" style="display: none">Mithalas cathedral left area, trident head behind the spirit cristal.</span>
+            <span name="check_tips" id="collect_turtle_egg" style="display: none">Turtle cave, a Turtle Egg behind the blocking rocks.</span>
+            <span name="check_tips" id="collect_upsidedown_seed" style="display: none">Kelp Forest top left, Jelly Egg at the bottom of the current with upside down jellies.</span>
+            <span name="check_tips" id="collect_walker" style="display: none">Kelp forest bottom left area, Walker baby at the end of the spirit cristal path.</span>
+            <span name="check_tips" id="collect_crab_costume" style="display: none">Arnassi ruins, get a Crab armor by beating Crabbius Maximus.</span>
+            <span name="check_tips" id="collect_jelly_costume" style="display: none">Abyss left area, Jellyfish Costume after beating King Optimus Jelly Prime.</span>
+            <span name="check_tips" id="collect_mithalan_costume" style="display: none">Mithalas cathedral right area, Mithalan Dress in the book shelf after the current.</span>
+            <span name="check_tips" id="collect_mutant_costume" style="display: none">The body bottom area, Mutant Costume in the secret passage (look at your map).</span>
+            <span name="check_tips" id="collect_seahorse_costume" style="display: none">Arnassi ruins, Arnassi Armor (Seahorse Costume) by beating the race.</span>
+            <span name="check_tips" id="collect_teen_costume" style="display: none">Sunken city left area, Girl Costume in the bed room.</span>
+            <span name="check_tips" id="collect_urchin_costume" style="display: none">Turtle cave, Urchin costume at the very top bubble.</span>
+            <span name="check_tips" id="collect_nautilus" style="display: none">Home water, Nautilus Egg by beating Nautilus Prime.</span>
+            <span name="check_tips" id="collect_blaster" style="display: none">Energy temple, passage after the fallen got boss, blaster egg in the locked room.</span>
+            <span name="check_tips" id="collect_dumbo" style="display: none">Octocave, Dumbo Egg by beating the Octopus Prime.</span>
+            <span name="check_tips" id="collect_piranha" style="display: none">Mermog cave, Piranha Egg by beating Mermog.</span>
+        </div>
+
         <p>&nbsp</p>
         <p>Le générateur en français est <a href="index_fr.html">ici</a>.</p>
     </div>

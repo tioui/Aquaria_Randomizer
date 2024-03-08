@@ -206,7 +206,7 @@ Treasure checks:
 	- 184 -> collect_sun_key -> collectible_sun_key -> Sun temple, Sun key in the secret passage in the rightest part of the temple
 	- 185 -> collect_trident_head -> collectible_trident_head -> Mithalas cathedral left area, trident head behind the spirit cristal
 	- 186 -> collect_turtle_egg -> collectible_turtle_egg -> Turtle cave, a Turtle Egg behind the blocking rocks
-	- 187 -> collect_upsidedown_seed -> collectible_upsidedown_seed -> Egg from an upside down jelly
+	- 187 -> collect_upsidedown_seed -> collectible_upsidedown_seed -> Kelp Forest top left, Jelly Egg at the bottom of the current with upside down jellies
 	- 188 -> collect_walker -> collectible_walker -> Kelp forest bottom left area, Walker baby at the end of the spirit cristal path
 	- 189 -> collect_crab_costume -> collectible_crab_costume -> Arnassi ruins, get a Crab armor by beating the Crabbius Maximus boss
 	- 190 -> collect_jelly_costume -> collectible_jelly_costume -> Abyss left area, Jellyfish Costume after beating King optimus jelly prime

@@ -95,7 +95,16 @@ public:
      */
     void spawnIngredientFromEntity(Entity *entity, IngredientData *ingredientData, bool randomized = true);
 
+
+    /**
+     * The unique ID for the Randomizer
+     * @return The ID of the Randomizer
+     */
+    std::string getUid();
+
 protected:
+
+
 
     /**
      * Replacement of every ingredients.
@@ -153,7 +162,18 @@ protected:
      */
     std::vector<ingredient_t> * ingredients;
 
+    /**
+     * Assign the unique ID for the Randomizer
+     * @param uid The ID of the Randomizer
+     */
+    void setUid(std::string uid);
+
 private:
+
+    /**
+     * Unique ID for the randomizer
+     */
+    std::string uid;
 
     /**
      * Initialize every Checks
@@ -262,5 +282,13 @@ const int FLAG_COLLECTIBLE_NAUTILUS        = 534;
 const int FLAG_COLLECTIBLE_DUMBO           = 535;
 const int FLAG_COLLECTIBLE_PIRANHA         = 536;
 
+// Bosses flags to open the way to the body
+const int FLAG_MINIBOSS_START              = 700;
+const int FLAG_MINIBOSS_END                = 706;
+const int FLAG_ENERGYBOSSDEAD              = 109;
+const int FLAG_SUNKENCITY_BOSS             = 114;
+const int FLAG_BOSS_FOREST                 = 117;
+const int FLAG_BOSS_MITHALA                = 116;
+const int FLAG_BOSS_SUNWORM                = 128;
 
 #endif /* end of include guard RANDOMIZER_H */

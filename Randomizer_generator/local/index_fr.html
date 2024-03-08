@@ -26,9 +26,325 @@
         <div class="text-center">
             <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Générer...</a>
         </div>
+    </div>
+    <div class="container" style="width: 540px;">
+        <h1 class="text-center">Tips</h1>
+        <div class="text-center">
+            <p>Chargez votre fichier JSON et indiquez l'objet à rechercher pour savoir où le trouver.</p>
+            <select id="tips_item">
+                <option value="collectible_anemone">Anémone de collection</option>
+                <option value="collectible_arnassi_statue">Statue d'Arnassi de collection</option>
+                <option value="collectible_big_seed">Grosse Graine de collection</option>
+                <option value="collectible_bio_seed">Graine Luisante de collection</option>
+                <option value="collectible_blackpearl">Perle Noire de collection</option>
+                <option value="collectible_energy_boss">Dent de collection</option>
+                <option value="collectible_energy_statue">Idole de l'énergie de collection</option>
+                <option value="collectible_gold_star">Etoile de mer dorée de collection</option>
+                <option value="collectible_golden_gear">Engin de collection</option>
+                <option value="collectible_jelly_beacon">Sphère de Méduse de collection</option>
+                <option value="collectible_jelly_plant">Plante Luisante de collection</option>
+                <option value="collectible_mithala_doll">Poupée Mithala de collection</option>
+                <option value="collectible_mithalas_banner">Bannière Mythalane de collection</option>
+                <option value="collectible_mithalas_pot">Pôt de Mithalas de collection</option>
+                <option value="collectible_seed_bag">Sac de graines de collection</option>
+                <option value="collectible_skull">Crâne du roi de collection</option>
+                <option value="collectible_spore_seed">Spore de Plante Sonore de collection</option>
+                <option value="collectible_stone_head">Tête de pierre de collection</option>
+                <option value="collectible_sun_key">Clef solaire de collection</option>
+                <option value="collectible_treasure_chest">Coffre Bizarre de collection</option>
+                <option value="collectible_trident_head">Trident de collection</option>
+                <option value="collectible_turtle_egg">Oeuf de tortue de collection</option>
+                <option value="collectible_upsidedown_seed">Oeuf de méduse de collection</option>
+                <option value="collectible_crab_costume">Armure de crabe</option>
+                <option value="collectible_energy_temple">Armure de Krotite</option>
+                <option value="collectible_jelly_costume">Costume de Méduse</option>
+                <option value="collectible_mithalan_costume">Robe Mithalane</option>
+                <option value="collectible_mutant_costume">Armure de Mutant</option>
+                <option value="collectible_seahorse_costume">Armure d'Arnassi</option>
+                <option value="collectible_teen_costume">Costume de Fille</option>
+                <option value="collectible_urchin_costume">Costume d'Oursin</option>
+                <option value="collectible_walker">Bébé de walker</option>
+                <option value="collectible_blaster">Bébé de Blaster</option>
+                <option value="collectible_dumbo">Bébé de dumbo</option>
+                <option value="collectible_nautilus">Bébé de nautilus</option>
+                <option value="collectible_piranha">Bébé de piranha</option>
+                <option value="ingredient_Vedha'sCure-All">Vedha's Cure-All</option>
+                <option value="ingredient_Zuuna'sperogi">Zuuna's perogi</option>
+                <option value="ingredient_arcanepoultice">Arcane poultice</option>
+                <option value="ingredient_berryicecream">Berry ice cream</option>
+                <option value="ingredient_butterysealoaf">Buttery sea loaf</option>
+                <option value="ingredient_coldborscht">Cold borscht</option>
+                <option value="ingredient_coldsoup">Cold soup</option>
+                <option value="ingredient_crabcake">Crab cake</option>
+                <option value="ingredient_divinesoup">Divine soup</option>
+                <option value="ingredient_dumboicecream">Dumbo ice cream</option>
+                <option value="ingredient_eeloil">Eel oil</option>
+                <option value="ingredient_fishmeat">Fish meat</option>
+                <option value="ingredient_fishoil">Fish oil</option>
+                <option value="ingredient_glowingegg">Glowing egg</option>
+                <option value="ingredient_handroll">Hand roll</option>
+                <option value="ingredient_healingpoultice">Healing poultice</option>
+                <option value="ingredient_heartysoup">Hearty soup</option>
+                <option value="ingredient_hotborscht">Hot borscht</option>
+                <option value="ingredient_hotsoup">Hot soup</option>
+                <option value="ingredient_icecream">Ice cream</option>
+                <option value="ingredient_leadershiproll">Leadership roll</option>
+                <option value="ingredient_leafpoultice">Leaf poultice</option>
+                <option value="ingredient_leechingpoultice">Leeching poultice</option>
+                <option value="ingredient_legendarycake">Legendary cake</option>
+                <option value="ingredient_loafoflife">Loaf of life</option>
+                <option value="ingredient_longlifesoup">Long life soup</option>
+                <option value="ingredient_magicsoup">Magic soup</option>
+                <option value="ingredient_mushroom">Mushroom</option>
+                <option value="ingredient_perogi">Perogi</option>
+                <option value="ingredient_plantleaf">Plant leaf</option>
+                <option value="ingredient_plumpperogi">Plump perogi</option>
+                <option value="ingredient_poisonloaf">Poison loaf</option>
+                <option value="ingredient_poisonsoup">Poison soup</option>
+                <option value="ingredient_rainbowmushroom">Rainbow mushroom</option>
+                <option value="ingredient_rainbowsoup">Rainbow soup</option>
+                <option value="ingredient_redberry">Red berry</option>
+                <option value="ingredient_redbulb">Red bulb</option>
+                <option value="ingredient_rottencake">Rotten cake</option>
+                <option value="ingredient_rottenloaf">Rotten loaf</option>
+                <option value="ingredient_rottenmeat">Rotten meat</option>
+                <option value="ingredient_royalsoup">Royal soup</option>
+                <option value="ingredient_seacake">Sea cake</option>
+                <option value="ingredient_sealoaf">Sea loaf</option>
+                <option value="ingredient_sharkfinsoup">Shark fin soup</option>
+                <option value="ingredient_sightpoultice">Sight poultice</option>
+                <option value="ingredient_smallbone">Small bone</option>
+                <option value="ingredient_smallegg">Small egg</option>
+                <option value="ingredient_smalltentacle">Small tentacle</option>
+                <option value="ingredient_specialbulb">Special bulb</option>
+                <option value="ingredient_specialcake">Special cake</option>
+                <option value="ingredient_spicymeat">Spicy meat</option>
+                <option value="ingredient_spicyroll">Spicy roll</option>
+                <option value="ingredient_spicysoup">Spicy soup</option>
+                <option value="ingredient_spiderroll">Spider roll</option>
+                <option value="ingredient_swampcake">Swamp cake</option>
+                <option value="ingredient_tastycake">Tasty cake</option>
+                <option value="ingredient_tastyroll">Tasty roll</option>
+                <option value="ingredient_toughcake">Tough cake</option>
+                <option value="ingredient_turtlesoup">Turtle soup</option>
+                <option value="ingredient_vedhaseacrisp">Vedha sea crisp</option>
+                <option value="ingredient_veggiecake">Veggie cake</option>
+                <option value="ingredient_veggieicecream">Veggie ice cream</option>
+                <option value="ingredient_veggiesoup">Veggie soup</option>
+                <option value="ingredient_volcanoroll">Volcano roll</option>
+                <option value="upgrade_health">Ajout de point de vie</option>
+                <option value="upgrade_wok">Wok</option>
+            </select>
+            <br/>
+            <input type="file" id="jsonfile" value="Import" />
+
+            <br/>
+            <a href="#" class="btn btn-primary" onclick="show_tips();">Voir aide...</a>
+            <br/>
+            <span name="check_tips" id="bulb_turtlecave" style="display: none">Caverne Des Tortues, bulbe sur la falaise de bulles.</span>
+            <span name="check_tips" id="bulb_openwater_tl_1" style="display: none">Eaux du Large section en haut à gauche, bulbe en dessous de la roche sur le chemin de droite.</span>
+            <span name="check_tips" id="bulb_openwater_tl_2" style="display: none">Eaux du Large section en haut à gauche, bulbe en dessous de la roche sur le chemin de gauche.</span>
+            <span name="check_tips" id="bulb_openwater_tl_3" style="display: none">Eaux du Large section en haut à gauche, bulbe à droite du cristal de sauvegarde.</span>
+            <span name="check_tips" id="bulb_openwater_tr_1" style="display: none">Eaux du Large section en haut à droite, bulbe dans le petit chemin avant Mithalas.</span>
+            <span name="check_tips" id="bulb_openwater_tr_2" style="display: none">Eaux du Large section en haut à droite, bulbe dans le chemin vers l'entrée de gauche.</span>
+            <span name="check_tips" id="bulb_openwater_tr_3" style="display: none">Eaux du Large section en haut à droite, bulbe dans la clairière proche de l'entrée du bas.</span>
+            <span name="check_tips" id="bulb_openwater_tr_4" style="display: none">Eaux du Large section en haut à droite, bulbe dans la clairière proche du cristal de sauvegarde.</span>
+            <span name="check_tips" id="bulb_openwater_tr_5" style="display: none">Eaux du Large section en haut à droite, bulbe dans la grosse clairière proche de l'entrée du haut.</span>
+            <span name="check_tips" id="bulb_openwater_tr_6" style="display: none">Eaux du Large section en haut à droite, bulbe dans la pièce de la tortue.</span>
+            <span name="check_tips" id="bulb_openwater_bl_1" style="display: none">Eaux du Large section en bas à gauche, bulbe dans le passage de poisson du bas.</span>
+            <span name="check_tips" id="bulb_openwater_bl_2" style="display: none">Eaux du Large section en bas à gauche, bulbe derrière le poisson Chomper.</span>
+            <span name="check_tips" id="bulb_skeleton_path_1" style="display: none">Eaux du Large chemin de squelettes, bulbe proche de l'entrée de droite.</span>
+            <span name="check_tips" id="bulb_skeleton_path_2" style="display: none">Eaux du Large chemin de squelettes, bulbe derrière le poisson Chomper.</span>
+            <span name="check_tips" id="bulb_arnassi_1" style="display: none">Ruines D'Arnassi, bulbe dans la partie de droite.</span>
+            <span name="check_tips" id="bulb_arnassi_2" style="display: none">Ruines D'Arnassi, bulbe dans la partie de gauche.</span>
+            <span name="check_tips" id="bulb_arnassi_3" style="display: none">Ruines D'Arnassi, bulbe dans la partie du centre.</span>
+            <span name="check_tips" id="bulb_sunworm_1" style="display: none">Chemin du ver du soleil, Premier bulbe du chemin.</span>
+            <span name="check_tips" id="bulb_sunworm_2" style="display: none">Chemin du ver du soleil, Second bulbe du chemin.</span>
+            <span name="check_tips" id="bulb_sunworm_3" style="display: none">Chemin du ver du soleil, bulbe de la première falaise du chemin.</span>
+            <span name="check_tips" id="bulb_sunworm_4" style="display: none">Chemin du ver du soleil, bulbe de la seconde falaise du chemin.</span>
+            <span name="check_tips" id="bulb_tutorial_1" style="display: none">Caverne du Verse section gauche, bulbe du centre.</span>
+            <span name="check_tips" id="bulb_tutorial_2" style="display: none">Caverne du Verse section gauche, bulbe de droite.</span>
+            <span name="check_tips" id="bulb_tutorial_3" style="display: none">Caverne du Verse section gauche, bulbe de gauche sous la roche.</span>
+            <span name="check_tips" id="bulb_abyss_l_1" style="display: none">Abysses section gauche, bulbe dans la pièce du chemin caché.</span>
+            <span name="check_tips" id="bulb_abyss_l_2" style="display: none">Abysses section gauche, bulbe dans la partie de droite.</span>
+            <span name="check_tips" id="bulb_abyss_l_3" style="display: none">Abysses section gauche, bulbe dans le passage de poisson du bas.</span>
+            <span name="check_tips" id="bulb_energy_temple_1_1" style="display: none">Temple de l'énergie première section, bulbe dans la pièce du bas bloqué par une roche.</span>
+            <span name="check_tips" id="bulb_energy_temple_2_1" style="display: none">Temple de l'énergie seconde section, bulbe sous la roche.</span>
+            <span name="check_tips" id="bulb_energy_temple_3_1" style="display: none">Temple de l'énergie troisième section, bulbe dans le chemin du bas.</span>
+            <span name="check_tips" id="bulb_mithalas_city_01" style="display: none">Cité de Mithalas, Un bulbe dans la partie gauche de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_02" style="display: none">Cité de Mithalas, bulbe dans la partie de droite de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_03" style="display: none">Cité de Mithalas, Un bulbe à la fin du chemin dans le haut de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_04" style="display: none">Cité de Mithalas, bulbe dans le haut de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_05" style="display: none">Cité de Mithalas, bulbe dans une maison brisée.</span>
+            <span name="check_tips" id="bulb_mithalas_city_06" style="display: none">Cité de Mithalas, un bulbe dans la partie gauche de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_07" style="display: none">Cité de Mithalas, bulbe dans le chemin en haut de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_08" style="display: none">Cité de Mithalas, bulbe dans le bas, à gauche de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_09" style="display: none">Cité de Mithalas, un bulbe dans une des maisons.</span>
+            <span name="check_tips" id="bulb_mithalas_city_10" style="display: none">Cité de Mithalas, un bulbe dans une des maisons.</span>
+            <span name="check_tips" id="bulb_mithalas_city_11" style="display: none">Cité de Mithalas, Un bulbe à la fin du chemin en haut de la cité.</span>
+            <span name="check_tips" id="bulb_mithalas_city_12" style="display: none">Cité de Mithalas, un bulbe dans une des maison brisée.</span>
+            <span name="check_tips" id="bulb_cathedral_l_2" style="display: none">Cathedral de Mithalas section de gauche, bulbe dans le trou de chair.</span>
+            <span name="check_tips" id="bulb_boilerroom_1" style="display: none">Cité engloutie, bulbe au sommet de l'arrêne du boss (Salle des Machines).</span>
+            <span name="check_tips" id="bulb_forest_tl_1" style="display: none">Forêt de Varech section en haut à gauche, bulbe dans la clairière du bas à gauche.</span>
+            <span name="check_tips" id="bulb_forest_tl_2" style="display: none">Forêt de Varech section en haut à gauche, bulbe dans le chemin en bas à partir de la clairière d'en haut à gauche.</span>
+            <span name="check_tips" id="bulb_forest_tl_3" style="display: none">Forêt de Varech section en haut à gauche, bulbe dans la clairière d'en haut, à gauche.</span>
+            <span name="check_tips" id="bulb_forest_tl_4" style="display: none">Forêt de Varech section en haut à gauche, bulbe dans le chemin du centre.</span>
+            <span name="check_tips" id="bulb_forest_tr_1" style="display: none">Forêt de Varech en haut à droite, bulbe en dessous d'une roche dans le chemin de droite.</span>
+            <span name="check_tips" id="bulb_forest_tr_2" style="display: none">Forêt de Varech en haut à droite, bulbe à gauche de la clairière du centre.</span>
+            <span name="check_tips" id="bulb_forest_tr_3" style="display: none">Forêt de Varech en haut à droite, bulbe dans le passage de poisson.</span>
+            <span name="check_tips" id="bulb_forest_tr_4" style="display: none">Forêt de Varech en haut à droite, bulbe dans la grande pièce du chemin de gauche.</span>
+            <span name="check_tips" id="bulb_forest_tr_5" style="display: none">Forêt de Varech en haut à droite, bulbe dans la petite chambre du chemin de gauche.</span>
+            <span name="check_tips" id="bulb_forest_tr_6" style="display: none">Forêt de Varech en haut à droite, bulbe dans le haut de la clairière du centre.</span>
+            <span name="check_tips" id="bulb_forest_bl_1" style="display: none">Forêt de Varech section en bas à gauche, bulbe proche du cristal d'esprit.</span>
+            <span name="check_tips" id="bulb_forest_boss_room_1" style="display: none">Forêt de Varech pièce du boss, bulbe dans le bas de la pièce.</span>
+            <span name="check_tips" id="bulb_forest_sprite_cave_1" style="display: none">Forêt de Varech Antre de l'Esprit de la Forêt, bulbe dans le chemin de poisson.</span>
+            <span name="check_tips" id="bulb_forest_sprite_cave_2" style="display: none">Forêt de Varech Antre de l'Esprit de la Forêt, bulbe dans la seconde pièce.</span>
+            <span name="check_tips" id="bulb_home_water_1" style="display: none">Eaux Connues, bulbe en dessous du poisson Grouper.</span>
+            <span name="check_tips" id="bulb_home_water_2" style="display: none">Eaux Connues, bulbe dans le chemin en dessous du Nautilus Prime.</span>
+            <span name="check_tips" id="bulb_home_water_3" style="display: none">Eaux Connues, bulbe dans la petite ouverture au dessus du poisson Grouper.</span>
+            <span name="check_tips" id="bulb_home_water_4" style="display: none">Eaux Connues, bulb in the end of the left path from the tutorial cave.</span>
+            <span name="check_tips" id="bulb_home_water_5" style="display: none">Eaux Connues, bulbe dans le chemin en hau à gauche.</span>
+            <span name="check_tips" id="bulb_home_water_6" style="display: none">Eaux Connues, bulbe dans la pièce en bas, à gauche.</span>
+            <span name="check_tips" id="bulb_home_water_7" style="display: none">Eaux Connues, bulbe proche de la maison de Naija.</span>
+            <span name="check_tips" id="bulb_home_water_8" style="display: none">Eaux Connues, bulbe en dessous d'une roche dans le chemin à gauche à partir de la Caverne du Verse.</span>
+            <span name="check_tips" id="bulb_final_l_1" style="display: none">Le corps section gauche, Une bulbe dans la pièce du visage du haut.</span>
+            <span name="check_tips" id="bulb_final_l_2" style="display: none">Le corps section gauche, bulbe en dessous du courrant.</span>
+            <span name="check_tips" id="bulb_final_l_3" style="display: none">Le corps section gauche, bulbe dans le chemin du haut vers la pièce du visage du haut.</span>
+            <span name="check_tips" id="bulb_final_l_4" style="display: none">Le corps section gauche, un bulbe dans la pièce de visage du haut.</span>
+            <span name="check_tips" id="bulb_final_l_5" style="display: none">Le corps section gauche, bulbe dans la pièce du visage du bas.</span>
+            <span name="check_tips" id="bulb_song_cave_1" style="display: none">Caverne du chant, bulbe dans la patie en haut à gauche.</span>
+            <span name="check_tips" id="bulb_song_cave_2" style="display: none">Caverne du chant, bulbe dans la pièce avec la grosse anémone.</span>
+            <span name="check_tips" id="bulb_song_cave_3" style="display: none">Caverne du chant, bulbe dans le chemin vers les statues qui chantent.</span>
+            <span name="check_tips" id="bulb_song_cave_4" style="display: none">Caverne du chant, bulbe en dessous d'une roche dans le chemin vers les statues qui chantent.</span>
+            <span name="check_tips" id="bulb_song_cave_5" style="display: none">Caverne du chant, bulbe en dessous d'une roche proche de la porte du chant.</span>
+            <span name="check_tips" id="bulb_veil_tl_1" style="display: none">Le Voile section en haut à gauche, bulbe caché derrière un roche qui bloquent le chemin.</span>
+            <span name="check_tips" id="bulb_veil_tl_2" style="display: none">Le Voile section en haut à gauche, bulbe après le passage de poisson.</span>
+            <span name="check_tips" id="bulb_veil_tl_3" style="display: none">Le Voile section en haut à gauche, bulbe en dessous d'un roche dans le chemin en haut à droite.</span>
+            <span name="check_tips" id="bulb_veil_tr_1" style="display: none">Le Voile en haut à droite, bulbe dans le milieu de la falaise à escalader.</span>
+            <span name="check_tips" id="bulb_veil_tr_2" style="display: none">Le Voile en haut à droite, bulbe dans le haut de la chute.</span>
+            <span name="check_tips" id="bulb_veil_b_1" style="display: none">Le Voile section du bas, bulbe dans le chemin avec des cristal d'esprit.</span>
+            <span name="check_tips" id="bulb_veil_b_2" style="display: none">Le Voile section du bas, bulbe dans le chemin de gauche.</span>
+            <span name="check_tips" id="bulb_ice_cave_1" style="display: none">Ice cave, bulbe dans la pièce à droite.</span>
+            <span name="check_tips" id="bulb_ice_cave_2" style="display: none">Ice cave, un bulbe dans la sortie du haut.</span>
+            <span name="check_tips" id="bulb_ice_cave_3" style="display: none">Ice cave, un bulbe dans la sortie du haut.</span>
+            <span name="check_tips" id="bulb_ice_cave_4" style="display: none">Ice cave, un bulbe dans la sortie du haut.</span>
+            <span name="check_tips" id="bulb_ice_cave_5" style="display: none">Ice cave, bulbe dans la pièce de gauche.</span>
+            <span name="check_tips" id="bulb_king_jellyfish_cave_1" style="display: none">Antre Du Roi Méduse, bulbe dans le chemin de droit à partir du Roi Méduse.</span>
+            <span name="check_tips" id="bulb_bubble_cave_1" style="display: none">Caverne aux Bulles, bulbe sur le mur de gauche de la caverne.</span>
+            <span name="check_tips" id="bulb_bubble_cave_2" style="display: none">Caverne aux Bulles, bulbe sur le mur de gauche de la caverne (derrière le cristal de glace).</span>
+            <span name="check_tips" id="bulb_sun_temple_1" style="display: none">Temple du Soleil, premier bulbe du temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_2" style="display: none">Temple du Soleil, bulbe dans la partie gauche du temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_3" style="display: none">Temple du Soleil, bulbe dans la pièce secrète de la partie gauche du temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_4" style="display: none">Temple du Soleil, bulbe dans la partie haut à gauche du temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_5" style="display: none">Temple du Soleil, bulbe dans la partie haut à droite du temple.</span>
+            <span name="check_tips" id="bulb_sun_temple_6" style="display: none">Temple du Soleil, bulbe en haut de la haute pièce sombre.</span>
+            <span name="check_tips" id="bulb_final_c_1" style="display: none">Le corps section du centre, bulbe sur le tube qui bloque dans le chemin principal.</span>
+            <span name="check_tips" id="bulb_final_r_1" style="display: none">Le corps section droite, bulbe dans le chemin du haut vers la salle du visage.</span>
+            <span name="check_tips" id="bulb_final_r_2" style="display: none">Le corps section droite, bulbe dans la salle du visage du bas.</span>
+            <span name="check_tips" id="bulb_final_r_3" style="display: none">Le corps section droite, bulbe dans la salle du visage du haut.</span>
+            <span name="check_tips" id="bulb_final_b_1" style="display: none">Le corps section du bas, bulbe dans la pièce des Jelly Zap.</span>
+            <span name="check_tips" id="bulb_final_b_2" style="display: none">Le corps section du bas, bulbe dans la pièce des nautilus.</span>
+            <span name="check_tips" id="bulb_final_boss_1" style="display: none">Section du boss final, un bulbe dans la pièce de la tortue.</span>
+            <span name="check_tips" id="bulb_final_boss_2" style="display: none">Section du boss final, un bulbe dans la pièce de la tortue.</span>
+            <span name="check_tips" id="bulb_final_boss_3" style="display: none">Section du boss final, un bulbe dans la pièce de la tortue.</span>
+            <span name="check_tips" id="bulb_final_boss_4" style="display: none">Section du boss final, bulbe dans la salle de la seconde forme du boss final.</span>
+            <span name="check_tips" id="bulb_starting_cave_1" style="display: none">Caverne du Verse, bulbe dans la salle du squelette.</span>
+            <span name="check_tips" id="bulb_starting_cave_2" style="display: none">Caverne du Verse, bulbe dans le chemin à gauche de la salle du squelette.</span>
+            <span name="check_tips" id="bulb_abyss_r_1" style="display: none">Abysses section droite, bulbe derrière une roche dans la pièce en bas à gauche.</span>
+            <span name="check_tips" id="bulb_abyss_r_2" style="display: none">Abysses section droite, bulbe dans le chemin du millieu.</span>
+            <span name="check_tips" id="bulb_abyss_r_3" style="display: none">Abysses section droite, bulbe derrière une roche dans le chemin du millieu.</span>
+            <span name="check_tips" id="bulb_abyss_r_4" style="display: none">Abysses section droite, bulbe dans la pièce verte à gauche.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_1" style="display: none">Sous-sol de la cathédrale, bulbe au centre.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_2" style="display: none">Sous-sol de la cathédrale, un bulbe dans le haut à gauche.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_3" style="display: none">Sous-sol de la cathédrale, un bulbe dans le haut à gauche.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_4" style="display: none">Sous-sol de la cathédrale, un bulbe dans le haut à gauche.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_5" style="display: none">Sous-sol de la cathédrale, bulbe prêt du cristal de sauvegarde.</span>
+            <span name="check_tips" id="bulb_cathedral_under_ground_6" style="display: none">Sous-sol de la cathédrale, bulbe en bas, à droite.</span>
+            <span name="check_tips" id="bulb_naija_home_1" style="display: none">Maison de Naija, bulbe passé la porte d'énergie.</span>
+            <span name="check_tips" id="bulb_naija_home_2" style="display: none">Maison de Naija, bulbe en dessous de la roche à droite du chemin principal.</span>
+            <span name="check_tips" id="bulb_mermog_cave_1" style="display: none">Caverne des Mermogs, bulbe à gauche de la caverne.</span>
+            <span name="check_tips" id="bulb_octo_cave_1" style="display: none">Antre de la Pieuvre, bulbe dans le chemin en dessous de la caverne.</span>
+            <span name="check_tips" id="urn_mithalas_city_1" style="display: none">Cité de Mithalas, urne dans une des maisons.</span>
+            <span name="check_tips" id="urn_mithalas_city_2" style="display: none">Cité de Mithalas, urne dans une des maisons.</span>
+            <span name="check_tips" id="urn_mithalas_city_3" style="display: none">Cité de Mithalas, une urne dans la réserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_4" style="display: none">Cité de Mithalas, une urne dans la réserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_5" style="display: none">Cité de Mithalas, une urne dans la réserve.</span>
+            <span name="check_tips" id="urn_mithalas_city_6" style="display: none">Cité de Mithalas, urne dans l'entrée de la cathédral par une fleur tube.</span>
+            <span name="check_tips" id="urn_mithalas_city_7" style="display: none">Cité de Mithalas, urne dans un passage de poisson à l'intérieur d'une maison.</span>
+            <span name="check_tips" id="urn_cathedral_l_1" style="display: none">Cathédral de Mithalas section gauche, urne dans la chambre à coucher.</span>
+            <span name="check_tips" id="urn_cathedral_l_2" style="display: none">Cathédral de Mithalas section gauche, une urne dans le chemin avec une seule lampe.</span>
+            <span name="check_tips" id="urn_cathedral_l_3" style="display: none">Cathédral de Mithalas section gauche, une urne dans le chemin avec une seule lampe.</span>
+            <span name="check_tips" id="urn_cathedral_l_4" style="display: none">Cathédral de Mithalas section gauche, urne dans la pièce du bas.</span>
+            <span name="check_tips" id="urn_cathedral_l_5" style="display: none">Cathédral de Mithalas section gauche, une urne dans le chemin d'entrée.</span>
+            <span name="check_tips" id="urn_cathedral_l_6" style="display: none">Cathédral de Mithalas section gauche, une urne dans le chemin d'entrée.</span>
+            <span name="check_tips" id="urn_cathedral_r_01" style="display: none">Cathédral de Mithalas section droite, une urne dans la pièce en haut à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_02" style="display: none">Cathédral de Mithalas section droite, une urne dans la pièce en haut à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_03" style="display: none">Cathédral de Mithalas section droite, une urne dans la pièce en haut à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_04" style="display: none">Cathédral de Mithalas section droite, urne dans la pièce en chair avec des puces.</span>
+            <span name="check_tips" id="urn_cathedral_r_05" style="display: none">Cathédral de Mithalas section droite, une urne dans le chemin en bas à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_06" style="display: none">Cathédral de Mithalas section droite, une urne dans le chemin en bas à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_07" style="display: none">Cathédral de Mithalas section droite, urne derrière la veine de chair.</span>
+            <span name="check_tips" id="urn_cathedral_r_08" style="display: none">Cathédral de Mithalas section droite, urne dans le chemin en haut à droite.</span>
+            <span name="check_tips" id="urn_cathedral_r_09" style="display: none">Cathédral de Mithalas section droite, une urne dans le chemin derrière la veine de chair.</span>
+            <span name="check_tips" id="urn_cathedral_r_10" style="display: none">Cathédral de Mithalas section droite, une urne dans le chemin derrière la veine de chair.</span>
+            <span name="check_tips" id="urn_cathedral_r_11" style="display: none">Cathédral de Mithalas section droite, une urne dans le chemin derrière la veine de chair.</span>
+            <span name="check_tips" id="urn_cathedral_r_12" style="display: none">Cathédral de Mithalas section droite, une urne dans la pièce en haut à droite.</span>
+            <span name="check_tips" id="urn_openwater_tr_1" style="display: none">Eaux du Large en haut à droite, une urne dans la sortie vers Mithalas.</span>
+            <span name="check_tips" id="urn_openwater_tr_2" style="display: none">Eaux du Large en haut à droite, une urne dans la sortie vers Mithalas.</span>
+            <span name="check_tips" id="urn_openwater_tr_3" style="display: none">Eaux du Large en haut à droite, une urne dans la sortie vers Mithalas.</span>
+            <span name="check_tips" id="crate_sunkencity_2_1" style="display: none">Cité engloutie section gauche, caisse dans dans la petite pièce au tuyaux.</span>
+            <span name="check_tips" id="crate_sunkencity_2_2" style="display: none">Cité engloutie section gauche, caisse prêt du cristal de sauvegarde.</span>
+            <span name="check_tips" id="crate_sunkencity_2_3" style="display: none">Cité engloutie section gauche, caisse derrière la chambre à coucher.</span>
+            <span name="check_tips" id="crate_sunkencity_1_1" style="display: none">Cité engloutie section droite, caisse prêt du cristal de sauvegarde.</span>
+            <span name="check_tips" id="crate_sunkencity_1_2" style="display: none">Cité engloutie section droite, caisse dans la pièce en bas à gauche.</span>
+            <span name="check_tips" id="beating_simon" style="display: none">Battre Simon dit.</span>
+            <span name="check_tips" id="health_egg_1" style="display: none">OEuf de Verse dans le navire coulé du voile section du bas.</span>
+            <span name="check_tips" id="health_egg_2" style="display: none">OEuf de Verse dans la Forêt de Varech section en haut à gauche.</span>
+            <span name="check_tips" id="health_egg_3" style="display: none">OEuf de Verse dans la baleine.</span>
+            <span name="check_tips" id="health_egg_4" style="display: none">OEuf de Verse dans la Caverne du chant.</span>
+            <span name="check_tips" id="health_egg_5" style="display: none">OEuf de Verse en battant le Mantis Shrimp Prime de la Caverne aux Bulles.</span>
+            <span name="check_tips" id="collect_anemone" style="display: none">Caverne du chant, Graine d'Anémone derrière la grosse anémone.</span>
+            <span name="check_tips" id="collect_energy_temple" style="display: none">Temple de l'énergie entrée du bas, Armure de Krotite sur l'autel.</span>
+            <span name="check_tips" id="collect_arnassi_statue" style="display: none">Ruines D'Arnassi, Statue d'Arnassi dans le bas du chemin de l'hypocampe de droite.</span>
+            <span name="check_tips" id="collect_mithalas_banner" style="display: none">Cathédral de Mithalas section gauche, Bannière bleu au dessus de l'entrée.</span>
+            <span name="check_tips" id="collect_bio_seed" style="display: none">Abysses section gauche, Graine Luisantedans la petite pièce avec un rayon de soleil.</span>
+            <span name="check_tips" id="collect_blackpearl" style="display: none">Forêt de Varech en haut à droite, Perle Noire derrière le seawolf.</span>
+            <span name="check_tips" id="collect_treasure_chest" style="display: none">Forêt de Varech section en bas à droite, Coffre Bizarre dans le bateau coulé.</span>
+            <span name="check_tips" id="collect_energy_boss" style="display: none">Temple de l'énergie, Dent du Fallen God.</span>
+            <span name="check_tips" id="collect_energy_statue" style="display: none">Temple de l'énergie première section, Idole de l'énergie dans le passage de poisson.</span>
+            <span name="check_tips" id="collect_golden_gear" style="display: none">Temple du Soleil, Engin doré d'où les homards dorées apparaissent.</span>
+            <span name="check_tips" id="collect_jelly_plant" style="display: none">Abysses section gauche, Plante Luisantedans le passage caché à droite.</span>
+            <span name="check_tips" id="collect_mithala_doll" style="display: none">Cité de Mithalas, Poupée dans un chemin de poisson.</span>
+            <span name="check_tips" id="collect_mithalas_pot" style="display: none">Cité de Mithalas, pot dans le passage du haut.</span>
+            <span name="check_tips" id="collect_big_seed" style="display: none">Verse cave section droite, Grosse Graine derrière une roche dans une pièce à gauche de la pièce du skelette.</span>
+            <span name="check_tips" id="collect_seed_bag" style="display: none">Kelp Forest Antre de l'Esprit de la Forêt, Sac de graines à la fin du chemin derrière la fleur tube.</span>
+            <span name="check_tips" id="collect_skull" style="display: none">Eaux du Large chemin de skelette, Crâne du roi entre les courrants chaux.</span>
+            <span name="check_tips" id="collect_jelly_beacon" style="display: none">Caverne du chant, Sphère de méduse dans le haut de la caverne.</span>
+            <span name="check_tips" id="collect_spore_seed" style="display: none">Ruines D'Arnassi, Spore de Plante Sonore dans la haut des ruines.</span>
+            <span name="check_tips" id="collect_gold_star" style="display: none">Le Voile en haut à droite, Etoile de mer dorée dans le bas à droite du chemin du bas.</span>
+            <span name="check_tips" id="collect_stone_head" style="display: none">Le Voile section du bas, Tête de roche dans le passage de gauche de la partie du haut.</span>
+            <span name="check_tips" id="collect_sun_key" style="display: none">Temple du Soleil, Clef Solaire dans le chemin secret dans la partie droite du temple.</span>
+            <span name="check_tips" id="collect_trident_head" style="display: none">Cathédral de Mithalas section gauche, Tête de Trident derrière le cristal d'esprit.</span>
+            <span name="check_tips" id="collect_turtle_egg" style="display: none">Caverne Des Tortues, Oeuf de tortue derrière la roche qui bloque le chemin.</span>
+            <span name="check_tips" id="collect_upsidedown_seed" style="display: none">Kelp Forest top left, Oeuf de Méduse dans le bas du courrant avec des méduses inversées.</span>
+            <span name="check_tips" id="collect_walker" style="display: none">Forêt de Varech section en bas à gauche, Bébé Walker au bout du chemin avec des cristaux d'esprits.</span>
+            <span name="check_tips" id="collect_crab_costume" style="display: none">Ruines D'Arnassi, Armur de Crab reçu en battant Crabbius Maximus.</span>
+            <span name="check_tips" id="collect_jelly_costume" style="display: none">Abysses section gauche, Costume de Méduse reçu en battant le roi Optimus Jelly Prime.</span>
+            <span name="check_tips" id="collect_mithalan_costume" style="display: none">Cathédral de Mithalas section droite, Robe Mithalane dans la bibliothèque après le courrant du centre.</span>
+            <span name="check_tips" id="collect_mutant_costume" style="display: none">Le corps section du bas, Costume de Mutant dans le chemin secret (regarder la carte).</span>
+            <span name="check_tips" id="collect_seahorse_costume" style="display: none">Ruines D'Arnassi, Armure d'Arnassi (Costume d'hippocampe) en gagnant la course.</span>
+            <span name="check_tips" id="collect_teen_costume" style="display: none">Cité engloutie section gauche, Costume de fille dans la chambre à coucher.</span>
+            <span name="check_tips" id="collect_urchin_costume" style="display: none">Caverne Des Tortues, Costume d'Oursin dans le haut des bulles.</span>
+            <span name="check_tips" id="collect_nautilus" style="display: none">Eaux Connues, Oeuf de Nautilus reçu en battant Nautilus Prime.</span>
+            <span name="check_tips" id="collect_blaster" style="display: none">Temple de l'énergie, chemin après le dieu déchu (boss) Oeuf de blaster dans la pièce barrée.</span>
+            <span name="check_tips" id="collect_dumbo" style="display: none">Octocave, Oeuf de Dumbo reçu en battant Octopus Prime.</span>
+            <span name="check_tips" id="collect_piranha" style="display: none">Mermog cave, Oeuf de Piranha reçu en battant Mermog.</span>
+        </div>
+
         <p>&nbsp</p>
         <p>The english generator is <a href="index.html">here</a>.</p>
     </div>
+
     <script src="generator.js"></script>
     </body>
 </html>

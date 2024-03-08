@@ -42,10 +42,13 @@ luaScriptError: jellysmall : postInit : attempt to call a nil value [???:0]
  */
 RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     checksReplacement = new std::vector<int>();
+    long long int lUid = 0;
     std::ifstream lFile(aFilename);
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
         version = lJsonData["version"];
+        lUid = lJsonData["uid"];
+        setUid(std::to_string(lUid));
         for (int lElement : lJsonData["ingredientReplacement"]) {
             ingredientReplacement->push_back(lElement);
         }
@@ -84,3 +87,4 @@ void RandomizerLocal::activateCheck(std::string aCheck) {
     }
 
 }
+

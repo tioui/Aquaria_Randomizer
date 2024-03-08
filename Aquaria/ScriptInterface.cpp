@@ -846,11 +846,11 @@ static int loadFile_helper(lua_State *L, const char *fn)
 
 luaFunc(randomizerCheck)
 {
-	debugLog("Activating check:");
 	debugLog(getString(L, 1));
 	dsq->randomizer->activateCheck(getString(L, 1));
 	luaReturnNil();
 }
+
 
 
 luaFunc(dofile_caseinsensitive)
@@ -10413,7 +10413,7 @@ static const struct {
 
 	luaRegister(getPerformanceCounter),
 	luaRegister(getPerformanceFreq),
-	luaRegister(randomizerCheck),
+    luaRegister(randomizerCheck),
 	
 
 
