@@ -427,6 +427,7 @@ ENDIF(HAVE_STRCASECMP)
 SET(RANDOMIZER_SRCS
         ${RANDOMIZERDIR}/Randomizer.cpp
         ${RANDOMIZERDIR}/RandomizerLocal.cpp
+        ${RANDOMIZERDIR}/RandomizerArchipelago.cpp
 )
 
 
