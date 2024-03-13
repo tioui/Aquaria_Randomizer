@@ -60,7 +60,6 @@ void Randomizer::initialiseIngredients() {
     ingredients->push_back({"SmallBone", IT_BONE});
     ingredients->push_back({"SmallEgg", IT_EGG});
     ingredients->push_back({"SmallEgg", IT_EGG});
-    ingredients->push_back({"RukhEgg", IT_EGG});
     ingredients->push_back({"GlowingEgg", IT_EGG});
     ingredients->push_back({"SpiderEgg", IT_EGG});
     ingredients->push_back({"SmallEye", IT_PART});
@@ -68,11 +67,12 @@ void Randomizer::initialiseIngredients() {
     ingredients->push_back({"SmallTentacle", IT_TENTACLE});
     ingredients->push_back({"RedBerry", IT_BERRY});
     ingredients->push_back({"PlantBulb", IT_BULB});
-    ingredients->push_back({"SpecialBulb", IT_BULB});
-    ingredients->push_back({"RedBulb", IT_BULB});
     ingredients->push_back({"Mushroom", IT_MUSHROOM});
     ingredients->push_back({"RainbowMushroom", IT_MUSHROOM});
     ingredients->push_back({"IceChunk", IT_ICECHUNK});
+    ingredients->push_back({"SpecialBulb", IT_BULB});
+    ingredients->push_back({"RedBulb", IT_BULB});
+    ingredients->push_back({"RukhEgg", IT_EGG});
     ingredients->push_back({"HotSoup", IT_SOUP});
     ingredients->push_back({"HeartySoup", IT_SOUP});
     ingredients->push_back({"DivineSoup", IT_SOUP});
