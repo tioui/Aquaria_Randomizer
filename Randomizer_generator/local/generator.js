@@ -24,7 +24,7 @@ class Randomizer {
      * Randomize the ingredient part of the ingredientReplacement array.
      */
     randomizeIngredientReplacement(aCommons){
-        let lSkip = 50;
+        let lSkip = 49;
         if (aCommons){
             lSkip = lSkip + 3;
         }
@@ -35,7 +35,7 @@ class Randomizer {
      * Randomize the dish part of the ingredientReplacement array.
      */
     randomizeDishReplacement(){
-        this.randomizeArray(this.ingredientReplacement, 26, 0);
+        this.randomizeArray(this.ingredientReplacement, 27, 0);
     }
 
     /**
