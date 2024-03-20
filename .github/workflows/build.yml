@@ -58,7 +58,7 @@ jobs:
       - run: |
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
-          cmake -DAQUARIA_USE_SDL2=1 ..
+          cmake -DAQUARIA_USE_SDL2=1 -VERBOSE=1 ..
           make
       - run: echo "Compiling done."
       - run: echo "Build standard packaging."
