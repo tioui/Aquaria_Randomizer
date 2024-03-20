@@ -27,6 +27,7 @@ function init(me)
 	v.commonInit(me, "Collectibles/seahorse-costume", FLAG_COLLECTIBLE_LOCATION_SEAHORSECOSTUME, "collect_seahorse_costume")
 end
 
-function update(me, dt)
-	v.commonUpdate(me, dt)
+function update(me, dt) 
+    v.commonUpdate(me, dt) 
 end
+

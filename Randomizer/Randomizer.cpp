@@ -14,23 +14,6 @@
 #include <vector>
 #include "apclient.hpp"
 
-// /**
-//  * Constructor of the object
-//  * \param aName The username
-//  * \param aServer The server ip and port
-//  */
-// Randomizer::Randomizer(std::string aName, std::string aServer)
-// {
-// 	dsq = NULL;
-// 	ingredientReplacement = {};
-// 	for (int i = 0; i < 26; i = i + 1) {
-// 		ingredientReplacement.push_back(i);
-// 	}
-// 	name = aName;
-// 	server = aServer;
-// }
-
-
 /**
  * Constructor for the Randomizer
  */
@@ -332,6 +315,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1296, "collect_blaster","collectible_blaster",1, "Baby blaster"});
     checks->push_back({1297, "collect_dumbo","collectible_dumbo",1, "Baby dumbo"});
     checks->push_back({1298, "collect_piranha","collectible_piranha",1, "Baby piranha"});
+    checks->push_back({1299, "urn_cathedral_r_13","ingredient_leafpoultice",3, "Leaf poultice"});
 }
 
 /**

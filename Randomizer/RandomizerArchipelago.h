@@ -284,8 +284,5 @@ private:
      * @param aX The vertical coordinate of the top corner of the text to show
      */
     void showText(const std::string &aText, float aX = 0.0, float aY = 500.0);
-
-
-
 };
 

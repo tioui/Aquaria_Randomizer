@@ -110,7 +110,7 @@ public:
     /**
      * Lunched at each game loop iteration
      */
-    virtual void update() = 0;
+    virtual void update() {};
 
     /**
      * Get the file name (without path and extension) of the graphic file to show Aquarian text
