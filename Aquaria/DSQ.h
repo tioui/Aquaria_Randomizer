@@ -1524,7 +1524,7 @@ public:
 	
 	void instantQuit();
 
-	void centerText(const std::string &text);
+    void centerText(const std::string &text);
 	void centerMessage(const std::string &text, float y=300, int type=0);
 
 	bool routeShoulder;

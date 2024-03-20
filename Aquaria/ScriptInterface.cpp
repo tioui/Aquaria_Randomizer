@@ -844,11 +844,22 @@ static int loadFile_helper(lua_State *L, const char *fn)
 #endif
 }
 
+luaFunc(onLoad)
+{
+    dsq->randomizer->onLoad(getBool(L, 1));
+    luaReturnNil();
+}
+
 luaFunc(randomizerCheck)
 {
-	debugLog(getString(L, 1));
-	dsq->randomizer->activateCheck(getString(L, 1));
-	luaReturnNil();
+    dsq->randomizer->activateCheck(getString(L, 1));
+    luaReturnNil();
+}
+
+luaFunc(randomizerEndingGame)
+{
+    dsq->randomizer->endingGame();
+    luaReturnNil();
 }
 
 
@@ -10413,7 +10424,9 @@ static const struct {
 
 	luaRegister(getPerformanceCounter),
 	luaRegister(getPerformanceFreq),
+    luaRegister(onLoad),
     luaRegister(randomizerCheck),
+    luaRegister(randomizerEndingGame),
 	
 
 

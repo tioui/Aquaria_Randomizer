@@ -26,8 +26,10 @@ end
 function update(me, dt)
 	if isFlag(FLAG_NAIJA_SINGING, 0) then
 		if node_isEntityIn(me, getNaija()) then
+			-- ToDo: Ajouter le check pour le song shield
 			setControlHint(getStringBank(35), 0, 0, 0, 8, "", SONG_SHIELD)
 			voice("naija_singing")
+			-- Enlever le set flag lorsque la routine sera faite
 			setFlag(FLAG_NAIJA_SINGING, 1)
 		end
 	end

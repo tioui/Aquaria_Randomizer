@@ -290,7 +290,21 @@ void Game::updatePreviewRecipe()
 			data = dsq->continuity.getIngredientDataByName(r->result);
 			previewRecipe->setTexture("ingredients/"+data->gfx);
 		}
-		else
+		else if (r && nocasecmp(r->result, "spicysoup") == 0) {
+            std::vector<Recipe> lRecipes = dsq->continuity.recipes;
+            Recipe * lRecipe = nullptr;
+            for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
+                if (nocasecmp(lRecipes.at(i).result, "heartysoup")==0) {
+                    lRecipe = &lRecipes.at(i);
+                }
+            }
+            if (lRecipe && lRecipe->isKnown()) {
+                r = lRecipe;
+                data = dsq->continuity.getIngredientDataByName(r->result);
+                previewRecipe->setTexture("ingredients/"+data->gfx);
+            }
+        }
+        else
 		{
 			previewRecipe->setTexture("gui/question-mark");
 		}
@@ -6466,6 +6480,7 @@ void Game::applyState()
 
 	if (verbose) debugLog("Creating Avatar");
 	avatar = new Avatar();
+    dsq->randomizer->setAvatar(avatar);
 	if (verbose) debugLog("Done new Avatar");
 
 	if (warpAreaType.empty())
@@ -7372,6 +7387,19 @@ void Game::onCook()
 	IngredientData *data=0;
 	Recipe *r = findRecipe(cookList);
 
+    if (r && !r->isKnown() && nocasecmp(r->result, "spicysoup") == 0) {
+        std::vector<Recipe> lRecipes = dsq->continuity.recipes;
+        Recipe * lRecipe = nullptr;
+        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
+            if (nocasecmp(lRecipes.at(i).result, "heartysoup")==0) {
+                lRecipe = &lRecipes.at(i);
+            }
+        }
+        if (lRecipe && lRecipe->isKnown()) {
+            r = lRecipe;
+        }
+    }
+
 	if (r)
 		data = dsq->continuity.getIngredientDataByName(r->result);
 	else if(cookingScript)
@@ -8168,6 +8196,7 @@ void Game::onPressEscape()
 	}
 }
 
+
 void Game::onDebugSave()
 {
 	hideInGameMenu();
@@ -8204,6 +8233,7 @@ void Game::onExitCheckYes()
 {
 	dsq->sound->stopAllVoice();
 	dsq->toggleCursor(0, 0.25);
+    dsq->randomizer->onClose();
 	dsq->title();
 }
 
@@ -10051,6 +10081,7 @@ void Game::onHelpUp()
 
 void Game::update(float dt)
 {
+    dsq->randomizer->update();
 	particleManager->clearInfluences();
 
 	if (inHelpScreen)
@@ -10601,7 +10632,7 @@ ElementTemplate Game::getElementTemplateForLetter(int i)
 	//for (int i = 0; i < 27; i++)
 	ElementTemplate t;
 	t.idx = 1024+i;
-	t.gfx = "Aquarian";
+	t.gfx = dsq->randomizer->getAquarianGfx();
 	int x = i,y=0;
 	while (x >= 6)
 	{

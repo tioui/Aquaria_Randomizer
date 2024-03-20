@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "DSQ.h"
 #include "../Randomizer/RandomizerLocal.h"
+#include "../Randomizer/RandomizerArchipelago.h"
 
 
 
@@ -57,17 +58,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		const char *envPath = 0;
         const char *appImageDir = 0;
 
-        if (argc >= 5 && strncmp(argv[1], "--name", 6) && strncpy(argv[3], "--server", 8)) {
-            // TODO: Creating Archipelago Randomizer
+        if (argc >= 5 && strncmp(argv[1], "--name", 6) == 0 && strncmp(argv[3], "--server", 8) == 0) {
+            std::string lPassword;
+            if (argc >= 7 && strncmp(argv[5], "--password", 10) == 0) {
+                lPassword = argv[5];
+            } else {
+                lPassword = "";
+            }
+            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword);
         } else if (argc > 1) {
             lRandomizer = new RandomizerLocal(argv[1]);
-            if (lRandomizer->hasError()) {
-                std::cerr << lRandomizer->getErrorMessage() << std::endl;
-                exit(1);
-            }
         } else {
             std::cerr << "Usage: " << argv[0] << " <local filename>" << std::endl;
-            std::cerr << "Usage: " << argv[0] << " --name <Name> --server <ServerIP:Port>" << std::endl;
+            std::cerr << "Usage: " << argv[0] << " --name <Name> --server <ServerIP:Port>[ --password <Room password>]" << std::endl;
+            std::cerr.flush();
+            exit(1);
+        }
+        if (lRandomizer->hasError()) {
+            std::cerr << lRandomizer->getErrorMessage() << std::endl;
             std::cerr.flush();
             exit(1);
         }

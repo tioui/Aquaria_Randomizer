@@ -3,14 +3,16 @@
  * @created     : mercredi jan 10, 2024 16:08:04 EST
  * @license     : MIT
  * Class that encapsulate every randomization functionalities
+ *
+ * Todo: Add the Urn in the first big room of the cathedral right part
  */
 
+#include "../Aquaria/Game.h"
 #include "Randomizer.h"
 #include <cassert>
 #include <utility>
 #include <vector>
 #include "apclient.hpp"
-#include "../Aquaria/Game.h"
 
 // /**
 //  * Constructor of the object
@@ -35,11 +37,14 @@
 Randomizer::Randomizer() {
 	ingredientReplacement = new std::vector<int>();
     error = false;
+    inGame = false;
     errorMessage = "";
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
+    collectibles = new std::vector<collectible_t>();
     initialiseChecks();
     initialiseIngredients();
+    initialiseCollectibles();
 }
 
 /**
@@ -60,7 +65,6 @@ void Randomizer::initialiseIngredients() {
     ingredients->push_back({"SmallBone", IT_BONE});
     ingredients->push_back({"SmallEgg", IT_EGG});
     ingredients->push_back({"SmallEgg", IT_EGG});
-    ingredients->push_back({"RukhEgg", IT_EGG});
     ingredients->push_back({"GlowingEgg", IT_EGG});
     ingredients->push_back({"SpiderEgg", IT_EGG});
     ingredients->push_back({"SmallEye", IT_PART});
@@ -68,11 +72,12 @@ void Randomizer::initialiseIngredients() {
     ingredients->push_back({"SmallTentacle", IT_TENTACLE});
     ingredients->push_back({"RedBerry", IT_BERRY});
     ingredients->push_back({"PlantBulb", IT_BULB});
-    ingredients->push_back({"SpecialBulb", IT_BULB});
-    ingredients->push_back({"RedBulb", IT_BULB});
     ingredients->push_back({"Mushroom", IT_MUSHROOM});
     ingredients->push_back({"RainbowMushroom", IT_MUSHROOM});
     ingredients->push_back({"IceChunk", IT_ICECHUNK});
+    ingredients->push_back({"SpecialBulb", IT_BULB});
+    ingredients->push_back({"RedBulb", IT_BULB});
+    ingredients->push_back({"RukhEgg", IT_EGG});
     ingredients->push_back({"HotSoup", IT_SOUP});
     ingredients->push_back({"HeartySoup", IT_SOUP});
     ingredients->push_back({"DivineSoup", IT_SOUP});
@@ -269,7 +274,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1238, "urn_cathedral_r_02","ingredient_rottencake",1, "Rotten cake"});
     checks->push_back({1239, "urn_cathedral_r_03","ingredient_toughcake",1, "Tough cake"});
     checks->push_back({1240, "urn_cathedral_r_04","ingredient_spicyroll",1, "Spicy roll"});
-    checks->push_back({1241, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rottem meat"});
+    checks->push_back({1241, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rotten meat"});
     checks->push_back({1242, "urn_cathedral_r_06","ingredient_plantleaf",1, "Plant leaf"});
     checks->push_back({1243, "urn_cathedral_r_07","ingredient_leechingpoultice",1, "Leeching poultice"});
     checks->push_back({1244, "urn_cathedral_r_08","ingredient_smallbone",3, "Small bone"});
@@ -291,42 +296,84 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1260, "health_egg_3","upgrade_health_3",1, "Health"});
     checks->push_back({1261, "health_egg_4","upgrade_health_4",1, "Health"});
     checks->push_back({1262, "health_egg_5","upgrade_health_5",1, "Health"});
-    checks->push_back({FLAG_COLLECTIBLE_ANEMONESEED, "collect_anemone","collectible_anemone",1, "Anemone"});
-    checks->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collect_energy_temple","collectible_energy_temple",1, "Krotite armor"});
-    checks->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue"});
-    checks->push_back({FLAG_COLLECTIBLE_BANNER, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
-    checks->push_back({FLAG_COLLECTIBLE_BIOSEED, "collect_bio_seed","collectible_bio_seed",1, "Glowing seed"});
-    checks->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
-    checks->push_back({FLAG_COLLECTIBLE_CHEST, "collect_treasure_chest","collectible_treasure_chest",1, "Odd container"});
-    checks->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collect_energy_boss","collectible_energy_boss",1, "Tooth"});
-    checks->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
-    checks->push_back({FLAG_COLLECTIBLE_GEAR, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
-    checks->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
-    checks->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll"});
-    checks->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collect_mithalas_pot","collectible_mithalas_pot",1, "Mithalas pot"});
-    checks->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collect_big_seed","collectible_big_seed",1, "Big seed"});
-    checks->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
-    checks->push_back({FLAG_COLLECTIBLE_SKULL, "collect_skull","collectible_skull",1, "King's Skull"});
-    checks->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
-    checks->push_back({FLAG_COLLECTIBLE_SPORESEED, "collect_spore_seed","collectible_spore_seed",1, "Song plant spore"});
-    checks->push_back({FLAG_COLLECTIBLE_STARFISH, "collect_gold_star","collectible_gold_star",1, "Golden starfish"});
-    checks->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collect_stone_head","collectible_stone_head",1, "Stone head"});
-    checks->push_back({FLAG_COLLECTIBLE_SUNKEY, "collect_sun_key","collectible_sun_key",1, "Sun key"});
-    checks->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collect_trident_head","collectible_trident_head",1, "Trident"});
-    checks->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
-    checks->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Jelly egg"});
-    checks->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collect_walker","collectible_walker",1, "Baby walker"});
-    checks->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collect_crab_costume","collectible_crab_costume",1, "Crab armor"});
-    checks->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
-    checks->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan dress"});
-    checks->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collect_mutant_costume","collectible_mutant_costume",1, "Mutant costume"});
-    checks->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collect_seahorse_costume","collectible_seahorse_costume",1, "Arnassi Armor"});
-    checks->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collect_teen_costume","collectible_teen_costume",1, "Girl costume"});
-    checks->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
-    checks->push_back({FLAG_PET_NAUTILUS, "collect_nautilus","collectible_nautilus",1, "Baby nautilus"});
-    checks->push_back({FLAG_PET_BLASTER, "collect_blaster","collectible_blaster",1, "Baby blaster"});
-    checks->push_back({FLAG_PET_DUMBO, "collect_dumbo","collectible_dumbo",1, "Baby dumbo"});
-    checks->push_back({FLAG_PET_PIRANHA, "collect_piranha","collectible_piranha",1, "Baby piranha"});
+    checks->push_back({1263, "collect_anemone","collectible_anemone",1, "Anemone"});
+    checks->push_back({1264, "collect_energy_temple","collectible_energy_temple",1, "Krotite armor"});
+    checks->push_back({1265, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue"});
+    checks->push_back({1266, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner"});
+    checks->push_back({1267, "collect_bio_seed","collectible_bio_seed",1, "Glowing seed"});
+    checks->push_back({1268, "collect_blackpearl","collectible_blackpearl",1, "Black pearl"});
+    checks->push_back({1269, "collect_treasure_chest","collectible_treasure_chest",1, "Odd container"});
+    checks->push_back({1270, "collect_energy_boss","collectible_energy_boss",1, "Tooth"});
+    checks->push_back({1271, "collect_energy_statue","collectible_energy_statue",1, "Energy statue"});
+    checks->push_back({1272, "collect_golden_gear","collectible_golden_gear",1, "Golden gear"});
+    checks->push_back({1273, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant"});
+    checks->push_back({1274, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll"});
+    checks->push_back({1275, "collect_mithalas_pot","collectible_mithalas_pot",1, "Mithalas pot"});
+    checks->push_back({1276, "collect_big_seed","collectible_big_seed",1, "Big seed"});
+    checks->push_back({1277, "collect_seed_bag","collectible_seed_bag",1, "Seed bag"});
+    checks->push_back({1278, "collect_skull","collectible_skull",1, "King's Skull"});
+    checks->push_back({1279, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon"});
+    checks->push_back({1280, "collect_spore_seed","collectible_spore_seed",1, "Song plant spore"});
+    checks->push_back({1281, "collect_gold_star","collectible_gold_star",1, "Golden starfish"});
+    checks->push_back({1282, "collect_stone_head","collectible_stone_head",1, "Stone head"});
+    checks->push_back({1283, "collect_sun_key","collectible_sun_key",1, "Sun key"});
+    checks->push_back({1284, "collect_trident_head","collectible_trident_head",1, "Trident"});
+    checks->push_back({1285, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg"});
+    checks->push_back({1286, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Jelly egg"});
+    checks->push_back({1287, "collect_walker","collectible_walker",1, "Baby walker"});
+    checks->push_back({1288, "collect_crab_costume","collectible_crab_costume",1, "Crab armor"});
+    checks->push_back({1289, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume"});
+    checks->push_back({1290, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan dress"});
+    checks->push_back({1291, "collect_mutant_costume","collectible_mutant_costume",1, "Mutant costume"});
+    checks->push_back({1292, "collect_seahorse_costume","collectible_seahorse_costume",1, "Arnassi Armor"});
+    checks->push_back({1293, "collect_teen_costume","collectible_teen_costume",1, "Girl costume"});
+    checks->push_back({1294, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume"});
+    checks->push_back({1295, "collect_nautilus","collectible_nautilus",1, "Baby nautilus"});
+    checks->push_back({1296, "collect_blaster","collectible_blaster",1, "Baby blaster"});
+    checks->push_back({1297, "collect_dumbo","collectible_dumbo",1, "Baby dumbo"});
+    checks->push_back({1298, "collect_piranha","collectible_piranha",1, "Baby piranha"});
+}
+
+/**
+ * Initialize `collectibles`
+ */
+void Randomizer::initialiseCollectibles() {
+    collectibles->push_back({FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collectible_energy_temple"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collectible_arnassi_statue"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BANNER, "collectible_mithalas_banner"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BIOSEED, "collectible_bio_seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collectible_blackpearl"});
+    collectibles->push_back({FLAG_COLLECTIBLE_CHEST, "collectible_treasure_chest"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collectible_energy_boss"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collectible_energy_statue"});
+    collectibles->push_back({FLAG_COLLECTIBLE_GEAR, "collectible_golden_gear"});
+    collectibles->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collectible_jelly_plant"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collectible_mithala_doll"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collectible_mithalas_pot"});
+    collectibles->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collectible_big_seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collectible_seed_bag"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SKULL, "collectible_skull"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collectible_jelly_beacon"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SPORESEED, "collectible_spore_seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_STARFISH, "collectible_gold_star"});
+    collectibles->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collectible_stone_head"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SUNKEY, "collectible_sun_key"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collectible_trident_head"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collectible_turtle_egg"});
+    collectibles->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collectible_upsidedown_seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collectible_walker"});
+    collectibles->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collectible_crab_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collectible_jelly_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collectible_mithalan_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collectible_mutant_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collectible_seahorse_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collectible_teen_costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collectible_urchin_costume"});
+    collectibles->push_back({FLAG_PET_NAUTILUS, "collectible_nautilus"});
+    collectibles->push_back({FLAG_PET_BLASTER, "collectible_blaster"});
+    collectibles->push_back({FLAG_PET_DUMBO, "collectible_dumbo"});
+    collectibles->push_back({FLAG_PET_PIRANHA, "collectible_piranha"});
 }
 
 
@@ -335,24 +382,32 @@ void Randomizer::initialiseChecks(){
  * @param aCheck The collectible check item to activate
  */
 void Randomizer::receivingCollectible(check_t *aCheck) {
-    dsq->continuity.setFlag(aCheck->flag, 1);
-    if (aCheck->flag == FLAG_PET_BLASTER) {
+    collectible_t *lCollectible = nullptr;
+    for (int i = 0; i < collectibles->size() && !lCollectible; i = i + 1) {
+        if (collectibles->at(i).name == aCheck->item) {
+            lCollectible = &collectibles->at(i);
+        }
+    }
+    assert(lCollectible && "The Collectible is not valid!");
+    dsq->continuity.setFlag(lCollectible->flag, 1);
+    if (lCollectible->flag == FLAG_PET_BLASTER) {
         dsq->continuity.setFlag(FLAG_COLLECTIBLE_BLASTER, 1);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(30), false, false,
                                   false, 6, "collectibles/egg-blaster");
-    } else if (aCheck->flag == FLAG_PET_NAUTILUS) {
+    } else if (lCollectible->flag == FLAG_PET_NAUTILUS) {
         dsq->continuity.setFlag(FLAG_COLLECTIBLE_NAUTILUS, 1);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(33), false, false,
                                   false, 6, "collectibles/egg-nautilus");
-    } else if (aCheck->flag == FLAG_PET_DUMBO) {
+    } else if (lCollectible->flag == FLAG_PET_DUMBO) {
         dsq->continuity.setFlag(FLAG_COLLECTIBLE_DUMBO, 1);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(32), false, false,
                                   false, 6, "collectibles/egg-dumbo");
-    } else if (aCheck->flag == FLAG_PET_PIRANHA) {
+    } else if (lCollectible->flag == FLAG_PET_PIRANHA) {
         dsq->continuity.setFlag(FLAG_COLLECTIBLE_PIRANHA, 1);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(31), false, false,
                                   false, 6, "collectibles/egg-piranha");
     }
+
 
 }
 
@@ -372,11 +427,13 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		std::string lIngredientName = aItem.substr(11);
 		IngredientData *lIngredient = dsq->continuity.getIngredientDataByName(lIngredientName);
 		dsq->continuity.pickupIngredient(lIngredient, aCount);
-        dsq->game->pickupIngredientEffects(lIngredient);
+        for (int i = 0; i < aCount; i = i + 1) {
+            dsq->game->pickupIngredientEffects(lIngredient);
+        }
 	} else if (aItem.compare(0, 11, "upgrade_wok") == 0) {
 		lMessageStream << "Upgrade: Wok";
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
-	} else if (aItem.compare(0, 10, "upgrade_health") == 0) {
+	} else if (aItem.compare(0, 14, "upgrade_health") == 0) {
 		lMessageStream << "Upgrade: Health";
 		dsq->continuity.upgradeHealth();
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
@@ -386,7 +443,15 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 	} else {
 		assert(false && "The receving item is not valid!");
 	}
-	dsq->screenMessage(lMessageStream.str());
+    showQuickMessage(lMessageStream.str());
+}
+
+/**
+ * Show a quick message on the screen.
+ * @param aText The text to show
+ */
+void Randomizer::showQuickMessage(const std::string &aText){
+    dsq->screenMessage(aText);
 }
 
 /**
@@ -686,5 +751,62 @@ std::string Randomizer::getUid() {
     return uid;
 }
 
+/**
+ * Is the Aquarian text in the game should be translated
+ * @param aValue The value to assign to `isAquarianTranslated`
+ */
+void Randomizer::setIsAquarianTranslated(bool aValue){
+    isAquarianTranslated = aValue;
+}
 
+/**
+ * Is the Aquarian text in the game should be translated
+ * @return True if the text should be translated
+ */
+bool Randomizer::getIsAquarianTranslated(){
+    return isAquarianTranslated;
+}
+
+/**
+ * Get the file name (without path and extension) of the graphic file to show Aquarian text
+ * @return The filename
+ */
+std::string Randomizer::getAquarianGfx(){
+    std::string lResult = "aquarian";
+    if (isAquarianTranslated) {
+        lResult = "aquarian_alt";
+    }
+    return lResult;
+}
+
+/**
+ * Set the avatar (Naija) object
+ * @param aAvatar Naija
+ */
+void Randomizer::setAvatar(Avatar *aAvatar) {
+    avatar = aAvatar;
+}
+
+/**
+ * A now or saves game has been load
+   @param aNewGame True if a new game is launched.
+ */
+void Randomizer::onLoad(bool aNewGame){
+    if (!aNewGame) {
+        dsq->toggleCursor(true);
+        if (dsq->confirm("Restart at Naija's cave?","", false, 3.0)) {
+            dsq->game->sceneToLoad = "naijacave";
+            dsq->game->positionToAvatar = Vector(8880, 3881);
+        }
+        dsq->toggleCursor(false);
+    }
+    inGame = true;
+}
+
+/**
+ * When a game is quitting.
+ */
+void Randomizer::onClose() {
+    inGame = false;
+}
 

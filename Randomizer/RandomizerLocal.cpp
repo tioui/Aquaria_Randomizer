@@ -44,11 +44,14 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     checksReplacement = new std::vector<int>();
     long long int lUid = 0;
     std::ifstream lFile(aFilename);
+    bool lAquarianTranslated = false;
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
         version = lJsonData["version"];
         lUid = lJsonData["uid"];
         setUid(std::to_string(lUid));
+        lAquarianTranslated = lJsonData["aquarianTranslate"];
+        setIsAquarianTranslated(lAquarianTranslated);
         for (int lElement : lJsonData["ingredientReplacement"]) {
             ingredientReplacement->push_back(lElement);
         }
@@ -72,6 +75,7 @@ RandomizerLocal::~RandomizerLocal() {
 /**
  * Activate a randomizer check
  * @param aCheck The check to activate
+ * Todo: Put the location index in the continuity flags instead of the item index (after the first walkthrough
  */
 void RandomizerLocal::activateCheck(std::string aCheck) {
     int lCheckIndex =getCheckIndex(aCheck);
@@ -86,5 +90,11 @@ void RandomizerLocal::activateCheck(std::string aCheck) {
         receivingItem(lCheck->item, lCheck->count);
     }
 
+}
+
+/**
+ * Lunched at each game loop iteration
+ */
+void RandomizerLocal::update(){
 }
 

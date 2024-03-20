@@ -34,6 +34,7 @@ end
 
 function update(me, dt)
 	if not v.done then
+		-- Ajouter des conditions ici pour permettre d'ouvrir la porte seulement si les conditions sont respectés.
 		if node_isEntityIn(me, v.n) and not (entity_isState(v.ent, STATE_OPENED) or entity_isState(v.ent, STATE_OPEN)) then
 			entity_setState(v.ent, STATE_OPEN, -1, 1)
 			v.done = true

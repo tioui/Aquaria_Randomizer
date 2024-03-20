@@ -980,7 +980,7 @@ public:
 	void clearBuffers();	
 	void render(int startLayer=-1, int endLayer=-1, bool useFrameBufferIfAvail=true);
 	void showBuffer();
-	void quit();
+	virtual void quit();
 	bool isShuttingDown();
 	bool isWindowFocus();
 

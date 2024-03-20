@@ -42,6 +42,7 @@ function update(me, dt)
 		local visionNaija = getNode("VISIONNAIJA")
 		
 		local n = getNaija()
+		randomizerEndingGame()
 		changeForm(FORM_NORMAL)
 		entity_setInvincible(n)
 		entity_setPosition(v.ent, entity_x(v.ent), entity_y(v.ent), 0.01)
