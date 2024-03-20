@@ -804,7 +804,7 @@ IF(AQUARIA_USE_VFS)
 ENDIF(AQUARIA_USE_VFS)
 
 IF(WIN32_TRUE)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lpthread -static  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -lcrypt32 -lws2_32")
+
 ELSE(WIN32_TRUE)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
 ENDIF(WIN32_TRUE)
@@ -876,7 +876,7 @@ ADD_EXECUTABLE(aquaria_randomizer ${EXETYPE}
 TARGET_LINK_LIBRARIES(aquaria_randomizer "${OPTIONAL_LIBS}")
 IF(WIN32_TRUE)
     add_dependencies(aquaria_randomizer openssl)
-    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
+    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole -lpthread -static  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -lcrypt32 -lws2_32")
 ENDIF(WIN32_TRUE)
 # end of CMakeLists.txt ...
 
