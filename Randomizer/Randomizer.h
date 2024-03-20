@@ -26,6 +26,11 @@ typedef struct ingredient {
     IngredientType category;
 } ingredient_t;
 
+typedef struct collectible {
+    int flag;
+    std::string name;
+} collectible_t;
+
 /**
  * Class that encapsulate every randomization functionalities
 */
@@ -102,14 +107,68 @@ public:
      */
     std::string getUid();
 
+    /**
+     * Lunched at each game loop iteration
+     */
+    virtual void update() {};
+
+    /**
+     * Get the file name (without path and extension) of the graphic file to show Aquarian text
+     * @return The filename
+     */
+    std::string getAquarianGfx();
+
+    /**
+     * Is the Aquarian text in the game should be translated
+     * @return True if the text should be translated
+     */
+    bool getIsAquarianTranslated();
+
+    /**
+     * Launched when the game is ending
+     */
+    virtual void endingGame() {};
+
+    /**
+     * Set the avatar (Naija) object
+     * @param avatar Naija
+     */
+    void setAvatar(Avatar *avatar);
+
+    /**
+     * A new or saves game has been load
+     * @param newGame True if a new game is launched.
+     */
+    virtual void onLoad(bool newGame);
+
+    /**
+     * When a game is closing a game (return to menu).
+     */
+    virtual void onClose();
+
+    /**
+     * Show a quick message on the screen.
+     * @param text The text to show
+     */
+    virtual void showQuickMessage(const std::string &aText);
+
+
 protected:
 
-
+    /**
+     * A game is presently running. (not in title)
+     */
+    bool inGame;
 
     /**
      * Replacement of every ingredients.
      */
     std::vector<int> *ingredientReplacement;
+
+    /**
+     * List of every collectible flags.
+     */
+    std::vector<collectible_t> *collectibles;
 
     /**
      * Put hasError to True and assign a message to getErrorMessage.
@@ -168,6 +227,22 @@ protected:
      */
     void setUid(std::string uid);
 
+    /**
+     * Is the Aquarian text in the game should be translated
+     * @param value The value to assign to `isAquarianTranslated`
+     */
+    void setIsAquarianTranslated(bool value);
+
+    /**
+     * Naija
+     */
+    Avatar *avatar;
+
+    /**
+     * Every checks of the Randomizer
+     */
+    std::vector<check_t> *checks;
+
 private:
 
     /**
@@ -186,9 +261,9 @@ private:
     void initialiseIngredients();
 
     /**
-     * Every checks of the Randomizer
+     * Initialize `collectibles`
      */
-    std::vector<check_t> *checks;
+    void initialiseCollectibles();
 
 
     /**
@@ -233,15 +308,10 @@ private:
      */
     ingredient_t *getRandomIngredient(IngredientType aType);
 
-//        /**
-//         * The name of the multiworld randomizer user
-//         */
-//        std::string name;
-//
-//        /**
-//         * The name of the multiworld randomizer server and port
-//         */
-//        std::string server;
+    /**
+     * Should Aquarian characters be translated to English.
+     */
+    bool isAquarianTranslated;
 };
 
 const int FLAG_COLLECTIBLE_SONGCAVE        = 500;

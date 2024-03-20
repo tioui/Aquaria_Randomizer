@@ -15,7 +15,7 @@ class Randomizer {
             this.ingredientReplacement.push(i);
         }
         this.checksReplacement = [];
-        for(let i = 0; i < 199; i = i + 1) {
+        for(let i = 0; i < 200; i = i + 1) {
             this.checksReplacement.push(i);
         }
     }
@@ -320,7 +320,8 @@ class Tips {
             { "check_id":"collect_nautilus", "item_id":"collectible_nautilus"},
             { "check_id":"collect_blaster", "item_id":"collectible_blaster"},
             { "check_id":"collect_dumbo", "item_id":"collectible_dumbo"},
-            { "check_id":"collect_piranha", "item_id":"collectible_piranha"}
+            { "check_id":"collect_piranha", "item_id":"collectible_piranha"},
+            { "check_id":"urn_cathedral_r_13", "item_id":"ingredient_leafpoultice"}
         ];
     }
 }
