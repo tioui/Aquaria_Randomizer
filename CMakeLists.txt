@@ -395,12 +395,12 @@ IF(CMAKE_COMPILER_IS_GNUCC)
         # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
         # Exceptions are not used, excluding support for release builds adds less bulk as well.
         set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector" CACHE STRING "Flags used for release builds" FORCE)
-        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -fexceptions" CACHE STRING "Flags used for release builds" FORCE)
 	ELSE(AQUARIA_GCC_HAS_STACKPROT)
         # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
         # Exceptions are not used, excluding support for release builds adds less bulk as well.
         set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char" CACHE STRING "Flags used for release builds" FORCE)
-        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fexceptions" CACHE STRING "Flags used for release builds" FORCE)
     ENDIF(AQUARIA_GCC_HAS_STACKPROT)
 
 	### For an unknown reason, the program crash with a segfault when using -O2 on Windows (Should investiguate in the future)
