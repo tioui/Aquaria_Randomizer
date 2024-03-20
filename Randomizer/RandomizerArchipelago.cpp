@@ -793,4 +793,7 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 195, "collect_blaster"});
     apLocations->push_back({AP_BASE + 196, "collect_dumbo"});
     apLocations->push_back({AP_BASE + 197, "collect_piranha"});
+    apLocations->push_back({AP_BASE + 198, "urn_cathedral_r_13"});
+
+
 }
