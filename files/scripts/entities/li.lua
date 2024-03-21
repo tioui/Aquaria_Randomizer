@@ -650,17 +650,17 @@ function song(me, song)
 		end
 	end
 	
-	if entity_isState(me, STATE_CORNERED) then
-		--debugLog("i'm cornered and you sun a song")
-		if song == SONG_BIND then
-			--debugLog("it was bind")
-			--debugLog(string.format("FLAG_LI: %d", getFlag(FLAG_LI)))
-			if isFlag(FLAG_LI, 1) then			
-				--debugLog("calling cutscene")
-				cutscene(me)
-			end
-		end
-	else
+--	if entity_isState(me, STATE_CORNERED) then
+--		--debugLog("i'm cornered and you sun a song")
+--		if song == SONG_BIND then
+--			--debugLog("it was bind")
+--			--debugLog(string.format("FLAG_LI: %d", getFlag(FLAG_LI)))
+--			if isFlag(FLAG_LI, 1) then			
+--				--debugLog("calling cutscene")
+--				cutscene(me)
+--			end
+--		end
+--	else
 		if song == SONG_ENERGYFORM then
 			v.nearNaijaTimer = 0
 			expression(me, EXPRESSION_SURPRISE, 1.5)
@@ -675,7 +675,7 @@ function song(me, song)
 			expression(me, EXPRESSION_HAPPY, 3)
 			entity_flipToEntity(me, v.n)		
 		end
-	end
+--	end
 end
 
 local function softFlipTo(me, ent)
@@ -686,7 +686,7 @@ local function softFlipTo(me, ent)
 end
 
 function update(me, dt)
-	if isForm(FORM_DUAL) then return end
+--	if isForm(FORM_DUAL) then return end
 	if v.incut then return end
 	if entity_isState(me, STATE_WAIT) then return end
 	if entity_isState(me, STATE_TRAPPEDINCREATOR) then return end

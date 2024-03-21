@@ -21,7 +21,8 @@ enum ItemType {
     ITEM_TYPE_RECIPE,
     ITEM_TYPE_COLLECTIBLE,
     ITEM_TYPE_HEALTH,
-    ITEM_TYPE_WOK
+    ITEM_TYPE_WOK,
+    ITEM_TYPE_SONG
 };
 
 /**

@@ -283,6 +283,13 @@ private:
      */
     void receivingCollectible(check_t *check);
 
+
+    /**
+     * Get a new song item to activate in the local game
+     * @param check The song check item to activate
+     */
+    void receivingSong(check_t *check);
+
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
      * @param recipe The recipe to spawn

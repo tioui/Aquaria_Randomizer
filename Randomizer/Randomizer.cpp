@@ -13,6 +13,7 @@
 #include <utility>
 #include <vector>
 #include "apclient.hpp"
+#include "../Aquaria/Avatar.h"
 
 /**
  * Constructor for the Randomizer
@@ -316,10 +317,11 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1297, "collect_dumbo","collectible_dumbo",1, "Baby dumbo"});
     checks->push_back({1298, "collect_piranha","collectible_piranha",1, "Baby piranha"});
     checks->push_back({1299, "urn_cathedral_r_13","ingredient_leafpoultice",3, "Leaf poultice"});
+    checks->push_back({1300, "li_cave","song_li",1, "Li and Li song"});
 }
 
 /**
- * Initialize `collectibles`
+ * Initialize `collectibles`ddddd
  */
 void Randomizer::initialiseCollectibles() {
     collectibles->push_back({
@@ -361,7 +363,6 @@ void Randomizer::initialiseCollectibles() {
     collectibles->push_back({FLAG_PET_PIRANHA, "collectible_piranha"});
 }
 
-
 /**
  * Get a new collectible item to activate in the local game
  * @param aCheck The collectible check item to activate
@@ -397,6 +398,21 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
 }
 
 /**
+ * Get a new song item to activate in the local game
+ * @param aCheck The song check item to activate
+ */
+void Randomizer::receivingSong(check_t *aCheck) {
+    if (aCheck->flag = 1300) { // Li song
+        dsq->continuity.setFlag(FLAG_LI, 100);
+        dsq->continuity.learnSong(SONG_LI);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(42), false, false,
+                                  false, 10, "", false, SONG_LI);
+        dsq->game->createEntity("li", 0, Vector (avatar->position.x, avatar->position.y), 0,
+                                false, "Li", ET_ENEMY, true);
+    }
+}
+
+/**
  * Get a new item to activate in the local game
  * @param aItem The item to activate
  * @param aCount The number of element to receive
@@ -422,9 +438,13 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		lMessageStream << "Upgrade: Health";
 		dsq->continuity.upgradeHealth();
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
-		check_t * lCheck = getCheckByItem(aItem);
-		lMessageStream << lCheck->message;
-		receivingCollectible(lCheck);
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingCollectible(lCheck);
+    } else if (aItem.compare(0, 5, "song_") == 0) {
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingSong(lCheck);
 	} else {
 		assert(false && "The receving item is not valid!");
 	}

@@ -26,13 +26,17 @@ function init(me)
 end
 
 function update(me, dt)
-	if hasLi() and isFlag(FLAG_HINT_LISONG, 0) then
-		if node_isEntityIn(me, v.n) then
-			setControlHint(getStringBank(6), 0, 0, 0, 8)
-			setFlag(FLAG_HINT_LISONG, 1)
-			if not hasSong(SONG_LI) then
-				learnSong(SONG_LI)
-			end
-		end
+	if isFlag(FLAG_HINT_LISONG, 0) then
+		setFlag(FLAG_HINT_LISONG, 1)
+		randomizerCheck("li_cave")
 	end
+--	if hasLi() and isFlag(FLAG_HINT_LISONG, 0) then
+--		if node_isEntityIn(me, v.n) then
+--			setControlHint(getStringBank(6), 0, 0, 0, 8)
+--			setFlag(FLAG_HINT_LISONG, 1)
+--			if not hasSong(SONG_LI) then
+--				learnSong(SONG_LI)
+--			end
+--		end
+--	end
 end

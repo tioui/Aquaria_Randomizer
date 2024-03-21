@@ -588,6 +588,7 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 114, "ingredient_sealoaf", 2, ITEM_TYPE_RECIPE});
     apItems->push_back({AP_BASE + 115, "ingredient_smallbone", 3, ITEM_TYPE_INGREDIENT});
     apItems->push_back({AP_BASE + 116, "ingredient_smallegg", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 117, "song_li", 1, ITEM_TYPE_SONG});
 }
 
 /**
@@ -794,6 +795,7 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 196, "collect_dumbo"});
     apLocations->push_back({AP_BASE + 197, "collect_piranha"});
     apLocations->push_back({AP_BASE + 198, "urn_cathedral_r_13"});
+    apLocations->push_back({AP_BASE + 199, "li_cave"});
 
 
 }
