@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "Game.h"
 #include "Avatar.h"
 #include "../BBGE/AfterEffect.h"
+#include "../Randomizer/Randomizer.h"
 
 const float strengthSeparation = 1;
 const float strengthAlignment = 0.8f;
@@ -143,18 +144,18 @@ void SchoolFish::onEnterState(int action)
 			if (dsq->game->firstSchoolFish)
 			{
 				if (chance(50))
-					dsq->game->spawnIngredient("FishOil", position, 1);
+					dsq->randomizer->spawnIngredient("FishOil", position, 1, true);
 				else
-					dsq->game->spawnIngredient("FishMeat", position, 1);
+					dsq->randomizer->spawnIngredient("FishMeat", position, 1, true);
 
 				dsq->game->firstSchoolFish = false;
 			}
 			else
 			{
 				if (chance(8))
-					dsq->game->spawnIngredient("FishOil", position, 1);
+					dsq->randomizer->spawnIngredient("FishOil", position, 1, true);
 				if (chance(5))
-					dsq->game->spawnIngredient("FishMeat", position, 1);
+					dsq->randomizer->spawnIngredient("FishMeat", position, 1, true);
 			}
 		}
 	}

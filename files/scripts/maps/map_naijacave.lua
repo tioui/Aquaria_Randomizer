@@ -108,6 +108,7 @@ function init()
 	elseif isStory(0) then
 		setCutscene(1, 1)
 		
+		-- ToDo: Replacing by check
 		learnSong(SONG_SHIELD)
 
 		setStory(1)
@@ -211,6 +212,7 @@ function init()
 		pickupGem("Naija-Token", 1)
 		
 		setCutscene(0)
+		onLoad(true)
 		
 		--[[
 		pickupGem("PieceGreen", 1)

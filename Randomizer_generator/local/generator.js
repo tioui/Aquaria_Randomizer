@@ -10,12 +10,13 @@ class Randomizer {
     constructor(aVersion) {
         this.version = aVersion;
         this.uid = Date.now();
+        this.aquarianTranslate = false;
         this.ingredientReplacement = []; // 26 base ingredients and 50 dishs
         for(let i = 0; i < 76; i = i + 1) {
             this.ingredientReplacement.push(i);
         }
         this.checksReplacement = [];
-        for(let i = 0; i < 200; i = i + 1) {
+        for(let i = 0; i < 199; i = i + 1) {
             this.checksReplacement.push(i);
         }
     }
@@ -66,20 +67,19 @@ class Randomizer {
  */
 function generateRandomizer(aPage) {
     let lRandomizer = new Randomizer(0);
-    console.log("UID: " + lRandomizer.uid);
-    // lRandomizer.randomizeCheckReplacement();
-    // let lIngredientOption = $('#ingredient');
-    // if (lIngredientOption.val() === "common") {
-    //     lRandomizer.randomizeIngredientReplacement(true);
-    // } else if (lIngredientOption.val() === "all") {
-    //     lRandomizer.randomizeIngredientReplacement(false);
-    // }
-    // if ($('#dish').val() === "all") {
-    //     lRandomizer.randomizeDishReplacement();
-    // }
-    // var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lRandomizer));
-    // aPage.setAttribute("href", "data:"+data);
-    // aPage.setAttribute("download", "aquaria_randomized.json");
+    lRandomizer.randomizeCheckReplacement();
+    let lIngredientOption = $('#ingredient');
+    if (lIngredientOption.val() === "common") {
+        lRandomizer.randomizeIngredientReplacement(true);
+    } else if (lIngredientOption.val() === "all") {
+        lRandomizer.randomizeIngredientReplacement(false);
+    }
+    if ($('#dish').val() === "all") {
+        lRandomizer.randomizeDishReplacement();
+    }
+    var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lRandomizer));
+    aPage.setAttribute("href", "data:"+data);
+    aPage.setAttribute("download", "aquaria_randomized.json");
 }
 
 function show_tips() {

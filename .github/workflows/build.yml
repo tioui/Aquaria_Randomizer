@@ -24,7 +24,7 @@ jobs:
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
           cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 ..
-          make
+          make VERBOSE=1
       - run: echo "Compiling done."
       - run: echo "Packaging..."
       - run: |

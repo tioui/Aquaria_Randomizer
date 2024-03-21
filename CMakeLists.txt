@@ -395,12 +395,12 @@ IF(CMAKE_COMPILER_IS_GNUCC)
         # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
         # Exceptions are not used, excluding support for release builds adds less bulk as well.
         set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector" CACHE STRING "Flags used for release builds" FORCE)
-        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-stack-protector -fexceptions" CACHE STRING "Flags used for release builds" FORCE)
 	ELSE(AQUARIA_GCC_HAS_STACKPROT)
         # -O3 breaks on some GCC/MinGW versions, make sure CMake does not set this as default.
         # Exceptions are not used, excluding support for release builds adds less bulk as well.
         set(CMAKE_C_FLAGS_RELEASE "-pipe -fsigned-char" CACHE STRING "Flags used for release builds" FORCE)
-        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fno-exceptions" CACHE STRING "Flags used for release builds" FORCE)
+        set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fexceptions" CACHE STRING "Flags used for release builds" FORCE)
     ENDIF(AQUARIA_GCC_HAS_STACKPROT)
 
 	### For an unknown reason, the program crash with a segfault when using -O2 on Windows (Should investiguate in the future)
@@ -659,8 +659,14 @@ IF(WIN32_TRUE)
 	)
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include"
+		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
 	)
+
+	SET_SOURCE_FILES_PROPERTIES(
+		${AQUARIA_SRCS}
+		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
+	)
+ 
 ELSE(WIN32_TRUE)
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
@@ -797,11 +803,12 @@ IF(AQUARIA_USE_VFS)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "ttvfs_cfileapi")
 ENDIF(AQUARIA_USE_VFS)
 
-IF(WIN32)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lpthread -static  ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/libcrypto.a  -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -lwsock32 -lcrypt32 -lws2_32")
-ELSE(WIN32)
+IF(WIN32_TRUE)
+
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lwsock32 -L${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl -lssl -lcrypto -lcrypt32 -lws2_32")
+ELSE(WIN32_TRUE)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
-ENDIF(WIN32)
+ENDIF(WIN32_TRUE)
 
 IF(MACOSX)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Carbon")
@@ -870,7 +877,7 @@ ADD_EXECUTABLE(aquaria_randomizer ${EXETYPE}
 TARGET_LINK_LIBRARIES(aquaria_randomizer "${OPTIONAL_LIBS}")
 IF(WIN32_TRUE)
     add_dependencies(aquaria_randomizer openssl)
-    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
+    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole -lpthread -static -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_")
 ENDIF(WIN32_TRUE)
 # end of CMakeLists.txt ...
 

@@ -3228,7 +3228,6 @@ void DSQ::doSaveSlotMenu(SaveSlotMode ssm, const Vector &position)
 	}
 
 	saveSlotMode = SSM_NONE;
-	
 	createSaveSlots(ssm);
 	const int firstSaveSlot = user.data.savePage * saveSlotPageSize;
 	if (user.data.saveSlot >= firstSaveSlot && user.data.saveSlot < firstSaveSlot + saveSlots.size())
@@ -4187,7 +4186,6 @@ void DSQ::onUpdate(float dt)
 			closeHint();
 	}
 	*/
-
 	if (isSkippingCutscene())
 	{
 		if (!isInCutscene())

@@ -139,7 +139,6 @@ function activate(me)
 	if entity_isState(me, STATE_HUG) then
 		endHug(me)
 	else
-	
 		if isFlag(FLAG_LI, 101) or isFlag(FLAG_LI, 102) then
 			--debugLog("setting li to follow")
 			fade(1, 1)

@@ -7580,13 +7580,8 @@ void Game::onCook()
 		dsq->main(0.5);
 
 		dsq->continuity.setFlag(FLAG_COOKS, dsq->continuity.getFlag(FLAG_COOKS)+1);
-
-		if (r && r->isKnown())
-		{
-			dsq->continuity.learnRecipe(r);
-			if (haveLeftovers)
-				updatePreviewRecipe();
-		}
+        if (haveLeftovers)
+            updatePreviewRecipe();
 
 		core->mouse.buttonsEnabled = true;
 	}

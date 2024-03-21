@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "AutoMap.h"
 #include "GridRender.h"
 #include "DeflateCompressor.h"
+#include "../Randomizer/Randomizer.h"
 
 #include "tinyxml2.h"
 using namespace tinyxml2;
@@ -3317,7 +3318,8 @@ void Continuity::loadFile(int slot)
 			webTimer.start(timer);
 		}
 
-	}
+    }
+    dsq->randomizer->onLoad(false);
 }
 
 void Continuity::setNaijaModel(std::string model)
