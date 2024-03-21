@@ -322,7 +322,8 @@ void Randomizer::initialiseChecks(){
  * Initialize `collectibles`
  */
 void Randomizer::initialiseCollectibles() {
-    collectibles->push_back({FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone"});
+    collectibles->push_back({
+        FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone"});
     collectibles->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collectible_energy_temple"});
     collectibles->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collectible_arnassi_statue"});
     collectibles->push_back({FLAG_COLLECTIBLE_BANNER, "collectible_mithalas_banner"});
