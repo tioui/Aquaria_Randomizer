@@ -319,6 +319,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1299, "urn_cathedral_r_13","ingredient_leafpoultice",3, "Leaf poultice"});
     checks->push_back({1300, "li_cave","song_li",1, "Li and Li song"});
     checks->push_back({1301, "song_shield_hint","song_shield",1, "Shield song"});
+    checks->push_back({1302, "breaking_li_cage","song_dual",1, "Dual Form"});
 }
 
 /**
@@ -413,6 +414,10 @@ void Randomizer::receivingSong(check_t *aCheck) {
     } else if (aCheck->flag == 1301) { // Shield song
         dsq->continuity.learnSong(SONG_SHIELDAURA);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(35), false, false,
+                                  false, 8, "", false, SONG_SHIELDAURA);
+    } else if (aCheck->flag == 1302) { // Dual song
+        dsq->continuity.learnSong(SONG_DUALFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(43), false, false,
                                   false, 8, "", false, SONG_SHIELDAURA);
     }
 }

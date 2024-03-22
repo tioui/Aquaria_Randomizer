@@ -590,12 +590,12 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 116, "ingredient_smallegg", 2, ITEM_TYPE_INGREDIENT});
     apItems->push_back({AP_BASE + 117, "song_li", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 118, "song_shield", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 119, "song_dual", 1, ITEM_TYPE_SONG});
 }
 
 /**
  * Initialise every aplocation_t element of the apLocations list
  */
-
 void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 0, "bulb_turtlecave"});
     apLocations->push_back({AP_BASE + 1, "bulb_openwater_tl_1"});
@@ -798,4 +798,5 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 198, "urn_cathedral_r_13"});
     apLocations->push_back({AP_BASE + 199, "li_cave"});
     apLocations->push_back({AP_BASE + 200, "song_shield_hint"});
+    apLocations->push_back({AP_BASE + 201, "breaking_li_cage"});
 }

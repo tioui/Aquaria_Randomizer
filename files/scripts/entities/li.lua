@@ -611,9 +611,9 @@ local function cutscene(me)
 	
 	setCutscene(0)
 	
-	learnSong(SONG_LI)
+--	learnSong(SONG_LI)
 	
-	setControlHint(getStringBank(42), 0, 0, 0, 10, "", SONG_LI)
+--	setControlHint(getStringBank(42), 0, 0, 0, 10, "", SONG_LI)
 	
 	setLi(me)
 end

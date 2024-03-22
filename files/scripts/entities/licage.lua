@@ -130,14 +130,15 @@ function enterState(me)
 	elseif entity_isState(me, STATE_OPEN) then
 		entity_idle(v.n)
 		local li = getLi()
-		learnSong(SONG_DUALFORM)
+--		learnSong(SONG_DUALFORM)
 		local ent = entity_getNearestEntity(me, "CC_Final")
 		if ent ~= 0 then
 			entity_alpha(ent, 0, 2)
 		end
 		local naijapos = getNode("naijapos")
 		entity_setPosition(v.n, node_x(naijapos), node_y(naijapos))
-		entity_flipToEntity(v.n, li)
+--		entity_flipToEntity(v.n, li)
+		entity_flipToEntity(v.n, me)
 		cam_toEntity(me)
 		v.singing = true
 		overrideZoom(0.7, 0.001)
@@ -220,14 +221,14 @@ function enterState(me)
 		setFlag(FLAG_FINAL, FINAL_FREEDLI)
 		
 		
-		changeForm(FORM_DUAL)
+	--	changeForm(FORM_DUAL)
 		fade2(0, 0.5, 1, 1, 1)
 		
 		updateMusic()
 		
-		voice("Naija_Song_DualForm")
+	--	voice("Naija_Song_DualForm")
 
-		setControlHint(getStringBank(43), 0, 0, 0, 10, "", SONG_DUALFORM)
+	--  setControlHint(getStringBank(43), 0, 0, 0, 10, "", SONG_DUALFORM)
 		
 		overrideZoom(0)
 	
