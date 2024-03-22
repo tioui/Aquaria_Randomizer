@@ -157,14 +157,14 @@ function init()
 	hideImage()
 	overrideZoom(1, 7)
 	watch(4)
-	changeForm(FORM_NATURE)
+	--changeForm(FORM_NATURE)
 	watch(3)
 
 	setOverrideVoiceFader(-1)
 	
 	setCutscene(0)
 	
-	voice("Naija_Song_NatureForm")
+	--voice("Naija_Song_NatureForm")
 	loadMap("Tree02", "NAIJADONE")
 
 	--[[

@@ -169,7 +169,7 @@ function init()
 		cam_toEntity(n)
 		setSceneColor(1, 1, 1, 5)
 	else
-		randomizerCheck("song_sun")
+		randomizerCheck("beating_sun_god")
 		--learnSong(SONG_SUNFORM)
 		watch(1)
 		entity_idle(n)

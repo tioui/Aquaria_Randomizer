@@ -326,6 +326,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1306, "beating_energy_statue","song_energy",1, "Energy Form"});
     checks->push_back({1307, "erulian_spirit","song_bind",1, "Bind song"});
     checks->push_back({1308, "fish_cave_puzzle","song_fish",1, "Fish form"});
+    checks->push_back({1309, "beating_priests","song_spirit",1, "Spirit form"});
 
 
 }
@@ -451,6 +452,10 @@ void Randomizer::receivingSong(check_t *aCheck) {
         dsq->continuity.learnSong(SONG_FISHFORM);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(39), false, false,
                                   false, 8, "", false, SONG_FISHFORM);
+    } else if (aCheck->flag == 1309) { // Fish song
+        dsq->continuity.learnSong(SONG_SPIRITFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(44), false, false,
+                                  false, 8, "", false, SONG_SPIRITFORM);
     }
 }
 

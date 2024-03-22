@@ -16,7 +16,7 @@ class Randomizer {
             this.ingredientReplacement.push(i);
         }
         this.checksReplacement = [];
-        for(let i = 0; i < 208; i = i + 1) {
+        for(let i = 0; i < 209; i = i + 1) {
             this.checksReplacement.push(i);
         }
     }

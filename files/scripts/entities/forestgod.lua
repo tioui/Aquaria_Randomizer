@@ -234,6 +234,7 @@ v.inCutScene = false
 local function cutscene(me)
 	v.n = getNaija()
 	if not v.inCutScene then
+		randomizerCheck("beating_drunian_god")
 		v.inCutScene = true
 		pickupGem("Boss-PlantGoddess")
 		setFlag(FLAG_BOSS_FOREST,1)
@@ -254,7 +255,6 @@ local function cutscene(me)
 		local pn = getNode("NAIJADONE")
 		entity_animate(v.n, "agony", LOOP_INF)
 		watch(2)
-		randomizerCheck("song_nature")
 		-- learnSong(SONG_NATUREFORM)
 		entity_setPosition(v.n, node_x(pn), node_y(pn), 2, 0, 0, 1)
 		watch(2)
