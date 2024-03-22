@@ -25,15 +25,15 @@ function init()
 	v.initFinalSpirits()
 	
 	if isFlag(FLAG_FINAL, FINAL_START) then
-		setFlag(FLAG_LI, 200)
+--		setFlag(FLAG_LI, 200)
 	
 		local node = getNode("LIHEART")
-		local ent = getLi()
-		if ent == 0 then
-			ent = createEntity("Li", "")
-		end
-		entity_setPosition(ent, node_x(node), node_y(node))
-		entity_setState(ent, STATE_TRAPPEDINCREATOR, -1, 1)
+--		local ent = getLi()
+--		if ent == 0 then
+--			ent = createEntity("Li", "")
+--		end
+--		entity_setPosition(ent, node_x(node), node_y(node))
+--		entity_setState(ent, STATE_TRAPPEDINCREATOR, -1, 1)
 		
 		local node = getNode("CCHEART")
 		local ent = createEntity("CC_Final", "", node_x(node), node_y(node))

@@ -26,26 +26,26 @@ function init(me)
 end
 
 function update(me, dt)
-	if not hasSong(SONG_DUALFORM) and not v.done and not hasLi() and node_isEntityIn(me, getNaija()) then
-		v.done = true
-		
-		local li = getEntity("li")
-		if li ~= 0 then
-			entity_idle(getNaija())
-			entity_flipToEntity(getNaija(), li)
-			watch(0.5)
-			overrideZoom(0.3)
-			setCameraLerpDelay(0.0001)
-			overrideZoom(1.2, 16)
-			screenFadeGo(0.5)
-			playSfx("ping")
-			cam_toEntity(li)
-			watch(4)
-			cam_toEntity(getNaija())
-			screenFadeGo(3)
-			watch(0.5)
-			setCameraLerpDelay(0)
-			overrideZoom(0)
-		end
-	end
+--	if not hasSong(SONG_DUALFORM) and not v.done and not hasLi() and node_isEntityIn(me, getNaija()) then
+--		v.done = true
+--		
+--		local li = getEntity("li")
+--		if li ~= 0 then
+--			entity_idle(getNaija())
+--			entity_flipToEntity(getNaija(), li)
+--			watch(0.5)
+--			overrideZoom(0.3)
+--			setCameraLerpDelay(0.0001)
+--			overrideZoom(1.2, 16)
+--			screenFadeGo(0.5)
+--			playSfx("ping")
+--			cam_toEntity(li)
+--			watch(4)
+--			cam_toEntity(getNaija())
+--			screenFadeGo(3)
+--			watch(0.5)
+--			setCameraLerpDelay(0)
+--			overrideZoom(0)
+--		end
+--	end
 end
