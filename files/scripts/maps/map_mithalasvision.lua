@@ -511,10 +511,11 @@ function init()
 		
 		cam_toEntity(n)
 	else
-		learnSong(SONG_BEASTFORM)
+		randomizerCheck("beating_mithalas")
+		--learnSong(SONG_BEASTFORM)
 		watch(0.5)
 		entity_idle(n)
-		changeForm(FORM_BEAST)
+		--changeForm(FORM_BEAST)
 		--voice("naija_song_beastform")
 		
 		setCutscene(0)

@@ -169,10 +169,11 @@ function init()
 		cam_toEntity(n)
 		setSceneColor(1, 1, 1, 5)
 	else
-		learnSong(SONG_SUNFORM)
+		randomizerCheck("song_sun")
+		--learnSong(SONG_SUNFORM)
 		watch(1)
 		entity_idle(n)
-		changeForm(FORM_SUN)
+		--changeForm(FORM_SUN)
 		
 		setCutscene(0)
 		loadMap("SunWormTest", "RETURN")

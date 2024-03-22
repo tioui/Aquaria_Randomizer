@@ -27,8 +27,8 @@ v.noteSung2 = 0
 v.noteSung3 = 0
 v.foundSong = false
 v.songDelay = 0
-v.singDelay = 8
-v.maxSingDelay = 10
+v.singDelay = -1
+v.maxSingDelay = 9
 v.running = false
 
 -- SEE ENERGYTEMPLE_FIRSTSLOT
@@ -129,51 +129,52 @@ local function transformScene(me)
 	
 	watch(2)
 	
-	setSceneColor(1, 0.6, 0.5, 4)
-	
-	spawnParticleEffect("EnergyGodEnergy", node_x(particleNode), node_y(particleNode))
-	
-	watch(2)
-	
-	spawnParticleEffect("EnergyGodSend", node_x(particleNode2), node_y(particleNode2))
-	watch(0.5)
-	voice("EnergyGodTransfer")
-	entity_animate(v.naija, "checkoutEnergy")
-	watch(1.5)
-	
-	
-	
-	watch(0.5)
+--	setSceneColor(1, 0.6, 0.5, 4)
+--	
+--	spawnParticleEffect("EnergyGodEnergy", node_x(particleNode), node_y(particleNode))
+--	
+--	watch(2)
+--	
+--	spawnParticleEffect("EnergyGodSend", node_x(particleNode2), node_y(particleNode2))
+--	watch(0.5)
+--	voice("EnergyGodTransfer")
+--	entity_animate(v.naija, "checkoutEnergy")
+--	watch(1.5)
+--	
+--	
+--	
+--	watch(0.5)
 	cam_toEntity(v.naija)
-	
-	setNaijaHeadTexture("Pain")
-	entity_idle(v.naija)
-	playSfx("NaijaZapped")
-	setSceneColor(1, 0.5, 0.5, 1)
-	entity_animate(v.naija, "energyStruggle", LOOP_INF)
-	
-	spawnParticleEffect("EnergyGodTransfer", entity_x(v.naija), entity_y(v.naija))
-	watch(3.5)
-	entity_animate(v.naija, "energyStruggle2", LOOP_INF)
-	watch(1.0)
-	
-	learnSong(SONG_ENERGYFORM)
-	changeForm(FORM_ENERGY)
-	setSceneColor(1, 1, 1, 10)
-	entity_idle(v.naija)
+--	
+--	setNaijaHeadTexture("Pain")
+--	entity_idle(v.naija)
+--	playSfx("NaijaZapped")
+--	setSceneColor(1, 0.5, 0.5, 1)
+--	entity_animate(v.naija, "energyStruggle", LOOP_INF)
+--	
+--	spawnParticleEffect("EnergyGodTransfer", entity_x(v.naija), entity_y(v.naija))
+--	watch(3.5)
+--	entity_animate(v.naija, "energyStruggle2", LOOP_INF)
+--	watch(1.0)
+--	
+--	learnSong(SONG_ENERGYFORM)
+--	changeForm(FORM_ENERGY)
+--	setSceneColor(1, 1, 1, 10)
+--	entity_idle(v.naija)
 	playMusic("archaic")
-	voice("NAIJA_ENERGYFORM")
-	watch(2)
-	entity_animate(v.naija, "checkoutEnergy")
-	while entity_isAnimating(v.naija) do
-		watch(FRAME_TIME)
-	end
-	watch(0.5)
+--	voice("NAIJA_ENERGYFORM")
+--	watch(2)
+--	entity_animate(v.naija, "checkoutEnergy")
+--	while entity_isAnimating(v.naija) do
+--		watch(FRAME_TIME)
+--	end
+--	watch(0.5)
 	
 	setCutscene(0)
 	
+	randomizerCheck("beating_energy_statue")
 	esetv(v.naija, EV_LOOKAT, 1)
-	setControlHint(getStringBank(37), 0, 0, 0, 10, "", SONG_ENERGYFORM)
+--	setControlHint(getStringBank(37), 0, 0, 0, 10, "", SONG_ENERGYFORM)
 	
 	local door = node_getNearestEntity(getNode("STATUEEXITDOOR"), "EnergyDoor")
 	entity_setState(door, STATE_OPEN)
@@ -245,26 +246,16 @@ function update(me, dt)
 			
 			cam_toEntity(v.naija)
 			
+			v.singDelay = -1
 			setFlag(FLAG_ENERGYGODENCOUNTER, 1)
 		end
 	elseif isFlag(FLAG_ENERGYGODENCOUNTER, 2) then
-		
-		if node_isEntityInRange(me, v.naija, 1000) then
 			if v.singDelay > 0 then
 				v.singDelay = v.singDelay - dt
 				if v.singDelay < 0 then
-					v.singDelay = v.maxSingDelay
-					singSong(me)
+					transformScene(me)
 				end
 			end
-		end
-		if v.songDelay > 0 then
-			v.songDelay = v.songDelay - dt
-			if v.songDelay < 0 then
-				v.songDelay = 0
-				transformScene(me)
-			end
-		end
 	end
 	v.running = false
 end
@@ -273,16 +264,19 @@ function activate(me)
 	entity_idle(v.naija)
 	entity_clearVel(v.naija)
 	
-	cam_toNode(getNode("ENERGYGODCAM"))
-	entity_flipToNode(v.naija, getNode("ENERGYGODCAM"))
-	
-	v.singDelay = v.maxSingDelay
-	watch(2)
-	
-	singSong(me)
-	v.singDelay = v.maxSingDelay
-	
-	watch(3)
+--	cam_toNode(getNode("ENERGYGODCAM"))
+--	entity_flipToNode(v.naija, getNode("ENERGYGODCAM"))
+--	
+--	v.singDelay = v.maxSingDelay
+--	watch(2)
+--	
+--	singSong(me)
+--	v.singDelay = v.maxSingDelay
+--	
+--	watch(3)
+	if v.singDelay < 0 then
+		v.singDelay = v.maxSingDelay
+	end
 	
 	cam_toEntity(v.naija)
 end

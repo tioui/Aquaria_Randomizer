@@ -590,7 +590,10 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 116, "ingredient_smallegg", 2, ITEM_TYPE_INGREDIENT});
     apItems->push_back({AP_BASE + 117, "song_li", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 118, "song_shield", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 119, "song_dual", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 119, "song_beast", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 120, "song_sun", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 121, "song_nature", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 122, "song_energy", 1, ITEM_TYPE_SONG});
 }
 
 /**
@@ -799,4 +802,8 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 199, "li_cave"});
     apLocations->push_back({AP_BASE + 200, "song_shield_hint"});
     apLocations->push_back({AP_BASE + 201, "breaking_li_cage"});
+    apLocations->push_back({AP_BASE + 202, "beating_mithalas"});
+    apLocations->push_back({AP_BASE + 203, "beating_sun_god"});
+    apLocations->push_back({AP_BASE + 204, "beating_drunian_god"});
+    apLocations->push_back({AP_BASE + 205, "beating_energy_statue"});
 }

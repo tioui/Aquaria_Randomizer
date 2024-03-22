@@ -90,6 +90,7 @@ function update(me, dt)
 		if v.delay < 0 then
 			v.delay = v.delayTime
 			entity_setState(me, STATE_SING) 
+			debugLog("Singing...")
 		end
 	end
 	
@@ -98,6 +99,7 @@ function update(me, dt)
 			v.noteTimer = v.noteTimer + dt
 			if v.noteTimer > 1 then
 				-- hit it!
+				debugLog("Is hurt...")
 				v.holdingNote = false
 				entity_setState(me, STATE_HURT)
 			end
@@ -192,7 +194,6 @@ function exitState(me)
 		if v.hits <= 0 then
 			setFlag(FLAG_ENERGYGODENCOUNTER, 2)
 			entity_damage(me, v.n, 10000)
-			
 			setSceneColor(1, 1, 1, 5)
 			fadeOutMusic(6)
 			shakeCamera(10, 4)
@@ -207,7 +208,6 @@ function exitState(me)
 			shakeCamera(20, 2)
 			watch(2)
 			cam_toEntity(getNaija())
-		
 			local node = entity_getNearestNode(me, "energygodencounter")
 			if node ~= 0 then
 				node_activate(node)

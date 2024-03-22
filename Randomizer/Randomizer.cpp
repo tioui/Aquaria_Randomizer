@@ -320,6 +320,12 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1300, "li_cave","song_li",1, "Li and Li song"});
     checks->push_back({1301, "song_shield_hint","song_shield",1, "Shield song"});
     checks->push_back({1302, "breaking_li_cage","song_dual",1, "Dual Form"});
+    checks->push_back({1303, "beating_mithalas","song_beast",1, "Beast Form"});
+    checks->push_back({1304, "beating_sun_god","song_sun",1, "Sun Form"});
+    checks->push_back({1305, "beating_drunian_god","song_nature",1, "Nature Form"});
+    checks->push_back({1306, "beating_energy_statue","song_energy",1, "Energy Form"});
+
+
 }
 
 /**
@@ -418,7 +424,23 @@ void Randomizer::receivingSong(check_t *aCheck) {
     } else if (aCheck->flag == 1302) { // Dual song
         dsq->continuity.learnSong(SONG_DUALFORM);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(43), false, false,
-                                  false, 8, "", false, SONG_SHIELDAURA);
+                                  false, 8, "", false, SONG_DUALFORM);
+    } else if (aCheck->flag == 1303) { // Beast song
+        dsq->continuity.learnSong(SONG_BEASTFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(38), false, false,
+                                  false, 8, "", false, SONG_BEASTFORM);
+    } else if (aCheck->flag == 1304) { // Sun song
+        dsq->continuity.learnSong(SONG_SUNFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(41), false, false,
+                                  false, 8, "", false, SONG_SUNFORM);
+    } else if (aCheck->flag == 1305) { // Nature song
+        dsq->continuity.learnSong(SONG_NATUREFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(40), false, false,
+                                  false, 8, "", false, SONG_NATUREFORM);
+    } else if (aCheck->flag == 1306) { // Energy song
+        dsq->continuity.learnSong(SONG_ENERGYFORM);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(37), false, false,
+                                  false, 8, "", false, SONG_ENERGYFORM);
     }
 }
 

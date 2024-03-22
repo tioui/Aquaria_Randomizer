@@ -225,7 +225,7 @@ function postInit(me)
 	entity_setTarget(me, v.n)
 	
 	if entity_isFlag(me, 1) then
-		setControlHint(getStringBank(40), 0, 0, 0, 10, "", SONG_NATUREFORM)
+--		setControlHint(getStringBank(40), 0, 0, 0, 10, "", SONG_NATUREFORM)
 		entity_setFlag(me, 2)
 	end
 end
@@ -254,7 +254,8 @@ local function cutscene(me)
 		local pn = getNode("NAIJADONE")
 		entity_animate(v.n, "agony", LOOP_INF)
 		watch(2)
-		learnSong(SONG_NATUREFORM)
+		randomizerCheck("song_nature")
+		-- learnSong(SONG_NATUREFORM)
 		entity_setPosition(v.n, node_x(pn), node_y(pn), 2, 0, 0, 1)
 		watch(2)
 		entity_setFlag(me, 1)
