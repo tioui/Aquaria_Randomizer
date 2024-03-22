@@ -110,7 +110,7 @@ function update(me, dt)
 			stopMusic()
 			fade2(1, 0.1, 1, 1, 1)
 			
-			learnSong(SONG_ENERGYFORM)
+--			learnSong(SONG_ENERGYFORM)
 			changeForm(FORM_ENERGY)
 			
 			setCanChangeForm(false)
@@ -147,7 +147,7 @@ function update(me, dt)
 			
 			setCanChangeForm(true)
 			changeForm(FORM_NORMAL)
-			unlearnSong(SONG_ENERGYFORM)
+--			unlearnSong(SONG_ENERGYFORM)
 			
 			setInvincibleOnNested(true)
 			

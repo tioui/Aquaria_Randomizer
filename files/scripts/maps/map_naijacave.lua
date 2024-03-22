@@ -108,8 +108,7 @@ function init()
 	elseif isStory(0) then
 		setCutscene(1, 1)
 		
-		-- ToDo: Replacing by check
-		learnSong(SONG_SHIELD)
+--		learnSong(SONG_SHIELD)
 
 		setStory(1)
 		

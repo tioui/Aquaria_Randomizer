@@ -3671,12 +3671,6 @@ void Continuity::reset()
 		inFile >> spd;
 		speedTypes.push_back(spd);
 	}
-	//selectedSpell = SpellType(0);
-
-	if (!dsq->mod.isActive())
-	{
-		learnSong(SONG_SHIELDAURA);
-	}
 
 	initFoodSort();
 

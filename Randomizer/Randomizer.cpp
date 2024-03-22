@@ -318,10 +318,11 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1298, "collect_piranha","collectible_piranha",1, "Baby piranha"});
     checks->push_back({1299, "urn_cathedral_r_13","ingredient_leafpoultice",3, "Leaf poultice"});
     checks->push_back({1300, "li_cave","song_li",1, "Li and Li song"});
+    checks->push_back({1301, "song_shield_hint","song_shield",1, "Shield song"});
 }
 
 /**
- * Initialize `collectibles`ddddd
+ * Initialize `collectibles`
  */
 void Randomizer::initialiseCollectibles() {
     collectibles->push_back({
@@ -402,13 +403,17 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
  * @param aCheck The song check item to activate
  */
 void Randomizer::receivingSong(check_t *aCheck) {
-    if (aCheck->flag = 1300) { // Li song
+    if (aCheck->flag == 1300) { // Li song
         dsq->continuity.setFlag(FLAG_LI, 100);
         dsq->continuity.learnSong(SONG_LI);
         dsq->game->setControlHint(dsq->continuity.stringBank.get(42), false, false,
-                                  false, 10, "", false, SONG_LI);
-        dsq->game->createEntity("li", 0, Vector (avatar->position.x, avatar->position.y), 0,
+                                  false, 8, "", false, SONG_LI);
+        dsq->game->li = dsq->game->createEntity("li", 0, Vector (avatar->position.x, avatar->position.y), 0,
                                 false, "Li", ET_ENEMY, true);
+    } else if (aCheck->flag == 1301) { // Shield song
+        dsq->continuity.learnSong(SONG_SHIELDAURA);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(35), false, false,
+                                  false, 8, "", false, SONG_SHIELDAURA);
     }
 }
 
