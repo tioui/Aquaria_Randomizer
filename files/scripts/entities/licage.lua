@@ -130,6 +130,7 @@ function enterState(me)
 	elseif entity_isState(me, STATE_OPEN) then
 		entity_idle(v.n)
 		local li = getLi()
+		randomizerCheck("breaking_li_cage")
 --		learnSong(SONG_DUALFORM)
 		local ent = entity_getNearestEntity(me, "CC_Final")
 		if ent ~= 0 then
