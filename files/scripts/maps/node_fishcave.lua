@@ -151,13 +151,14 @@ local function doScene(me)
 		playSfx("speedup")
 		fade2(1, 2, 1, 1, 1)
 		watch(2)
-		
-		learnSong(SONG_FISHFORM)
+	
+		randomizerCheck("fish_cave_puzzle")
+	--	learnSong(SONG_FISHFORM)
 		fade2(0, 0.5, 1, 1, 1)
-		changeForm(FORM_FISH)
-		voice("Naija_Song_FishForm")
+	--	changeForm(FORM_FISH)
+	--	voice("Naija_Song_FishForm")
 		
-		setControlHint(getStringBank(39), 0, 0, 0, 10, "", SONG_FISHFORM)
+	--	setControlHint(getStringBank(39), 0, 0, 0, 10, "", SONG_FISHFORM)
 		
 		setCameraLerpDelay(0)
 		

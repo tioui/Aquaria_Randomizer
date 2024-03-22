@@ -594,6 +594,8 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 120, "song_sun", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 121, "song_nature", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 122, "song_energy", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 123, "song_bind", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 124, "song_fish", 1, ITEM_TYPE_SONG});
 }
 
 /**
@@ -806,4 +808,6 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 203, "beating_sun_god"});
     apLocations->push_back({AP_BASE + 204, "beating_drunian_god"});
     apLocations->push_back({AP_BASE + 205, "beating_energy_statue"});
+    apLocations->push_back({AP_BASE + 206, "erulian_spirit"});
+    apLocations->push_back({AP_BASE + 207, "fish_cave_puzzle"});
 }

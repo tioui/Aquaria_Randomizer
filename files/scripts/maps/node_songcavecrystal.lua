@@ -167,16 +167,17 @@ local function runScene(me)
 	node_setCursorActivation(me, false)
 	
 	overrideZoom(0)
-	learnSong(SONG_PULL)
+	randomizerCheck("erulian_spirit")
+--	learnSong(SONG_PULL)
 	
 	setCutscene(0)
 	
-	setControlHint(getStringBank(36), 0, 0, 0, 10, "", SONG_BIND)
+--	setControlHint(getStringBank(36), 0, 0, 0, 10, "", SONG_BIND)
 	
 	playMusic("Cave")
 	
 	
-	voice("naija_song_bind")	
+--	voice("naija_song_bind")	
 	entity_setPosition(ghost, oldx, oldy)
 	
 	esetv(getNaija(), EV_LOOKAT, 1)
