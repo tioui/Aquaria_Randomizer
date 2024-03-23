@@ -327,9 +327,19 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1307, "erulian_spirit","song_bind",1, "Bind song"});
     checks->push_back({1308, "fish_cave_puzzle","song_fish",1, "Fish form"});
     checks->push_back({1309, "beating_priests","song_spirit",1, "Spirit form"});
+    checks->push_back({1310, "transturtle_veil01","transport_veil01",1, "Transport to The Veil top left area"});
+    checks->push_back({1311, "transturtle_veil02","transport_veil02",1, "Transport to The Veil top right area"});
+    checks->push_back({1312, "transturtle_openwater03","transport_openwater03",1, "Transport to Open water top right area"});
+    checks->push_back({1313, "transturtle_forest04","transport_forest04",1, "Transport to Kelp Forest bottom left area"});
+    checks->push_back({1314, "transturtle_mainarea","transport_mainarea",1, "Transport to home water"});
+    checks->push_back({1315, "transturtle_abyss03","transport_abyss03",1, "Transport to The Abyss right area"});
+    checks->push_back({1316, "transturtle_finalboss","transport_finalboss",1, "Transport to The Creator"});
+    checks->push_back({1317, "transturtle_forest05","transport_forest05",1, "Transport to Simon says"});
+    checks->push_back({1318, "transturtle_seahorse","transport_seahorse",1, "Transport to Arnassi Ruins right area"});
 
 
 }
+
 
 /**
  * Initialize `collectibles`
@@ -372,6 +382,46 @@ void Randomizer::initialiseCollectibles() {
     collectibles->push_back({FLAG_PET_BLASTER, "collectible_blaster"});
     collectibles->push_back({FLAG_PET_DUMBO, "collectible_dumbo"});
     collectibles->push_back({FLAG_PET_PIRANHA, "collectible_piranha"});
+}
+
+/**
+ * Get a new transport to location
+ * @param aCheck The transport item to activate
+ */
+void Randomizer::receivingTransport(check_t *aCheck) {
+    int lAreaStringIndex = 0;
+    if (aCheck->flag == 1310) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL01, 1);
+        lAreaStringIndex = 1014;
+    } else if (aCheck->flag == 1311) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL02, 1);
+        lAreaStringIndex = 1014;
+    } else if (aCheck->flag == 1312) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_OPENWATER03, 1);
+        lAreaStringIndex = 1009;
+    } else if (aCheck->flag == 1313) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_FOREST04, 1);
+        lAreaStringIndex = 1010;
+    } else if (aCheck->flag == 1314) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_MAINAREA, 1);
+        lAreaStringIndex = 1008;
+    } else if (aCheck->flag == 1315) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_ABYSS03, 1);
+        lAreaStringIndex = 1015;
+    } else if (aCheck->flag == 1316) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_FINALBOSS, 1);
+        lAreaStringIndex = 1021;
+    } else if (aCheck->flag == 1317) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_FOREST05, 1);
+        lAreaStringIndex = 1010;
+    } else if (aCheck->flag == 1318) {
+        dsq->continuity.setFlag(FLAG_TRANSTURTLE_SEAHORSE, 1);
+        lAreaStringIndex = 1028;
+    }
+    dsq->game->setControlHint(
+            dsq->continuity.stringBank.get(226) + " " + dsq->continuity.stringBank.get(lAreaStringIndex),
+            false, false, false, 10
+            );
 }
 
 /**
@@ -492,6 +542,10 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
         receivingSong(lCheck);
+    } else if (aItem.compare(0, 10, "transport_") == 0) {
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingTransport(lCheck);
 	} else {
 		assert(false && "The receving item is not valid!");
 	}

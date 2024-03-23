@@ -22,18 +22,19 @@ if not AQUARIA_VERSION then dofile("scripts/entities/entityinclude.lua") end
 
 -- regular areas
 local TURTLE_REGULAR	= 0
--- energy upgrade secret, forest 05, openwater03
-local TURTLE_SECRET1	= 1
 
 v.seat = 0
 v.seat2 = 0
 v.tame = 0
 v.n = 0
 v.li = 0
+v.lights = false
 v.leave = 0
 v.avatarAttached = false
 v.liAttached = false
+v.myCheckFlag = 0
 v.myFlag = 0
+v.check = 0
 v.turtleType = TURTLE_REGULAR
 
 v.light1 = 0
@@ -62,45 +63,54 @@ function init(me)
 	bone_alpha(v.tame, 0)
 	
 	if isMapName("VEIL01") then
-		debugLog("is veil01")
+		v.myCheckFlag = FLAG_TRANSTURTLE_VEIL01_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_VEIL01
 		v.sbank = 1014
+		v.check = "transturtle_veil01"
 	elseif isMapName("VEIL02") then
-		debugLog("is veil02")
+		v.myCheckFlag = FLAG_TRANSTURTLE_VEIL02_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_VEIL02
 		v.sbank = 1014
+		v.check = "transturtle_veil02"
 	elseif isMapName("OPENWATER03") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_OPENWATER03_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_OPENWATER03
 		v.sbank = 1009
+		v.check = "transturtle_openwater03"
 	elseif isMapName("FOREST04") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_FOREST04_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_FOREST04
 		v.sbank = 1010
--- think openwater06 is unused atm
-	elseif isMapName("OPENWATER06")	then
-		v.myFlag = FLAG_TRANSTURTLE_OPENWATER06
-		v.sbank = 1009
--- think openwater06 is unused atm
+		v.check = "transturtle_forest04"
 	elseif isMapName("MAINAREA") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_MAINAREA_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_MAINAREA
 		v.sbank = 1008
+		v.check = "transturtle_mainarea"
 	elseif isMapName("ABYSS03") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_ABYSS03_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_ABYSS03
 		v.turtleType = TURTLE_REGULAR
 		v.sbank = 1015
+		v.check = "transturtle_abyss03"
 	elseif isMapName("FINALBOSS") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_FINALBOSS_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_FINALBOSS
 		v.turtleType = TURTLE_REGULAR
 		v.sbank = 1021
+		v.check = "transturtle_finalboss"
 	elseif isMapName("FOREST05") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_FOREST05_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_FOREST05
-		v.turtleType = TURTLE_SECRET1
+		v.turtleType = TURTLE_REGULAR
+		v.sbank = 1010
+		v.check = "transturtle_forest05"
 	elseif isMapName("SEAHORSE") then
+		v.myCheckFlag = FLAG_TRANSTURTLE_SEAHORSE_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_SEAHORSE
-		v.turtleType = TURTLE_SECRET1
-	end
-	
-	if v.myFlag ~= 0 and (not entity_isFlag(me, 0)) then
-		setFlag(v.myFlag, 1)
+		v.turtleType = TURTLE_REGULAR
+		v.sbank = 1028
+		v.check = "transturtle_seahorse"
 	end
 	
 	v.light1 = entity_getBoneByName(me, "Light1")
@@ -124,7 +134,7 @@ local function lights(me, on, t)
 	else
 		debugLog("Lights on!")
 	end
-	
+	v.lights = on
 	bone_alpha(v.light1, a, t)
 	bone_alpha(v.light2, a, t)
 end
@@ -134,10 +144,9 @@ function postInit(me)
 	
 	if v.turtleType == TURTLE_REGULAR then
 		debugLog("Regular turtle")
-		if isFlag(v.myFlag, 0) then
+		if isFlag(v.myCheckFlag, 0) then
 			lights(me, false, 0)
 		else
-			-- turn on ze lights
 			lights(me, true, 0)
 		end
 		
@@ -179,6 +188,10 @@ local function anyOtherFlag()
 			return true
 		elseif isOtherFlag(FLAG_TRANSTURTLE_ABYSS03) then
 			return true
+		elseif isOtherFlag(FLAG_TRANSTURTLE_FOREST05) then
+			return true
+		elseif isOtherFlag(FLAG_TRANSTURTLE_SEAHORSE) then
+			return true
 		end
 	end
 	if v.turtleType == TURTLE_SECRET1 then
@@ -191,25 +204,13 @@ end
 
 function update(me, dt)
 
---[[
-	if isForm(FORM_BEAST) then
+	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and v.light then
+		lights(me, true, 1.5)
+	end
+	if anyOtherFlag() then
 		entity_setActivationType(me, AT_CLICK)
 	else
 		entity_setActivationType(me, AT_NONE)
-	end
-	
-	if not hasSong(SONG_BEASTFORM) then
-		if entity_isEntityInRange(me, v.n, 512) then
-			voiceOnce("Naija_TransportTurtles")
-		end
-	end
-	]]--
-	if entity_isFlag(me, 0) then
-		--debugLog("flag is 0")
-		entity_setActivationType(me, AT_NONE)
-	else
-		--debugLog("setting click")
-		entity_setActivationType(me, AT_CLICK)
 	end
 	
 	if v.avatarAttached then
@@ -233,51 +234,34 @@ function update(me, dt)
 	if entity_isEntityInRange(me, v.n, 300) then
 		if not v.seen then
 			emote(EMOTE_NAIJAWOW)
-			if anyOtherFlag() then
-				setControlHint(getStringBank(226), 0, 0, 0, 5, "transturtle/headicon")
-			else
+			if not anyOtherFlag() then
+--				setControlHint(getStringBank(226), 0, 0, 0, 5, "transturtle/headicon")
+--			else
 				setControlHint(getStringBank(225), 0, 0, 0, 5, "transturtle/headicon")
 			end
 			v.seen = true
 		end
 	end
 	
-	if v.turtleType == TURTLE_REGULAR then
 		if isNested() then return end
-		if entity_isEntityInRange(me, v.n, 300) and (not isFlag(v.myFlag, 1) or entity_isFlag(me, 0)) and entity_isUnderWater(v.n) then
+		if entity_isEntityInRange(me, v.n, 300) and not isFlag(v.myCheckFlag, 1) and entity_isUnderWater(v.n) then
 			entity_idle(v.n)
 			entity_setInvincible(v.n, true)
 			entity_flipToEntity(v.n, me)
 			cam_toEntity(me)
 			watch(1.5)
 			playSfx("TransTurtle-Light")
-			lights(me, true, 1.5)
-			watch(2)
+			--lights(me, true, 1.5)
+			--watch(2)
 			cam_toEntity(v.n)
 			watch(1)
-			setFlag(v.myFlag, 1)
+			setFlag(v.myCheckFlag, 1)
+			randomizerCheck(v.check)
 			pickupGem("Turtle")
-			entity_setFlag(me, 1)
 		end
-	else
-		if entity_isEntityInRange(me, v.n, 256) and entity_isFlag(me,0) then
-			entity_setFlag(me, 1)
-			pickupGem("Turtle")
-			--debugLog(string.format("setting %d to 1", v.myFlag));
-			setFlag(v.myFlag, 1)
-		end
-	end
 end
 
 function activate(me)
-	--if isForm(FORM_BEAST) then
-	--[[
-	if v.turtleType == TURTLE_REGULAR then
-		voiceOnce("Naija_TransportTurtles2")
-	end
-	]]--
-	if entity_isFlag(me, 0) then return end
-	
 	if entity_getRiding(getNaija())~=0 then
 		return
 	end
@@ -384,8 +368,12 @@ function activate(me)
 					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				end
@@ -400,14 +388,22 @@ function activate(me)
 					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				end
 			elseif isMapName("OPENWATER03") then
 				if isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
@@ -418,7 +414,9 @@ function activate(me)
 					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
 				end
 			elseif isMapName("FOREST04") then
-				if isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
+				if isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
 					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
@@ -430,10 +428,16 @@ function activate(me)
 					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				end
 			elseif isMapName("MAINAREA") then
-				if isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
+				if isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
@@ -452,8 +456,12 @@ function activate(me)
 					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
@@ -464,8 +472,12 @@ function activate(me)
 					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
 					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
 					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
 					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
 				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
@@ -476,14 +488,6 @@ function activate(me)
 			end
 		end
 		
-		-- secret:
-		if v.turtleType == TURTLE_SECRET1 then
-			if isMapName("SEAHORSE") then
-				warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-			elseif isMapName("FOREST05") then
-				warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-			end
-		end
 	else
 		debugLog("TransTurtle: no other flag set")
 		playSfx("denied")

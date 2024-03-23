@@ -291,6 +291,12 @@ private:
     void receivingSong(check_t *check);
 
     /**
+     * Get a new transport to location
+     * @param aCheck The transport item to activate
+     */
+    void receivingTransport(check_t *aCheck)
+
+    /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
      * @param recipe The recipe to spawn
      * @param position At what position to spawn the ingredients
@@ -367,5 +373,16 @@ const int FLAG_SUNKENCITY_BOSS             = 114;
 const int FLAG_BOSS_FOREST                 = 117;
 const int FLAG_BOSS_MITHALA                = 116;
 const int FLAG_BOSS_SUNWORM                = 128;
+
+const int FLAG_TRANSTURTLE_VEIL01          = 130;
+const int FLAG_TRANSTURTLE_FOREST04        = 132;
+const int FLAG_TRANSTURTLE_OPENWATER03     = 133;
+const int FLAG_TRANSTURTLE_FOREST05        = 134;
+const int FLAG_TRANSTURTLE_MAINAREA        = 135;
+const int FLAG_TRANSTURTLE_SEAHORSE        = 136;
+const int FLAG_TRANSTURTLE_VEIL02          = 137;
+const int FLAG_TRANSTURTLE_ABYSS03         = 138;
+const int FLAG_TRANSTURTLE_FINALBOSS       = 139;
+
 
 #endif /* end of include guard RANDOMIZER_H */
