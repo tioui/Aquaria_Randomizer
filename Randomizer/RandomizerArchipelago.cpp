@@ -596,18 +596,17 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 122, "song_energy", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 123, "song_bind", 1, ITEM_TYPE_SONG});
     apItems->push_back({AP_BASE + 124, "song_fish", 1, ITEM_TYPE_SONG});
-
-    apItems->push_back({AP_BASE + 125, "transport_veil01", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 126, "transport_veil02", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 127, "transport_openwater03", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 128, "transport_forest04", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 129, "transport_mainarea", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 130, "transport_abyss03", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 131, "transport_finalboss", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 132, "transport_forest05", 1, ITEM_TYPE_TRANSTURTLE});
-    apItems->push_back({AP_BASE + 133, "transport_seahorse", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 125, "song_spirit", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 126, "transport_veil01", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 127, "transport_veil02", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 128, "transport_openwater03", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 129, "transport_forest04", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 130, "transport_mainarea", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 131, "transport_abyss03", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 132, "transport_finalboss", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 133, "transport_forest05", 1, ITEM_TYPE_TRANSTURTLE});
+    apItems->push_back({AP_BASE + 134, "transport_seahorse", 1, ITEM_TYPE_TRANSTURTLE});
 }
-
 /**
  * Initialise every aplocation_t element of the apLocations list
  */
@@ -820,13 +819,14 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 205, "beating_energy_statue"});
     apLocations->push_back({AP_BASE + 206, "erulian_spirit"});
     apLocations->push_back({AP_BASE + 207, "fish_cave_puzzle"});
-    apLocations->push_back({AP_BASE + 208, "transturtle_veil01"});
-    apLocations->push_back({AP_BASE + 209, "transturtle_veil02"});
-    apLocations->push_back({AP_BASE + 210, "transturtle_openwater03"});
-    apLocations->push_back({AP_BASE + 211, "transturtle_forest04"});
-    apLocations->push_back({AP_BASE + 212, "transturtle_mainarea"});
-    apLocations->push_back({AP_BASE + 213, "transturtle_abyss03"});
-    apLocations->push_back({AP_BASE + 214, "transturtle_finalboss"});
-    apLocations->push_back({AP_BASE + 215, "transturtle_forest05"});
-    apLocations->push_back({AP_BASE + 216, "transturtle_seahorse"});
+    apLocations->push_back({AP_BASE + 208, "beating_priests"});
+    apLocations->push_back({AP_BASE + 209, "transturtle_veil01"});
+    apLocations->push_back({AP_BASE + 210, "transturtle_veil02"});
+    apLocations->push_back({AP_BASE + 211, "transturtle_openwater03"});
+    apLocations->push_back({AP_BASE + 212, "transturtle_forest04"});
+    apLocations->push_back({AP_BASE + 213, "transturtle_mainarea"});
+    apLocations->push_back({AP_BASE + 214, "transturtle_abyss03"});
+    apLocations->push_back({AP_BASE + 215, "transturtle_finalboss"});
+    apLocations->push_back({AP_BASE + 216, "transturtle_forest05"});
+    apLocations->push_back({AP_BASE + 217, "transturtle_seahorse"});
 }
