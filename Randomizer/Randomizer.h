@@ -294,7 +294,7 @@ private:
      * Get a new transport to location
      * @param aCheck The transport item to activate
      */
-    void receivingTransport(check_t *aCheck)
+    void receivingTransport(check_t *aCheck);
 
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
