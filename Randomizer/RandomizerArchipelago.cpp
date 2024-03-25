@@ -31,10 +31,8 @@ RandomizerArchipelago::RandomizerArchipelago(
     secretNeeded = false;
     deathLink = false;
     backupMessages = new std::queue<std::string>();
-    currentMessageTime = 0;
     currentQuickMessageTime = 0;
     deathLinkPause = false;
-    nextMessages = new std::queue<apmessage_t>();
     nextQuickMessages = new std::queue<std::string>();
     apuuid_generate(uuid);
     apItems = new std::vector<apitem_t>();
@@ -182,6 +180,10 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     setIsAquarianTranslated(lAquarianTranslated);
     if (aJsonText.contains("secret_needed")) // ToDo To remove after tests
         secretNeeded = aJsonText["secret_needed"];
+    if (aJsonText.contains("minibosses_to_kill")) // ToDo To remove after tests
+        miniBossesToKill = aJsonText["minibosses_to_kill"];
+    if (aJsonText.contains("bigbosses_to_kill")) // ToDo To remove after tests
+        bigBossesToKill = aJsonText["bigbosses_to_kill"];
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
@@ -311,6 +313,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
  * Lunched at each game loop iteration
  */
 void RandomizerArchipelago::update(){
+    Randomizer::update();
     if (inGame) {
         apClient->poll();
         if (avatar->isEntityDead()) {
@@ -328,18 +331,6 @@ void RandomizerArchipelago::update(){
         }
     }
     auto lNow = std::chrono::system_clock::now();
-    if (currentMessageTime) {
-        auto lTime = std::chrono::system_clock::from_time_t (currentMessageTime);
-        auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
-        if (lDuration.count() > 9) {
-            currentMessageTime = 0;
-            if (!nextMessages->empty()) {
-                apmessage_t lMessage = nextMessages->front();
-                nextMessages->pop();
-                showText(lMessage.text, lMessage.x, lMessage.y);
-            }
-        }
-    }
     if (currentQuickMessageTime) {
         auto lTime = std::chrono::system_clock::from_time_t (currentQuickMessageTime);
         auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
@@ -357,23 +348,12 @@ void RandomizerArchipelago::update(){
 /**
  * Launched when the game is ending
  */
-void RandomizerArchipelago::endingGame() {
-    int lSecretsCount = 0;
-    if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (dsq->continuity.getFlag(FLAG_SECRET02) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (dsq->continuity.getFlag(FLAG_SECRET03) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (!secretNeeded || (lSecretsCount == 3)) {
+bool RandomizerArchipelago::endingGame() {
+    bool lResult = Randomizer::endingGame();
+    if (lResult) {
         apClient->StatusUpdate(APClient::ClientStatus::GOAL);
-    } else {
-        showText("You must acquire all 3 secrets to achieve the goal. You got " +
-                 std::to_string(lSecretsCount) + ".");
     }
+    return lResult;
 }
 
 /**
@@ -395,62 +375,6 @@ void RandomizerArchipelago::onClose(){
     }
 }
 
-
-/**
- * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
- * @param aText The text to show in game
- * @param aX The horizontal coordinate of the top corner of the text to show
- * @param aX The vertical coordinate of the top corner of the text to show
- */
-void RandomizerArchipelago::showText(const std::string &aText, float aX, float aY)
-{
-    if (currentMessageTime) {
-        nextMessages->push({aText, aX, aY});
-    } else {
-        auto lNow = std::chrono::system_clock::now();
-        std::time_t currentTime = std::chrono::system_clock::to_time_t(lNow);
-        currentMessageTime = currentTime;
-        Vector pos(aX,aY);
-        float time = 8;
-
-        BitmapText *s = new BitmapText(&(dsq->smallFont));
-        s->setAlign(ALIGN_LEFT);
-        s->setWidth(700.0);
-        s->color = Vector(0,0,0);
-        s->position = pos;
-        s->offset = Vector(1,1);
-        s->setText(aText);
-        s->setLife(time + 0.5f);
-        s->setDecayRate(1);
-        s->followCamera = 1;
-        s->alpha.ensureData();
-        s->alpha.data->path.addPathNode(0, 0);
-        s->alpha.data->path.addPathNode(1, 0.1);
-        s->alpha.data->path.addPathNode(1, 0.8);
-        s->alpha.data->path.addPathNode(0, 1);
-        s->alpha.startPath(time);
-        dsq->getTopStateData()->addRenderObject(s, LR_HUD);
-
-
-        BitmapText *t = new BitmapText(&(dsq->smallFont));
-
-        t->position =pos;
-        t->setAlign(ALIGN_LEFT);
-        t->setWidth(700.0);
-        t->alpha.ensureData();
-        t->alpha.data->path.addPathNode(0, 0);
-        t->alpha.data->path.addPathNode(1, 0.1);
-        t->alpha.data->path.addPathNode(1, 0.8);
-        t->alpha.data->path.addPathNode(0, 1);
-        t->alpha.startPath(time);
-        t->followCamera = 1;
-        t->setLife(time + 0.5f);
-        t->setDecayRate(1);
-        //t->scrollText(text, 0.1);
-        t->setText(aText);
-        dsq->getTopStateData()->addRenderObject(t, LR_HUD);
-    }
-}
 
 /**
  * Show a quick message on the screen.
@@ -517,86 +441,85 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 43, "ingredient_crabcake", 1, ITEM_TYPE_RECIPE});
     apItems->push_back({AP_BASE + 44, "ingredient_divinesoup", 1, ITEM_TYPE_RECIPE});
     apItems->push_back({AP_BASE + 45, "ingredient_dumboicecream", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 46, "ingredient_eeloil", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 47, "ingredient_fishmeat", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 48, "ingredient_fishoil", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 49, "ingredient_glowingegg", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 50, "ingredient_handroll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 51, "ingredient_healingpoultice", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 52, "ingredient_heartysoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 53, "ingredient_hotborscht", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 54, "ingredient_hotsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 55, "ingredient_icecream", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 56, "ingredient_leadershiproll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 57, "ingredient_leafpoultice", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 58, "ingredient_leechingpoultice", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 59, "ingredient_legendarycake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 60, "ingredient_loafoflife", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 61, "ingredient_longlifesoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 62, "ingredient_magicsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 63, "ingredient_mushroom", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 64, "ingredient_perogi", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 65, "ingredient_plantleaf", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 66, "ingredient_plumpperogi", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 67, "ingredient_poisonloaf", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 68, "ingredient_poisonsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 69, "ingredient_rainbowmushroom", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 70, "ingredient_rainbowsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 71, "ingredient_redberry", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 72, "ingredient_redbulb", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 73, "ingredient_rottencake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 74, "ingredient_rottenloaf", 8, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 75, "ingredient_rottenmeat", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 76, "ingredient_royalsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 77, "ingredient_seacake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 78, "ingredient_sealoaf", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 79, "ingredient_sharkfinsoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 80, "ingredient_sightpoultice", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 81, "ingredient_smallbone", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 82, "ingredient_smallegg", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 83, "ingredient_smalltentacle", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 84, "ingredient_specialbulb", 1, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 85, "ingredient_specialcake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 86, "ingredient_spicymeat", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 87, "ingredient_spicyroll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 88, "ingredient_spicysoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 89, "ingredient_spiderroll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 90, "ingredient_swampcake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 91, "ingredient_tastycake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 92, "ingredient_tastyroll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 93, "ingredient_toughcake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 94, "ingredient_turtlesoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 95, "ingredient_vedhaseacrisp", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 96, "ingredient_veggiecake", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 97, "ingredient_veggieicecream", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 98, "ingredient_veggiesoup", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 99, "ingredient_volcanoroll", 1, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 100, "upgrade_health", 1, ITEM_TYPE_HEALTH});
-    apItems->push_back({AP_BASE + 101, "upgrade_wok", 1, ITEM_TYPE_WOK});
-    apItems->push_back({AP_BASE + 102, "ingredient_eeloil", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 46, "ingredient_fishoil", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 47, "ingredient_glowingegg", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 48, "ingredient_handroll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 49, "ingredient_healingpoultice", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 50, "ingredient_heartysoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 51, "ingredient_hotborscht", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 52, "ingredient_hotsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 53, "ingredient_icecream", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 54, "ingredient_leadershiproll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 55, "ingredient_leafpoultice", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 56, "ingredient_leechingpoultice", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 57, "ingredient_legendarycake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 58, "ingredient_loafoflife", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 59, "ingredient_longlifesoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 60, "ingredient_magicsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 61, "ingredient_mushroom", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 62, "ingredient_perogi", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 63, "ingredient_plantleaf", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 64, "ingredient_plumpperogi", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 65, "ingredient_poisonloaf", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 66, "ingredient_poisonsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 67, "ingredient_rainbowmushroom", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 68, "ingredient_rainbowsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 69, "ingredient_redberry", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 70, "ingredient_redbulb", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 71, "ingredient_rottencake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 72, "ingredient_rottenloaf", 8, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 73, "ingredient_rottenmeat", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 74, "ingredient_royalsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 75, "ingredient_seacake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 76, "ingredient_sealoaf", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 77, "ingredient_sharkfinsoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 78, "ingredient_sightpoultice", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 79, "ingredient_smallbone", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 80, "ingredient_smallegg", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 81, "ingredient_smalltentacle", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 82, "ingredient_specialbulb", 1, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 83, "ingredient_specialcake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 84, "ingredient_spicymeat", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 85, "ingredient_spicyroll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 86, "ingredient_spicysoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 87, "ingredient_spiderroll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 88, "ingredient_swampcake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 89, "ingredient_tastycake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 90, "ingredient_tastyroll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 91, "ingredient_toughcake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 92, "ingredient_turtlesoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 93, "ingredient_vedhaseacrisp", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 94, "ingredient_veggiecake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 95, "ingredient_veggieicecream", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 96, "ingredient_veggiesoup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 97, "ingredient_volcanoroll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 98, "upgrade_health", 1, ITEM_TYPE_HEALTH});
+    apItems->push_back({AP_BASE + 99, "upgrade_wok", 1, ITEM_TYPE_WOK});
+    apItems->push_back({AP_BASE + 100, "ingredient_eeloil", 2, ITEM_TYPE_INGREDIENT});
     apItems->push_back({AP_BASE + 103, "ingredient_fishmeat", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 104, "ingredient_fishoil", 3, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 105, "ingredient_glowingegg", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 106, "ingredient_healingpoultice", 2, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 107, "ingredient_hotsoup", 2, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 108, "ingredient_leadershiproll", 2, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 109, "ingredient_leafpoultice", 3, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 110, "ingredient_plantleaf", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 111, "ingredient_plantleaf", 3, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 112, "ingredient_rottenmeat", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 113, "ingredient_rottenmeat", 8, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 114, "ingredient_sealoaf", 2, ITEM_TYPE_RECIPE});
-    apItems->push_back({AP_BASE + 115, "ingredient_smallbone", 3, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 116, "ingredient_smallegg", 2, ITEM_TYPE_INGREDIENT});
-    apItems->push_back({AP_BASE + 117, "song_li", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 118, "song_shield", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 119, "song_beast", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 120, "song_sun", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 121, "song_nature", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 122, "song_energy", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 123, "song_bind", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 124, "song_fish", 1, ITEM_TYPE_SONG});
-    apItems->push_back({AP_BASE + 125, "song_spirit", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 102, "ingredient_fishoil", 3, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 103, "ingredient_glowingegg", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 104, "ingredient_healingpoultice", 2, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 105, "ingredient_hotsoup", 2, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 106, "ingredient_leadershiproll", 2, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 107, "ingredient_leafpoultice", 3, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 108, "ingredient_plantleaf", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 109, "ingredient_plantleaf", 3, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 110, "ingredient_rottenmeat", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 111, "ingredient_rottenmeat", 8, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 112, "ingredient_sealoaf", 2, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 113, "ingredient_smallbone", 3, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 114, "ingredient_smallegg", 2, ITEM_TYPE_INGREDIENT});
+    apItems->push_back({AP_BASE + 115, "song_li", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 116, "song_shield", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 117, "song_beast", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 118, "song_sun", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 119, "song_nature", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 120, "song_energy", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 121, "song_bind", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 122, "song_fish", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 123, "song_spirit", 1, ITEM_TYPE_SONG});
+    apItems->push_back({AP_BASE + 124, "song_dual", 1, ITEM_TYPE_SONG});
 }
 
 /**

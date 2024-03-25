@@ -80,6 +80,7 @@ RandomizerLocal::~RandomizerLocal() {
 void RandomizerLocal::activateCheck(std::string aCheck) {
     int lCheckIndex =getCheckIndex(aCheck);
     int lItemIndex = checksReplacement->at(lCheckIndex);
+    secretNeeded = false; // ToDo
 
     check_t *lCheck = getCheckByIndex(lItemIndex);
     if (dsq->continuity.getFlag(lCheck->flag)) {

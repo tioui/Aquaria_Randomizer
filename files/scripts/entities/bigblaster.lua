@@ -174,6 +174,7 @@ function enterState(me)
 		end
 		entity_setMaxSpeed(me, 900)
 	elseif entity_isState(me, STATE_DEATHSCENE) then
+		setFlag(FLAG_MINIBOSS_BLASTER, 1)
 		clearShots()
 		entity_setStateTime(me, 99)
 		debugLog("spawning egg")

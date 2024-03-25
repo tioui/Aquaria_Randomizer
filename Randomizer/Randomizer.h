@@ -11,6 +11,7 @@
 
 
 #include "../Aquaria/DSQ.h"
+#include <chrono>
 
 typedef struct check {
     int flag;
@@ -30,6 +31,15 @@ typedef struct collectible {
     int flag;
     std::string name;
 } collectible_t;
+
+/**
+ * Used to link Location of Archipelago to the Check of the Randomizer base class
+ */
+typedef struct randoMessage {
+    std::string text;
+    float x;
+    float y;
+} randomessage_t;
 
 /**
  * Class that encapsulate every randomization functionalities
@@ -110,7 +120,7 @@ public:
     /**
      * Lunched at each game loop iteration
      */
-    virtual void update() {};
+    virtual void update();
 
     /**
      * Get the file name (without path and extension) of the graphic file to show Aquarian text
@@ -127,7 +137,7 @@ public:
     /**
      * Launched when the game is ending
      */
-    virtual void endingGame() {};
+    virtual bool endingGame();
 
     /**
      * Set the avatar (Naija) object
@@ -152,6 +162,11 @@ public:
      */
     virtual void showQuickMessage(const std::string &aText);
 
+    /**
+     * Is the final boss is accessible.
+     * @return True if the final boss is accessible. False if not.
+     */
+    bool accessFinalBoss() const;
 
 protected:
 
@@ -243,6 +258,29 @@ protected:
      */
     std::vector<check_t> *checks;
 
+    /**
+     * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
+     * @param aText The text to show in game
+     * @param aX The horizontal coordinate of the top corner of the text to show
+     * @param aX The vertical coordinate of the top corner of the text to show
+     */
+    void showText(const std::string &aText, float aX = 0.0, float aY = 500.0);
+
+    /**
+     * All secret needed for goal achievement
+     */
+    bool secretNeeded;
+
+    /**
+     * Number of big bosses to kill
+     */
+    int bigBossesToKill;
+
+    /**
+     * Number of mini bosses to kill
+     */
+    int miniBossesToKill;
+
 private:
 
     /**
@@ -316,6 +354,16 @@ private:
     ingredient_t *getRandomIngredient(IngredientType aType);
 
     /**
+     * The time start of the presently shown message
+     */
+    std::time_t currentMessageTime;
+
+    /**
+     * A message recently showed in game.
+     */
+    std::queue<randomessage_t> *nextMessages;
+
+    /**
      * Should Aquarian characters be translated to English.
      */
     bool isAquarianTranslated;
@@ -361,11 +409,13 @@ const int FLAG_COLLECTIBLE_PIRANHA         = 536;
 
 // Bosses flags to open the way to the body
 const int FLAG_MINIBOSS_START              = 700;
-const int FLAG_MINIBOSS_END                = 706;
+const int FLAG_MINIBOSS_END                = 707;
 const int FLAG_ENERGYBOSSDEAD              = 109;
 const int FLAG_SUNKENCITY_BOSS             = 114;
 const int FLAG_BOSS_FOREST                 = 117;
 const int FLAG_BOSS_MITHALA                = 116;
 const int FLAG_BOSS_SUNWORM                = 128;
+
+
 
 #endif /* end of include guard RANDOMIZER_H */
