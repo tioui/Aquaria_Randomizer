@@ -26,6 +26,8 @@ Randomizer::Randomizer() {
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
+    nextMessages = new std::queue<randomessage_t>();
+    currentMessageTime = 0;
     initialiseChecks();
     initialiseIngredients();
     initialiseCollectibles();
@@ -914,5 +916,138 @@ void Randomizer::onLoad(bool aNewGame){
  */
 void Randomizer::onClose() {
     inGame = false;
+}
+
+
+/**
+ * Launched when the game is ending
+ */
+bool Randomizer::endingGame() {
+    int lSecretsCount = 0;
+    bool lResult;
+    if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_SECRET02) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_SECRET03) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    if (!secretNeeded || (lSecretsCount == 3)) {
+        lResult = true;
+    } else {
+        lResult = false;
+        showText("You must acquire all 3 secrets to achieve the goal. You got " +
+                 std::to_string(lSecretsCount) + ".");
+    }
+    return lResult;
+}
+
+/**
+ * Lunched at each game loop iteration
+ */
+void Randomizer::update(){
+    auto lNow = std::chrono::system_clock::now();
+    if (currentMessageTime) {
+        auto lTime = std::chrono::system_clock::from_time_t (currentMessageTime);
+        auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
+        if (lDuration.count() > 9) {
+            currentMessageTime = 0;
+            if (!nextMessages->empty()) {
+                randomessage_t lMessage = nextMessages->front();
+                nextMessages->pop();
+                showText(lMessage.text, lMessage.x, lMessage.y);
+            }
+        }
+    }
+}
+
+/**
+ * Is the final boss is accessible.
+ * @return True if the final boss is accessible. False if not.
+ */
+bool Randomizer::accessFinalBoss() const {
+    int lMiniBosses = 0;
+    int lBigBosses = 0;
+    for (int i = FLAG_MINIBOSS_START; i <= FLAG_MINIBOSS_END; i = i + 1) {
+        if (dsq->continuity.getFlag(i) > 0) {
+            lMiniBosses = lMiniBosses + 1;
+        }
+    }
+    if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) > 0) {
+        lBigBosses = lBigBosses + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS) > 0) {
+        lBigBosses = lBigBosses + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_BOSS_FOREST) > 0) {
+        lBigBosses = lBigBosses + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_BOSS_MITHALA) > 0) {
+        lBigBosses = lBigBosses + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_BOSS_SUNWORM) > 0) {
+        lBigBosses = lBigBosses + 1;
+    }
+    return lMiniBosses >= miniBossesToKill and lBigBosses >= bigBossesToKill;
+}
+
+
+
+/**
+ * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
+ * @param aText The text to show in game
+ * @param aX The horizontal coordinate of the top corner of the text to show
+ * @param aX The vertical coordinate of the top corner of the text to show
+ */
+void Randomizer::showText(const std::string &aText, float aX, float aY)
+{
+    if (currentMessageTime) {
+        nextMessages->push({aText, aX, aY});
+    } else {
+        auto lNow = std::chrono::system_clock::now();
+        std::time_t currentTime = std::chrono::system_clock::to_time_t(lNow);
+        currentMessageTime = currentTime;
+        Vector pos(aX,aY);
+        float time = 8;
+
+        BitmapText *s = new BitmapText(&(dsq->smallFont));
+        s->setAlign(ALIGN_LEFT);
+        s->setWidth(700.0);
+        s->color = Vector(0,0,0);
+        s->position = pos;
+        s->offset = Vector(1,1);
+        s->setText(aText);
+        s->setLife(time + 0.5f);
+        s->setDecayRate(1);
+        s->followCamera = 1;
+        s->alpha.ensureData();
+        s->alpha.data->path.addPathNode(0, 0);
+        s->alpha.data->path.addPathNode(1, 0.1);
+        s->alpha.data->path.addPathNode(1, 0.8);
+        s->alpha.data->path.addPathNode(0, 1);
+        s->alpha.startPath(time);
+        dsq->getTopStateData()->addRenderObject(s, LR_HUD);
+
+
+        BitmapText *t = new BitmapText(&(dsq->smallFont));
+
+        t->position =pos;
+        t->setAlign(ALIGN_LEFT);
+        t->setWidth(700.0);
+        t->alpha.ensureData();
+        t->alpha.data->path.addPathNode(0, 0);
+        t->alpha.data->path.addPathNode(1, 0.1);
+        t->alpha.data->path.addPathNode(1, 0.8);
+        t->alpha.data->path.addPathNode(0, 1);
+        t->alpha.startPath(time);
+        t->followCamera = 1;
+        t->setLife(time + 0.5f);
+        t->setDecayRate(1);
+        //t->scrollText(text, 0.1);
+        t->setText(aText);
+        dsq->getTopStateData()->addRenderObject(t, LR_HUD);
+    }
 }
 

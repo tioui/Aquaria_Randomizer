@@ -45,15 +45,6 @@ typedef struct apLocation {
 } aplocation_t;
 
 /**
- * Used to link Location of Archipelago to the Check of the Randomizer base class
- */
-typedef struct apMessage {
-    std::string text;
-    float x;
-    float y;
-} apmessage_t;
-
-/**
  * A randomizer for the Archipelago system
  */
 class RandomizerArchipelago : public Randomizer {
@@ -87,7 +78,7 @@ public:
     /**
      * Launched when the game is ending
      */
-    void endingGame() override;
+    bool endingGame() override;
 
     /**
      * A new or saves game has been load
@@ -154,11 +145,6 @@ private:
     bool syncing;
 
     /**
-     * All secret needed for goal achievement
-     */
-    bool secretNeeded;
-
-    /**
      * Is the current Slot have the death link enable.
      */
     bool deathLink;
@@ -180,19 +166,9 @@ private:
     std::vector<aplocation_t> *apLocations;
 
     /**
-     * The time start of the presently shown message
-     */
-    std::time_t currentMessageTime;
-
-    /**
      * The time start of the presently shown quick message
      */
     std::time_t currentQuickMessageTime;
-
-    /**
-     * A message recently showed in game.
-     */
-    std::queue<apmessage_t> *nextMessages;
 
     /**
      * A quick message recently showed in game.
@@ -278,13 +254,5 @@ private:
      * @return The apitem_t associate to the ID
      */
     apitem_t *getApItemById(int64_t id);
-
-    /**
-     * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
-     * @param aText The text to show in game
-     * @param aX The horizontal coordinate of the top corner of the text to show
-     * @param aX The vertical coordinate of the top corner of the text to show
-     */
-    void showText(const std::string &aText, float aX = 0.0, float aY = 500.0);
 };
 

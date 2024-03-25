@@ -862,6 +862,12 @@ luaFunc(randomizerEndingGame)
     luaReturnNil();
 }
 
+luaFunc(randomizerAccessFinalBoss)
+{
+    luaReturnBool(dsq->randomizer->accessFinalBoss());
+}
+
+
 
 
 luaFunc(dofile_caseinsensitive)
@@ -10427,7 +10433,8 @@ static const struct {
     luaRegister(onLoad),
     luaRegister(randomizerCheck),
     luaRegister(randomizerEndingGame),
-	
+    luaRegister(randomizerAccessFinalBoss),
+
 
 
 
