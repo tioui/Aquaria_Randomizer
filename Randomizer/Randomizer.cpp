@@ -923,6 +923,7 @@ void Randomizer::onClose() {
  * Launched when the game is ending
  */
 bool Randomizer::endingGame() {
+    onClose();
     int lSecretsCount = 0;
     bool lResult;
     if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
