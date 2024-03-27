@@ -862,6 +862,14 @@ luaFunc(randomizerEndingGame)
     luaReturnNil();
 }
 
+luaFunc(randomizerClose)
+{
+    dsq->randomizer->onClose();
+    luaReturnNil();
+}
+
+
+
 luaFunc(randomizerAccessFinalBoss)
 {
     luaReturnBool(dsq->randomizer->accessFinalBoss());
@@ -10434,6 +10442,7 @@ static const struct {
     luaRegister(randomizerCheck),
     luaRegister(randomizerEndingGame),
     luaRegister(randomizerAccessFinalBoss),
+    luaRegister(randomizerClose),
 
 
 

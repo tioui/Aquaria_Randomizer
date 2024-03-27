@@ -103,7 +103,7 @@ function init()
 		stopMusic()
 		
 		setFlag(FLAG_ENDING, ENDING_DONE)
-		
+		randomizerClose()
 		jumpState("Credits")
 	elseif isStory(0) then
 		setCutscene(1, 1)

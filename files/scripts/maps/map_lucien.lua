@@ -148,8 +148,8 @@ function init()
 		fadeSfx(sfx, 20)
 		fadeSfx(engineLoop, 20)
 		watch(4)
-		
-		centerText("To Be Continued...")
+		-- I don't think that is is indeed to be continued
+		-- centerText("To Be Continued...")
 		
 		watch(4)
 		
