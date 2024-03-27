@@ -138,7 +138,7 @@ function enterState(me)
 		end
 		local naijapos = getNode("naijapos")
 		entity_setPosition(v.n, node_x(naijapos), node_y(naijapos))
---		entity_flipToEntity(v.n, li)
+		entity_flipToEntity(v.n, li)
 		entity_flipToEntity(v.n, me)
 		cam_toEntity(me)
 		v.singing = true
