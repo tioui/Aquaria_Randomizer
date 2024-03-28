@@ -52,9 +52,9 @@ RandomizerArchipelago::RandomizerArchipelago(
     if (hasRoomInfo) {
         setUid(apClient->get_seed());
     }
-    if (apClient) {
-        apClient->reset();
-    }
+//    if (apClient) {
+//        apClient->reset();
+//    }
 }
 
 /**
@@ -148,19 +148,8 @@ void RandomizerArchipelago::onSlotRefused (const std::list<std::string>& aTexts)
  * Launched when the the Archipelago send Room Info message
  */
 void RandomizerArchipelago::onRoomInfoHandler(){
-    const int item_handling_flags_all = 7;
-    if (inGame) {
-        std::list<std::string> tags;
-        if (deathLink) {
-            tags.emplace_back("DeathLink");
-        }
-        apClient->ConnectSlot(name, password, item_handling_flags_all,
-                              tags, AP_VERSION_SUPPORT);
-    } else {
-        apClient->ConnectSlot(name, password, 0,
-                              {}, AP_VERSION_SUPPORT);
-    }
-
+    apClient->ConnectSlot(name, password, 0,
+                          {}, AP_VERSION_SUPPORT);
     hasRoomInfo = true;
 }
 
@@ -314,8 +303,8 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
+    apClient->poll();
     if (inGame) {
-        apClient->poll();
         if (avatar->isEntityDead()) {
             if (!deathLinkPause) {
                 deathLinkPause = true;
@@ -361,7 +350,13 @@ bool RandomizerArchipelago::endingGame() {
    @param aNewGame True if a new game is launched.
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
+    const int item_handling_flags_all = 7;
     Randomizer::onLoad(aNewGame);
+    std::list<std::string> tags;
+    if (deathLink) {
+        tags.emplace_back("DeathLink");
+    }
+    apClient->ConnectUpdate(item_handling_flags_all,tags);
     apClient->poll();
 }
 
@@ -370,9 +365,7 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
  */
 void RandomizerArchipelago::onClose(){
     Randomizer::onClose();
-    if (apClient) {
-        apClient->reset();
-    }
+    apClient->ConnectUpdate(0, {});
 }
 
 

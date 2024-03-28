@@ -10076,7 +10076,6 @@ void Game::onHelpUp()
 
 void Game::update(float dt)
 {
-    dsq->randomizer->update();
 	particleManager->clearInfluences();
 
 	if (inHelpScreen)

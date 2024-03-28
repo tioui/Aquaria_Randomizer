@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "StateManager.h"
 #include "Core.h"
+#include "../Randomizer/Randomizer.h"
 
 StateManager *stateManager = 0;
 
@@ -61,6 +62,7 @@ void StateObject::action(int id, int state)
 void StateObject::update(float dt)
 {
 	ActionMapper::onUpdate(dt);
+    dsq->randomizer->update();
 }
 
 //========[ STATEDATA ]========//
