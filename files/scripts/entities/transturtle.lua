@@ -172,8 +172,8 @@ local function isOtherFlag(flag)
 end
 
 local function anyOtherFlag()
-	if v.turtleType == TURTLE_REGULAR then
-		debugLog("turtle is regular")
+--	if v.turtleType == TURTLE_REGULAR then
+--		debugLog("turtle is regular")
 		if isOtherFlag(FLAG_TRANSTURTLE_VEIL01) then
 			return true
 		elseif isOtherFlag(FLAG_TRANSTURTLE_VEIL02) then
@@ -193,18 +193,18 @@ local function anyOtherFlag()
 		elseif isOtherFlag(FLAG_TRANSTURTLE_SEAHORSE) then
 			return true
 		end
-	end
-	if v.turtleType == TURTLE_SECRET1 then
-		debugLog("turtle is secret")
-		return true
-	end
-	debugLog("turtle is nothing")
+--	end
+--	if v.turtleType == TURTLE_SECRET1 then
+--		debugLog("turtle is secret")
+--		return true
+--	end
+--	debugLog("turtle is nothing")
 	return false
 end
 
 function update(me, dt)
 
-	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and v.light then
+	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and not v.light then
 		lights(me, true, 1.5)
 	end
 	if anyOtherFlag() then
