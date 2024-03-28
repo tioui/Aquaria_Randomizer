@@ -256,10 +256,10 @@
     <Node pos="10900 7753" rect="248 294" shape="0" />
 </Path>
 <Path name="check urn_cathedral_r_13">
-    <Node pos="10900 7753" rect="248 294" shape="0" />
+    <Node pos="4030 15213" rect="248 294" shape="0" />
 </Path>
 <Path name="enter_mithalascathedral">
-    <Node pos="4030 15213" rect="572 1374" shape="0" />
+    <Node pos="2300 12885" rect="572 1374" shape="0" />
 </Path>
 <Path name="bloatup">
     <Node pos="19854 19497" rect="658 586" shape="0" />
