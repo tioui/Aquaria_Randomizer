@@ -120,7 +120,11 @@ function init(me)
 	v.maxMove = getNode("ENERGYBOSSMAXMOVE")
 	v.maxMove2 = getNode("ENERGYBOSSMAXMOVE2")
 	v.minMove = getNode("ENERGYBOSSMINMOVE")
+	v.fishpass = getNode("INFISHPASSENTRANCE")
 	
+
+	debugLog("Loading Fishpass")
+	debugLog(v.fishpass)
 	entity_setDamageTarget(me, DT_AVATAR_LIZAP, false)
 	entity_setDamageTarget(me, DT_AVATAR_PET, false)
 	
@@ -142,7 +146,6 @@ function postInit(me)
 			return
 		end
 	end
-
 	
 	v.orb = getEntityByID(4)
 	v.holder = getEntityByID(3)
@@ -229,6 +232,10 @@ function update(me, dt)
 	
 	if not v.awoken then return end
 	
+	if not entity_isState(me, STATE_COLLAPSE) and (entity_x(v.naija) < node_x(v.minMove) or node_isEntityIn(v.fishpass, v.naija)) then
+		entity_setPosition(v.naija, 5000, 5800)
+		entity_clearVel(v.naija)
+	end
 
 	if entity_isState(me, STATE_COLLAPSED) then
 		return
