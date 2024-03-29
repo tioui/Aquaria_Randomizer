@@ -202,6 +202,10 @@ function postInit(me)
 		end
 		entity_setAllDamageTargets(me, false)
 		entity_setColor(me, 0.6, 0.2, 0.2)
+	else
+		if entity_y(v.n) < 6700 then
+			entity_setPosition(v.n, 13500, 8500)
+		end
 	end
 	v.sx = entity_x(me)
 	v.sy = entity_y(me)

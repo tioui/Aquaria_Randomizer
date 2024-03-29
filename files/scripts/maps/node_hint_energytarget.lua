@@ -24,7 +24,7 @@ function init(me)
 end
 
 function update(me, dt)	
-	if isFlag(FLAG_HINT_ENERGYTARGET,0) then
+	if isFlag(FLAG_HINT_ENERGYTARGET,0) and hasSong(SONG_ENERGYFORM) then
 		if node_isEntityIn(me, getNaija()) then
 			if isPlat(PLAT_MAC) then
 				setControlHint(getStringBank(83), 0, 1)

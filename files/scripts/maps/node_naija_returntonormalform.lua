@@ -24,7 +24,7 @@ function init(me)
 end
 
 function update(me, dt)
-	if isFlag(FLAG_NAIJA_RETURNTONORMALFORM,0) then
+	if isFlag(FLAG_NAIJA_RETURNTONORMALFORM,0) and hasSong(SONG_ENERGYFORM) then
 		if node_isEntityIn(me, getNaija()) then
 			voice("naija_returntonormalform")
 			if isPlat(PLAT_MAC) then

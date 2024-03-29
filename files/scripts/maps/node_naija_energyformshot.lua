@@ -25,7 +25,7 @@ end
 
 function update(me, dt)	
 ---isFlag(FLAG_ENERGYGODENCOUNTER, 2) and 
-	if isFlag(FLAG_NAIJA_ENERGYFORMSHOT,0) then
+	if isFlag(FLAG_NAIJA_ENERGYFORMSHOT,0) and hasSong(SONG_ENERGYFORM) then
 		if node_isEntityIn(me, getNaija()) then
 			voice("naija_energyformshot")
 			if isPlat(PLAT_MAC) then
