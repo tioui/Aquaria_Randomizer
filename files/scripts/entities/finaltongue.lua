@@ -27,12 +27,15 @@ dofile("scripts/entities/doorcommon.lua")
 v.ix = 0
 v.iy = 0
 v.dist = 4048
+v.tonguecollision = 0
+v.naija = 0
 
 function init(me)
 	setupEntity(me, "Final-Tongue", -2)
 	entity_scale(me, 4.5, 4.5)
 	entity_setFillGrid(me, true)
-	
+	v.tonguecollision = getNode("TONGUECOLLISION")
+	v.naija = getNaija()
 	entity_setEntityLayer(me, -3)
 	entity_setSegs(me, 2, 32, 0.15, 0.15, -0.018, 0, 6, 1)
 	loadSound("tentacledoor")
@@ -54,6 +57,9 @@ function update(me, dt)
 			shakeCamera(4, 1)
 			entity_setState(me, STATE_OPENED)
 		end
+	end
+	if not entity_isState(me, STATE_OPEN) and not entity_isState(me, STATE_OPENED) and node_isEntityIn(v.tonguecollision, v.naija) then
+		entity_setPosition(v.naija, 19200, 20400)
 	end
 end
 

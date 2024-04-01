@@ -39,6 +39,10 @@
 <Path name="ccleadstart">
     <Node pos="9397 23809" rect="64 64" shape="0" />
 </Path>
+<Path name="tonguecollision">
+    <Node pos="18900 21700" rect="1600 1200" shape="0" />
+</Path>
+
 <Path name="vox iwillfindyou">
     <Node pos="19036 19823" rect="2046 2028" shape="0" />
 </Path>
