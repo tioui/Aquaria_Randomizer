@@ -23,6 +23,7 @@ Randomizer::Randomizer() {
     error = false;
     inGame = false;
     errorMessage = "";
+    skipFirstVision = false;
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
@@ -907,6 +908,9 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->game->positionToAvatar = Vector(8880, 3881);
         }
         dsq->toggleCursor(false);
+    }
+    if (skipFirstVision) {
+        dsq->continuity.setFlag(FLAG_VISION_ENERGYTEMPLE, 1);
     }
     inGame = true;
 }

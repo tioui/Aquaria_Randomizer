@@ -173,6 +173,8 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         miniBossesToKill = aJsonText["minibosses_to_kill"];
     if (aJsonText.contains("bigbosses_to_kill")) // ToDo To remove after tests
         bigBossesToKill = aJsonText["bigbosses_to_kill"];
+    if (aJsonText.contains("skip_first_vision")) // ToDo To remove after tests
+        skipFirstVision = aJsonText["skip_first_vision"];
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }

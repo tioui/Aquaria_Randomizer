@@ -51,7 +51,9 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         lUid = lJsonData["uid"];
         setUid(std::to_string(lUid));
         lAquarianTranslated = lJsonData["aquarianTranslate"];
+        skipFirstVision = lJsonData["skipFirstVision"];
         setIsAquarianTranslated(lAquarianTranslated);
+        secretNeeded = lJsonData["secretNeeded"]; // ToDo
         for (int lElement : lJsonData["ingredientReplacement"]) {
             ingredientReplacement->push_back(lElement);
         }
@@ -80,7 +82,6 @@ RandomizerLocal::~RandomizerLocal() {
 void RandomizerLocal::activateCheck(std::string aCheck) {
     int lCheckIndex =getCheckIndex(aCheck);
     int lItemIndex = checksReplacement->at(lCheckIndex);
-    secretNeeded = false; // ToDo
 
     check_t *lCheck = getCheckByIndex(lItemIndex);
     if (dsq->continuity.getFlag(lCheck->flag)) {

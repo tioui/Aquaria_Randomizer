@@ -279,7 +279,12 @@ int bigBossesToKill;
 /**
  * Number of mini bosses to kill
  */
-int miniBossesToKill;
+    int miniBossesToKill;
+
+/**
+ * Skip first vision in the verse cave
+ */
+    bool skipFirstVision;
 
 private:
 
@@ -431,6 +436,9 @@ const int FLAG_TRANSTURTLE_SEAHORSE        = 136;
 const int FLAG_TRANSTURTLE_VEIL02          = 137;
 const int FLAG_TRANSTURTLE_ABYSS03         = 138;
 const int FLAG_TRANSTURTLE_FINALBOSS       = 139;
+
+// Other flags
+const int FLAG_VISION_ENERGYTEMPLE         = 300;
 
 
 #endif /* end of include guard RANDOMIZER_H */

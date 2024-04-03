@@ -48,7 +48,6 @@ function init(me)
 	v.n = getNaija()
 	
 	setupEntity(me, "")
-	
 	entity_initSkeletal(me, "TransTurtle")
 	
 	entity_setEntityType(me, ET_NEUTRAL)
@@ -61,6 +60,7 @@ function init(me)
 	bone_alpha(v.seat, 0)
 	bone_alpha(v.seat2, 0)
 	bone_alpha(v.tame, 0)
+	debugLog("Loading Turtle")
 	
 	if isMapName("VEIL01") then
 		v.myCheckFlag = FLAG_TRANSTURTLE_VEIL01_CHECK
@@ -73,6 +73,8 @@ function init(me)
 		v.sbank = 1014
 		v.check = "transturtle_veil02"
 	elseif isMapName("OPENWATER03") then
+		debugLog("Here I am: ")
+		debugLog(FLAG_TRANSTURTLE_VEIL01_CHECK)
 		v.myCheckFlag = FLAG_TRANSTURTLE_OPENWATER03_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_OPENWATER03
 		v.sbank = 1009
@@ -204,7 +206,7 @@ end
 
 function update(me, dt)
 
-	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and not v.light then
+	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and not v.lights then
 		lights(me, true, 1.5)
 	end
 	if anyOtherFlag() then

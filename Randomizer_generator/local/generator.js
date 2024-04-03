@@ -11,6 +11,10 @@ class Randomizer {
         this.version = aVersion;
         this.uid = Date.now();
         this.aquarianTranslate = false;
+        this.secretNeeded = false;
+        this.bigBossesToKill = 0;
+        this.miniBossesToKill = 0;
+        this.skipFirstVision = false;
         this.ingredientReplacement = []; // 26 base ingredients and 50 dishs
         for(let i = 0; i < 76; i = i + 1) {
             this.ingredientReplacement.push(i);
