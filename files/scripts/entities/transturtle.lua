@@ -487,6 +487,44 @@ function activate(me)
 				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
 					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
 				end
+			elseif isMapName("SEAHORSE") then
+				if isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
+					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
+					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
+					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
+					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
+					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
+					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
+					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				end
+			elseif isMapName("FOREST05") then
+				if isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
+					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
+					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
+					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
+					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
+					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
+					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
+					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
+					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
+					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
+				end
 			end
 		end
 		
