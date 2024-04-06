@@ -58,7 +58,7 @@ function update(me, dt)
 			entity_setState(me, STATE_OPENED)
 		end
 	end
-	if not entity_isState(me, STATE_OPEN) and not entity_isState(me, STATE_OPENED) and node_isEntityIn(v.tonguecollision, v.naija) then
+	if not entity_isFlag(me, 1) and node_isEntityIn(v.tonguecollision, v.naija) then
 		entity_setPosition(v.naija, 19200, 20400)
 	end
 end

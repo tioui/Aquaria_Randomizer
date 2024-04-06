@@ -439,6 +439,7 @@ const int FLAG_TRANSTURTLE_FINALBOSS       = 139;
 
 // Other flags
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
+const int FLAG_ENTER_HOMECAVE              = 654;
 
 
 #endif /* end of include guard RANDOMIZER_H */

@@ -903,10 +903,18 @@ void Randomizer::setAvatar(Avatar *aAvatar) {
 void Randomizer::onLoad(bool aNewGame){
     if (!aNewGame) {
         dsq->toggleCursor(true);
-        if (dsq->confirm("Restart at Naija's cave?","", false, 3.0)) {
-            dsq->game->sceneToLoad = "naijacave";
-            dsq->game->positionToAvatar = Vector(8880, 3881);
+        if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
+            if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
+                dsq->game->sceneToLoad = "naijacave";
+                dsq->game->positionToAvatar = Vector(8880, 3881);
+            }
+        } else {
+            if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
+                dsq->game->sceneToLoad = "vedhacave";
+                dsq->game->positionToAvatar = Vector(1743, 2888);
+            }
         }
+
         dsq->toggleCursor(false);
     }
     if (skipFirstVision) {
