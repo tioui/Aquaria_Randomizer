@@ -3,32 +3,6 @@
  * @created     : mercredi feb 15, 2024 21:30:04 EST
  * @license     : MIT
  * Class that encapsulate local randomization functionalities
- *
- * Todo:
-jellyshock : attempt to call a nil value [???:0] songNoteDone
-        nudi : attempt to call a nil value [???:0] songNoteDone
-        pet_nautilus : attempt to call a nil value [???:0] songNoteDone
-        luaScriptError: Path [naija_bindshell]: songNoteDone : attempt to call a nil value [???:0]
-
-        anemone : attempt to call a nil value [???:0] songNoteDone
-anemone3 : attempt to call a nil value [???:0] songNoteDone
-anemone4 : attempt to call a nil value [???:0] songNoteDone
-anemone : attempt to call a nil value [???:0] songNoteDone
-anemone : attempt to call a nil value [???:0] songNote
-anemone2 : attempt to call a nil value [???:0] songNote
-anemone3 : attempt to call a nil value [???:0] songNote
-anemone : attempt to call a nil value [???:0] songNote
-anemone2 : attempt to call a nil value [???:0] songNote
-luaScriptError: Path [big-anemone]: songNote : attempt to call a nil value [???:0]
-anemone : attempt to call a nil value [???:0] songNoteDone
-anemone2 : attempt to call a nil value [???:0] songNoteDone
-anemone3 : attempt to call a nil value [???:0] songNoteDone
-anemone : attempt to call a nil value [???:0] songNoteDone
-anemone2 : attempt to call a nil value [???:0] songNoteDone
-luaScriptError: Path [big-anemone]: songNoteDone : attempt to call a nil value [???:0]
-
-luaScriptError: jellysmall : postInit : attempt to call a nil value [???:0]
- aggrohopper: canShotHit function failed
 */
 
 #include "RandomizerLocal.h"

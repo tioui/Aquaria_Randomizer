@@ -339,12 +339,8 @@ void RandomizerArchipelago::update(){
 /**
  * Launched when the game is ending
  */
-bool RandomizerArchipelago::endingGame() {
-    bool lResult = Randomizer::endingGame();
-    if (lResult) {
-        apClient->StatusUpdate(APClient::ClientStatus::GOAL);
-    }
-    return lResult;
+void RandomizerArchipelago::endingGame() {
+    apClient->StatusUpdate(APClient::ClientStatus::GOAL);
 }
 
 /**

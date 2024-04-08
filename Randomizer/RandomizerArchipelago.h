@@ -78,7 +78,7 @@ public:
     /**
      * Launched when the game is ending
      */
-    bool endingGame() override;
+    void endingGame() override;
 
     /**
      * A new or saves game has been load

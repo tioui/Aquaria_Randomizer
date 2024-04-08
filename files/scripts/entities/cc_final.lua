@@ -46,7 +46,7 @@ function postInit(me)
 end
 
 function update(me, dt)
-	if not hasSong(SONG_DUALFORM) and entity_isEntityInRange(me, v.n, 600) then	
+	if getFlag(FLAG_SUNKENCITY_PUZZLE) >= SUNKENCITY_BOSSDONE and not isFlag(FLAG_FINAL, FINAL_FREEDLI) and entity_isEntityInRange(me, v.n, 600) then	
 		v.singDelay = v.singDelay - dt
 		if v.singDelay < 0 then
 			v.singDelay = 10

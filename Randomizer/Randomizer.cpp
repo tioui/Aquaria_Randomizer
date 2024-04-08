@@ -932,31 +932,6 @@ void Randomizer::onClose() {
 
 
 /**
- * Launched when the game is ending
- */
-bool Randomizer::endingGame() {
-    int lSecretsCount = 0;
-    bool lResult;
-    if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (dsq->continuity.getFlag(FLAG_SECRET02) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (dsq->continuity.getFlag(FLAG_SECRET03) != 0) {
-        lSecretsCount = lSecretsCount + 1;
-    }
-    if (!secretNeeded || (lSecretsCount == 3)) {
-        lResult = true;
-    } else {
-        lResult = false;
-        showText("You must acquire all 3 secrets to achieve the goal. You got " +
-                 std::to_string(lSecretsCount) + ".");
-    }
-    return lResult;
-}
-
-/**
  * Lunched at each game loop iteration
  */
 void Randomizer::update(){
@@ -976,17 +951,27 @@ void Randomizer::update(){
 }
 
 /**
- * Is the final boss is accessible.
- * @return True if the final boss is accessible. False if not.
+ * Tne number of mini bosses that as been slain.
+ *
+ * @return the number of mini bosses that as been beaten by the player
  */
-bool Randomizer::accessFinalBoss() const {
+int Randomizer::miniBossCount() {
     int lMiniBosses = 0;
-    int lBigBosses = 0;
     for (int i = FLAG_MINIBOSS_START; i <= FLAG_MINIBOSS_END; i = i + 1) {
         if (dsq->continuity.getFlag(i) > 0) {
             lMiniBosses = lMiniBosses + 1;
         }
     }
+    return lMiniBosses;
+}
+
+/**
+ * Tne number of big bosses that as been slain.
+ *
+ * @return the number of big bosses that as been beaten by the player
+ */
+int Randomizer::bigBossCount() {
+    int lBigBosses = 0;
     if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) > 0) {
         lBigBosses = lBigBosses + 1;
     }
@@ -1002,10 +987,74 @@ bool Randomizer::accessFinalBoss() const {
     if (dsq->continuity.getFlag(FLAG_BOSS_SUNWORM) > 0) {
         lBigBosses = lBigBosses + 1;
     }
-    return lMiniBosses >= miniBossesToKill and lBigBosses >= bigBossesToKill;
+    return lBigBosses;
+}
+
+/**
+ * Tne number of secrets that has been found.
+ *
+ * @return the number of secrets founded by the player
+ */
+int Randomizer::secretsFound() {
+    int lSecretsCount = 0;
+    if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_SECRET02) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    if (dsq->continuity.getFlag(FLAG_SECRET03) != 0) {
+        lSecretsCount = lSecretsCount + 1;
+    }
+    return lSecretsCount;
 }
 
 
+/**
+ * Is the final boss is accessible.
+ * @return True if the final boss is accessible. False if not.
+ */
+bool Randomizer::accessFinalBoss() {
+    return dsq->continuity.hasLi() and dsq->continuity.hasSong(SONG_DUALFORM) and
+           dsq->continuity.hasSong(SONG_ENERGYFORM) and dsq->continuity.hasSong(SONG_SUNFORM)
+           and dsq->continuity.hasSong(SONG_BIND) and miniBossCount() >= miniBossesToKill and
+           bigBossCount() >= bigBossesToKill and (!secretNeeded || (secretsFound() == 3));
+}
+
+void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
+    if (aCount < aObjective) {
+        std::stringstream lMessageStream;
+        lMessageStream << "You have " << aCount << " " << aMessage << ". Needing " << aObjective <<
+                            " to access final boss.";
+        showText(lMessageStream.str());
+    }
+}
+
+/**
+ * Show what is missing to access final boss.
+ */
+void Randomizer::showHintFinalBoss() {
+    if (!dsq->continuity.hasLi()) {
+        showText("Li needed to access final boss..");
+    }
+    if (!dsq->continuity.hasSong(SONG_BIND)) {
+        showText("Bind song needed to access final boss..");
+    }
+    if (!dsq->continuity.hasSong(SONG_ENERGYFORM)) {
+        showText("Energy form needed to access final boss..");
+    }
+    if (!dsq->continuity.hasSong(SONG_SUNFORM)) {
+        showText("Sun form needed to access final boss..");
+    }
+    if (!dsq->continuity.hasSong(SONG_DUALFORM)) {
+        showText("Dual form needed to access final boss..");
+    }
+    showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
+    showHint(bigBossCount(), bigBossesToKill, "big bosses beaten");
+    if (secretNeeded) {
+        showHint(secretsFound(), 3, "secret memories founded");
+    }
+}
 
 /**
  * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))

@@ -24,7 +24,7 @@ dofile("scripts/maps/finalcommon.lua")
 function init()
 	v.initFinalSpirits()
 	
-	if isFlag(FLAG_FINAL, FINAL_START) then
+	if getFlag(FLAG_SUNKENCITY_PUZZLE) >= SUNKENCITY_BOSSDONE and isFlag(FLAG_FINAL, FINAL_START) then
 		setFlag(FLAG_LI, 200)
 	
 		local node = getNode("LIHEART")

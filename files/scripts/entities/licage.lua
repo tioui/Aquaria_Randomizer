@@ -111,7 +111,7 @@ function update(me, dt)
 		entity_handleShotCollisions(me)
 	end
 	
-	if not isFlag(FLAG_FINAL, FINAL_FREEDLI) then
+	if getFlag(FLAG_SUNKENCITY_PUZZLE) >= SUNKENCITY_BOSSDONE and not isFlag(FLAG_FINAL, FINAL_FREEDLI) then
 		if not v.seen and entity_isEntityInRange(me, v.n, 600) then
 			entity_flipToEntity(v.n, me)
 			entity_idle(v.n)
@@ -128,6 +128,7 @@ function enterState(me)
 	if entity_isState(me, STATE_IDLE) then
 		entity_animate(me, "idle", -1)
 	elseif entity_isState(me, STATE_OPEN) then
+		setFlag(FLAG_FINAL, FINAL_FREEDLI)
 		entity_idle(v.n)
 		local li = getLi()
 		randomizerCheck("breaking_li_cage")
@@ -219,7 +220,6 @@ function enterState(me)
 		entity_setState(li, STATE_IDLE)
 		watch(0.5)
 		
-		setFlag(FLAG_FINAL, FINAL_FREEDLI)
 		
 		
 	--	changeForm(FORM_DUAL)
@@ -260,7 +260,7 @@ end
 function songNoteDone(me, note)
 	v.singing = false
 	if isFlag(FLAG_FINAL, FINAL_FREEDLI) then return end
-	if isFlag(FLAG_SPIRIT_ERULIAN, 1) and isFlag(FLAG_SPIRIT_KROTITE, 1) and isFlag(FLAG_SPIRIT_DRUNIAD, 1) and isFlag(FLAG_SPIRIT_DRASK, 1) then
+	if getFlag(FLAG_SUNKENCITY_PUZZLE) >= SUNKENCITY_BOSSDONE and isFlag(FLAG_SPIRIT_ERULIAN, 1) and isFlag(FLAG_SPIRIT_KROTITE, 1) and isFlag(FLAG_SPIRIT_DRUNIAD, 1) and isFlag(FLAG_SPIRIT_DRASK, 1) then
 		if entity_isState(me, STATE_IDLE) then
 			--debugLog(string.format("curNote: %d", v.curNote))
 			if notes[v.curNote] == note then

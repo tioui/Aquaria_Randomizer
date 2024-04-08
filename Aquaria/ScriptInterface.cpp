@@ -868,15 +868,16 @@ luaFunc(randomizerClose)
     luaReturnNil();
 }
 
-
-
 luaFunc(randomizerAccessFinalBoss)
 {
     luaReturnBool(dsq->randomizer->accessFinalBoss());
 }
 
-
-
+luaFunc(randomizerShowHintFinalBoss)
+{
+    dsq->randomizer->showHintFinalBoss();
+    luaReturnNil();
+}
 
 luaFunc(dofile_caseinsensitive)
 {
@@ -10442,10 +10443,8 @@ static const struct {
     luaRegister(randomizerCheck),
     luaRegister(randomizerEndingGame),
     luaRegister(randomizerAccessFinalBoss),
+    luaRegister(randomizerShowHintFinalBoss),
     luaRegister(randomizerClose),
-
-
-
 
 #undef MK_FUNC
 #undef MK_ALIAS

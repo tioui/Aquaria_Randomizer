@@ -36,9 +36,12 @@ function update(me, dt)
 	if not v.done then
 		-- Ajouter des conditions ici pour permettre d'ouvrir la porte seulement si les conditions sont respectés.
 		if node_isEntityIn(me, v.n) and not (entity_isState(v.ent, STATE_OPENED) or entity_isState(v.ent, STATE_OPEN)) then
-			if hasLi() and hasSong(SONG_DUALFORM) and hasSong(SONG_ENERGYFORM) and hasSong(SONG_SUNFORM) and hasSong(SONG_BIND) and randomizerAccessFinalBoss() then
+			if randomizerAccessFinalBoss() then
 				entity_setState(v.ent, STATE_OPEN, -1, 1)
 				v.done = true
+				entity_setActivation(v.ent, AT_NONE)
+			else
+			    entity_setActivation(v.ent, AT_CLICK, 150, 400)
 			end
 		end
 	end

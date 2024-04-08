@@ -29,3 +29,7 @@ end
 function update(me, dt)
 	v.commonUpdate(me, dt)
 end
+
+function activate(me)
+    randomizerShowHintFinalBoss()
+end
