@@ -53,9 +53,9 @@ end
 
 function activate(me)
 	if entity_isState(me, STATE_ON) then
-		if hasSong(SONG_DUALFORM) then
-			playSfx("denied")
-		else
+--		if hasSong(SONG_DUALFORM) then
+--			playSfx("denied")
+--		else
 			entity_idle(getNaija())
 			fade(1, 1)
 			watch(1)
@@ -88,7 +88,7 @@ function activate(me)
 			end
 			]]--
 			entity_setState(me, STATE_OFF)
-		end
+--		end
 	end
 end
 

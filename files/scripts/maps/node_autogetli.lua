@@ -24,13 +24,13 @@ function init(me)
 end
 
 function update(me, dt)
-	if not hasLi() then
-		if node_isEntityIn(me, getNaija()) then
-			local n = getNaija()
-			setFlag(FLAG_LI, 100)
-			local li = createEntity("li", "", entity_x(n), entity_y(n))
-			setLi(li)
-			
-		end
-	end
+--	if not hasLi() then
+--		if node_isEntityIn(me, getNaija()) then
+--			local n = getNaija()
+--			setFlag(FLAG_LI, 100)
+--			local li = createEntity("li", "", entity_x(n), entity_y(n))
+--			setLi(li)
+--			
+--		end
+--	end
 end

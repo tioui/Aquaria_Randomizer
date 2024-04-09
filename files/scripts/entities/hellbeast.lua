@@ -196,8 +196,8 @@ function postInit(me)
 		bone_alpha(v.bone_tongue, 0)
 		entity_animate(me, "done", -1, true)
 		if entity_isFlag(me, 0) then
-			voice("naija_song_beastform")
-			setControlHint(getStringBank(38), 0, 0, 0, 10, "", SONG_BEASTFORM)
+			-- voice("naija_song_beastform")
+			-- setControlHint(getStringBank(38), 0, 0, 0, 10, "", SONG_BEASTFORM)
 			entity_setFlag(me, 1)
 		end
 		entity_setAllDamageTargets(me, false)

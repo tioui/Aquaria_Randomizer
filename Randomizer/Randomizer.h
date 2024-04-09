@@ -291,7 +291,28 @@ protected:
      */
         bool skipFirstVision;
 
-    private:
+    /**
+     * Tne number of mini bosses that as been slain.
+     *
+     * @return the number of mini bosses that as been beaten by the player
+     */
+    int miniBossCount();
+
+    /**
+     * Tne number of big bosses that as been slain.
+     *
+     * @return the number of big bosses that as been beaten by the player
+     */
+    int bigBossCount();
+
+    /**
+     * Tne number of secrets that has been found.
+     *
+     * @return the number of secrets founded by the player
+     */
+    int secretsFound();
+
+private:
 
     /**
      * Unique ID for the randomizer
@@ -383,27 +404,6 @@ protected:
      * Should Aquarian characters be translated to English.
      */
     bool isAquarianTranslated;
-
-    /**
-     * Tne number of mini bosses that as been slain.
-     *
-     * @return the number of mini bosses that as been beaten by the player
-     */
-    int miniBossCount();
-
-    /**
-     * Tne number of big bosses that as been slain.
-     *
-     * @return the number of big bosses that as been beaten by the player
-     */
-    int bigBossCount();
-
-    /**
-     * Tne number of secrets that has been found.
-     *
-     * @return the number of secrets founded by the player
-     */
-    int secretsFound();
 
     /**
      * Show a hint if the count is lower than the objective.

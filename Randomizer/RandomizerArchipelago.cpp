@@ -340,7 +340,13 @@ void RandomizerArchipelago::update(){
  * Launched when the game is ending
  */
 void RandomizerArchipelago::endingGame() {
-    apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+    if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
+        (!secretNeeded || (secretsFound() == 3))) {
+        apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+    } else {
+        showText("You are missing some prerequisite to get the goal.");
+    }
+
 }
 
 /**
