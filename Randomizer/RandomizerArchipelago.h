@@ -254,5 +254,10 @@ private:
      * @return The apitem_t associate to the ID
      */
     apitem_t *getApItemById(int64_t id);
+
+    /**
+     * Update the APClient to handle items.
+     */
+    void connectionUpdate();
 };
 

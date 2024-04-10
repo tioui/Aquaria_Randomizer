@@ -3,8 +3,6 @@
  * @created     : mercredi jan 10, 2024 16:08:04 EST
  * @license     : MIT
  * Class that encapsulate every randomization functionalities
- *
- * Todo: Add the Urn in the first big room of the cathedral right part
  */
 
 #include "../Aquaria/Game.h"

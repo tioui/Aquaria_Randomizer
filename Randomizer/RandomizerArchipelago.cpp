@@ -1,7 +1,6 @@
 //
 // Created by louis on 24-03-08.
 //
-
 #include "RandomizerArchipelago.h"
 #include "subprojects/apclientpp/apclient.hpp"
 #include "subprojects/apclientpp/apuuid.hpp"
@@ -52,9 +51,6 @@ RandomizerArchipelago::RandomizerArchipelago(
     if (hasRoomInfo) {
         setUid(apClient->get_seed());
     }
-//    if (apClient) {
-//        apClient->reset();
-//    }
 }
 
 /**
@@ -148,8 +144,18 @@ void RandomizerArchipelago::onSlotRefused (const std::list<std::string>& aTexts)
  * Launched when the the Archipelago send Room Info message
  */
 void RandomizerArchipelago::onRoomInfoHandler(){
-    apClient->ConnectSlot(name, password, 0,
-                          {}, AP_VERSION_SUPPORT);
+    if (inGame) {
+        const int item_handling_flags_all = 7;
+        std::list<std::string> tags;
+        if (deathLink) {
+            tags.emplace_back("DeathLink");
+        }
+        apClient->ConnectSlot(name, password, item_handling_flags_all, tags, AP_VERSION_SUPPORT);
+    } else {
+        apClient->ConnectSlot(name, password, 0,
+                              {}, AP_VERSION_SUPPORT);
+    }
+
     hasRoomInfo = true;
 }
 
@@ -301,11 +307,32 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
 }
 
 /**
+ * Update the APClient to handle items.
+ */
+void RandomizerArchipelago::connectionUpdate() {
+    const int item_handling_flags_all = 7;
+    std::list<std::string> tags;
+    if (deathLink) {
+        tags.emplace_back("DeathLink");
+    }
+    apClient->ConnectUpdate(item_handling_flags_all,tags);
+    apClient->poll();
+}
+
+/**
  * Lunched at each game loop iteration
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
-    apClient->poll();
+    try {
+        apClient->poll();
+    } catch (const websocketpp::exception& lException) {
+        showText("Disconnected from server. Will try to reconnect.");
+        delete(apClient);
+        apClient = new APClient(uuid, "Aquaria",serverAddress);
+        initialiseCallback();
+    }
+
     if (inGame) {
         if (avatar->isEntityDead()) {
             if (!deathLinkPause) {
@@ -354,14 +381,8 @@ void RandomizerArchipelago::endingGame() {
    @param aNewGame True if a new game is launched.
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
-    const int item_handling_flags_all = 7;
     Randomizer::onLoad(aNewGame);
-    std::list<std::string> tags;
-    if (deathLink) {
-        tags.emplace_back("DeathLink");
-    }
-    apClient->ConnectUpdate(item_handling_flags_all,tags);
-    apClient->poll();
+    connectionUpdate();
 }
 
 /**
