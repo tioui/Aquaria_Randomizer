@@ -327,10 +327,7 @@ void RandomizerArchipelago::update(){
     try {
         apClient->poll();
     } catch (const websocketpp::exception& lException) {
-        showText("Disconnected from server. Will try to reconnect.");
-        delete(apClient);
-        apClient = new APClient(uuid, "Aquaria",serverAddress);
-        initialiseCallback();
+        showText("Disconnected from server. Trying to reconnect.");
     }
 
     if (inGame) {
