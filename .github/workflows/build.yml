@@ -71,7 +71,7 @@ jobs:
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
           cd Releases/
-          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml
+          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml cacert.pem
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf override
