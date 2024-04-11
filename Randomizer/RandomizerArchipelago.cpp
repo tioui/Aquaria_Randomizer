@@ -67,8 +67,6 @@ RandomizerArchipelago::~RandomizerArchipelago(){
  * Set every APClient callback
  */
 void RandomizerArchipelago::initialiseCallback(){
-    std::cout << "Locked mutex 1";
-    std::lock_guard<std::mutex> lock(apMutex);
     apClient->set_socket_connected_handler([&](){
         onSocketConnected();
     });
@@ -96,9 +94,6 @@ void RandomizerArchipelago::initialiseCallback(){
     apClient->set_bounced_handler([&](const nlohmann::json& aJson){
         onBounceMessageReceived(aJson);
     });
-    std::cout << "Unlocked mutex 1";
-
-
 }
 
 /**
