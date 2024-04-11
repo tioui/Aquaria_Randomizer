@@ -24,6 +24,8 @@ ENDIF(WIN32)
 
 IF(MSYS)
     SET(WIN32_TRUE TRUE)
+    ADD_DEFINITIONS(-DBBGE_BUILD_WINDOWS=1)
+    SET(EXETYPE WIN32)
 ENDIF(MSYS)
 
 # if no build type was provided, set a default one
@@ -404,10 +406,10 @@ IF(CMAKE_COMPILER_IS_GNUCC)
     ENDIF(AQUARIA_GCC_HAS_STACKPROT)
 
 	### For an unknown reason, the program crash with a segfault when using -O2 on Windows (Should investiguate in the future)
-	IF(NOT WIN32_TRUE)
+	#IF(NOT WIN32_TRUE)
 		set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
-	ENDIF(NOT WIN32_TRUE)
+	#ENDIF(NOT WIN32_TRUE)
 
     # !!! FIXME: probably not safe long-term.
     # CMake mailing list had this hack for getting rid of -rdynamic:
@@ -652,19 +654,20 @@ SET_SOURCE_FILES_PROPERTIES(
 )
 
 IF(WIN32_TRUE)
-	add_custom_target(
-	   openssl
-	   COMMAND ./Configure mingw --cross-compile-prefix=i686-w64-mingw32- && make
-	   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl
-	)
+    set(OPENSSL_TOOLCHAIN "i686-w64-mingw32-" CACHE STRING "The toolchain used to compile openssl")
+    add_custom_target(
+       openssl
+       COMMAND ./Configure mingw no-apps no-docs --cross-compile-prefix=${OPENSSL_TOOLCHAIN} && make
+       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl
+    )
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
+		PROPERTIES COMPILE_FLAGS "-D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
 	)
 
 	SET_SOURCE_FILES_PROPERTIES(
 		${AQUARIA_SRCS}
-		PROPERTIES COMPILE_FLAGS "-std=c++20 -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
+		PROPERTIES COMPILE_FLAGS "-D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_ -DASIO_STANDALONE -fexceptions -I${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl/include -Wa,-mbig-obj"
 	)
  
 ELSE(WIN32_TRUE)
