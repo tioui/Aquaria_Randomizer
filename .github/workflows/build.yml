@@ -35,6 +35,7 @@ jobs:
           cp ${{ github.workspace }}/ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
           cp -r ${{ github.workspace }}/ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
           cp -r ${{ github.workspace }}/usersettings.xml aquaria_randomizer/
+          cp -r ${{ github.workspace }}/cacert.pem aquaria_randomizer/
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
@@ -68,6 +69,7 @@ jobs:
           cp -p build/aquaria_randomizer Releases/
           cp -rp files Releases/override
           cp usersettings.xml Releases/
+          cp cacert.pem Releases/
           cd Releases/
           tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml
           rm usersettings.xml
@@ -84,6 +86,7 @@ jobs:
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
           cp -rp ../files AppDir/usr/bin/override
           cp -rp ../usersettings.xml AppDir/usr/bin/
+          cp -rp ../cacert.pem AppDir/usr/bin/
           ./appimagetool-x86_64.AppImage AppDir/
           cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/
       - name: 'Upload artifact'

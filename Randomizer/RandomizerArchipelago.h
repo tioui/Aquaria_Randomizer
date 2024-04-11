@@ -259,5 +259,10 @@ private:
      * Update the APClient to handle items.
      */
     void connectionUpdate();
+
+    /**
+     * The mutex used to synchrnize the apClient.
+     */
+    std::mutex apMutex;
 };
 
