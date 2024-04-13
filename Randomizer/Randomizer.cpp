@@ -386,6 +386,17 @@ void Randomizer::initialiseCollectibles() {
 }
 
 /**
+ * Destructor of the object
+ */
+Randomizer::~Randomizer() {
+    delete(ingredientReplacement);
+    delete(checks);
+    delete(ingredients);
+    delete(collectibles);
+    delete(nextMessages);
+}
+
+/**
  * Get a new transport to location
  * @param aCheck The transport item to activate
  */
@@ -796,13 +807,6 @@ IngredientData *Randomizer::getRandomizedIngredientData(IngredientData* aData)
 }
 
 /**
- * Destructor of the object
- */
-Randomizer::~Randomizer() {
-    delete(ingredientReplacement);
-}
-
-/**
  * True if an error occured at initialization. False means every thing is fine
  *
  * @return True if an error occured at initialization. False if not.
@@ -818,6 +822,7 @@ bool Randomizer::hasError() const{
 std::string Randomizer::getErrorMessage(){
     return errorMessage;
 }
+
 /**
  * Put hasError to True and assign a message to getErrorMessage.
  * @param message The message to assign to getErrorMessage
@@ -825,6 +830,13 @@ std::string Randomizer::getErrorMessage(){
 void Randomizer::setError(std::string message) {
     errorMessage = std::move(message);
     error = true;
+}
+
+/**
+ * Remove pending error
+ */
+void Randomizer::clearError() {
+    error = false;
 }
 
 

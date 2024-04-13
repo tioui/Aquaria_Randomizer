@@ -197,6 +197,11 @@ protected:
     void setError(std::string message);
 
     /**
+     * Remove pending error
+     */
+    void clearError();
+
+    /**
      * Retreive the index of a check
      * @param checkId The Id of the check to retreive
      * @return The index of the check in the CHECKS vector

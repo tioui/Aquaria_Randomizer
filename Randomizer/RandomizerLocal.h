@@ -23,7 +23,7 @@ public:
     /**
      * Destructor of the current object
      */
-    ~RandomizerLocal();
+    ~RandomizerLocal() override;
 
     /**
      * Activate a randomizer check

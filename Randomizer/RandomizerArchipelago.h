@@ -57,12 +57,20 @@ public:
      * @param name The player name on the archipelago server
      * @param password The password of the room on the archipelago server
      */
-    explicit RandomizerArchipelago(const std::string& server, const std::string& name, const std::string& password);
+    explicit RandomizerArchipelago(const std::string& server, const std::string& name, const std::string& password,
+                                   bool selfMessage);
 
     /**
      * Destructor of the current object
      */
-    ~RandomizerArchipelago();
+    ~RandomizerArchipelago() override;
+
+    /**
+     * Try to connect to the server (try secure and not secure unless specified)
+     *
+     * @param server The server URI (including port number
+     */
+    void tryConnection(std::string server);
 
     /**
      * Activate a randomizer check
@@ -264,5 +272,17 @@ private:
      * The mutex used to synchrnize the apClient.
      */
     std::mutex apMutex;
+
+    /**
+     * Show only message from AP Server that are related to the current player
+     */
+    bool selfMessageOnly;
+
+    /**
+     * Check if the Text node is related to the current player.
+     * @param aData
+     * @return
+     */
+    bool selfRelatedJson(const std::list<APClient::TextNode>& aData);
 };
 

@@ -18,12 +18,12 @@
  * @param aName The player name on the archipelago server
  * @param aPassword The password of the room on the archipelago server
  */
-RandomizerArchipelago::RandomizerArchipelago(
-        const std::string& aServer, const std::string& aName, const std::string& aPassword): Randomizer(){
-    bool aTimeOut = false;
+RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const std::string& aName,
+                                             const std::string& aPassword, bool aSelfMessage): Randomizer(){
     name = aName;
     password = aPassword;
     serverAddress = aServer;
+    selfMessageOnly = aSelfMessage;
     hasRoomInfo = false;
     hasSlotInfo = false;
     syncing = false;
@@ -38,18 +38,43 @@ RandomizerArchipelago::RandomizerArchipelago(
     initialiseApItems();
     apLocations = new std::vector<aplocation_t>();
     initialiseApLocations();
-    apClient = new APClient(uuid, "Aquaria",serverAddress, "cacert.pem");
+    tryConnection(aServer);
+    if (hasRoomInfo) {
+        setUid(apClient->get_seed());
+    }
+}
+
+/**
+ * Try to connect to the server (try secure and not secure unless specified)
+ *
+ * @param server The server URI (including port number
+ */
+void RandomizerArchipelago::tryConnection(std::string aServer) {
+    bool mustRetry = true;
+    std::string lServer = aServer;
+    std::transform(lServer.begin(), lServer.end(), lServer.begin(), ::tolower);
+    if (lServer.compare(0, 6, "wss://") == 0 || lServer.compare(0, 5, "ws://") == 0) {
+        mustRetry = false;
+    } else {
+        lServer = "wss://" + aServer;
+    }
+    bool timeOut = false;
+    serverAddress = lServer;
+    hasRoomInfo = false;
+    hasSlotInfo = false;
+    clearError();
+    apClient = new APClient(uuid, "Aquaria",lServer, "cacert.pem");
     initialiseCallback();
     std::chrono::time_point lStart = std::chrono::system_clock::now();
-    while (!(hasRoomInfo && hasSlotInfo) && !hasError() && !aTimeOut) {
+    while (!(hasRoomInfo && hasSlotInfo) && !hasError() && !timeOut) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         apClient->poll();
         std::chrono::time_point lNow = std::chrono::system_clock::now();
         auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lStart);
-        aTimeOut = lDuration.count() > 5;
+        timeOut = lDuration.count() > 5;
     }
-    if (hasRoomInfo) {
-        setUid(apClient->get_seed());
+    if (hasError() && mustRetry) {
+        tryConnection("ws://" + aServer);
     }
 }
 
@@ -215,13 +240,25 @@ void RandomizerArchipelago::onItemsReceived (const std::list<APClient::NetworkIt
 void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
     if (aJson.type != "Tutorial" && aJson.type != "Join" && aJson.type != "Part" && aJson.type != "Hint" &&
         aJson.type != "TagsChanged" && aJson.type != "CommandResult" && aJson.type != "AdminCommandResult") {
-        std::stringstream lMessageStream;
-        for (const APClient::TextNode& lNode : aJson.data) {
-            lMessageStream << translateJsonDataToString(lNode);
+        if (aJson.type != "ItemSend" || !selfMessageOnly || selfRelatedJson(aJson.data)) {
+            std::stringstream lMessageStream;
+            for (const APClient::TextNode& lNode : aJson.data) {
+                lMessageStream << translateJsonDataToString(lNode);
+            }
+            debugLog(lMessageStream.str());
+            showText(lMessageStream.str());
         }
-        debugLog(lMessageStream.str());
-        showText(lMessageStream.str());
     }
+}
+
+bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>& aData) {
+    bool lResult = false;
+    for (const APClient::TextNode& lNode : aData) {
+        if (lNode.type == "player_id" and apClient->get_player_alias(std::stoi(lNode.text)) == name) {
+            lResult = true;
+        };
+    }
+    return lResult;
 }
 
 /**
