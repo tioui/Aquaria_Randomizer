@@ -70,7 +70,7 @@ public:
      *
      * @param server The server URI (including port number
      */
-    void tryConnection(std::string server);
+    void tryConnection(const std::string& server);
 
     /**
      * Activate a randomizer check

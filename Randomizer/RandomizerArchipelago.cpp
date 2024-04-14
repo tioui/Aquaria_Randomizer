@@ -49,7 +49,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
  *
  * @param server The server URI (including port number
  */
-void RandomizerArchipelago::tryConnection(std::string aServer) {
+void RandomizerArchipelago::tryConnection(const std::string& aServer) {
     bool mustRetry = true;
     std::string lServer = aServer;
     std::transform(lServer.begin(), lServer.end(), lServer.begin(), ::tolower);
