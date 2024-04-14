@@ -574,7 +574,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
 	} else if (aItem.compare(0, 14, "upgrade_health") == 0) {
 		lMessageStream << "Upgrade: Health";
-        if (avatar->health <= 10) {
+        if (avatar->health < 10) {
             dsq->continuity.upgradeHealth();
         }
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
