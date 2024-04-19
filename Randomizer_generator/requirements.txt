@@ -13,3 +13,4 @@ cymem>=2.0.8
 orjson>=3.9.10
 typing_extensions>=4.7.0
 pyramid==2.0.2
+pyramid_chameleon

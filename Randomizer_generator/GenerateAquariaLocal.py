@@ -4,6 +4,7 @@ Date: Fri, 19 Apr 2024 19:50:39 +0000
 Description: Generator for the Aquaria local randomizer
 """
 
+import sys
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.renderers import render_to_response
@@ -430,5 +431,13 @@ if __name__ == '__main__':
         config.add_view(view_generation, route_name='generation')
         config.add_static_view(name='static', path='static_assets')
         app = config.make_wsgi_app()
-    server = make_server('0.0.0.0', 6543, app)
+    port_number: int
+    if len(sys.argv) > 1:
+        try:
+            port_number = int(sys.argv[1])
+        except ValueError:
+            port_number = 6543
+    else:
+        port_number = 6543
+    server = make_server('0.0.0.0', port_number, app)
     server.serve_forever()
