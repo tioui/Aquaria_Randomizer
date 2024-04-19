@@ -21,4 +21,5 @@ six>=1.16.0
 maseya-z3pr>=1.0.0rc1
 xxtea>=3.0.0
 s2clientprotocol>=5.0.11.90136.0
-zilliandomizer==0.7.0
+zilliandomizer @ git+https://github.com/beauxq/zilliandomizer@b36a23b5a138c78732ac8efb5b5ca8b0be07dcff#0.7.0
+typing-extensions>=4.7, <5
