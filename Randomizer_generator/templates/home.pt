@@ -11,22 +11,54 @@
     <body>
     <div class="container" style="width: 540px;">
         <h1 class="text-center">Generating Aquaria randomizer</h1>
-        <p>Ingredient randomization: <select id="ingredient">
-            <option value="no">No ingredient randomization</option>
-            <option value="common" selected="selected">Randomize only common ingredients</option>
-            <option value="all">Randomize every ingredient*</option>
+		<form action="/generation" method="POST">
+        <p><label for="randomizeIngredients">Ingredient randomization:</label> <select id="randomizeIngredients" name="randomizeIngredients">
+            <option value="0">No ingredient randomization</option>
+            <option value="1" selected="selected">Randomize only common ingredients</option>
+            <option value="2">Randomize every ingredient*</option>
         </select></p>
         <p>*Note that randomizing every ingredient can make recipe difficult to make
             (for example, if Plant Leaf is swap with Red Bulb).</p>
-        <p>Dish randomization: <select id="dish">
-            <option value="no">No dish randomization</option>
-            <option value="all" selected="selected">Randomize dish drop**</option>
+        <p><label for="randomizeDishes">Dish randomization:</label> <select id="randomizeDishes" name="randomizeDishes">
+            <option value="0">No dish randomization</option>
+            <option value="1" selected="selected">Randomize dish drop**</option>
         </select></p>
         <p>**Note that dish drop only work when the dish recipe has been learned from checks.</p>
+        <p><label for="randomizeTurtles">Randomize transportation turtles:</label> <select id="randomizeTurtles" name="randomizeTurtles">
+            <option value="0">No</option>
+            <option value="1">Randomize every Transportation turtles</option>
+            <option value="2" selected="selected">Yes, but not the last one, before the Creator</option>
+        </select></p>
+		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1"></p>
+		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
+		<p><label for="secretNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretNeeded" name="secretNeeded" value="1"></p>
+        <p><label for="miniBossesToBeat">Mini boss to beat to access the Creator:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
+            <option value="0" selected="selected">No mini boss necessary</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select></p>
+        <p><label for="bigBossesToBeat">Big boss to beat to access the Creator:</label> <select id="bigBossesToBeat" name="bigBossesToBeat">
+            <option value="0" selected="selected">No big boss necessary</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select></p>
+		<p><label for="bindSongNeededForBulbUnderRock">Makes bind song necessary to get under rocks locations:</label> <input type="checkbox" id="bindSongNeededForBulbUnderRock" name="bindSongNeededForBulbUnderRock" value="1"></p>
+		<p><label for="skipFirstVision">Skip the first vision in the verse cave:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
+		<p><label for="excludeHardItem">Exclude hard to get and well hidden locations:</label> <input type="checkbox" id="excludeHardItem" name="excludeHardItem" value="1"></p>
+		<p>*Note that excluded locations can still be obtained, but will have filler items (like simple ingredients).</p>
         <div class="text-center">
-            <a href="#" class="btn btn-primary" onclick="generateRandomizer(this);">Generate...</a>
+            <button class="btn btn-primary" type="submit">Generate...</button>
         </div>
-
+		</form>
     </div>
     <div class="container" style="width: 540px;">
         <h1 class="text-center">Tips</h1>
@@ -386,6 +418,6 @@
     </div>
 
 
-    <script src="generator.js"></script>
+    <script src="${request.static_url('static_assets/scripts/generator.js')}"></script>
     </body>
 </html>
