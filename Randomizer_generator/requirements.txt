@@ -14,3 +14,11 @@ orjson>=3.9.10
 typing_extensions>=4.7.0
 pyramid==2.0.2
 pyramid_chameleon
+Pymem>=1.10.0
+pyevermizer==0.48.0
+nest-asyncio>=1.5.5
+six>=1.16.0
+maseya-z3pr>=1.0.0rc1
+xxtea>=3.0.0
+s2clientprotocol>=5.0.11.90136.0
+zilliandomizer==0.7.0
