@@ -1,0 +1,15 @@
+FROM python:latest
+RUN mkdir /src && apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
+		git && \
+    cd /src && \
+    git clone --recursive https://github.com/tioui/Archipelago.git && \
+    git clone https://github.com/tioui/Aquaria_Randomizer.git && \
+    cp -rp Aquaria_Randomizer/Randomizer_generator/* Archipelago/ && \
+    rm -rf Aquaria_Randomizer && \
+    cd Archipelago && \
+    pip install -r requirements.txt && \
+    for f in `find worlds -name requirements.txt`; do pip install -r $f; done 
+WORKDIR /src/Archipelago
+CMD /bin/bash -c "python GenerateAquariaLocal.py $SERVER_PORT"
+
+

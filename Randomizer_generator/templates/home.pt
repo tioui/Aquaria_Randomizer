@@ -29,7 +29,7 @@
             <option value="1">Randomize every Transportation turtles</option>
             <option value="2" selected="selected">Yes, but not the last one, before the Creator</option>
         </select></p>
-		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1"></p>
+		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
 		<p><label for="secretNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretNeeded" name="secretNeeded" value="1"></p>
         <p><label for="miniBossesToBeat">Mini boss to beat to access the Creator:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
@@ -418,6 +418,6 @@
     </div>
 
 
-    <script src="${request.static_url('static_assets/scripts/generator.js')}"></script>
+    <script src="${request.static_url('static_assets/scripts/generator.js', _scheme='https')}"></script>
     </body>
 </html>
