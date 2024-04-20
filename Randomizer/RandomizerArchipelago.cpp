@@ -335,7 +335,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
         if (aCheck == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
-            std::lock_guard<std::mutex> lock(apMutex);
+            //std::lock_guard<std::mutex> lock(apMutex);
             apClient->LocationChecks(lIds);
         }
     }
@@ -350,7 +350,7 @@ void RandomizerArchipelago::connectionUpdate() {
     if (deathLink) {
         tags.emplace_back("DeathLink");
     }
-    std::lock_guard<std::mutex> lock(apMutex);
+    //std::lock_guard<std::mutex> lock(apMutex);
     apClient->ConnectUpdate(item_handling_flags_all,tags);
     apClient->poll();
 }
@@ -360,7 +360,7 @@ void RandomizerArchipelago::connectionUpdate() {
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
-    std::lock_guard<std::mutex> lock(apMutex);
+    //std::lock_guard<std::mutex> lock(apMutex);
     try {
         apClient->poll();
     } catch (const websocketpp::exception& lException) {
@@ -403,7 +403,7 @@ void RandomizerArchipelago::update(){
 void RandomizerArchipelago::endingGame() {
     if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
         (!secretNeeded || (secretsFound() == 3))) {
-        std::lock_guard<std::mutex> lock(apMutex);
+        //std::lock_guard<std::mutex> lock(apMutex);
         apClient->StatusUpdate(APClient::ClientStatus::GOAL);
     } else {
         showText("You are missing some prerequisite to get the goal.");
@@ -425,7 +425,7 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
  */
 void RandomizerArchipelago::onClose(){
     Randomizer::onClose();
-    std::lock_guard<std::mutex> lock(apMutex);
+    //std::lock_guard<std::mutex> lock(apMutex);
     apClient->ConnectUpdate(0, {});
 }
 
