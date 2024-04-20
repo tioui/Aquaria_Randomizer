@@ -360,13 +360,12 @@ void RandomizerArchipelago::update(){
                 activateCheck(lCheck.id);
             }
         }
-    } else {
-        try {
-            std::lock_guard<std::mutex> lock(apMutex);
-            apClient->poll();
-        } catch (const websocketpp::exception& lException) {
-            showText("Disconnected from server. Trying to reconnect.");
-        }
+    }
+    try {
+        std::lock_guard<std::mutex> lock(apMutex);
+        apClient->poll();
+    } catch (const websocketpp::exception& lException) {
+        showText("Disconnected from server. Trying to reconnect.");
     }
     if (inGame) {
         if (avatar->isEntityDead()) {
