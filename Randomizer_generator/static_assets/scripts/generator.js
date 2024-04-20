@@ -237,7 +237,26 @@ class Tips {
             { "check_id":"collect_blaster", "item_id":"collectible_blaster"},
             { "check_id":"collect_dumbo", "item_id":"collectible_dumbo"},
             { "check_id":"collect_piranha", "item_id":"collectible_piranha"},
-            { "check_id":"urn_cathedral_r_13", "item_id":"ingredient_leafpoultice"}
+            { "check_id":"urn_cathedral_r_13", "item_id":"ingredient_leafpoultice"},
+            { "check_id":"li_cave", "item_id":"song_li"},
+            { "check_id":"song_shield_hint", "item_id":"song_shield"},
+            { "check_id":"breaking_li_cage", "item_id":"song_dual"},
+            { "check_id":"beating_mithalas", "item_id":"song_beast"},
+            { "check_id":"beating_sun_god", "item_id":"song_sun"},
+            { "check_id":"beating_drunian_god", "item_id":"song_nature"},
+            { "check_id":"beating_energy_statue", "item_id":"song_energy"},
+            { "check_id":"erulian_spirit", "item_id":"song_bind"},
+            { "check_id":"fish_cave_puzzle", "item_id":"song_fish"},
+            { "check_id":"beating_priests", "item_id":"song_spirit"},
+            { "check_id":"transturtle_veil01", "item_id":"transport_veil01"},
+            { "check_id":"transturtle_veil02", "item_id":"transport_veil02"},
+            { "check_id":"transturtle_openwater03", "item_id":"transport_openwater03"},
+            { "check_id":"transturtle_forest04", "item_id":"transport_forest04"},
+            { "check_id":"transturtle_mainarea", "item_id":"transport_mainarea"},
+            { "check_id":"transturtle_abyss03", "item_id":"transport_abyss03"},
+            { "check_id":"transturtle_finalboss", "item_id":"transport_finalboss"},
+            { "check_id":"transturtle_forest05", "item_id":"transport_forest05"},
+            { "check_id":"transturtle_seahorse", "item_id":"transport_seahorse"}
         ];
     }
 }
