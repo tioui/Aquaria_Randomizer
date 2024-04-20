@@ -354,6 +354,7 @@ void RandomizerArchipelago::connectionUpdate() {
 void RandomizerArchipelago::update(){
     Randomizer::update();
     if (syncing) {
+        syncing = false;
         for (const check_t& lCheck : *checks) {
             if (dsq->continuity.getFlag(lCheck.flag)) {
                 activateCheck(lCheck.id);
