@@ -26,7 +26,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     selfMessageOnly = aSelfMessage;
     hasRoomInfo = false;
     hasSlotInfo = false;
-    syncing = false;
+    syncing = true;
     secretNeeded = false;
     deathLink = false;
     backupMessages = new std::queue<std::string>();
@@ -353,14 +353,6 @@ void RandomizerArchipelago::connectionUpdate() {
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
-    if (syncing) {
-        syncing = false;
-        for (const check_t& lCheck : *checks) {
-            if (dsq->continuity.getFlag(lCheck.flag)) {
-                activateCheck(lCheck.id);
-            }
-        }
-    }
     try {
         std::lock_guard<std::mutex> lock(apMutex);
         apClient->poll();
@@ -368,6 +360,14 @@ void RandomizerArchipelago::update(){
         showText("Disconnected from server. Trying to reconnect.");
     }
     if (inGame) {
+        if (syncing) {
+            syncing = false;
+            for (const check_t& lCheck : *checks) {
+                if (dsq->continuity.getFlag(lCheck.flag)) {
+                    activateCheck(lCheck.id);
+                }
+            }
+        }
         if (avatar->isEntityDead()) {
             if (!deathLinkPause) {
                 deathLinkPause = true;
@@ -418,6 +418,7 @@ void RandomizerArchipelago::endingGame() {
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
     connectionUpdate();
+    syncing = !aNewGame;
 }
 
 /**
