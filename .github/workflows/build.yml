@@ -6,7 +6,7 @@ on: [push]
 
 jobs:
   build-windows:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
@@ -14,33 +14,41 @@ jobs:
         uses: actions/checkout@v4
       - run: git submodule update --init
       - run: echo "Checkout done."
-      - run: echo "Instaling development package..."
-      - run: sudo apt-get update
-      - run: sudo apt-get install g++-mingw-w64-i686 gcc-mingw-w64-i686 build-essential mingw-w64 cmake
-      - run: sudo update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
-      - run: echo "Developpement package installed..."
+      - name: Installing MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          update: true
+      - run: echo "Installing dependencies..."
+      - shell: msys2 {0}
+        run: |
+          pacman -Syu --noconfirm
+          pacman -Sy --noconfirm --needed base-devel mingw-w64-i686-toolchain
+          pacman -Sy --noconfirm mingw32/mingw-w64-i686-cmake
       - run: echo "Compiling..."
-      - run: |
-          mkdir ${{ github.workspace }}/build
-          cd ${{ github.workspace }}/build
-          cmake -DCMAKE_TOOLCHAIN_FILE=../docker_windows_compilation/i686-w64-mingw32.cmake -DAQUARIA_USE_SDL2=1 ..
+      - shell: msys2 {0}
+        run: |
+          mkdir build
+          cd build
+          /mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -DOPENSSL_TOOLCHAIN="" -G "Unix Makefiles" ..
           make VERBOSE=1
+          cd ..
       - run: echo "Compiling done."
       - run: echo "Packaging..."
-      - run: |
-          cd ${{ github.workspace }}
+      - shell: msys2 {0}
+        run: |
           mkdir aquaria_randomizer
-          cp -p ${{ github.workspace }}/build/aquaria_randomizer.exe aquaria_randomizer/
+          cp -p build/aquaria_randomizer.exe aquaria_randomizer/
           cp -rp files aquaria_randomizer/override
-          cp ${{ github.workspace }}/ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
-          cp -r ${{ github.workspace }}/ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
-          cp -r ${{ github.workspace }}/usersettings.xml aquaria_randomizer/
-          cp -r ${{ github.workspace }}/cacert.pem aquaria_randomizer/
+          cp ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
+          cp -r ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
+          cp -r usersettings.xml aquaria_randomizer/
+          cp -r cacert.pem aquaria_randomizer/
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
           name: Release-Windows-artefact
-          path: ${{ github.workspace }}/aquaria_randomizer
+          path: aquaria_randomizer
           retention-days: 1
   build-ubuntu:
     runs-on: ubuntu-latest
