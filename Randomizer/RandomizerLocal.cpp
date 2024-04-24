@@ -22,8 +22,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
         version = lJsonData["version"];
-        lUid = lJsonData["uid"];
-        setUid(std::to_string(lUid));
+        setUid(lJsonData["uid"]);
         lAquarianTranslated = lJsonData["aquarianTranslate"];
         skipFirstVision = lJsonData["skipFirstVision"];
         setIsAquarianTranslated(lAquarianTranslated);

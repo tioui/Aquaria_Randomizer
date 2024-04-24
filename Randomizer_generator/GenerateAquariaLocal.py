@@ -361,7 +361,7 @@ def generate_json(options: Dict) -> str:
     multiworld: MultiWorld = generate_aquaria_multiworld(options)
     values = {
         "version": 1,
-        "uid": multiworld.seed,
+        "uid": str(multiworld.seed),
         "aquarianTranslate": bool(options["aquarianTranslate"]),
         "secretsNeeded": bool(options["secretsNeeded"]),
         "bigBossesToBeat": options["bigBossesToBeat"],
