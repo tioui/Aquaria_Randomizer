@@ -20,10 +20,7 @@
         </select></p>
         <p>*À noter que randomiser tous les ingrédients peut rendre la création de recette difficile.
             (par exemple, si les Plant Leaf sont échangés avec les Red Bulb).</p>
-        <p><label for="randomizeDishes">Randomiser les repas:</label> <select id="randomizeDishes" name="randomizeDishes">
-            <option value="0">Aucune randomisation de repas</option>
-            <option value="1" selected="selected">Randomiser les repas**</option>
-        </select></p>
+		<p><label for="randomizeDishes">Randomiser les repas**:</label> <input type="checkbox" id="randomizeDishes" name="randomizeDishes" value="1"></p>
         <p>**À noter que les repas ne peuvent pas apparaître sans avoir été préalablement apris par des checks.</p>
         <p><label for="randomizeTurtles">Randomisation des tortues de transport:</label> <select id="randomizeTurtles" name="randomizeTurtles">
             <option value="0">Ne pas randomiser les tortues de transport</option>

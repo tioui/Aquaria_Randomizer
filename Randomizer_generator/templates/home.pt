@@ -19,10 +19,7 @@
         </select></p>
         <p>*Note that randomizing every ingredient can make recipe difficult to make
             (for example, if Plant Leaf is swap with Red Bulb).</p>
-        <p><label for="randomizeDishes">Dish randomization:</label> <select id="randomizeDishes" name="randomizeDishes">
-            <option value="0">No dish randomization</option>
-            <option value="1" selected="selected">Randomize dish drop**</option>
-        </select></p>
+		<p><label for="randomizeDishes">Randomize dishes**:</label> <input type="checkbox" id="randomizeDishes" name="randomizeDishes" value="1"></p>
         <p>**Note that dish drop only work when the dish recipe has been learned from checks.</p>
         <p><label for="randomizeTurtles">Randomize transportation turtles:</label> <select id="randomizeTurtles" name="randomizeTurtles">
             <option value="0">No</option>

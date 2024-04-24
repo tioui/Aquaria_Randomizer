@@ -363,10 +363,10 @@ def generate_json(options: Dict) -> str:
         "version": 1,
         "uid": multiworld.seed,
         "aquarianTranslate": bool(options["aquarianTranslate"]),
-        "secretsNeeded": options["secretsNeeded"],
+        "secretsNeeded": bool(options["secretsNeeded"]),
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
-        "skipFirstVision": options["skipFirstVision"],
+        "skipFirstVision": bool(options["skipFirstVision"]),
         "ingredientReplacement": [i for i in range(76)],
         "checksReplacement": [i for i in range(218)],
     }
@@ -399,16 +399,16 @@ def view_generation(request) -> Response:
     if request.method == "POST":
         options = {
             "aquarianTranslate": False,
-            "secretsNeeded": False,
+            "secretsNeeded": 0,
             "bigBossesToBeat": 0,
             "miniBossesToBeat": 0,
             "skipFirstVision": False,
             "randomizeIngredients": 0,
-            "randomizeDishes": 0,
+            "randomizeDishes": False,
             "randomizeTurtles": 0,
-            "earlyEnergyForm": 0,
+            "earlyEnergyForm": 1,
             "excludeHardItem": 0,
-            "lightNeededInDarkPlaces": 0,
+            "lightNeededInDarkPlaces": 1,
             "bindSongNeededForBulbUnderRock": 0,
         }
         for key, value in request.POST.items():
