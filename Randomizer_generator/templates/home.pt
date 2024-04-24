@@ -31,7 +31,7 @@
         </select></p>
 		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
-		<p><label for="secretNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretNeeded" name="secretNeeded" value="1"></p>
+		<p><label for="secretsNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>
         <p><label for="miniBossesToBeat">Mini boss to beat to access the Creator:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
             <option value="0" selected="selected">No mini boss necessary</option>
             <option value="1">1</option>
@@ -414,7 +414,7 @@
         </div>
 
         <p>&nbsp</p>
-        <p>Le générateur en français est <a href="index_fr.html">ici</a>.</p>
+        <p>Le générateur en français est <a href="/fr">ici</a>.</p>
     </div>
 
 

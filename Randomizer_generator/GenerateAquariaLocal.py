@@ -284,7 +284,7 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.dish_randomizer = {1: DishRandomizer(1)}
     else:
         arguments.dish_randomizer = {1: DishRandomizer(0)}
-    if "secretNeeded" in options and options["secretNeeded"]:
+    if "secretsNeeded" in options and options["secretsNeeded"]:
         arguments.objective = {1: Objective(1)}
     else:
         arguments.objective = {1: Objective(0)}
@@ -362,8 +362,8 @@ def generate_json(options: Dict) -> str:
     values = {
         "version": 1,
         "uid": multiworld.seed,
-        "aquarianTranslate": options["aquarianTranslate"],
-        "secretNeeded": options["secretNeeded"],
+        "aquarianTranslate": bool(options["aquarianTranslate"]),
+        "secretsNeeded": options["secretsNeeded"],
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
         "skipFirstVision": options["skipFirstVision"],
@@ -389,6 +389,9 @@ def view_home_page(request) -> Response:
     """Return the home page view."""
     return render_to_response("templates/home.pt", {}, request)
 
+def view_home_page_fr(request) -> Response:
+    """Return the home page view.n french"""
+    return render_to_response("templates/home_fr.pt", {}, request)
 
 def view_generation(request) -> Response:
     """Return a json download Response"""
@@ -396,7 +399,7 @@ def view_generation(request) -> Response:
     if request.method == "POST":
         options = {
             "aquarianTranslate": False,
-            "secretNeeded": False,
+            "secretsNeeded": False,
             "bigBossesToBeat": 0,
             "miniBossesToBeat": 0,
             "skipFirstVision": False,
@@ -426,8 +429,10 @@ if __name__ == '__main__':
     with Configurator() as config:
         config.include("pyramid_chameleon")
         config.add_route('home', '/')
+        config.add_route('homefr', '/fr')
         config.add_route('generation', '/generation')
         config.add_view(view_home_page, route_name='home')
+        config.add_view(view_home_page_fr, route_name='homefr')
         config.add_view(view_generation, route_name='generation')
         config.add_static_view(name='static', path='static_assets')
         app = config.make_wsgi_app()

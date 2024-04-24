@@ -277,9 +277,9 @@ protected:
     void showText(const std::string &aText, float aX = 0.0, float aY = 500.0);
 
     /**
-     * All secret needed for goal achievement
+     * All secrets needed for goal achievement
      */
-    bool secretNeeded;
+    bool secretsNeeded;
 
     /**
      * Number of big bosses to kill

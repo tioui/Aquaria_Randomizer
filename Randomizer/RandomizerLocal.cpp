@@ -27,7 +27,10 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         lAquarianTranslated = lJsonData["aquarianTranslate"];
         skipFirstVision = lJsonData["skipFirstVision"];
         setIsAquarianTranslated(lAquarianTranslated);
-        secretNeeded = lJsonData["secretNeeded"]; // ToDo
+        secretsNeeded = lJsonData["secretsNeeded"];
+        bigBossesToKill = lJsonData["bigBossesToBeat"];
+        miniBossesToKill = lJsonData["miniBossesToBeat"];
+        skipFirstVision = lJsonData["skipFirstVision"];
         for (int lElement : lJsonData["ingredientReplacement"]) {
             ingredientReplacement->push_back(lElement);
         }

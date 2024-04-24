@@ -27,7 +27,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     hasRoomInfo = false;
     hasSlotInfo = false;
     syncing = true;
-    secretNeeded = false;
+    secretsNeeded = false;
     deathLink = false;
     backupMessages = new std::queue<std::string>();
     currentQuickMessageTime = 0;
@@ -196,7 +196,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     lAquarianTranslated = aJsonText["aquarianTranslate"];
     setIsAquarianTranslated(lAquarianTranslated);
     if (aJsonText.contains("secret_needed")) // ToDo To remove after tests
-        secretNeeded = aJsonText["secret_needed"];
+        secretsNeeded = aJsonText["secret_needed"];
     if (aJsonText.contains("minibosses_to_kill")) // ToDo To remove after tests
         miniBossesToKill = aJsonText["minibosses_to_kill"];
     if (aJsonText.contains("bigbosses_to_kill")) // ToDo To remove after tests
@@ -402,7 +402,7 @@ void RandomizerArchipelago::update(){
  */
 void RandomizerArchipelago::endingGame() {
     if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
-        (!secretNeeded || (secretsFound() == 3))) {
+        (!secretsNeeded || (secretsFound() == 3))) {
         std::lock_guard<std::mutex> lock(apMutex);
         apClient->StatusUpdate(APClient::ClientStatus::GOAL);
     } else {

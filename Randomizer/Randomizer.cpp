@@ -22,11 +22,15 @@ Randomizer::Randomizer() {
     inGame = false;
     errorMessage = "";
     skipFirstVision = false;
+    isAquarianTranslated = false;
+    secretsNeeded = false;
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
     nextMessages = new std::queue<randomessage_t>();
     currentMessageTime = 0;
+    miniBossesToKill = 0;
+    bigBossesToKill = 0;
     initialiseChecks();
     initialiseIngredients();
     initialiseCollectibles();
@@ -1059,7 +1063,7 @@ bool Randomizer::accessFinalBoss() {
     return dsq->continuity.hasLi() and dsq->continuity.hasSong(SONG_DUALFORM) and
            dsq->continuity.hasSong(SONG_ENERGYFORM) and dsq->continuity.hasSong(SONG_SUNFORM)
            and dsq->continuity.hasSong(SONG_BIND) and miniBossCount() >= miniBossesToKill and
-           bigBossCount() >= bigBossesToKill and (!secretNeeded || (secretsFound() == 3));
+           bigBossCount() >= bigBossesToKill and (!secretsNeeded || (secretsFound() == 3));
 }
 
 void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
@@ -1092,7 +1096,7 @@ void Randomizer::showHintFinalBoss() {
     }
     showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
     showHint(bigBossCount(), bigBossesToKill, "big bosses beaten");
-    if (secretNeeded) {
+    if (secretsNeeded) {
         showHint(secretsFound(), 3, "secret memories founded");
     }
 }
