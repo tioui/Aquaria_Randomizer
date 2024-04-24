@@ -411,7 +411,7 @@
         </div>
 
         <p>&nbsp</p>
-        <p>The english generator is <a href="index.html">here</a>.</p>
+        <p>The english generator is <a href="/">here</a>.</p>
     </div>
 
     <script src="${request.static_url('static_assets/scripts/generator.js')}"></script>
