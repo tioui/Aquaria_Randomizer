@@ -24,8 +24,8 @@
         <p>**À noter que les repas ne peuvent pas apparaître sans avoir été préalablement apris par des checks.</p>
         <p><label for="randomizeTurtles">Randomisation des tortues de transport:</label> <select id="randomizeTurtles" name="randomizeTurtles">
             <option value="0">Ne pas randomiser les tortues de transport</option>
-            <option value="1">Toutes les tortues, sauf celle avant le créateur</option>
-            <option value="2" selected="selected">Toutes les tortues de transport</option>
+            <option value="1">Toutes les tortues de transport</option>
+            <option value="2" selected="selected">Toutes les tortues, sauf celle avant le créateur</option>
         </select></p>
 		<p><label for="earlyEnergyForm">Placer la forme de l'énergie tôt dans le jeu:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="aquarianTranslate">Traduire les écritures Aquarienne:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
