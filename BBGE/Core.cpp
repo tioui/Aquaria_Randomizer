@@ -5167,6 +5167,8 @@ void Core::setupFileAccess()
         vfs.Mount(_appImageDir.c_str(), "");
     }
 
+    vfs.Mount("randomizer_files", "");
+
     vfs.Mount("override", "");
 
 	if(_extraDataDir.length())

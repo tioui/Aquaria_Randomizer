@@ -70,9 +70,4 @@ void RandomizerLocal::activateCheck(std::string aCheck) {
 
 }
 
-/**
- * Lunched at each game loop iteration
- */
-void RandomizerLocal::update(){
-}
 
