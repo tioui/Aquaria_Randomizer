@@ -53,19 +53,19 @@ RandomizerLocal::~RandomizerLocal() {
 /**
  * Activate a randomizer check
  * @param aCheck The check to activate
- * Todo: Put the location index in the continuity flags instead of the item index (after the first walkthrough
  */
 void RandomizerLocal::activateCheck(std::string aCheck) {
     int lCheckIndex =getCheckIndex(aCheck);
     int lItemIndex = checksReplacement->at(lCheckIndex);
 
-    check_t *lCheck = getCheckByIndex(lItemIndex);
-    if (dsq->continuity.getFlag(lCheck->flag)) {
+    check_t *lLocationCheck = getCheckByIndex(lCheckIndex);
+    check_t *lItemCheck = getCheckByIndex(lItemIndex);
+    if (dsq->continuity.getFlag(lLocationCheck->flag)) {
         dsq->screenMessage("Check already obtained.");
     } else {
-        dsq->continuity.setFlag(lCheck->flag, 1);
+        dsq->continuity.setFlag(lLocationCheck->flag, 1);
 
-        receivingItem(lCheck->item, lCheck->count);
+        receivingItem(lItemCheck->item, lItemCheck->count);
     }
 
 }
