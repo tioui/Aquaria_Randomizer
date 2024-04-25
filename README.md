@@ -1,9 +1,6 @@
 ﻿Aquaria Randomizer
 ==================
 
-> [!WARNING]
-> Warning: this project is presently in beta.
-
 This repository is a clone of the Aquaria game repository
 (https://github.com/AquariaOSE/Aquaria) and has been modified to be used as
 a Randomizer.
