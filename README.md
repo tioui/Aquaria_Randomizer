@@ -11,49 +11,20 @@ a Randomizer.
 Generating a local randomize JSON file
 --------------------------------------
 
-An HTML page that can generate randomize JSON file can be found in the `Randomizer_generator/local` directory.
-
-Alternatively, you can use the online generator [here](https://tioui.com/aquaria_randomizer_generator/).
-
+You can generate a local JSON randomizer file at this address: https://aquariarandomizer.tioui.com/
 
 What are the current checks managed by the randomizer
 -----------------------------------------------------
 
-For now, every Sing bulbs, Mithalas urns, Sunken City crates, collectable treasures
-and the third cooking plate are the checks.
+Every songs (and forms), li, transportation turtles, sing bulbs, Mithalas urns, Sunken City crates,
+collectable treasures and the third cooking plate are the checks.
 
 > [!NOTE] 
 > Note that every recipes in the randomizer can be found in the checks.
 
 > [!NOTE]
-> Also note that it is not possible to get a recipe from anywhere other than
+> Also note that it is not possible to get a new recipe from anywhere other than
 the checks.
-
-
-What it the modifications done to the game
-------------------------------------------
-
-- Recipes have to be learned by check before being cooked (by getting dishes).
-- Every dishes can be learn in checks.
-- Before you get the recipe, ennemies drop ingredients used to create the dish.
-- Once you get the recipe, ennemies can drop the dish.
-- In the veil bottom area, a swamp cake (close to the health upgrade) and a special bulb (in the spirit path) has been swapped.
-- In the Naija's home, there is Fish Oil on the ground instead of Hearty Soup.
-- Adaptation make to checks so that every dishes are found in checks:
-  - Adding a poisonloaf in the empty urn in the cathedral right area
-  - Replacing the 4 fleas in an urn of the cathedral right area by poison soup
-  - Replacing Plant Leafs in a bulb by a Buttery Sea Loaf in the Open Water Top Left area.
-  - Replacing the open water skeleton path bulb with 2 baby deep shrimp in it with a Tasty Cake.
-  - Replacing the cathedral left area urn with a toad in it with a Rainbow Soup.
-  - Replacing the abyss right area bulb with an Hatchet Fish in it with a Tasty roll.
-  - Replacing a bulb containing Plant leafs in the Sun Temple by a Magic Soup.
-  - Replacing the content of 2 bulbs that contain 2 Plant Leafs in Mithalas City by Vedha Sea Crisp.
-  - Replacing one of the icecream bulb in the Ice cave by a Veggie Ice Cream.
-  - Replacing one of the icecream bulb in the Ice cave by a Berry Ice Cream.
-  - Replacing the Crab Cake bulb in a bulb of the Bubble Cave by a Cold Soup.
-  - Replacing a bulb containing 2 plant leafs by a Zuuna's Perogi.
-  - Replacing a 4 Plant Leafs bulb in the final boss area by a Vedha's Cure-All
-  - Replacing a 4 Eel Oils bulb in the final boss area by a Loaf Of Life.
 
 Compilation
 ===========
@@ -87,33 +58,116 @@ The executable will be the `aquaria_randomizer` executable.
 Compilation on Windows
 ----------------------
 
-Good luck with that! If you succeed, tell me. I accept pull request.
+I use Mingw32 include in MSYS2 to compile. Here is the commands:
+
+```bash
+mkdir build
+cd build
+/mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -DOPENSSL_TOOLCHAIN="" -G "Unix Makefiles" ..
+make
+```
 
 Compilation on Mac OS X
 -----------------------
 
 I don't know. If you succeed, tell me. I accept pull request.
 
-Installation
-============
+Installation and execution
+==========================
 
-To install the executable you need an official Aquaria installation directory. The installation will
-occured in the official Aquaria directory.
+Windows
+-------
 
-1. Copy the `aquaria_randomizer` executable in the official Aquaria directory (in the root);
+First, you should copy the original Aquaria folder game. The randomizer will possibly modify the game so that
+the original game will stop working. Copying the folder will guarantee that the original game keeps on working.
+Also, in Windows, the save files are stored in the Aquaria folder. So copying the Aquaria folder for every Multiworld
+game you play will make sure that every game has their own save game.
+
+Then you need to transfert those files and directories of the current repository in the Aquaria game folder:
+- aquaria_randomizer.exe -> from your build folder (see above)
+- OpenAL32.dll -> from `ExternalLibs/AL/lib/win32
+- wrap_oal.dll -> `ExternalLibs/AL/lib/win32`
+- override -> by renaming the `files` folder
+- SDL2.dll -> from `ExternalLibs/SDL2/lib/win32`
+- usersettings.xml
+- cacert.pem
+
+If there is a conflict between file in the original game folder and the unzipped files, you should override
+the original files with the one of the unzipped randomizer.
+
+Finally, to launch the randomizer, you must use the command line interface (you can open the command line interface
+by writing `cmd` in the address bar of the Windows file explorer).
+
+Here is the command line to use to start the local randomizer (with a randomized json file):
+
 ```bash
-cp -p build/aquaria_randomizer /path/to/aquaria/dir/
+aquaria_randomizer.exe aquaria_randomized.json
 ```
-2. Copy the `files` directory as an `override`
+
+Here is the command line to use to start the multiworld randomizer (with an Archipelago server):
+
 ```bash
-cp -rp files /path/to/aquaria/dir/override
+aquaria_randomizer.exe --name YourName --server theServer:thePort
 ```
 
-You should now be able to launch the randomizer with
+or, if the room has a password:
+
 ```bash
-cd /path/to/aquaria/dir
+aquaria_randomizer.exe  --name YourName --server theServer:thePort --password thePassword
+```
+
+Linux
+-----
+
+First, you should copy the original Aquaria folder game. The randomizer will possibly modify the game so that
+the original game will stop working. Copying the folder will guarantee that the original game keeps on working.
+
+Untar the Aquaria randomizer release and copy all extracted files in the Aquaria game folder. The extracted
+files are those:
+- aquaria_randomizer -> from your build folder (see above)
+- override (directory) -> by renaming the `files` folder
+- usersettings.xml
+- cacert.pem
+
+If there is a conflict between file in the original game folder and the extracted files, you should override
+the original files with the one of the extracted randomizer files.
+
+Then, you should use your system package manager to install liblua5, libogg, libvorbis, libopenal and libsdl2.
+On Debian base system (like Ubuntu), you can use the following command:
+
+```bash
+sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
+```
+
+Also, if there is some `.so` files in the Aquaria original game folder (`libgcc_s.so.1`, `libopenal.so.1`,
+`libSDL-1.2.so.0` and `libstdc++.so.6`), you should remove them from the Aquaria Randomizer game folder. Those are
+old libraries that will not work on the recent build of the randomizer.
+
+To launch the local randomizer (with a randomized json file), just launch in command line:
+
+```bash
 ./aquaria_randomizer aquaria_randomized.json
 ```
+
+To launch the multiworld randomizer (with an archipelago server), just launch in command line:
+
+```bash
+./aquaria_randomizer --name YourName --server theServer:thePort
+```
+
+or, if the room has a password:
+
+```bash
+./aquaria_randomizer --name YourName --server theServer:thePort --password thePassword
+```
+
+Note: If you have a permission denied error when using the command line, you can use this command line to be
+sure that your executable has executable permission:
+
+```bash
+chmod +x aquaria_randomizer
+```
+
 
 Original Aquaria README
 =======================
