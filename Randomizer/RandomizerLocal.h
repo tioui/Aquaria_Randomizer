@@ -31,10 +31,6 @@ public:
     */
     void activateCheck(std::string check) override;
 
-    /**
-     * Lunched at each game loop iteration
-     */
-    void update() override;
 
 private:
 
