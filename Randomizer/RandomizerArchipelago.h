@@ -1,8 +1,8 @@
 /**
- * @author      : Louis Marchand (prog@tioui.com)
+ * @author      : Louis M (prog@tioui.com)
  * @created     : Fri, 08 Mar 2024 19:51:46 +0000
  * @license     : MIT
- * Class that encapsulate local randomization functionalities
+ * Class that encapsulate Archipelago server randomization
  */
 
 #include "Randomizer.h"

@@ -67,6 +67,22 @@ SET(PNGDIR ${EXTLIBDIR}/glpng/png)
 
 ################ Look for external libraries
 
+### wxWidgets
+
+if(NOT RANDOMIZER_NO_LAUNCHER)
+    find_package(wxWidgets COMPONENTS core base REQUIRED)
+    IF(NOT wxWidgets_FOUND)
+        message(STATUS "wxWidgets not found. Will compile without the launcher.")
+        ADD_DEFINITIONS(-DRANDOMIZER_NO_LAUNCHER=1)
+    ELSE(NOT wxWidgets_FOUND)
+        include( "${wxWidgets_USE_FILE}" )
+    ENDIF(NOT wxWidgets_FOUND)
+ELSE(NOT RANDOMIZER_NO_LAUNCHER)
+    message(STATUS "Will compile without the launcher.")
+    ADD_DEFINITIONS(-DRANDOMIZER_NO_LAUNCHER=1)
+ENDIF(NOT RANDOMIZER_NO_LAUNCHER)
+
+
 ### zlib
 
 OPTION(AQUARIA_INTERNAL_ZLIB "Always use included zlib library" TRUE)
@@ -432,7 +448,12 @@ SET(RANDOMIZER_SRCS
         ${RANDOMIZERDIR}/RandomizerArchipelago.cpp
 )
 
-
+IF(wxWidgets_FOUND)
+    SET(RANDOMIZER_SRCS ${RANDOMIZER_SRCS}
+			${RANDOMIZERDIR}/RandomizerLauncherFrame.cpp
+            ${RANDOMIZERDIR}/RandomizerLauncher.cpp
+    )
+ENDIF(wxWidgets_FOUND)
 
 # Main game source code for Aquaria, minus engine and other middleware...
 SET(AQUARIA_SRCS
@@ -825,6 +846,10 @@ ENDIF()
 
 SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${SDL_LIBRARY})
 SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${OPENAL_LIBRARY})
+
+IF(wxWidgets_FOUND)
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${wxWidgets_LIBRARIES})
+ENDIF(wxWidgets_FOUND)
 
 IF(ZLIB_FOUND)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${ZLIB_LIBRARIES})

@@ -31,7 +31,7 @@ Compilation on Linux Ubuntu
 
 First, be sure to have the needed libraries
 ```bash
-sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev git
+sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev git
 ```
 
 Then, clone the project with the --recursive flag some place

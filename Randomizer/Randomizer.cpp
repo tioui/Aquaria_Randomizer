@@ -1,6 +1,6 @@
 /**
- * @author      : Louis Marchand (prog@tioui.com)
- * @created     : mercredi jan 10, 2024 16:08:04 EST
+ * @author      : Louis M (prog@tioui.com)
+ * @created     : Wed, jan 10, 2024 16:08:04 EST
  * @license     : MIT
  * Class that encapsulate every randomization functionalities
  */

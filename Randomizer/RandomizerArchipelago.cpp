@@ -1,6 +1,9 @@
-//
-// Created by louis on 24-03-08.
-//
+/**
+ * @author      : Louis M (prog@tioui.com)
+ * @created     : Fri, 08 Mar 2024 19:51:46 +0000
+ * @license     : MIT
+ * Class that encapsulate Archipelago server randomization
+*/
 #include "RandomizerArchipelago.h"
 #include "subprojects/apclientpp/apclient.hpp"
 #include "subprojects/apclientpp/apuuid.hpp"
