@@ -5169,8 +5169,6 @@ void Core::setupFileAccess()
 
     vfs.Mount("randomizer_files", "");
 
-    vfs.Mount("override", "");
-
 	if(_extraDataDir.length())
 	{
 		debugLog("Mounting extra data dir: " + _extraDataDir);
