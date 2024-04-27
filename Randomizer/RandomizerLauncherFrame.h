@@ -12,6 +12,8 @@
 #include <wx/wx.h>
 #include "Randomizer.h"
 
+class wxNotebook;
+
 class RandomizerLauncherFrame : public wxFrame
 {
 public:
@@ -27,21 +29,29 @@ public:
      */
     Randomizer *getRandomizer();
 
-protected:
 private:
+    /**
+     * Creating a new page in a notebook with a text as title and a function to build the included panel.
+     *
+     * @param notebook The notebook to add the page.
+     * @param text The text to used as tab title
+     * @param panelBuilder A function that will be used to create the panel inside the page.
+     */
+    void createPage(wxNotebook *notebook, const wxString& text,
+                    const std::function<wxWindow * (wxWindow *)>& panelBuilder);
     /**
      * Build the panel used in the Local randomizer tab
      *
      * @param parent The panel to put the local panel in.
      */
-    void buildLocalPanel(wxWindow *parent);
+    wxWindow *buildLocalPanel(wxWindow *parent);
 
     /**
      * Build the panel used in the archipelago randomizer tab
      *
      * @param parent The panel to put the archipelago panel in.
      */
-    void buildArchipelagoPanel(wxWindow *parent);
+    wxWindow *buildArchipelagoPanel(wxWindow *parent);
 
     /**
      * The randomizer that is generated after clicking the OK button.
@@ -49,19 +59,9 @@ private:
     Randomizer *randomizer;
 
     /**
-     * The panel of the local randomizer tab.
-     */
-    wxPanel* localPanel;
-
-    /**
      * The text box used to get the json file path of the local randomizer.
      */
     wxTextCtrl *jsonFileText;
-
-    /**
-     * The panel of the archipelago randomizer tab.
-     */
-    wxPanel* archipelagoPanel;
 
     /**
      * Text box used to enter the slot name for the archipelago randomizer.
@@ -123,6 +123,13 @@ private:
      * @return The text view of the field .
      */
     wxTextCtrl *createField(wxWindow *parent, std::string labelText);
+
+    /**
+     * Add a visual space of a certain size in the parent layout
+     * @param parent The panel to add the space
+     * @param size the size of the space
+     */
+    void includeSpace(wxWindow *parent, int size);
 };
 
 

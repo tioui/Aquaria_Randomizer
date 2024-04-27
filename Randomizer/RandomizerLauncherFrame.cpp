@@ -15,22 +15,41 @@
  */
 RandomizerLauncherFrame::RandomizerLauncherFrame() : wxFrame(nullptr, wxID_ANY, "Aquaria Randomizer Launcher") {
     randomizer = nullptr;
-    wxPanel* lPanel = new wxPanel(this, wxID_ANY);
-    lPanel->SetMinSize(wxSize(800, 600));
-    wxNotebook *lNotebook = new wxNotebook(lPanel, wxID_ANY);
-    buildLocalPanel(lNotebook);
-    lNotebook->AddPage(localPanel, L"Local randomizer");
-    buildArchipelagoPanel(lNotebook);
-    lNotebook->AddPage(archipelagoPanel, L"Archipelago randomizer");
-    wxBoxSizer* lPanelSizer = new wxBoxSizer(wxHORIZONTAL);
-    lPanelSizer->Add(lNotebook, 1, wxEXPAND);
-    lPanel->SetSizer(lPanelSizer);
+    wxPanel* lMainPanel = new wxPanel(this, wxID_ANY);
+    lMainPanel->SetMinSize(wxSize(600, 300));
+    wxNotebook *lNotebook = new wxNotebook(lMainPanel, wxID_ANY);
+    createPage(lNotebook, L"Local randomizer", [this](wxWindow *aParent) -> wxWindow*{
+        return buildLocalPanel(aParent);
+    });
+    createPage(lNotebook, L"Archipelago randomizer", [this](wxWindow *aParent) -> wxWindow*{
+        return buildArchipelagoPanel(aParent);
+    });
+    wxBoxSizer* lMainPanelSizer = new wxBoxSizer(wxHORIZONTAL);
+    lMainPanelSizer->Add(lNotebook, 1, wxEXPAND);
+    lMainPanel->SetSizer(lMainPanelSizer);
     wxBoxSizer* lTopSizer = new wxBoxSizer(wxHORIZONTAL);
     lTopSizer->SetMinSize(250, 100);
-    lTopSizer->Add(lPanel, 1, wxEXPAND);
+    lTopSizer->Add(lMainPanel, 1, wxEXPAND);
     SetSizerAndFit(lTopSizer);
     openFileDialog = new wxFileDialog(this, ("Open JSON file"),wxEmptyString, wxEmptyString,
                                       "JSON files (*.json)|*.json", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+}
+
+/**
+ * Creating a new page in a notebook with a text as title and a function to build the included panel.
+ *
+ * @param aNotebook The notebook to add the page.
+ * @param aText The text to used as tab title
+ * @param aPanelBuilder A function that will be used to create the panel inside the page.
+ */
+void RandomizerLauncherFrame::createPage(wxNotebook *aNotebook, const wxString& aText,
+                                         const std::function<wxWindow * (wxWindow *)>& aPanelBuilder) {
+    wxPanel* lPanel = new wxPanel(aNotebook, wxID_ANY);
+    lPanel->SetSizer(new wxBoxSizer(wxHORIZONTAL));
+    includeSpace(lPanel, 10);
+    lPanel->GetSizer()->Add(aPanelBuilder(lPanel), 1, wxEXPAND);
+    includeSpace(lPanel, 10);
+    aNotebook->AddPage(lPanel, aText);
 }
 
 /**
@@ -38,19 +57,22 @@ RandomizerLauncherFrame::RandomizerLauncherFrame() : wxFrame(nullptr, wxID_ANY, 
  *
  * @param aParent The panel to put the local panel in.
  */
-void RandomizerLauncherFrame::buildLocalPanel(wxWindow *aParent){
-    localPanel = new wxPanel(aParent,wxID_ANY);
+wxWindow *RandomizerLauncherFrame::buildLocalPanel(wxWindow *aParent){
+    wxPanel *lLocalPanel = new wxPanel(aParent,wxID_ANY);
     wxBoxSizer* lPanelSizer = new wxBoxSizer(wxVERTICAL);
-    localPanel->SetSizer(lPanelSizer);
-    jsonFileText = createField(localPanel, "Json file:");
-    wxButton *lOpenFileDialog = new wxButton(localPanel, wxID_FILE, "Select File...");
+    lLocalPanel->SetSizer(lPanelSizer);
+    includeSpace(lLocalPanel, 10);
+    jsonFileText = createField(lLocalPanel, "Json file: ");
+    wxButton *lOpenFileDialog = new wxButton(lLocalPanel, wxID_FILE, "Select File...");
     lPanelSizer->Add(lOpenFileDialog, 0, wxALIGN_RIGHT);
     lOpenFileDialog->Bind(wxEVT_BUTTON, [this](wxCommandEvent &aEvent){
         OnOpenJsonFileButton(aEvent);
     }, wxID_FILE);
-    createButtonPanel(localPanel, [&](wxCommandEvent &aEvent){
+    includeSpace(lLocalPanel, 10);
+    createButtonPanel(lLocalPanel, [&](wxCommandEvent &aEvent){
         OnLocalOKButton(aEvent);
     });
+    return lLocalPanel;
 }
 
 /**
@@ -125,17 +147,30 @@ void RandomizerLauncherFrame::OnLocalOKButton(wxCommandEvent& aEvent) {
  *
  * @param aParent The panel to put the archipelago panel in.
  */
-void RandomizerLauncherFrame::buildArchipelagoPanel(wxWindow *aParent){
-    archipelagoPanel = new wxPanel(aParent,wxID_ANY);
+wxWindow *RandomizerLauncherFrame::buildArchipelagoPanel(wxWindow *aParent){
+    wxPanel *lArchipelagoPanel = new wxPanel(aParent,wxID_ANY);
     wxBoxSizer* lPanelSizer = new wxBoxSizer(wxVERTICAL);
-    archipelagoPanel->SetSizer(lPanelSizer);
-
-    serverText = createField(archipelagoPanel, "Server host (including port): ");
-    slotNameText = createField(archipelagoPanel, "Slot name: ");
-    passwordText = createField(archipelagoPanel, "Server password (leave empty if none): ");
-    createButtonPanel(archipelagoPanel,[this](wxCommandEvent & aEvent){
+    lArchipelagoPanel->SetSizer(lPanelSizer);
+    includeSpace(lArchipelagoPanel, 10);
+    serverText = createField(lArchipelagoPanel, "Server host (including port): ");
+    includeSpace(lArchipelagoPanel, 10);
+    slotNameText = createField(lArchipelagoPanel, "Slot name: ");
+    includeSpace(lArchipelagoPanel, 10);
+    passwordText = createField(lArchipelagoPanel, "Server password (leave empty if none): ");
+    includeSpace(lArchipelagoPanel, 10);
+    createButtonPanel(lArchipelagoPanel,[this](wxCommandEvent & aEvent){
         OnArchipelagoOKButton(aEvent);
     });
+    return lArchipelagoPanel;
+}
+
+/**
+ * Add a visual space of a certain size in the parent layout
+ * @param aParent The panel to add the space
+ * @param aSize the size of the space
+ */
+void RandomizerLauncherFrame::includeSpace(wxWindow *aParent, int aSize) {
+    aParent->GetSizer()->Add(new wxPanel(aParent,wxID_ANY, wxDefaultPosition, wxSize(aSize, aSize)));
 }
 
 /**
