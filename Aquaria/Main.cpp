@@ -60,6 +60,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         const char *envPath = 0;
         const char *appImageDir = 0;
 
+        if (argc > 0) {
+            const char* lFiledir = "randomizer_files";
+            struct stat sb;
+            if (stat(lFiledir, &sb) != 0) {
+                std::cerr << "The randomizer_files directory is not found. Closing." << std::endl;
+                exit(1);
+            }
+        }
+
         if (argc >= 5 && strncmp(argv[1], "--name", 6) == 0 && strncmp(argv[3], "--server", 8) == 0) {
             std::string lPassword;
             bool lSelfMessage = false;
@@ -82,7 +91,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             wxApp::SetInstance( lLauncher );
             wxEntryStart( argc, argv );
             wxTheApp->CallOnInit();
-            wxTheApp->OnRun();
+            if (!lLauncher->hasError()) {
+                wxTheApp->OnRun();
+            }
             lRandomizer = lLauncher->getRandomizer();
             wxTheApp->OnExit();
             wxEntryCleanup();

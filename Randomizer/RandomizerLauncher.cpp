@@ -13,10 +13,25 @@
  * @return Always true
  */
 bool RandomizerLauncher::OnInit() {
-    frame = new RandomizerLauncherFrame();
-    frame->Refresh();
-    frame->Show();
+    const char* lFiledir = "randomizer_files";
+    struct stat sb;
+    if (stat(lFiledir, &sb) != 0) {
+        error = true;
+        messageBox("Randomizer error", "The randomizer_files directory is not found. Closing.");
+    } else {
+        error = false;
+        frame = new RandomizerLauncherFrame();
+        frame->Show();
+    }
     return true;
+}
+
+/**
+ * True if an error occured at creation
+ * @return true if an error occured.
+ */
+bool RandomizerLauncher::hasError() const {
+    return error;
 }
 
 /**

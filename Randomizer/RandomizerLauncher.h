@@ -26,11 +26,22 @@ public:
      * @return The randomizer
      */
     Randomizer *getRandomizer();
+
+    /**
+     * True if an error occured at creation
+     * @return true if an error occured.
+     */
+    bool hasError() const;
 private:
     /**
      * The Window of the launcher.
      */
     RandomizerLauncherFrame *frame;
+
+    /**
+     * True if an error occured at creation
+     */
+    bool error;
 };
 
 
