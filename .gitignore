@@ -18,6 +18,7 @@
 temp/*
 build*
 bin/*
+ExternalLibs/*
 
 *.patch
 *.diff

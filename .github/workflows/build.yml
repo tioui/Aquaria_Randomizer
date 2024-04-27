@@ -25,6 +25,13 @@ jobs:
           pacman -Syu --noconfirm
           pacman -Sy --noconfirm --needed base-devel mingw-w64-i686-toolchain
           pacman -Sy --noconfirm mingw32/mingw-w64-i686-cmake
+          pacman -Sy --noconfirm p7zip
+          mkdir ExternalLibs/wxWidgets
+          pushd  ExternalLibs/wxWidgets
+          wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.4/wxMSW-3.2.4_gcc1320_Dev.7z
+          wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.4/wxWidgets-3.2.4-headers.7z
+          p7zip -d wx*.7z
+          popd
       - run: echo "Compiling..."
       - shell: msys2 {0}
         run: |
