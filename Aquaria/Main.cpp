@@ -60,7 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         const char *envPath = 0;
         const char *appImageDir = 0;
 
-        if (argc > 0) {
+        if (argc > 1) {
             const char* lFiledir = "randomizer_files";
             struct stat sb;
             if (stat(lFiledir, &sb) != 0) {

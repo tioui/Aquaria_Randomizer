@@ -91,7 +91,7 @@ wxTextCtrl *RandomizerLauncherFrame::createField(wxWindow *aParent, std::string 
     wxStaticText * lTextLabel = new wxStaticText(lFieldPanel, wxID_ANY, aLabelText);
     lfieldPanelSizer->Add(lTextLabel, 0, wxALIGN_CENTER_VERTICAL);
     wxTextCtrl *lText = new wxTextCtrl(lFieldPanel, wxID_EDIT);
-    lfieldPanelSizer->Add(lText, 1, wxALIGN_RIGHT);
+    lfieldPanelSizer->Add(lText, 1, wxALIGN_TOP);
     return lText;
 }
 
@@ -108,10 +108,10 @@ void RandomizerLauncherFrame::createButtonPanel(wxWindow *aParent,std::function<
     aParent->GetSizer()->Add(lButtonPanel, 0, wxCENTER);
 
     wxButton *lOk = new wxButton(lButtonPanel, wxID_OK, "OK");
-    lButtonPanelSizer->Add(lOk, 0, wxALIGN_RIGHT);
+    lButtonPanelSizer->Add(lOk, 0, wxALIGN_TOP);
     lOk->Bind(wxEVT_BUTTON, aHandler, wxID_OK);
     wxButton *lCancel = new wxButton(lButtonPanel, wxID_CANCEL, "Cancel");
-    lButtonPanelSizer->Add(lCancel, 0, wxALIGN_RIGHT);
+    lButtonPanelSizer->Add(lCancel, 0, wxALIGN_TOP);
     lCancel->Bind(wxEVT_BUTTON, [this](wxCommandEvent &aEvent){
         OnCancelButton(aEvent);
     }, wxID_CANCEL);
