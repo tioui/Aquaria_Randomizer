@@ -58,7 +58,7 @@ const int MAX_INGREDIENT_AMOUNT = 8;
 const float MENUSELECTDELAY		= 0.2;
 
 const int VERSION_MAJOR			= 1;
-const int VERSION_MINOR			= 0;
+const int VERSION_MINOR			= 1;
 const int VERSION_REVISION		= 1;
 
 const int VERSION_BETA			= 0;
