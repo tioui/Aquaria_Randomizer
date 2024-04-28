@@ -19,3 +19,6 @@
 [submodule "Randomizer/subprojects/openssl"]
 	path = Randomizer/subprojects/openssl
 	url = https://github.com/openssl/openssl.git
+[submodule "Randomizer/subprojects/wxWidgets"]
+	path = Randomizer/subprojects/wxWidgets
+	url = https://github.com/wxWidgets/wxWidgets.git
