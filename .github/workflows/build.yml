@@ -12,7 +12,7 @@ jobs:
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: git submodule update --init
+      - run: git submodule update --init --recursive
       - run: echo "Checkout done."
       - name: Installing MSYS2
         uses: msys2/setup-msys2@v2
