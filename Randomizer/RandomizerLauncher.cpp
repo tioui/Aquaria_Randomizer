@@ -16,7 +16,7 @@
  */
 bool RandomizerLauncher::OnInit() {
     std::filesystem::path lFilepath = std::string("randomizer_files");
-    if (!std::filesystem::is_directory(lFilepath)) {
+    if ((!getenv("APPIMAGE")) && !std::filesystem::is_directory(lFilepath)) {
         error = true;
         messageBox("Randomizer error", "The randomizer_files directory is not found. Closing.");
     } else {
