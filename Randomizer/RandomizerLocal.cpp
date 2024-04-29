@@ -1,6 +1,6 @@
 /**
- * @author      : Louis Marchand (prog@tioui.com)
- * @created     : mercredi feb 15, 2024 21:30:04 EST
+ * @author      : Louis M (prog@tioui.com)
+ * @created     : Wed feb 15, 2024 21:30:04 EST
  * @license     : MIT
  * Class that encapsulate local randomization functionalities
 */
@@ -37,7 +37,9 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
             checksReplacement->push_back(lElement);
         }
     } catch (nlohmann::json::parse_error& lException){
-        setError("Randomizer JSON file " + aFilename + " is not valid.");
+        setError("Randomizer JSON file " + aFilename + " is not valid: " + lException.what());
+    } catch (nlohmann::json::type_error & lException){
+        setError("Randomizer JSON file " + aFilename + " has invalid value type: " +  + lException.what());
     }
 
 }

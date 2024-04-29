@@ -12,7 +12,7 @@ jobs:
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: git submodule update --init
+      - run: git submodule update --init --recursive
       - run: echo "Checkout done."
       - name: Installing MSYS2
         uses: msys2/setup-msys2@v2
@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          /mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -DOPENSSL_TOOLCHAIN="" -G "Unix Makefiles" ..
+          /mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -G "Unix Makefiles" ..
           make VERBOSE=1
           cd ..
       - run: echo "Compiling done."
@@ -61,7 +61,7 @@ jobs:
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
       - run: sudo apt-get update
-      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2 libwxgtk3.0-gtk3-dev
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
