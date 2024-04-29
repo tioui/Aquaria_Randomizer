@@ -7,15 +7,16 @@
 
 #include "RandomizerLauncher.h"
 
+#include <filesystem>
+
 /**
  * Initialisation of the Launcher
  *
  * @return Always true
  */
 bool RandomizerLauncher::OnInit() {
-    const char* lFiledir = "randomizer_files";
-    struct stat sb;
-    if (stat(lFiledir, &sb) != 0) {
+    std::filesystem::path lFilepath = std::string("randomizer_files");
+    if (!std::filesystem::is_directory(lFilepath)) {
         error = true;
         messageBox("Randomizer error", "The randomizer_files directory is not found. Closing.");
     } else {
