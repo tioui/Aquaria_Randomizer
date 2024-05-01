@@ -82,7 +82,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 lSelfMessage =  strncmp(argv[lMessageIndex + 1], "self", 4) == 0;
             }
             lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage);
-        } else if (argc > 1) {
+        } else if (argc == 2) {
             lRandomizer = new RandomizerLocal(argv[1]);
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
