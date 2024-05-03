@@ -198,14 +198,24 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     }
     lAquarianTranslated = aJsonText["aquarianTranslate"];
     setIsAquarianTranslated(lAquarianTranslated);
-    if (aJsonText.contains("secret_needed")) // ToDo To remove after tests
+    if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
-    if (aJsonText.contains("minibosses_to_kill")) // ToDo To remove after tests
+    }
+    if (aJsonText.contains("minibosses_to_kill")) {
         miniBossesToKill = aJsonText["minibosses_to_kill"];
-    if (aJsonText.contains("bigbosses_to_kill")) // ToDo To remove after tests
+    }
+    if (aJsonText.contains("bigbosses_to_kill")) {
         bigBossesToKill = aJsonText["bigbosses_to_kill"];
-    if (aJsonText.contains("skip_first_vision")) // ToDo To remove after tests
+    }
+    if (aJsonText.contains("skip_first_vision")) {
         skipFirstVision = aJsonText["skip_first_vision"];
+    }
+    if (aJsonText.contains("unconfine_home_water_energy_door")) {
+        unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
+    }
+    if (aJsonText.contains("unconfine_home_water_transturtle")) {
+        unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
+    }
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
