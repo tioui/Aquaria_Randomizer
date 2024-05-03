@@ -1249,7 +1249,7 @@ enum NagType
 class DSQ : public Core
 {
 public:
-	DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir, const std::string& userDataSubFolder, Randomizer * randomizer);
+	DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir, const std::string& userDataSubFolder, Randomizer * randomizer, const std::string& uid);
 	~DSQ();
 
 	void init();
@@ -1642,6 +1642,10 @@ protected:
 	void onRender();
 
 	void modifyDt(float &dt);
+
+private:
+
+    std::string uid;
 };
 
 extern DSQ *dsq;

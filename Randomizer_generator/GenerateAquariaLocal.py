@@ -23,7 +23,7 @@ from worlds.aquaria import AquariaWorld
 from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, DishRandomizer, Objective, \
                                    TurtleRandomizer, EarlyEnergyForm, BigBossesToBeat, MiniBossesToBeat, \
                                    SkipFirstVision, ExcludeHardOrHiddenLocation, LightNeededToGetToDarkPlaces, \
-                                   BindSongNeededToGetUnderRockBulb
+                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater
 
 # Every checks (association Location -> Item)
 checks: Dict[int, int] = {
@@ -321,6 +321,10 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.bind_song_needed_to_get_under_rock_bulb = {1: BindSongNeededToGetUnderRockBulb(0)}
     else:
         arguments.bind_song_needed_to_get_under_rock_bulb = {1: BindSongNeededToGetUnderRockBulb(0)}
+    if "unconfineHomeWater" in options and 0 <= options["unconfineHomeWater"] <= 3:
+        arguments.unconfine_home_water ={1: UnconfineHomeWater(options["unconfineHomeWater"])}
+    else:
+        arguments.unconfine_home_water ={1: UnconfineHomeWater(0)}
 
 
 def generate_aquaria_multiworld(options: Dict) -> MultiWorld:
@@ -368,6 +372,8 @@ def generate_json(options: Dict) -> str:
         "miniBossesToBeat": options["miniBossesToBeat"],
         "skipFirstVision": bool(options["skipFirstVision"]),
         "ingredientReplacement": [i for i in range(76)],
+        "unconfineHomeWaterEnergyDoor": options["unconfineHomeWater"] in [1, 3],
+        "unconfineHomeWaterTransturtle": options["unconfineHomeWater"] in [2, 3],
         "checksReplacement": [i for i in range(218)],
     }
     if isinstance(multiworld.worlds[1], AquariaWorld):
@@ -410,6 +416,7 @@ def view_generation(request) -> Response:
             "excludeHardItem": 0,
             "lightNeededInDarkPlaces": 1,
             "bindSongNeededForBulbUnderRock": 0,
+            "unconfineHomeWater": 0,
         }
         for key, value in request.POST.items():
             try:

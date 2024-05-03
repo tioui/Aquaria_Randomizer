@@ -133,7 +133,10 @@ void RandomizerLauncherFrame::OnOpenJsonFileButton(wxCommandEvent& aEvent) {
  * @param aEvent Information about the event (Not used)
  */
 void RandomizerLauncherFrame::OnLocalOKButton(wxCommandEvent& aEvent) {
-    RandomizerLocal *lRandomizer = new RandomizerLocal(jsonFileText->GetValue().ToStdString());
+    const char* test = (const char *) jsonFileText->GetValue().mb_str();
+    wxCSConv cs( wxFONTENCODING_UTF8 );
+    std::string lFilename = std::string(cs.cWC2MB(jsonFileText->GetValue().wc_str()));
+    RandomizerLocal *lRandomizer = new RandomizerLocal(lFilename);
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {

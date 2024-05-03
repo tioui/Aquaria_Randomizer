@@ -59,7 +59,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         std::string appImageExtraDir = "";
         const char *envPath = 0;
         const char *appImageDir = 0;
-
+        setlocale(LC_ALL, ".UTF8");
         if ((!getenv("APPIMAGE")) && argc > 1) {
             std::filesystem::path lFilepath = std::string("randomizer_files");
             if (!std::filesystem::is_directory(lFilepath)) {
@@ -82,7 +82,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 lSelfMessage =  strncmp(argv[lMessageIndex + 1], "self", 4) == 0;
             }
             lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage);
-        } else if (argc > 1) {
+        } else if (argc == 2) {
             lRandomizer = new RandomizerLocal(argv[1]);
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
@@ -142,7 +142,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         if (lRandomizer){
             DSQ dsql(dsqParam, extraDataDir, appImageExtraDir,
-                     "Aquaria_Randomizer_" + lRandomizer->getUid(), lRandomizer);
+                     "Aquaria_Randomizer", lRandomizer, lRandomizer->getUid());
             dsql.init();
             dsql.main();
             dsql.shutdown();

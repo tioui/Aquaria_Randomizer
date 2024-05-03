@@ -157,11 +157,13 @@ Vector savesz;
 	#define APPNAME "Aquaria_Randomizer"
 #endif
 
-DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir, const std::string& userDataSubFolder, Randomizer *aRandomizer)
+DSQ::DSQ(const std::string& fileSystem, const std::string& extraDataDir, const std::string& appImageDir,
+         const std::string& userDataSubFolder, Randomizer *aRandomizer, const std::string& aUid)
 : Core(fileSystem, extraDataDir, appImageDir, LR_MAX, APPNAME, PARTICLE_AMOUNT_DEFAULT, userDataSubFolder)
 {
 	dsq = this;
 
+    uid = aUid;
 	randomizer = aRandomizer;
 
 	cutscene_bg = 0;
@@ -936,8 +938,8 @@ This build is not yet final, and as such there are a couple things lacking. They
 #endif
 
 	createDir(getUserDataFolder());
-	createDir(getUserDataFolder() + "/save");
-	createDir(getUserDataFolder() + "/_mods");
+	createDir(getUserDataFolder() + "/save_" + uid);
+	//createDir(getUserDataFolder() + "/_mods");
 	createDir(getUserDataFolder() + "/screenshots");
 
 	addStateInstance(game = new Game);
@@ -4903,7 +4905,7 @@ void DSQ::clearEntities()
 
 std::string DSQ::getSaveDirectory()
 {
-	return getUserDataFolder() + "/save";
+	return getUserDataFolder() + "/save_" + uid;
 }
 
 ParticleEffect *DSQ::spawnParticleEffect(const std::string &name, Vector position, float rotz, float t, int layer, float follow)
