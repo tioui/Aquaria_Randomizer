@@ -59,7 +59,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         std::string appImageExtraDir = "";
         const char *envPath = 0;
         const char *appImageDir = 0;
-
+        setlocale(LC_ALL, ".UTF8");
         if ((!getenv("APPIMAGE")) && argc > 1) {
             std::filesystem::path lFilepath = std::string("randomizer_files");
             if (!std::filesystem::is_directory(lFilepath)) {

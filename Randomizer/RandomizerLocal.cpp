@@ -17,7 +17,7 @@
 RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     checksReplacement = new std::vector<int>();
     long long int lUid = 0;
-    std::ifstream lFile(aFilename);
+    std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
