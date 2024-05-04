@@ -7935,9 +7935,10 @@ void Game::toggleHelpScreen(bool on, const std::string &label)
 #endif
 
 		// !!! FIXME: this is such a hack.
+#ifdef BBGE_BUILD_ACHIEVEMENTS_INTERNAL
 		data += "\n\n" + dsq->continuity.stringBank.get(2032) + "\n\n";
 		dsq->continuity.statsAndAchievements->appendStringData(data);
-
+#endif
 		helpBG = new Quad;
 		//helpBG->color = 0;
 		helpBG->setTexture("brick");

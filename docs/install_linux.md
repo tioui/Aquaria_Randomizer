@@ -14,11 +14,11 @@ Untar the Aquaria randomizer release and copy all extracted files in the Aquaria
 
 If there is a conflict between file in the original game folder and the extracted files, you should override the original files with the one of the extracted randomizer files.
 
-Then, you should use your system package manager to install liblua5, libogg, libvorbis, libopenal and libsdl2.
+Then, you should use your system package manager to install liblua5, libogg, libvorbis, libopenal libsdl2 and libwxWidgets.
 On Debian base system (like Ubuntu), you can use the following command:
 
 ```bash
-sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
+sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev
 ```
 
 Once the randomizer is installed you can launch it. For details about the execution options, see: [execution_linux.md](execution_linux.md)
