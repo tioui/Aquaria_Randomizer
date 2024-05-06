@@ -12,7 +12,7 @@ jobs:
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: git submodule update --init
+      - run: git submodule update --init --recursive
       - run: echo "Checkout done."
       - name: Installing MSYS2
         uses: msys2/setup-msys2@v2
@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          /mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -DOPENSSL_TOOLCHAIN="" -G "Unix Makefiles" ..
+          /mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -G "Unix Makefiles" ..
           make VERBOSE=1
           cd ..
       - run: echo "Compiling done."
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir aquaria_randomizer
           cp -p build/aquaria_randomizer.exe aquaria_randomizer/
-          cp -rp files aquaria_randomizer/override
+          cp -rp files aquaria_randomizer/randomizer_files
           cp ExternalLibs/SDL2/lib/win32/SDL2.dll aquaria_randomizer/
           cp -r ExternalLibs/AL/lib/win32/*.dll aquaria_randomizer/
           cp -r usersettings.xml aquaria_randomizer/
@@ -61,13 +61,13 @@ jobs:
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
       - run: sudo apt-get update
-      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2 libwxgtk3.0-gtk3-dev
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
-          cmake -DAQUARIA_USE_SDL2=1 ..
+          cmake -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release ..
           make
       - run: echo "Compiling done."
       - run: echo "Build standard packaging."
@@ -75,14 +75,14 @@ jobs:
           cd ${{ github.workspace }}
           mkdir Releases
           cp -p build/aquaria_randomizer Releases/
-          cp -rp files Releases/override
+          cp -rp files Releases/randomizer_files
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
           cd Releases/
-          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer override usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
           rm usersettings.xml
           rm aquaria_randomizer
-          rm -rf override
+          rm -rf randomizer_files
       - run: echo "Build appimage packaging."
       - run: |
           cd ${{ github.workspace }}/appimage
@@ -92,7 +92,7 @@ jobs:
           wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
-          cp -rp ../files AppDir/usr/bin/override
+          cp -rp ../files AppDir/usr/bin/randomizer_files
           cp -rp ../usersettings.xml AppDir/usr/bin/
           cp -rp ../cacert.pem AppDir/usr/bin/
           ./appimagetool-x86_64.AppImage AppDir/

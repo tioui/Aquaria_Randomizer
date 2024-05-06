@@ -26,7 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../Randomizer/RandomizerLocal.h"
 #include "../Randomizer/RandomizerArchipelago.h"
 
-
+#ifndef RANDOMIZER_NO_LAUNCHER
+#include "../Randomizer/RandomizerLauncher.h"
+#endif
 
 
 #ifdef BBGE_BUILD_WINDOWS
@@ -55,8 +57,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         std::string dsqParam = ""; // fileSystem
         std::string extraDataDir = "";
         std::string appImageExtraDir = "";
-		const char *envPath = 0;
+        const char *envPath = 0;
         const char *appImageDir = 0;
+        setlocale(LC_ALL, ".UTF8");
+        if ((!getenv("APPIMAGE")) && argc > 1) {
+            std::filesystem::path lFilepath = std::string("randomizer_files");
+            if (!std::filesystem::is_directory(lFilepath)) {
+                std::cerr << "The randomizer_files directory is not found. Closing." << std::endl;
+                exit(1);
+            }
+        }
 
         if (argc >= 5 && strncmp(argv[1], "--name", 6) == 0 && strncmp(argv[3], "--server", 8) == 0) {
             std::string lPassword;
@@ -72,12 +82,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 lSelfMessage =  strncmp(argv[lMessageIndex + 1], "self", 4) == 0;
             }
             lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage);
-        } else if (argc > 1) {
+        } else if (argc == 2) {
             lRandomizer = new RandomizerLocal(argv[1]);
+#ifndef RANDOMIZER_NO_LAUNCHER
+        } else if (argc == 1) {
+            RandomizerLauncher *lLauncher = new RandomizerLauncher();
+            wxApp::SetInstance( lLauncher );
+            wxEntryStart( argc, argv );
+            wxTheApp->CallOnInit();
+            if (!lLauncher->hasError()) {
+                wxTheApp->OnRun();
+            }
+            lRandomizer = lLauncher->getRandomizer();
+            wxTheApp->OnExit();
+            wxEntryCleanup();
+            if (lRandomizer == nullptr) {
+                exit(0);
+            }
+#endif
         } else {
+#ifndef RANDOMIZER_NO_LAUNCHER
+            std::cerr << "Usage: " << argv[0] << std::endl;
+#endif
             std::cerr << "Usage: " << argv[0] << " <local filename>" << std::endl;
             std::cerr << "Usage: " << argv[0] <<
-                " --name <Name> --server <ServerIP:Port>[ --password <Room password>][ --message self]" << std::endl;
+                      " --name <Name> --server <ServerIP:Port>[ --password <Room password>][ --message self]" << std::endl;
             std::cerr.flush();
             exit(1);
         }
@@ -86,6 +115,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             std::cerr.flush();
             exit(1);
         }
+
 
 #ifdef BBGE_BUILD_UNIX
 		envPath = getenv("AQUARIA_DATA_PATH");
@@ -112,7 +142,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         if (lRandomizer){
             DSQ dsql(dsqParam, extraDataDir, appImageExtraDir,
-                     "Aquaria_Randomizer_" + lRandomizer->getUid(), lRandomizer);
+                     "Aquaria_Randomizer", lRandomizer, lRandomizer->getUid());
             dsql.init();
             dsql.main();
             dsql.shutdown();

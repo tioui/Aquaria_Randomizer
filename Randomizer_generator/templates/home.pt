@@ -26,6 +26,12 @@
             <option value="1">Randomize every Transportation turtles</option>
             <option value="2" selected="selected">Yes, but not the last one, before the Creator</option>
         </select></p>
+        <p><label for="unconfineHomeWater">Unconfine the home water:</label> <select id="unconfineHomeWater" name="unconfineHomeWater">
+                    <option value="0" selected="selected">No</option>
+                    <option value="1">Via the energy door</option>
+                    <option value="2">Via the transportation turtle</option>
+                    <option value="3">Via both</option>
+                </select></p>
 		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
 		<p><label for="secretsNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>

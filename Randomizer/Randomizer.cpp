@@ -1,6 +1,6 @@
 /**
- * @author      : Louis Marchand (prog@tioui.com)
- * @created     : mercredi jan 10, 2024 16:08:04 EST
+ * @author      : Louis M (prog@tioui.com)
+ * @created     : Wed, jan 10, 2024 16:08:04 EST
  * @license     : MIT
  * Class that encapsulate every randomization functionalities
  */
@@ -22,6 +22,8 @@ Randomizer::Randomizer() {
     inGame = false;
     errorMessage = "";
     skipFirstVision = false;
+    unconfine_home_water_transturtle = false;
+    unconfine_home_water_energy_door = false;
     isAquarianTranslated = false;
     secretsNeeded = false;
     checks = new std::vector<check_t>();
@@ -964,6 +966,12 @@ void Randomizer::onLoad(bool aNewGame){
     }
     if (skipFirstVision) {
         dsq->continuity.setFlag(FLAG_VISION_ENERGYTEMPLE, 1);
+    }
+    if (unconfine_home_water_transturtle) {
+        dsq->continuity.setFlag(FLAG_MAINAREA_TRANSTURTLE_ROCK, 1);
+    }
+    if (unconfine_home_water_energy_door) {
+        dsq->continuity.setFlag(FLAG_ENERGYSLOT_MAINAREA, 1);
     }
     inGame = true;
 }

@@ -27,6 +27,12 @@
             <option value="1">Toutes les tortues de transport</option>
             <option value="2" selected="selected">Toutes les tortues, sauf celle avant le créateur</option>
         </select></p>
+        <p><label for="unconfineHomeWater">Déconfiner les eaux connues:</label> <select id="unconfineHomeWater" name="unconfineHomeWater">
+                    <option value="0" selected="selected">Non</option>
+                    <option value="1">Via la porte d'énergie</option>
+                    <option value="2">Via la tortue de transportation</option>
+                    <option value="3">Via les deux sorties</option>
+                </select></p>
 		<p><label for="earlyEnergyForm">Placer la forme de l'énergie tôt dans le jeu:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="aquarianTranslate">Traduire les écritures Aquarienne:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
 		<p><label for="secretsNeeded">Les secrets sont nécessaires pour accéder au créateur:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>

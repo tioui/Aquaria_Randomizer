@@ -5,6 +5,8 @@ This repository is a clone of the Aquaria game repository
 (https://github.com/AquariaOSE/Aquaria) and has been modified to be used as
 a Randomizer.
 
+To play the Aquaria randomizer, you need to own a copy of the original Aquaria game. The game can be bought in almost every online game sellers (GOG, Steam, etc.)
+
 Generating a local randomize JSON file
 --------------------------------------
 
@@ -29,9 +31,12 @@ Compilation
 Compilation on Linux Ubuntu
 ---------------------------
 
-First, be sure to have the needed libraries
+First, be sure to have git to clone the project and the
+development libraries: liblua5, libogg, libvorbis, libopenal,
+libsdl2 and libwxWidgets. For example, with apt (for Debian OS
+including Ubuntu):
 ```bash
-sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev git
+sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev git
 ```
 
 Then, clone the project with the --recursive flag some place
@@ -46,7 +51,7 @@ Then, launch the compilation.
 ```bash
 mkdir build
 cd build
-cmake -DAQUARIA_USE_SDL2=1 ..
+cmake -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release  ..
 make
 ```
 
@@ -60,7 +65,7 @@ I use Mingw32 include in MSYS2 to compile. Here is the commands:
 ```bash
 mkdir build
 cd build
-/mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -DOPENSSL_TOOLCHAIN="" -G "Unix Makefiles" ..
+/mingw32/bin/cmake -DOPENAL_LIBRARY=../ExternalLibs/AL/lib/win32 -DOPENAL_INCLUDE_DIR=../ExternalLibs/AL/inclue -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release -DWIN32_TRUE=1 -DMSYS=1 -G "Unix Makefiles" ..
 make
 ```
 
@@ -75,33 +80,27 @@ Installation and execution
 Windows
 -------
 
-First, you should copy the original Aquaria folder game. The randomizer will possibly modify the game so that
-the original game will stop working. Copying the folder will guarantee that the original game keeps on working.
-Also, in Windows, the save files are stored in the Aquaria folder. So copying the Aquaria folder for every Multiworld
-game you play will make sure that every game has their own save game.
-
-Then you need to transfert those files and directories of the current repository in the Aquaria game folder:
+To install the randomizer, copy those files in the Aquaria original game folder:
 - aquaria_randomizer.exe -> from your build folder (see above)
 - OpenAL32.dll -> from `ExternalLibs/AL/lib/win32
 - wrap_oal.dll -> `ExternalLibs/AL/lib/win32`
-- override -> by renaming the `files` folder
+- randomizer_files -> by renaming the `files` folder
 - SDL2.dll -> from `ExternalLibs/SDL2/lib/win32`
 - usersettings.xml
 - cacert.pem
 
-If there is a conflict between file in the original game folder and the unzipped files, you should override
-the original files with the one of the unzipped randomizer.
+If there is a conflict between file in the original game folder those files, you should override
+the original files with the one from the randomizer randomizer.
 
-Finally, to launch the randomizer, you must use the command line interface (you can open the command line interface
-by writing `cmd` in the address bar of the Windows file explorer).
+You can launch the Randomizer by double-clicking on it. A launcher should appear that let you enter information about the local json file or the Archipelago server connection.
 
-Here is the command line to use to start the local randomizer (with a randomized json file):
+You can also use command lines to launch the randomizer. Here is the command line you should use to start the local randomizer (with a randomized json file):
 
 ```bash
 aquaria_randomizer.exe aquaria_randomized.json
 ```
 
-Here is the command line to use to start the multiworld randomizer (with an Archipelago server):
+Here is the command line you should use to start the multiworld randomizer (with an Archipelago server):
 
 ```bash
 aquaria_randomizer.exe --name YourName --server theServer:thePort
@@ -116,29 +115,26 @@ aquaria_randomizer.exe  --name YourName --server theServer:thePort --password th
 Linux
 -----
 
-First, you should copy the original Aquaria folder game. The randomizer will possibly modify the game so that
-the original game will stop working. Copying the folder will guarantee that the original game keeps on working.
+First, you should copy the original Aquaria folder game. The original game use 4 .so files (libgcc_s.so.1, libopenal.so.1, libSDL-1.2.so.0 and libstdc++.so.6) that are old and will not work with the randomizer. So to keep the original game working, you should copy the game folder elsewhere for the randomizer and remove the 4 .so file.
 
-Untar the Aquaria randomizer release and copy all extracted files in the Aquaria game folder. The extracted
-files are those:
+To install the randomizer, copy those files in the copy of the Aquaria game folder:
 - aquaria_randomizer -> from your build folder (see above)
-- override (directory) -> by renaming the `files` folder
+- randomizer_files (directory) -> by renaming the `files` folder
 - usersettings.xml
 - cacert.pem
 
-If there is a conflict between file in the original game folder and the extracted files, you should override
-the original files with the one of the extracted randomizer files.
+If there is a conflict between file in the original game folder and the files from the randomizer, you should override
+the original files with the one of the randomizer.
 
-Then, you should use your system package manager to install liblua5, libogg, libvorbis, libopenal and libsdl2.
+Then, you should use your system package manager to install liblua5, libogg, libvorbis, libopenal, libsdl2 and libwxWidgets.
 On Debian base system (like Ubuntu), you can use the following command:
 
 ```bash
-sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev
+sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev
 ```
 
-Also, if there is some `.so` files in the Aquaria original game folder (`libgcc_s.so.1`, `libopenal.so.1`,
-`libSDL-1.2.so.0` and `libstdc++.so.6`), you should remove them from the Aquaria Randomizer game folder. Those are
-old libraries that will not work on the recent build of the randomizer.
+If you just launch the aquaria_randomizer (without any command
+line parameters), a launcher will appeat that can be used to enter information about the local json files or the Multiworld Archipelago server.
 
 To launch the local randomizer (with a randomized json file), just launch in command line:
 

@@ -1,6 +1,6 @@
 /**
- * @author      : Louis Marchand (prog@tioui.com)
- * @created     : mercredi feb 15, 2024 21:30:04 EST
+ * @author      : Louis M (prog@tioui.com)
+ * @created     : Wed feb 15, 2024 21:30:04 EST
  * @license     : MIT
  * Class that encapsulate local randomization functionalities
  */
@@ -31,10 +31,6 @@ public:
     */
     void activateCheck(std::string check) override;
 
-    /**
-     * Lunched at each game loop iteration
-     */
-    void update() override;
 
 private:
 

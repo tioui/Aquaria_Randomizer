@@ -235,7 +235,9 @@ void StatsAndAchievements::RunFrame()
 #endif
 
 	if ( !statsValid ) {
-		debugLog("stats not valid");
+#ifdef BBGE_BUILD_ACHIEVEMENTS_INTERNAL
+        debugLog("stats not valid");
+#endif
 		return;
 	}
 
@@ -261,7 +263,9 @@ void StatsAndAchievements::appendStringData(std::string &data)
 {
 	if (!statsValid)
 	{
+#ifdef BBGE_BUILD_ACHIEVEMENTS_INTERNAL
 		data += "(Sorry, achievement data is apparently invalid.)\n\n";
+#endif
 		return;
 	}
 

@@ -40,7 +40,7 @@ OPTION(AQUARIA_USE_SDL2 "Use SDL2" FALSE)
 OPTION(AQUARIA_USE_GLM "Use GLM for matrix math" TRUE)
 
 # No Steamworks SDK for Linux at the moment. Roll our own achievements.
-ADD_DEFINITIONS(-DBBGE_BUILD_ACHIEVEMENTS_INTERNAL=1)
+# ADD_DEFINITIONS(-DBBGE_BUILD_ACHIEVEMENTS_INTERNAL=1)
 
 ### Randomizer include directories
 SET(RANDOMIZERDIR ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer)
@@ -62,20 +62,34 @@ SET(LUADIR ${EXTLIBDIR}/lua-5.1.4)
 SET(LUASRCDIR ${LUADIR}/src)
 SET(LIBOGGDIR ${EXTLIBDIR}/libogg-1.3.0)
 SET(LIBVORBISDIR ${EXTLIBDIR}/libvorbis-1.3.3)
-SET(ZLIBDIR ${EXTLIBDIR}/glpng/zlib)
 SET(PNGDIR ${EXTLIBDIR}/glpng/png)
 
 ################ Look for external libraries
 
-### zlib
+### wxWidgets
 
-OPTION(AQUARIA_INTERNAL_ZLIB "Always use included zlib library" TRUE)
-if(NOT AQUARIA_INTERNAL_ZLIB)
-    find_package(ZLIB)
-endif(NOT AQUARIA_INTERNAL_ZLIB)
-if(NOT ZLIB_FOUND)
-    set(ZLIB_INCLUDE_DIRS ${ZLIBDIR})
-endif(NOT ZLIB_FOUND)
+if(NOT RANDOMIZER_NO_LAUNCHER)
+	ADD_DEFINITIONS(-DwxDEBUG_LEVEL=0)
+	IF(WIN32_TRUE)
+		set(WX_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/wxWidgets/include" CACHE PATH "wxWidgets include directory" FORCE)
+		set(WXMSW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/wxWidgets/lib/wx/include/msw-unicode-static-3.2" CACHE PATH "wxWidgets setup include directory" FORCE)
+		set(wxWidgets_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/wxWidgets/lib/libwx_mswu-3.2.a" CACHE PATH "wxWidgets library" FORCE)
+		set(wxWidgets_PNG_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/wxWidgets/lib/libwxpng-3.2.a" CACHE PATH "wxWidgets png library" FORCE)
+		set(wxWidgets_FOUND 1)
+	ELSE(WIN32_TRUE)
+		find_package(wxWidgets COMPONENTS core base)
+		IF(NOT wxWidgets_FOUND)
+			message(STATUS "wxWidgets not found. Will compile without the launcher.")
+			ADD_DEFINITIONS(-DRANDOMIZER_NO_LAUNCHER=1)
+		ELSE(NOT wxWidgets_FOUND)
+			include( "${wxWidgets_USE_FILE}" )
+		ENDIF(NOT wxWidgets_FOUND)
+	ENDIF(WIN32_TRUE)
+ELSE(NOT RANDOMIZER_NO_LAUNCHER)
+    message(STATUS "Will compile without the launcher.")
+    ADD_DEFINITIONS(-DRANDOMIZER_NO_LAUNCHER=1)
+ENDIF(NOT RANDOMIZER_NO_LAUNCHER)
+
 
 ### PNG
 
@@ -85,7 +99,7 @@ if(NOT AQUARIA_INTERNAL_PNG)
 endif(NOT AQUARIA_INTERNAL_PNG)
 if(NOT PNG_FOUND)
     set(PNG_PNG_INCLUDE_DIR ${PNGDIR})
-    set(PNG_INCLUDE_DIR ${PNG_PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS})
+    set(PNG_INCLUDE_DIR ${PNG_PNG_INCLUDE_DIR} ) #${ZLIB_INCLUDE_DIRS})
 endif(NOT PNG_FOUND)
 
 FILE(STRINGS "${PNG_PNG_INCLUDE_DIR}/png.h" PNG_H REGEX "^#define PNG_LIBPNG_VER[^0-9]*[0-9]+")
@@ -280,7 +294,7 @@ INCLUDE_DIRECTORIES(${WEBSOCKETPPDIR})
 INCLUDE_DIRECTORIES(${WSWRAPDIR})
 INCLUDE_DIRECTORIES(${BBGEDIR})
 INCLUDE_DIRECTORIES(${BBGEDIR}/GL)
-INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIRS})
+#INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${SRCDIR})
 INCLUDE_DIRECTORIES(${FTGL_INCLUDE_DIRS})
@@ -292,33 +306,38 @@ INCLUDE_DIRECTORIES(${OPENAL_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${TINYXML2_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EXTLIBDIR})
 
+IF(WIN32_TRUE)
+	INCLUDE_DIRECTORIES(${WX_INCLUDE_DIR})
+	INCLUDE_DIRECTORIES(${WXMSW_INCLUDE_DIR})
+ENDIF(WIN32_TRUE)
+
 
 
 # Custom build ID: e.g. "-custom", " (my very own build)"
 SET(AQUARIA_CUSTOM_BUILD_ID "" CACHE STRING
     "Text to append to the Aquaria version ID on the title screen.")
 if (NOT(AQUARIA_CUSTOM_BUILD_ID STREQUAL ""))
-  ADD_DEFINITIONS("-DAQUARIA_CUSTOM_BUILD_ID=\"${AQUARIA_CUSTOM_BUILD_ID}\"")
+  #ADD_DEFINITIONS("-DAQUARIA_CUSTOM_BUILD_ID=\"${AQUARIA_CUSTOM_BUILD_ID}\"")
 endif (NOT(AQUARIA_CUSTOM_BUILD_ID STREQUAL ""))
 
 # Custom version string override (displayed as-is instead of "Aquaria vx.x.x ..." on the title screen
 SET(AQUARIA_OVERRIDE_VERSION_STRING "" CACHE STRING
     "Text to display instead of the Aquaria version ID on the title screen. (Overrides AQUARIA_CUSTOM_BUILD_ID as well)")
 if (NOT(AQUARIA_OVERRIDE_VERSION_STRING STREQUAL ""))
-  ADD_DEFINITIONS("-DAQUARIA_OVERRIDE_VERSION_STRING=\"${AQUARIA_OVERRIDE_VERSION_STRING}\"")
+  #ADD_DEFINITIONS("-DAQUARIA_OVERRIDE_VERSION_STRING=\"${AQUARIA_OVERRIDE_VERSION_STRING}\"")
 endif (NOT(AQUARIA_OVERRIDE_VERSION_STRING STREQUAL ""))
 
 # Custom data directories
 SET(AQUARIA_DEFAULT_DATA_DIR "" CACHE STRING
     "Default data directory (for package maintainers only)")
 if(NOT(AQUARIA_DEFAULT_DATA_DIR STREQUAL ""))
-    ADD_DEFINITIONS("-DAQUARIA_DEFAULT_DATA_DIR=\"${AQUARIA_DEFAULT_DATA_DIR}\"")
+    #ADD_DEFINITIONS("-DAQUARIA_DEFAULT_DATA_DIR=\"${AQUARIA_DEFAULT_DATA_DIR}\"")
 endif(NOT(AQUARIA_DEFAULT_DATA_DIR STREQUAL ""))
 
 SET(AQUARIA_EXTRA_DATA_DIR "" CACHE STRING
     "Extra data directory, overrides files from default datadir (for package maintainers only)")
 if(NOT(AQUARIA_EXTRA_DATA_DIR STREQUAL ""))
-    ADD_DEFINITIONS("-DAQUARIA_EXTRA_DATA_DIR=\"${AQUARIA_EXTRA_DATA_DIR}\"")
+    #ADD_DEFINITIONS("-DAQUARIA_EXTRA_DATA_DIR=\"${AQUARIA_EXTRA_DATA_DIR}\"")
 endif(NOT(AQUARIA_EXTRA_DATA_DIR STREQUAL ""))
 
 # Aquaria/BBGE specific defines...
@@ -353,8 +372,8 @@ IF(AQUARIA_DEMO_BUILD)
     message(STATUS "Demo build.")
     ADD_DEFINITIONS(-DAQUARIA_DEMO=1)
 ELSE(AQUARIA_DEMO_BUILD)
-    ADD_DEFINITIONS(-DAQUARIA_BUILD_CONSOLE=1)
-    ADD_DEFINITIONS(-DAQUARIA_BUILD_SCENEEDITOR=1)
+    #ADD_DEFINITIONS(-DAQUARIA_BUILD_CONSOLE=1)
+    #ADD_DEFINITIONS(-DAQUARIA_BUILD_SCENEEDITOR=1)
 ENDIF(AQUARIA_DEMO_BUILD)
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -432,7 +451,12 @@ SET(RANDOMIZER_SRCS
         ${RANDOMIZERDIR}/RandomizerArchipelago.cpp
 )
 
-
+IF(wxWidgets_FOUND)
+    SET(RANDOMIZER_SRCS ${RANDOMIZER_SRCS}
+			${RANDOMIZERDIR}/RandomizerLauncherFrame.cpp
+            ${RANDOMIZERDIR}/RandomizerLauncher.cpp
+    )
+ENDIF(wxWidgets_FOUND)
 
 # Main game source code for Aquaria, minus engine and other middleware...
 SET(AQUARIA_SRCS
@@ -578,19 +602,6 @@ SET(BBGE_SRCS
     ${EXTLIBDIR}/JPS.h
 )
 
-SET(ZLIB_SRCS
-    ${ZLIBDIR}/adler32.c
-    ${ZLIBDIR}/crc32.c
-    ${ZLIBDIR}/compress.c
-    ${ZLIBDIR}/deflate.c
-    ${ZLIBDIR}/inffast.c
-    ${ZLIBDIR}/inflate.c
-    ${ZLIBDIR}/inftrees.c
-    ${ZLIBDIR}/trees.c
-    ${ZLIBDIR}/uncompr.c
-    ${ZLIBDIR}/zutil.c
-)
-
 SET(PNG_SRCS
     ${PNGDIR}/png.c
     ${PNGDIR}/pngerror.c
@@ -654,11 +665,15 @@ SET_SOURCE_FILES_PROPERTIES(
 )
 
 IF(WIN32_TRUE)
-    set(OPENSSL_TOOLCHAIN "i686-w64-mingw32-" CACHE STRING "The toolchain used to compile openssl")
     add_custom_target(
        openssl
-       COMMAND ./Configure mingw no-apps no-docs --cross-compile-prefix=${OPENSSL_TOOLCHAIN} && make
+       COMMAND ./Configure mingw no-apps no-docs && make
        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl
+    )
+	add_custom_target(
+       wxwidgets
+       COMMAND ./configure --enable-monolithic --enable-unicode --disable-shared && make
+       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/wxWidgets
     )
 	SET_SOURCE_FILES_PROPERTIES(
 		${RANDOMIZER_SRCS}
@@ -807,7 +822,6 @@ IF(AQUARIA_USE_VFS)
 ENDIF(AQUARIA_USE_VFS)
 
 IF(WIN32_TRUE)
-
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lwsock32 -L${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl -lssl -lcrypto -lcrypt32 -lws2_32")
 ELSE(WIN32_TRUE)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
@@ -826,11 +840,13 @@ ENDIF()
 SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${SDL_LIBRARY})
 SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${OPENAL_LIBRARY})
 
-IF(ZLIB_FOUND)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${ZLIB_LIBRARIES})
-ELSE(ZLIB_FOUND)
-    SET(OPTIONAL_SRCS ${OPTIONAL_SRCS} ${ZLIB_SRCS})
-ENDIF(ZLIB_FOUND)
+IF(wxWidgets_FOUND)
+		SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${wxWidgets_LIBRARIES})
+		IF(WIN32_TRUE)
+			SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${wxWidgets_PNG_LIBRARIES})
+			SET(LINKER_FLAGS ${LINKER_FLAGS} "-lshlwapi -lcomctl32 -lUxTheme -lOleacc -lversion")
+		ENDIF(WIN32_TRUE)
+ENDIF(wxWidgets_FOUND)
 
 IF(PNG_FOUND)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} ${PNG_LIBRARIES})
@@ -877,10 +893,16 @@ ADD_EXECUTABLE(aquaria_randomizer ${EXETYPE}
     ${OPTIONAL_SRCS}
 )
 
-TARGET_LINK_LIBRARIES(aquaria_randomizer "${OPTIONAL_LIBS}")
+SET(LINKER_FLAGS ${LINKER_FLAGS} "-lz")
+
+TARGET_LINK_LIBRARIES(aquaria_randomizer ${OPTIONAL_LIBS} ${LINKER_FLAGS})
 IF(WIN32_TRUE)
     add_dependencies(aquaria_randomizer openssl)
-    SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -mconsole -lpthread -static -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_")
+	SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "-mconsole -lpthread -static -lmswsock -D__USE_W32_SOCKETS -D_WEBSOCKETPP_CPP11_THREAD_")
+	IF(NOT RANDOMIZER_NO_LAUNCHER)
+		add_dependencies(aquaria_randomizer wxwidgets)
+	ENDIF(NOT RANDOMIZER_NO_LAUNCHER)
+    
 ENDIF(WIN32_TRUE)
 # end of CMakeLists.txt ...
 

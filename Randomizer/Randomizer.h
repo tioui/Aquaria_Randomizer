@@ -1,5 +1,5 @@
 /**
-* @author      : Louis Marchand (prog@tioui.com)
+* @author      : Louis M (prog@tioui.com)
 * @created     : Thu, 25 Jan 2024 17:21:06 +0000
 * @license     : MIT
 * Class that encapsulate every randomization functionalities
@@ -282,6 +282,16 @@ protected:
     bool secretsNeeded;
 
     /**
+     * Unconfine the home water area by opening the energy door to the open water area
+     */
+    bool unconfine_home_water_energy_door;
+
+    /**
+     * Unconfine the home water area by removing the rock to the transportation turtle
+     */
+    bool unconfine_home_water_transturtle;
+
+    /**
      * Number of big bosses to kill
      */
     int bigBossesToKill;
@@ -477,6 +487,10 @@ const int FLAG_TRANSTURTLE_SEAHORSE        = 136;
 const int FLAG_TRANSTURTLE_VEIL02          = 137;
 const int FLAG_TRANSTURTLE_ABYSS03         = 138;
 const int FLAG_TRANSTURTLE_FINALBOSS       = 139;
+
+// Unconfine Home water
+const int FLAG_MAINAREA_TRANSTURTLE_ROCK   = 245;
+const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 
 // Other flags
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
