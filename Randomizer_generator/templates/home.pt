@@ -56,8 +56,7 @@
         </select></p>
 		<p><label for="bindSongNeededForBulbUnderRock">Makes bind song necessary to get under rocks locations:</label> <input type="checkbox" id="bindSongNeededForBulbUnderRock" name="bindSongNeededForBulbUnderRock" value="1"></p>
 		<p><label for="skipFirstVision">Skip the first vision in the verse cave:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
-		<p><label for="excludeHardItem">Exclude hard to get and well hidden locations:</label> <input type="checkbox" id="excludeHardItem" name="excludeHardItem" value="1"></p>
-		<p>*Note that excluded locations can still be obtained, but will have filler items (like simple ingredients).</p>
+		<p><label for="excludeHardItem">No progression items on hard to get and well hidden locations:</label> <input type="checkbox" id="excludeHardItem" name="excludeHardItem" value="1"></p>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Generate...</button>
         </div>
