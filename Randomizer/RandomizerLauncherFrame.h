@@ -79,6 +79,11 @@ private:
     wxTextCtrl *passwordText;
 
     /**
+     * Checkbox used to know if the randomizer should filter message.
+     */
+    wxCheckBox *filterSelf;
+
+    /**
      * File dialog used to select the local randomizer json file.
      */
     wxFileDialog *openFileDialog;
@@ -122,7 +127,25 @@ private:
      * @param labelText The text to put on the label.
      * @return The text view of the field .
      */
-    wxTextCtrl *createField(wxWindow *parent, std::string labelText);
+    wxTextCtrl *createField(wxWindow *parent, const std::string& labelText);
+
+    /**
+     * Create a panel that contain a label and a checkbox.
+     *
+     * @param parent the panel to put the new field panel in.
+     * @param labelText The text to put on the label.
+     * @return The checkbox of the field .
+     */
+    wxCheckBox *createCheckBox(wxWindow *parent, const std::string& labelText);
+
+    /**
+     * Create a panel that contain a label.
+     *
+     * @param parent the panel to put the new field panel in.
+     * @param labelText The text to put on the label.
+     * @return The panel of the field .
+     */
+    wxPanel *prepareFieldPanel(wxWindow *aParent, const std::string& aLabelText);
 
     /**
      * Add a visual space of a certain size in the parent layout

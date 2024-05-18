@@ -9,6 +9,7 @@
 #include "RandomizerLocal.h"
 #include "RandomizerArchipelago.h"
 #include <wx/notebook.h>
+#include <wx/checkbox.h>
 
 /**
  * Initialisation of the window
@@ -76,13 +77,13 @@ wxWindow *RandomizerLauncherFrame::buildLocalPanel(wxWindow *aParent){
 }
 
 /**
- * Create a panel that contain a label and a text view.
+ * Create a panel that contain a label.
  *
- * @param aParent the panel to put the new field panel in.
- * @param aLabelText The text to put on the label.
- * @return The text view of the field .
+ * @param parent the panel to put the new field panel in.
+ * @param labelText The text to put on the label.
+ * @return The panel of the field .
  */
-wxTextCtrl *RandomizerLauncherFrame::createField(wxWindow *aParent, std::string aLabelText) {
+wxPanel *RandomizerLauncherFrame::prepareFieldPanel(wxWindow *aParent, const std::string& aLabelText) {
     wxPanel *lFieldPanel = new wxPanel(aParent,wxID_ANY);
     wxBoxSizer* lfieldPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     lFieldPanel->SetSizer(lfieldPanelSizer);
@@ -90,9 +91,36 @@ wxTextCtrl *RandomizerLauncherFrame::createField(wxWindow *aParent, std::string 
 
     wxStaticText * lTextLabel = new wxStaticText(lFieldPanel, wxID_ANY, aLabelText);
     lfieldPanelSizer->Add(lTextLabel, 0, wxALIGN_CENTER_VERTICAL);
+    return lFieldPanel;
+}
+
+
+/**
+ * Create a panel that contain a label and a text view.
+ *
+ * @param aParent the panel to put the new field panel in.
+ * @param aLabelText The text to put on the label.
+ * @return The text view of the field .
+ */
+wxTextCtrl *RandomizerLauncherFrame::createField(wxWindow *aParent, const std::string& aLabelText) {
+    wxPanel *lFieldPanel = prepareFieldPanel(aParent, aLabelText);
     wxTextCtrl *lText = new wxTextCtrl(lFieldPanel, wxID_EDIT);
-    lfieldPanelSizer->Add(lText, 1, wxALIGN_TOP);
+    lFieldPanel->GetSizer()->Add(lText, 1, wxALIGN_TOP);
     return lText;
+}
+
+/**
+ * Create a panel that contain a label and a checkbox
+ *
+ * @param aParent the panel to put the new field panel in.
+ * @param aLabelText The text to put on the label.
+ * @return The checkbox of the field .
+ */
+wxCheckBox *RandomizerLauncherFrame::createCheckBox(wxWindow *aParent, const std::string& aLabelText) {
+    wxPanel *lFieldPanel = prepareFieldPanel(aParent, aLabelText);
+    wxCheckBox *lCheckBox = new wxCheckBox(lFieldPanel, wxID_IGNORE, "");
+    lFieldPanel->GetSizer()->Add(lCheckBox, 1, wxALIGN_TOP);
+    return lCheckBox;
 }
 
 /**
@@ -161,6 +189,7 @@ wxWindow *RandomizerLauncherFrame::buildArchipelagoPanel(wxWindow *aParent){
     includeSpace(lArchipelagoPanel, 10);
     passwordText = createField(lArchipelagoPanel, "Server password (leave empty if none): ");
     includeSpace(lArchipelagoPanel, 10);
+    filterSelf = createCheckBox(lArchipelagoPanel, "Filter messages not related to me: ");
     createButtonPanel(lArchipelagoPanel,[this](wxCommandEvent & aEvent){
         OnArchipelagoOKButton(aEvent);
     });
@@ -193,7 +222,7 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
             serverText->GetValue().ToStdString(),
             slotNameText->GetValue().ToStdString(),
             passwordText->GetValue().ToStdString(),
-            false);
+            filterSelf->GetValue());
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
