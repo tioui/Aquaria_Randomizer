@@ -42,6 +42,7 @@ local STATE_SING			= 1001
 
 function init(me)
 	setupEntity(me)
+	entity_setHealth(me, 200)
 	entity_setEntityType(me, ET_ENEMY)
 	entity_setTexture(me, "particles/lines")
 	entity_setAllDamageTargets(me, false)
@@ -219,6 +220,7 @@ function exitState(me)
 end
 
 function damage(me, attacker, bone, damageType, dmg)
+	entity_setHealth(me, 200)
 	return true
 end
 
