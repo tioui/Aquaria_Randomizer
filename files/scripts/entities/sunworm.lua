@@ -142,8 +142,8 @@ function postInit(me)
 	v.waterLevelMax = getNode("sunwormwaterlevelmax")
 	
 	if entity_isFlag(me, 1) then
-		setControlHint(getStringBank(41), 0, 0, 0, 10, "", SONG_SUNFORM)
-		voice("Naija_Song_SunForm")
+--		setControlHint(getStringBank(41), 0, 0, 0, 10, "", SONG_SUNFORM)
+--		voice("Naija_Song_SunForm")
 		entity_setFlag(me, 2)
 	end
 end
