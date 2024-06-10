@@ -889,7 +889,7 @@ static bool checkWritable(const std::string& path, bool warn, bool critical)
 
 
 const float SORT_DELAY = 10;
-Core::Core(const std::string &filesystem, const std::string& extraDataDir,  const std::string& appImageDir, int numRenderLayers, const std::string &appName, int particleSize, std::string userDataSubFolder)
+Core::Core(const std::string &filesystem, const std::string& extraDataDir, const std::string& appImageDir, int numRenderLayers, const std::string &appName, int particleSize, std::string userDataSubFolder)
 : ActionMapper(), StateManager(), appName(appName)
 {
 	sound = NULL;
@@ -4590,10 +4590,9 @@ CountedPtr<Texture> Core::addTexture(const std::string &textureName, TextureLoad
 	else
 		texResult = doTextureAdd(texture, loadName, internalTextureName);
 
-    if (texResult.second != TEX_FAILED) {
-        addTexture(texResult.first.content());
-    }
-
+	if (texResult.second != TEX_FAILED) {
+		Texture(texResult.first.content());
+	}
 
 	if(debugLogTextures)
 	{
@@ -5174,6 +5173,7 @@ void Core::setupFileAccess()
 		debugLog("Mounting extra data dir: " + _extraDataDir);
 		vfs.Mount(_extraDataDir.c_str(), "");
 	}
+
 	debugLog("Done");
 #endif
 }

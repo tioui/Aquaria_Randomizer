@@ -424,11 +424,8 @@ IF(CMAKE_COMPILER_IS_GNUCC)
         set(CMAKE_CXX_FLAGS_RELEASE "-pipe -fsigned-char -fexceptions" CACHE STRING "Flags used for release builds" FORCE)
     ENDIF(AQUARIA_GCC_HAS_STACKPROT)
 
-	### For an unknown reason, the program crash with a segfault when using -O2 on Windows (Should investiguate in the future)
-	#IF(NOT WIN32_TRUE)
 		set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
-	#ENDIF(NOT WIN32_TRUE)
 
     # !!! FIXME: probably not safe long-term.
     # CMake mailing list had this hack for getting rid of -rdynamic:
