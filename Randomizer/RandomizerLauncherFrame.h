@@ -20,7 +20,7 @@ public:
     /**
      * Initialisation of the window
      */
-    RandomizerLauncherFrame();
+    RandomizerLauncherFrame(std::string userDataFolder);
 
     /**
      * Retreuve the generated randomizer.
@@ -153,6 +153,52 @@ private:
      * @param size the size of the space
      */
     void includeSpace(wxWindow *parent, int size);
+
+    /**
+     * Save the Archipelago launcher info in an XML file.
+     */
+    void saveLauncherArchipelagoInfo();
+
+    /**
+     * Save the local launcher info in an XML file.
+     */
+    void saveLauncherLocalInfo();
+
+    /**
+     * Load the save XML values
+     */
+    void loadLauncherLocalInfo();
+
+    /**
+     * The preference directory of the user
+     */
+    std::string userDataFolder;
+
+    /**
+     * The path of the local randomizer in the XML save file.
+     */
+    std::string xmlLocalPath;
+
+    /**
+     * The server address and port of the archipelago randomizer in the XML save file.
+     */
+    std::string xmlServer;
+
+    /**
+     * The slot name of the archipelago randomizer in the XML save file.
+     */
+    std::string xmlSlotName;
+
+    /**
+     * The slot password of the archipelago randomizer in the XML save file.
+     */
+    std::string xmlPassword;
+
+    /**
+     * The filter boolean of the archipelago randomizer in the XML save file.
+     */
+    bool xmlFilter;
+
 };
 
 

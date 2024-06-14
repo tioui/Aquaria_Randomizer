@@ -11,10 +11,14 @@
 #include <wx/notebook.h>
 #include <wx/checkbox.h>
 
+#include <utility>
+
 /**
  * Initialisation of the window
  */
-RandomizerLauncherFrame::RandomizerLauncherFrame() : wxFrame(nullptr, wxID_ANY, "Aquaria Randomizer Launcher") {
+RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder) :
+                                wxFrame(nullptr, wxID_ANY, "Aquaria Randomizer Launcher") {
+    userDataFolder = std::move(aUserDataFolder);
     randomizer = nullptr;
     wxPanel* lMainPanel = new wxPanel(this, wxID_ANY);
     lMainPanel->SetMinSize(wxSize(600, 300));
@@ -34,6 +38,54 @@ RandomizerLauncherFrame::RandomizerLauncherFrame() : wxFrame(nullptr, wxID_ANY, 
     SetSizerAndFit(lTopSizer);
     openFileDialog = new wxFileDialog(this, ("Open JSON file"),wxEmptyString, wxEmptyString,
                                       "JSON files (*.json)|*.json", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    loadLauncherLocalInfo();
+}
+
+/**
+ * Load the save XML values
+ */
+void RandomizerLauncherFrame::loadLauncherLocalInfo() {
+    std::string filename;
+    xmlLocalPath = "";
+    xmlServer = "";
+    xmlSlotName = "";
+    xmlPassword = "";
+    xmlFilter = false;
+
+#if defined(BBGE_BUILD_UNIX)
+    filename = userDataFolder + "/launcher.xml";
+#elif defined(BBGE_BUILD_WINDOWS)
+    filename = "launcher.xml";
+#endif
+
+    if (std::filesystem::exists(filename)) {
+        std::ifstream fileStream(filename);
+        std::stringstream fileBuffer;
+        fileBuffer << fileStream.rdbuf();
+
+        TinyXMLDocument doc;
+        if (doc.Parse(fileBuffer.str().c_str()) == XML_SUCCESS) {
+            XMLElement *xml_local = doc.FirstChildElement("Local");
+            if (xml_local)
+            {
+                xmlLocalPath = xml_local->Attribute("path");
+                jsonFileText->SetValue(wxString::FromUTF8(xml_local->Attribute("path")));
+            }
+
+            XMLElement *xml_archipelago = doc.FirstChildElement("Archipelago");
+            if (xml_archipelago)
+            {
+                xmlServer = xml_archipelago->Attribute("server");
+                serverText->SetValue(wxString::FromUTF8(xml_archipelago->Attribute("server")));
+                xmlSlotName = xml_archipelago->Attribute("slotname");
+                slotNameText->SetValue(wxString::FromUTF8(xml_archipelago->Attribute("slotname")));
+                xmlPassword = xml_archipelago->Attribute("password");
+                passwordText->SetValue(wxString::FromUTF8(xml_archipelago->Attribute("password")));
+                xmlFilter = xml_archipelago->IntAttribute("filterself");
+                filterSelf->SetValue(xmlFilter);
+            }
+        }
+    }
 }
 
 /**
@@ -168,6 +220,7 @@ void RandomizerLauncherFrame::OnLocalOKButton(wxCommandEvent& aEvent) {
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
+        saveLauncherLocalInfo();
         randomizer = lRandomizer;
         Close();
     }
@@ -226,9 +279,58 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
+        saveLauncherArchipelagoInfo();
         randomizer = lRandomizer;
         Close();
     }
+}
+
+void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
+    TinyXMLDocument doc;
+    {
+        XMLElement *xml_local = doc.NewElement("Local");
+        {
+            xml_local->SetAttribute("path", xmlLocalPath.c_str());
+        }
+        doc.InsertEndChild(xml_local);
+        XMLElement *xml_archipelago = doc.NewElement("Archipelago");
+        {
+            xml_archipelago->SetAttribute("server", serverText->GetValue().utf8_str());
+            xml_archipelago->SetAttribute("slotname", slotNameText->GetValue().utf8_str());
+            xml_archipelago->SetAttribute("password", passwordText->GetValue().utf8_str());
+            xml_archipelago->SetAttribute("filterself", filterSelf->GetValue());
+        }
+        doc.InsertEndChild(xml_archipelago);
+    }
+#if defined(BBGE_BUILD_UNIX)
+    doc.SaveFile((userDataFolder + "/launcher.xml").c_str());
+#elif defined(BBGE_BUILD_WINDOWS)
+    doc.SaveFile("launcher.xml");
+#endif
+}
+
+void RandomizerLauncherFrame::saveLauncherLocalInfo() {
+    TinyXMLDocument doc;
+    {
+        XMLElement *xml_local = doc.NewElement("Local");
+        {
+            xml_local->SetAttribute("path", jsonFileText->GetValue().utf8_str());
+        }
+        doc.InsertEndChild(xml_local);
+        XMLElement *xml_archipelago = doc.NewElement("Archipelago");
+        {
+            xml_archipelago->SetAttribute("server", xmlServer.c_str());
+            xml_archipelago->SetAttribute("slotname", xmlSlotName.c_str());
+            xml_archipelago->SetAttribute("password", xmlPassword.c_str());
+            xml_archipelago->SetAttribute("filterself", xmlFilter);
+        }
+        doc.InsertEndChild(xml_archipelago);
+    }
+#if defined(BBGE_BUILD_UNIX)
+    doc.SaveFile((userDataFolder + "/launcher.xml").c_str());
+#elif defined(BBGE_BUILD_WINDOWS)
+    doc.SaveFile("launcher.xml");
+#endif
 }
 
 /**
