@@ -204,7 +204,7 @@ void RandomizerLauncherFrame::createButtonPanel(wxWindow *aParent,std::function<
 void RandomizerLauncherFrame::OnOpenJsonFileButton(wxCommandEvent& aEvent) {
     int lResult = openFileDialog->ShowModal();
     if (lResult == wxID_OK) {
-        jsonFileText->WriteText(openFileDialog->GetPath());
+        jsonFileText->SetValue(openFileDialog->GetPath());
     }
 }
 
