@@ -309,9 +309,9 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
     else:
         arguments.skip_first_vision = {1: SkipFirstVision(0)}
     if "excludeHardItem" in options and options["excludeHardItem"]:
-        arguments.exclude_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(1)}
+        arguments.no_progression_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(1)}
     else:
-        arguments.exclude_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(0)}
+        arguments.no_progression_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(0)}
     if "lightNeededInDarkPlaces" in options and options["lightNeededInDarkPlaces"]:
         arguments.light_needed_to_get_to_dark_places = {1: LightNeededToGetToDarkPlaces(
             options["lightNeededInDarkPlaces"])}

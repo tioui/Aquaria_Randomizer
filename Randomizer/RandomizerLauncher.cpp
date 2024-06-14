@@ -9,6 +9,27 @@
 
 #include <filesystem>
 
+RandomizerLauncher::RandomizerLauncher(std::string aUserFolderName) {
+    error = false;
+    #if defined(BBGE_BUILD_UNIX)
+        const char *envr = getenv("HOME");
+        if (envr == NULL)
+            envr = ".";  // oh well.
+        const std::string home(envr);
+
+        createDir(home);  // just in case.
+        #ifdef BBGE_BUILD_MACOSX
+            const std::string prefix("Library/Application Support/");
+        #else
+            const std::string prefix(".");
+        #endif
+        userDataFolder = home + "/" + prefix + aUserFolderName;
+        createDir(aUserFolderName);
+    #else
+        userDataFolder = ".";
+    #endif
+}
+
 /**
  * Initialisation of the Launcher
  *
@@ -20,8 +41,8 @@ bool RandomizerLauncher::OnInit() {
         error = true;
         messageBox("Randomizer error", "The randomizer_files directory is not found. Closing.");
     } else {
-        error = false;
-        frame = new RandomizerLauncherFrame();
+
+        frame = new RandomizerLauncherFrame(userDataFolder);
         frame->Show();
     }
     return true;

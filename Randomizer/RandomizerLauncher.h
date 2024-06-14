@@ -14,6 +14,12 @@
 
 class RandomizerLauncher : public wxApp {
 public:
+
+    /**
+     * Constructor for the Launcher
+     */
+    explicit RandomizerLauncher(std::string userFolderName);
+
     /**
      * Initialisation of the Launcher
      *
@@ -36,12 +42,17 @@ private:
     /**
      * The Window of the launcher.
      */
-    RandomizerLauncherFrame *frame;
+    RandomizerLauncherFrame *frame{};
 
     /**
      * True if an error occured at creation
      */
-    bool error;
+    bool error{};
+
+    /**
+     * The preference directory of the user
+     */
+    std::string userDataFolder;
 };
 
 
