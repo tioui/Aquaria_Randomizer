@@ -7914,6 +7914,12 @@ void Game::toggleHelpScreen(bool on, const std::string &label)
 		std::string fname = localisePath("data/help_header.txt");
 		appendFileToString(data, fname);
 #endif
+        dsq->randomizer->appendItemHelpData(data);
+        dsq->randomizer->appendMiniBossHelpData(data);
+        dsq->randomizer->appendBigBossHelpData(data);
+        dsq->randomizer->appendSecretHelpData(data);
+        dsq->randomizer->appendLocationsHelpData(data);
+
 		if (dsq->continuity.hasSong(SONG_BIND)) {
 			fname = localisePath("data/help_bindsong.txt");
 			appendFileToString(data, fname);

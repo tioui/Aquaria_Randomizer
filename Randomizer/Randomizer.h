@@ -19,6 +19,7 @@ std::string id;
 std::string item;
 int count;
 std::string message;
+std::string location;
 } check_t;
 
 
@@ -172,6 +173,43 @@ public:
      * Show what is missing to access the final boss.
      */
     void showHintFinalBoss();
+
+    /**
+     * Add information about receiving important item in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendItemHelpData(std::string &data);
+
+    /**
+     * Add information about mini bosses beaten in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendMiniBossHelpData(std::string &data);
+
+    /**
+     * Add information about big bosses beaten in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendBigBossHelpData(std::string &data);
+
+    /**
+     * Add information about secrets obtained in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendSecretHelpData(std::string &data);
+
+    /**
+     * Add information about locations in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendLocationsHelpData(std::string &data);
+
+
 
 protected:
 
@@ -429,6 +467,15 @@ private:
      */
     void showHint(int aCount, int aObjective, const std::string& aMessage);
 
+    /**
+     * Write the `text` to `messageStream` and put a check if `flag` is true
+     *
+     * @param messageStream The stream to write the text
+     * @param text the text to write
+     * @param flag write a check if true
+     */
+    void writeHelpData(std::stringstream *messageStream, std::string text, int flag);
+
 };
 
 const int FLAG_COLLECTIBLE_SONGCAVE        = 500;
@@ -471,6 +518,14 @@ const int FLAG_COLLECTIBLE_PIRANHA         = 536;
 
 // Bosses flags to open the way to the body
 const int FLAG_MINIBOSS_START              = 700;
+const int FLAG_MINIBOSS_NAUTILUSPRIME      = 700;
+const int FLAG_MINIBOSS_KINGJELLY          = 701;
+const int FLAG_MINIBOSS_MERGOG             = 702;
+const int FLAG_MINIBOSS_CRAB               = 703;
+const int FLAG_MINIBOSS_OCTOMUN            = 704;
+const int FLAG_MINIBOSS_MANTISSHRIMP       = 705;
+const int FLAG_MINIBOSS_PRIESTS            = 706;
+const int FLAG_MINIBOSS_BLASTER            = 707;
 const int FLAG_MINIBOSS_END                = 707;
 const int FLAG_ENERGYBOSSDEAD              = 109;
 const int FLAG_SUNKENCITY_BOSS             = 114;
