@@ -7932,13 +7932,13 @@ void Game::toggleHelpScreen(bool on, const std::string &label)
 		appendFileToString(data, fname);
 		
 // These say "Mac" but we use them on Linux, too.
-#if defined(BBGE_BUILD_UNIX)
-		fname = localisePath("data/help_end_mac.txt");
-		appendFileToString(data, fname);
-#else
-		fname = localisePath("data/help_end.txt");
-		appendFileToString(data, fname);
-#endif
+//#if defined(BBGE_BUILD_UNIX)
+//		fname = localisePath("data/help_end_mac.txt");
+//		appendFileToString(data, fname);
+//#else
+//		fname = localisePath("data/help_end.txt");
+//		appendFileToString(data, fname);
+//#endif
 
 		// !!! FIXME: this is such a hack.
 #ifdef BBGE_BUILD_ACHIEVEMENTS_INTERNAL

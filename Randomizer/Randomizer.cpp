@@ -1228,16 +1228,15 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Mithalan Priests", dsq->continuity.getFlag(FLAG_MINIBOSS_PRIESTS));
     writeHelpData(&lMessageStream, "Blaster Peg Prime", dsq->continuity.getFlag(FLAG_MINIBOSS_BLASTER));
 
-
+    lMessageStream << "\n";
     if (miniBossesToKill > 1) {
-        lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access final boss.\n\n";
+        lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access final boss.\n\n\n";
     } else if (miniBossesToKill == 1) {
-        lMessageStream << "1 nimi boss beaten are needed to access final boss.\n\n";
+        lMessageStream << "1 nimi boss beaten are needed to access final boss.\n\n\n";
     } else {
-        lMessageStream << "No mini boss beaten are needed to access final boss.\n\n";
+        lMessageStream << "No mini boss beaten are needed to access final boss.\n\n\n";
     }
 
-    lMessageStream << "\n";
     aData += lMessageStream.str();
 }
 
@@ -1255,16 +1254,15 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Sun God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
     writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
 
-    lMessageStream << "\n\n";
+    lMessageStream << "\n";
     if (bigBossesToKill > 1) {
-        lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n";
+        lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n\n";
     } else if (bigBossesToKill == 1) {
-        lMessageStream << "1 big boss beaten are needed to access final boss.\n\n";
+        lMessageStream << "1 big boss beaten are needed to access final boss.\n\n\n";
     } else {
-        lMessageStream << "No big boss beaten are needed to access final boss.\n\n";
+        lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
     }
 
-    lMessageStream << "\n";
     aData += lMessageStream.str();
 }
 
@@ -1280,11 +1278,11 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Second secret", dsq->continuity.getFlag(FLAG_SECRET02));
     writeHelpData(&lMessageStream, "Third Secret", dsq->continuity.getFlag(FLAG_SECRET03));
 
-    lMessageStream << "\n\n";
+    lMessageStream << "\n";
     if (secretsNeeded) {
-        lMessageStream << "Secrets are needed to access final boss.\n\n";
+        lMessageStream << "Secrets are needed to access final boss.\n\n\n";
     } else {
-        lMessageStream << "Secrets are not needed to access final boss.\n\n";
+        lMessageStream << "Secrets are not needed to access final boss.\n\n\n";
     }
 
     aData += lMessageStream.str();
@@ -1313,7 +1311,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
         writeHelpData(&lMessageStream, checks->at(order[i]).location,
                       dsq->continuity.getFlag(checks->at(order[i]).flag));
     }
-    lMessageStream << "\n";
+    lMessageStream << "\n\n";
     aData += lMessageStream.str();
 }
 
