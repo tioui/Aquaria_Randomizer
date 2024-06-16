@@ -1196,7 +1196,7 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Fish form", dsq->continuity.hasSong(SONG_FISHFORM));
     writeHelpData(&lMessageStream, "Spirit form", dsq->continuity.hasSong(SONG_SPIRITFORM));
     writeHelpData(&lMessageStream, "Dual form", dsq->continuity.hasSong(SONG_DUALFORM));
-    writeHelpData(&lMessageStream, "Li", dsq->continuity.hasSong(SONG_LI));
+    writeHelpData(&lMessageStream, "Li and Li song", dsq->continuity.hasSong(SONG_LI));
     writeHelpData(&lMessageStream, "Transport to The Veil top left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01));
     writeHelpData(&lMessageStream, "Transport to The Veil top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02));
     writeHelpData(&lMessageStream, "Transport to Open water top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
@@ -1347,7 +1347,8 @@ void Randomizer::onLoad(bool aNewGame){
         dsq->continuity.setFlag(FLAG_MAINAREA_TRANSTURTLE_ROCK, 1);
     }
     if (unconfine_home_water_energy_door) {
-        dsq->continuity.setFlag(FLAG_ENERGYSLOT_MAINAREA, 1);
+        dsq->continuity.setFlag(FLAG_ENERGYSLOT_MAINAREA, 29);
+
     }
     inGame = true;
 }
