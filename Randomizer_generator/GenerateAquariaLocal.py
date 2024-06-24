@@ -276,6 +276,10 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.aquarian_translation = {1: AquarianTranslation(1)}
     else:
         arguments.aquarian_translation = {1: AquarianTranslation(0)}
+    if "blindGoal" in options and options["blindGoal"]:
+        arguments.blind_goal = {1: BlindGoal(1)}
+    else:
+        arguments.blind_goal = {1: BlindGoal(0)}
     if "randomizeIngredients" in options and 0 <= options["randomizeIngredients"] <= 2:
         arguments.ingredient_randomizer = {1: IngredientRandomizer(options["randomizeIngredients"])}
     else:
@@ -367,6 +371,7 @@ def generate_json(options: Dict) -> str:
         "version": 1,
         "uid": str(multiworld.seed),
         "aquarianTranslate": bool(options["aquarianTranslate"]),
+        "blindGoal": bool(options["blindGoal"]),
         "secretsNeeded": bool(options["secretsNeeded"]),
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
@@ -405,6 +410,7 @@ def view_generation(request) -> Response:
     if request.method == "POST":
         options = {
             "aquarianTranslate": False,
+            "blindGoal": False,
             "secretsNeeded": 0,
             "bigBossesToBeat": 0,
             "miniBossesToBeat": 0,

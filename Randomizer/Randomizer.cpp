@@ -352,17 +352,17 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1213, "bulb_abyss_r_4","ingredient_hotborscht",1, "Hot borscht",
                        "Abyss right area, bulb in the left green room"});
     checks->push_back({1214, "bulb_cathedral_under_ground_1","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Cathedral Underground, bulb in the center part"});
+                       "Mithalas Cathedral Underground, bulb in the center part"});
     checks->push_back({1215, "bulb_cathedral_under_ground_2","ingredient_plantleaf",1, "Plant leaf",
-                       "Cathedral Underground, first bulb in the top left part"});
+                       "Mithalas Cathedral Underground, first bulb in the top left part"});
     checks->push_back({1216, "bulb_cathedral_under_ground_3","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Cathedral Underground, second bulb in the top left part"});
+                       "Mithalas Cathedral Underground, second bulb in the top left part"});
     checks->push_back({1217, "bulb_cathedral_under_ground_4","ingredient_redberry",1, "Red berry",
-                       "Cathedral Underground, third bulb in the top left part"});
+                       "Mithalas Cathedral Underground, third bulb in the top left part"});
     checks->push_back({1218, "bulb_cathedral_under_ground_5","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Cathedral Underground, bulb close to the save crystal"});
+                       "Mithalas Cathedral Underground, bulb close to the save crystal"});
     checks->push_back({1219, "bulb_cathedral_under_ground_6","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Cathedral Underground, bulb in the bottom right path"});
+                       "Mithalas Cathedral Underground, bulb in the bottom right path"});
     checks->push_back({1220, "bulb_naija_home_1","ingredient_spicyroll",1, "Spicy roll",
                        "Naija's Home, bulb after the energy door"});
     checks->push_back({1221, "bulb_naija_home_2","ingredient_heartysoup",1, "Hearty soup",
@@ -530,7 +530,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1302, "breaking_li_cage","song_dual",1, "Dual Form",
                        "The Body center area, breaking Li's cage"});
     checks->push_back({1303, "beating_mithalas","song_beast",1, "Beast Form",
-                       "Cathedral boss area, beating Mithalan God"});
+                       "Mithalas boss area, beating Mithalan God"});
     checks->push_back({1304, "beating_sun_god","song_sun",1, "Sun Form",
                        "Sun Temple boss area, beating Sun God"});
     checks->push_back({1305, "beating_drunian_god","song_nature",1, "Nature Form",
@@ -1127,6 +1127,22 @@ std::string Randomizer::getUid() {
 }
 
 /**
+ * Is the Goal's requirement be hidden from the player?
+ * @param value The value to assign to `blindGoal`
+ */
+void Randomizer::setBlindGoal(bool value) {
+    blindGoal = value;
+}
+
+/**
+ * Is the Goal's requirement be hidden from the player?
+ * @return The value to assign to `blindGoal`
+ */
+bool Randomizer::getBlindGoal() {
+    return blindGoal;
+}
+
+/**
  * Is the Aquarian text in the game should be translated
  * @param aValue The value to assign to `isAquarianTranslated`
  */
@@ -1229,12 +1245,14 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Blaster Peg Prime", dsq->continuity.getFlag(FLAG_MINIBOSS_BLASTER));
 
     lMessageStream << "\n";
-    if (miniBossesToKill > 1) {
-        lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access final boss.\n\n\n";
-    } else if (miniBossesToKill == 1) {
-        lMessageStream << "1 nimi boss beaten are needed to access final boss.\n\n\n";
-    } else {
-        lMessageStream << "No mini boss beaten are needed to access final boss.\n\n\n";
+    if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
+        if (miniBossesToKill > 1) {
+            lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access final boss.\n\n\n";
+        } else if (miniBossesToKill == 1) {
+            lMessageStream << "1 mini boss beaten are needed to access final boss.\n\n\n";
+        } else {
+            lMessageStream << "No mini boss beaten are needed to access final boss.\n\n\n";
+        }
     }
 
     aData += lMessageStream.str();
@@ -1255,12 +1273,14 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
 
     lMessageStream << "\n";
-    if (bigBossesToKill > 1) {
-        lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n\n";
-    } else if (bigBossesToKill == 1) {
-        lMessageStream << "1 big boss beaten are needed to access final boss.\n\n\n";
-    } else {
-        lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
+    if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
+        if (bigBossesToKill > 1) {
+            lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n\n";
+        } else if (bigBossesToKill == 1) {
+            lMessageStream << "1 big boss beaten are needed to access final boss.\n\n\n";
+        } else {
+            lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
+        }
     }
 
     aData += lMessageStream.str();
@@ -1279,10 +1299,12 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Third Secret", dsq->continuity.getFlag(FLAG_SECRET03));
 
     lMessageStream << "\n";
-    if (secretsNeeded) {
-        lMessageStream << "Secrets are needed to access final boss.\n\n\n";
-    } else {
-        lMessageStream << "Secrets are not needed to access final boss.\n\n\n";
+    if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
+        if (secretsNeeded) {
+            lMessageStream << "Secrets are needed to access final boss.\n\n\n";
+        } else {
+            lMessageStream << "Secrets are not needed to access final boss.\n\n\n";
+        }
     }
 
     aData += lMessageStream.str();
@@ -1322,7 +1344,13 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
-    if (!aNewGame) {
+    if (aNewGame) {
+        if (blindGoal) {
+            dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
+        } else {
+            dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+        }
+    } else {
         dsq->toggleCursor(true);
         if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
             if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
@@ -1346,7 +1374,6 @@ void Randomizer::onLoad(bool aNewGame){
     }
     if (unconfine_home_water_energy_door) {
         dsq->continuity.setFlag(FLAG_ENERGYSLOT_MAINAREA, 29);
-
     }
     inGame = true;
 }
@@ -1482,6 +1509,7 @@ void Randomizer::showHintFinalBoss() {
     if (secretsNeeded) {
         showHint(secretsFound(), 3, "secret memories founded");
     }
+    dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
 }
 
 /**

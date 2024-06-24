@@ -297,6 +297,18 @@ protected:
     void setIsAquarianTranslated(bool value);
 
     /**
+     * Is the Goal's requirement be hidden from the player?
+     * @param value The value to assign to `blindGoal`
+     */
+    void setBlindGoal(bool value);
+
+    /**
+     * Is the Goal's requirement be hidden from the player?
+     * @return The value to assign to `blindGoal`
+     */
+    bool getBlindGoal();
+
+    /**
      * Naija
      */
     Avatar *avatar;
@@ -337,12 +349,12 @@ protected:
     /**
      * Number of mini bosses to kill
      */
-        int miniBossesToKill;
+    int miniBossesToKill;
 
     /**
      * Skip first vision in the verse cave
      */
-        bool skipFirstVision;
+    bool skipFirstVision;
 
     /**
      * Tne number of mini bosses that as been slain.
@@ -459,6 +471,11 @@ private:
     bool isAquarianTranslated;
 
     /**
+     * True if the user should not see the goal's requirement before the end of the game.
+     */
+    bool blindGoal;
+
+    /**
      * Show a hint if the count is lower than the objective.
      *
      * @param aCount The number to valid
@@ -550,6 +567,11 @@ const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 // Other flags
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
+
+// Randomizer FLAGS
+const int FLAG_LOCATION_START              = 1100;
+const int FLAG_LOCATION_END                = 1318;
+const int FLAG_BLIND_GOAL                  = 1499;
 
 
 #endif /* end of include guard RANDOMIZER_H */

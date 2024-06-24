@@ -32,7 +32,6 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     syncing = true;
     secretsNeeded = false;
     deathLink = false;
-    backupMessages = new std::queue<std::string>();
     currentQuickMessageTime = 0;
     deathLinkPause = false;
     nextQuickMessages = new std::queue<std::string>();
@@ -86,7 +85,6 @@ void RandomizerArchipelago::tryConnection(const std::string& aServer) {
  */
 RandomizerArchipelago::~RandomizerArchipelago(){
     delete(apClient);
-    delete(backupMessages);
     delete(apLocations);
     delete(apItems);
 }
@@ -190,13 +188,14 @@ void RandomizerArchipelago::onRoomInfoHandler(){
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     bool lAquarianTranslated;
+    bool lBlindGoal;
     hasSlotInfo = true;
     if (aJsonText.contains("death_link")) {
         deathLink = aJsonText.at("death_link");
     } else {
         deathLink = false;
     }
-    lAquarianTranslated = aJsonText["aquarianTranslate"];
+    lAquarianTranslated = aJsonText["aquarian_translate"];
     setIsAquarianTranslated(lAquarianTranslated);
     if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
@@ -216,9 +215,14 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (aJsonText.contains("unconfine_home_water_transturtle")) {
         unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
     }
+    if (aJsonText.contains("blind_goal")) {
+        lBlindGoal = aJsonText["blind_goal"];
+        setBlindGoal(lBlindGoal);
+    }
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
+
 }
 
 /**

@@ -24,7 +24,7 @@ RandomizerLauncher::RandomizerLauncher(std::string aUserFolderName) {
             const std::string prefix(".");
         #endif
         userDataFolder = home + "/" + prefix + aUserFolderName;
-        createDir(aUserFolderName);
+        createDir(userDataFolder);
     #else
         userDataFolder = ".";
     #endif

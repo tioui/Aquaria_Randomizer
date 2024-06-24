@@ -19,13 +19,16 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     long long int lUid = 0;
     std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
+    bool lBlindGoal = false;
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
         version = lJsonData["version"];
         setUid(lJsonData["uid"]);
         lAquarianTranslated = lJsonData["aquarianTranslate"];
-        skipFirstVision = lJsonData["skipFirstVision"];
         setIsAquarianTranslated(lAquarianTranslated);
+        skipFirstVision = lJsonData["skipFirstVision"];
+        lBlindGoal = lJsonData["blindGoal"];
+        setBlindGoal(lBlindGoal);
         secretsNeeded = lJsonData["secretsNeeded"];
         bigBossesToKill = lJsonData["bigBossesToBeat"];
         miniBossesToKill = lJsonData["miniBossesToBeat"];

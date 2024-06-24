@@ -162,7 +162,6 @@ private:
      */
     bool deathLinkPause;
 
-    std::queue<std::string> *backupMessages;
     /**
      * Every item of the Arcipelago Randomizer
      */

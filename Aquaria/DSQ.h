@@ -323,7 +323,7 @@ struct Song
 	int script;
 };
 
-const int MAX_FLAGS				= 1400;
+const int MAX_FLAGS				= 1500;
 
 enum AuraType
 {
