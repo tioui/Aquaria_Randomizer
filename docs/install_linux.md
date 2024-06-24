@@ -21,5 +21,7 @@ On Debian base system (like Ubuntu), you can use the following command:
 sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev
 ```
 
+Note that on the latest Debian system, you should use `libwxgtk3.2-gtk3-dev` instead of `libwxgtk3.0-gtk3-dev`.
+
 Once the randomizer is installed you can launch it. For details about the execution options, see: [execution_linux.md](execution_linux.md)
 

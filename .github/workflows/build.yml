@@ -51,7 +51,7 @@ jobs:
           path: aquaria_randomizer
           retention-days: 1
   build-ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
@@ -79,7 +79,7 @@ jobs:
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
           cd Releases/
-          tar cfz aquaria_randomizer_linux.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_linuxwx-3.0.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf randomizer_files
@@ -96,10 +96,63 @@ jobs:
           cp -rp ../usersettings.xml AppDir/usr/bin/
           cp -rp ../cacert.pem AppDir/usr/bin/
           ./appimagetool-x86_64.AppImage AppDir/
-          cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/
+          cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/Aquaria_Randomizer-wx3.0-x86_64.AppImage
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
           name: Release-Linux-artefact
+          path: ${{ github.workspace }}/Releases
+          retention-days: 1
+  build-ubuntu22:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
+      - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: git submodule update --init
+      - run: echo "Checkout done."
+      - run: echo "Instaling development package..."
+      - run: sudo apt-get update
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libfuse2 libwxgtk3.2-gtk3-dev
+      - run: echo "Developpement package installed..."
+      - run: echo "Compiling..."
+      - run: |
+          mkdir ${{ github.workspace }}/build
+          cd ${{ github.workspace }}/build
+          cmake -DAQUARIA_USE_SDL2=1 -DCMAKE_BUILD_TYPE=Release ..
+          make
+      - run: echo "Compiling done."
+      - run: echo "Build standard packaging."
+      - run: |
+          cd ${{ github.workspace }}
+          mkdir Releases
+          cp -p build/aquaria_randomizer Releases/
+          cp -rp files Releases/randomizer_files
+          cp usersettings.xml Releases/
+          cp cacert.pem Releases/
+          cd Releases/
+          tar cfz aquaria_randomizer_linux-wx-3.2.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          rm usersettings.xml
+          rm aquaria_randomizer
+          rm -rf randomizer_files
+      - run: echo "Build appimage packaging."
+      - run: |
+          cd ${{ github.workspace }}/appimage
+          cp -p ${{ github.workspace }}/build/aquaria_randomizer ./
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage
+          wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
+          cp -rp ../files AppDir/usr/bin/randomizer_files
+          cp -rp ../usersettings.xml AppDir/usr/bin/
+          cp -rp ../cacert.pem AppDir/usr/bin/
+          ./appimagetool-x86_64.AppImage AppDir/
+          cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/Aquaria_Randomizer-wx3.2-x86_64.AppImage
+      - name: 'Upload artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-Linux22-artefact
           path: ${{ github.workspace }}/Releases
           retention-days: 1
