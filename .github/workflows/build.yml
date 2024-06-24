@@ -153,6 +153,6 @@ jobs:
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: Release-Linux22-artefact
+          name: Release-Linux24-artefact
           path: ${{ github.workspace }}/Releases
           retention-days: 1
