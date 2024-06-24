@@ -18,7 +18,7 @@ Then, you should use your system package manager to install liblua5, libogg, lib
 On Debian base system (like Ubuntu), you can use the following command:
 
 ```bash
-sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev
+sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libssl-dev libwxgtk3.0-gtk3-dev
 ```
 
 Note that on the latest Debian system, you should use `libwxgtk3.2-gtk3-dev` instead of `libwxgtk3.2-dev`.
