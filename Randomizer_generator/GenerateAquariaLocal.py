@@ -23,7 +23,7 @@ from worlds.aquaria import AquariaWorld
 from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, DishRandomizer, Objective, \
                                    TurtleRandomizer, EarlyEnergyForm, BigBossesToBeat, MiniBossesToBeat, \
                                    SkipFirstVision, NoProgressionHardOrHiddenLocation, LightNeededToGetToDarkPlaces, \
-                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater
+                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater, BlindGoal
 
 # Every checks (association Location -> Item)
 checks: Dict[int, int] = {
