@@ -92,22 +92,22 @@ ENDIF(NOT RANDOMIZER_NO_LAUNCHER)
 
 
 ### PNG
-
-OPTION(AQUARIA_INTERNAL_PNG "Always use included PNG library" TRUE)
+OPTION(AQUARIA_INTERNAL_PNG "Always use included PNG library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_PNG)
     find_package(PNG)
 endif(NOT AQUARIA_INTERNAL_PNG)
 if(NOT PNG_FOUND)
     set(PNG_PNG_INCLUDE_DIR ${PNGDIR})
     set(PNG_INCLUDE_DIR ${PNG_PNG_INCLUDE_DIR} ) #${ZLIB_INCLUDE_DIRS})
+    FILE(STRINGS "${PNG_PNG_INCLUDE_DIR}/png.h" PNG_H REGEX "^#define PNG_LIBPNG_VER[^0-9]*[0-9]+")
+    STRING(REGEX REPLACE "^.*PNG_LIBPNG_VER[^0-9]*([0-9]+).*$" "\\1" PNG_LIBPNG_VER "${PNG_H}")
 endif(NOT PNG_FOUND)
 
-FILE(STRINGS "${PNG_PNG_INCLUDE_DIR}/png.h" PNG_H REGEX "^#define PNG_LIBPNG_VER[^0-9]*[0-9]+")
-STRING(REGEX REPLACE "^.*PNG_LIBPNG_VER[^0-9]*([0-9]+).*$" "\\1" PNG_LIBPNG_VER "${PNG_H}")
+
 
 ### FreeType
 
-OPTION(AQUARIA_INTERNAL_FREETYPE "Always use included FreeType library" TRUE)
+OPTION(AQUARIA_INTERNAL_FREETYPE "Always use included Freetype library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_FREETYPE)
     find_package(Freetype)
 endif(NOT AQUARIA_INTERNAL_FREETYPE)
@@ -117,7 +117,7 @@ endif(NOT FREETYPE_FOUND)
 
 ### Lua
 
-OPTION(AQUARIA_INTERNAL_LUA "Always use included Lua library" TRUE)
+OPTION(AQUARIA_INTERNAL_LUA "Always use included Lua library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_LUA)
     find_package(Lua51)
 endif(NOT AQUARIA_INTERNAL_LUA)
@@ -127,7 +127,7 @@ endif(NOT LUA51_FOUND)
 
 ### Ogg/Vorbis
 
-OPTION(AQUARIA_INTERNAL_OGGVORBIS "Always use included Ogg/Vorbis libraries" TRUE)
+OPTION(AQUARIA_INTERNAL_OGGVORBIS "Always use included Ogg/Vorbis libraries on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_OGGVORBIS)
     # CMake doesn't seem to have a module for libogg or libvorbis yet, so
     # we roll our own based on existing find_package modules.
@@ -143,6 +143,7 @@ if(NOT AQUARIA_INTERNAL_OGGVORBIS)
         PATH_SUFFIXES lib64 lib
         PATHS ~/Library/Frameworks /Library/Frameworks /usr/local /usr /sw /opt/local /opt/csw /opt
     )
+
 
     if(OGG_LIBRARY)
 
@@ -189,7 +190,7 @@ endif(NOT OGGVORBIS_FOUND)
 
 ### SDL
 
-OPTION(AQUARIA_INTERNAL_SDL "Always use included SDL library" ${WIN32_TRUE})
+OPTION(AQUARIA_INTERNAL_SDL "Always use included SDL library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_SDL)
     if(AQUARIA_USE_SDL2)
         set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
@@ -266,7 +267,7 @@ endif(NOT TINYXML2_FOUND)
 
 ### FTGL
 
-OPTION(AQUARIA_INTERNAL_FTGL "Always use included FTGL library" TRUE)
+OPTION(AQUARIA_INTERNAL_FTGL "Always use included FTGL library" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_FTGL)
     find_package(FTGL)
 endif(NOT AQUARIA_INTERNAL_FTGL)
@@ -599,19 +600,22 @@ SET(BBGE_SRCS
     ${EXTLIBDIR}/JPS.h
 )
 
-SET(PNG_SRCS
-    ${PNGDIR}/png.c
-    ${PNGDIR}/pngerror.c
-    ${PNGDIR}/pngget.c
-    ${PNGDIR}/pngmem.c
-    ${PNGDIR}/pngpread.c
-    ${PNGDIR}/pngread.c
-    ${PNGDIR}/pngrio.c
-    ${PNGDIR}/pngrtran.c
-    ${PNGDIR}/pngrutil.c
-    ${PNGDIR}/pngset.c
-    ${PNGDIR}/pngtrans.c
-)
+if(NOT PNG_FOUND)
+    message(STATUS "Using internal PNG library")
+    SET(PNG_SRCS
+        ${PNGDIR}/png.c
+        ${PNGDIR}/pngerror.c
+        ${PNGDIR}/pngget.c
+        ${PNGDIR}/pngmem.c
+        ${PNGDIR}/pngpread.c
+        ${PNGDIR}/pngread.c
+        ${PNGDIR}/pngrio.c
+        ${PNGDIR}/pngrtran.c
+        ${PNGDIR}/pngrutil.c
+        ${PNGDIR}/pngset.c
+        ${PNGDIR}/pngtrans.c
+    )
+endif(NOT PNG_FOUND)
 
 # Apparently not used at the moment. Listed here just for completeness.
 SET(BBGE_SRCS_UNUSED
@@ -642,19 +646,21 @@ SET_SOURCE_FILES_PROPERTIES(
     PROPERTIES COMPILE_FLAGS "-fpermissive"
 )
 
-SET(FTGL_SRCS
-    ${FTGLSRCDIR}/FTCharmap.cpp
-    ${FTGLSRCDIR}/FTContour.cpp
-    ${FTGLSRCDIR}/FTFace.cpp
-    ${FTGLSRCDIR}/FTFont.cpp
-    ${FTGLSRCDIR}/FTGLTextureFont.cpp
-    ${FTGLSRCDIR}/FTGlyph.cpp
-    ${FTGLSRCDIR}/FTGlyphContainer.cpp
-    ${FTGLSRCDIR}/FTLibrary.cpp
-    ${FTGLSRCDIR}/FTPoint.cpp
-    ${FTGLSRCDIR}/FTSize.cpp
-    ${FTGLSRCDIR}/FTTextureGlyph.cpp
-)
+if(FTGL_FOUND)
+    SET(FTGL_SRCS
+        ${FTGLSRCDIR}/FTCharmap.cpp
+        ${FTGLSRCDIR}/FTContour.cpp
+        ${FTGLSRCDIR}/FTFace.cpp
+        ${FTGLSRCDIR}/FTFont.cpp
+        ${FTGLSRCDIR}/FTGLTextureFont.cpp
+        ${FTGLSRCDIR}/FTGlyph.cpp
+        ${FTGLSRCDIR}/FTGlyphContainer.cpp
+        ${FTGLSRCDIR}/FTLibrary.cpp
+        ${FTGLSRCDIR}/FTPoint.cpp
+        ${FTGLSRCDIR}/FTSize.cpp
+        ${FTGLSRCDIR}/FTTextureGlyph.cpp
+    )
+endif(FTGL_FOUND)
 
 SET_SOURCE_FILES_PROPERTIES(
     ${FTGL_SRCS}
@@ -688,74 +694,81 @@ ELSE(WIN32_TRUE)
 		PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
 	)
 ENDIF(WIN32_TRUE)
-SET(OGGVORBIS_SRCS
-    ${LIBOGGDIR}/src/bitwise.c
-    ${LIBOGGDIR}/src/framing.c
-    ${LIBVORBISDIR}/lib/analysis.c
-    ${LIBVORBISDIR}/lib/bitrate.c
-    ${LIBVORBISDIR}/lib/block.c
-    ${LIBVORBISDIR}/lib/codebook.c
-    ${LIBVORBISDIR}/lib/envelope.c
-    ${LIBVORBISDIR}/lib/floor0.c
-    ${LIBVORBISDIR}/lib/floor1.c
-    ${LIBVORBISDIR}/lib/info.c
-    ${LIBVORBISDIR}/lib/lpc.c
-    ${LIBVORBISDIR}/lib/lsp.c
-    ${LIBVORBISDIR}/lib/mapping0.c
-    ${LIBVORBISDIR}/lib/mdct.c
-    ${LIBVORBISDIR}/lib/psy.c
-    ${LIBVORBISDIR}/lib/registry.c
-    ${LIBVORBISDIR}/lib/res0.c
-    ${LIBVORBISDIR}/lib/sharedbook.c
-    ${LIBVORBISDIR}/lib/smallft.c
-    ${LIBVORBISDIR}/lib/synthesis.c
-    ${LIBVORBISDIR}/lib/vorbisfile.c
-    ${LIBVORBISDIR}/lib/window.c
-)
 
-SET(FREETYPE2_SRCS
-    ${FREETYPE2SRCDIR}/base/ftsystem.c
-    ${FREETYPE2SRCDIR}/base/ftdebug.c
-    ${FREETYPE2SRCDIR}/base/ftinit.c
-    ${FREETYPE2SRCDIR}/base/ftbase.c
-    ${FREETYPE2SRCDIR}/base/ftbbox.c
-    ${FREETYPE2SRCDIR}/base/ftbdf.c
-    ${FREETYPE2SRCDIR}/base/ftbitmap.c
-    ${FREETYPE2SRCDIR}/base/ftcid.c
-    ${FREETYPE2SRCDIR}/base/ftfstype.c
-    ${FREETYPE2SRCDIR}/base/ftgasp.c
-    ${FREETYPE2SRCDIR}/base/ftglyph.c
-    ${FREETYPE2SRCDIR}/base/ftgxval.c
-    ${FREETYPE2SRCDIR}/base/ftlcdfil.c
-    ${FREETYPE2SRCDIR}/base/ftmm.c
-    ${FREETYPE2SRCDIR}/base/ftotval.c
-    ${FREETYPE2SRCDIR}/base/ftpatent.c
-    ${FREETYPE2SRCDIR}/base/ftpfr.c
-    ${FREETYPE2SRCDIR}/base/ftstroke.c
-    ${FREETYPE2SRCDIR}/base/ftsynth.c
-    ${FREETYPE2SRCDIR}/base/fttype1.c
-    ${FREETYPE2SRCDIR}/base/ftwinfnt.c
-    ${FREETYPE2SRCDIR}/base/ftxf86.c
-    ${FREETYPE2SRCDIR}/truetype/truetype.c
-    ${FREETYPE2SRCDIR}/type1/type1.c
-    ${FREETYPE2SRCDIR}/cff/cff.c
-    ${FREETYPE2SRCDIR}/cid/type1cid.c
-    ${FREETYPE2SRCDIR}/pfr/pfr.c
-    ${FREETYPE2SRCDIR}/type42/type42.c
-    ${FREETYPE2SRCDIR}/winfonts/winfnt.c
-    ${FREETYPE2SRCDIR}/pcf/pcf.c
-    ${FREETYPE2SRCDIR}/bdf/bdf.c
-    ${FREETYPE2SRCDIR}/sfnt/sfnt.c
-    ${FREETYPE2SRCDIR}/autofit/autofit.c
-    ${FREETYPE2SRCDIR}/pshinter/pshinter.c
-    ${FREETYPE2SRCDIR}/raster/raster.c
-    ${FREETYPE2SRCDIR}/smooth/smooth.c
-    ${FREETYPE2SRCDIR}/cache/ftcache.c
-    ${FREETYPE2SRCDIR}/gzip/ftgzip.c
-    ${FREETYPE2SRCDIR}/lzw/ftlzw.c
-    ${FREETYPE2SRCDIR}/psaux/psaux.c
-    ${FREETYPE2SRCDIR}/psnames/psmodule.c
-)
+if(NOT OGGVORBIS_FOUND)
+    message(STATUS "Using internal Ogg/Vorbis library")
+    SET(OGGVORBIS_SRCS
+        ${LIBOGGDIR}/src/bitwise.c
+        ${LIBOGGDIR}/src/framing.c
+        ${LIBVORBISDIR}/lib/analysis.c
+        ${LIBVORBISDIR}/lib/bitrate.c
+        ${LIBVORBISDIR}/lib/block.c
+        ${LIBVORBISDIR}/lib/codebook.c
+        ${LIBVORBISDIR}/lib/envelope.c
+        ${LIBVORBISDIR}/lib/floor0.c
+        ${LIBVORBISDIR}/lib/floor1.c
+        ${LIBVORBISDIR}/lib/info.c
+        ${LIBVORBISDIR}/lib/lpc.c
+        ${LIBVORBISDIR}/lib/lsp.c
+        ${LIBVORBISDIR}/lib/mapping0.c
+        ${LIBVORBISDIR}/lib/mdct.c
+        ${LIBVORBISDIR}/lib/psy.c
+        ${LIBVORBISDIR}/lib/registry.c
+        ${LIBVORBISDIR}/lib/res0.c
+        ${LIBVORBISDIR}/lib/sharedbook.c
+        ${LIBVORBISDIR}/lib/smallft.c
+        ${LIBVORBISDIR}/lib/synthesis.c
+        ${LIBVORBISDIR}/lib/vorbisfile.c
+        ${LIBVORBISDIR}/lib/window.c
+    )
+endif(NOT OGGVORBIS_FOUND)
+
+if(NOT FREETYPE_FOUND)
+    message(STATUS "Using internal Freetype library")
+    SET(FREETYPE2_SRCS
+        ${FREETYPE2SRCDIR}/base/ftsystem.c
+        ${FREETYPE2SRCDIR}/base/ftdebug.c
+        ${FREETYPE2SRCDIR}/base/ftinit.c
+        ${FREETYPE2SRCDIR}/base/ftbase.c
+        ${FREETYPE2SRCDIR}/base/ftbbox.c
+        ${FREETYPE2SRCDIR}/base/ftbdf.c
+        ${FREETYPE2SRCDIR}/base/ftbitmap.c
+        ${FREETYPE2SRCDIR}/base/ftcid.c
+        ${FREETYPE2SRCDIR}/base/ftfstype.c
+        ${FREETYPE2SRCDIR}/base/ftgasp.c
+        ${FREETYPE2SRCDIR}/base/ftglyph.c
+        ${FREETYPE2SRCDIR}/base/ftgxval.c
+        ${FREETYPE2SRCDIR}/base/ftlcdfil.c
+        ${FREETYPE2SRCDIR}/base/ftmm.c
+        ${FREETYPE2SRCDIR}/base/ftotval.c
+        ${FREETYPE2SRCDIR}/base/ftpatent.c
+        ${FREETYPE2SRCDIR}/base/ftpfr.c
+        ${FREETYPE2SRCDIR}/base/ftstroke.c
+        ${FREETYPE2SRCDIR}/base/ftsynth.c
+        ${FREETYPE2SRCDIR}/base/fttype1.c
+        ${FREETYPE2SRCDIR}/base/ftwinfnt.c
+        ${FREETYPE2SRCDIR}/base/ftxf86.c
+        ${FREETYPE2SRCDIR}/truetype/truetype.c
+        ${FREETYPE2SRCDIR}/type1/type1.c
+        ${FREETYPE2SRCDIR}/cff/cff.c
+        ${FREETYPE2SRCDIR}/cid/type1cid.c
+        ${FREETYPE2SRCDIR}/pfr/pfr.c
+        ${FREETYPE2SRCDIR}/type42/type42.c
+        ${FREETYPE2SRCDIR}/winfonts/winfnt.c
+        ${FREETYPE2SRCDIR}/pcf/pcf.c
+        ${FREETYPE2SRCDIR}/bdf/bdf.c
+        ${FREETYPE2SRCDIR}/sfnt/sfnt.c
+        ${FREETYPE2SRCDIR}/autofit/autofit.c
+        ${FREETYPE2SRCDIR}/pshinter/pshinter.c
+        ${FREETYPE2SRCDIR}/raster/raster.c
+        ${FREETYPE2SRCDIR}/smooth/smooth.c
+        ${FREETYPE2SRCDIR}/cache/ftcache.c
+        ${FREETYPE2SRCDIR}/gzip/ftgzip.c
+        ${FREETYPE2SRCDIR}/lzw/ftlzw.c
+        ${FREETYPE2SRCDIR}/psaux/psaux.c
+        ${FREETYPE2SRCDIR}/psnames/psmodule.c
+    )
+endif(NOT FREETYPE_FOUND)
 
 IF(MSVC)
     SET_SOURCE_FILES_PROPERTIES(
@@ -776,38 +789,40 @@ ELSE(MSVC)
     )
 ENDIF(MSVC)
 
-
-SET(LUA_SRCS
-    ${LUASRCDIR}/lapi.c
-    ${LUASRCDIR}/ldblib.c
-    ${LUASRCDIR}/ldebug.c
-    ${LUASRCDIR}/ldo.c
-    ${LUASRCDIR}/ldump.c
-    ${LUASRCDIR}/lfunc.c
-    ${LUASRCDIR}/lgc.c
-    ${LUASRCDIR}/linit.c
-    ${LUASRCDIR}/liolib.c
-    ${LUASRCDIR}/lmem.c
-    ${LUASRCDIR}/loadlib.c
-    ${LUASRCDIR}/lobject.c
-    ${LUASRCDIR}/lopcodes.c
-    ${LUASRCDIR}/loslib.c
-    ${LUASRCDIR}/lstate.c
-    ${LUASRCDIR}/lstring.c
-    ${LUASRCDIR}/ltable.c
-    ${LUASRCDIR}/ltm.c
-    ${LUASRCDIR}/lundump.c
-    ${LUASRCDIR}/lvm.c
-    ${LUASRCDIR}/lzio.c
-    ${LUASRCDIR}/lauxlib.c
-    ${LUASRCDIR}/lbaselib.c
-    ${LUASRCDIR}/lstrlib.c
-    ${LUASRCDIR}/ltablib.c
-    ${LUASRCDIR}/lparser.c
-    ${LUASRCDIR}/llex.c
-    ${LUASRCDIR}/lcode.c
-    ${LUASRCDIR}/lmathlib.c
-)
+if(NOT LUA51_FOUND)
+    message(STATUS "Using internal Lua library")
+    SET(LUA_SRCS
+        ${LUASRCDIR}/lapi.c
+        ${LUASRCDIR}/ldblib.c
+        ${LUASRCDIR}/ldebug.c
+        ${LUASRCDIR}/ldo.c
+        ${LUASRCDIR}/ldump.c
+        ${LUASRCDIR}/lfunc.c
+        ${LUASRCDIR}/lgc.c
+        ${LUASRCDIR}/linit.c
+        ${LUASRCDIR}/liolib.c
+        ${LUASRCDIR}/lmem.c
+        ${LUASRCDIR}/loadlib.c
+        ${LUASRCDIR}/lobject.c
+        ${LUASRCDIR}/lopcodes.c
+        ${LUASRCDIR}/loslib.c
+        ${LUASRCDIR}/lstate.c
+        ${LUASRCDIR}/lstring.c
+        ${LUASRCDIR}/ltable.c
+        ${LUASRCDIR}/ltm.c
+        ${LUASRCDIR}/lundump.c
+        ${LUASRCDIR}/lvm.c
+        ${LUASRCDIR}/lzio.c
+        ${LUASRCDIR}/lauxlib.c
+        ${LUASRCDIR}/lbaselib.c
+        ${LUASRCDIR}/lstrlib.c
+        ${LUASRCDIR}/ltablib.c
+        ${LUASRCDIR}/lparser.c
+        ${LUASRCDIR}/llex.c
+        ${LUASRCDIR}/lcode.c
+        ${LUASRCDIR}/lmathlib.c
+    )
+endif(NOT LUA51_FOUND)
 
 IF(AQUARIA_USE_VFS)
     ADD_SUBDIRECTORY("${EXTLIBDIR}/ttvfs")
