@@ -112,7 +112,6 @@ if(NOT AQUARIA_INTERNAL_FREETYPE)
     find_package(Freetype)
 endif(NOT AQUARIA_INTERNAL_FREETYPE)
 if(NOT FREETYPE_FOUND)
-    message(STATUS "Test1")
     set(FREETYPE_INCLUDE_DIRS ${FREETYPE2DIR}/include)
 endif(NOT FREETYPE_FOUND)
 
@@ -268,7 +267,7 @@ endif(NOT TINYXML2_FOUND)
 
 ### FTGL
 
-OPTION(AQUARIA_INTERNAL_FTGL "Always use included FTGL library" ${WIN32_TRUE})
+OPTION(AQUARIA_INTERNAL_FTGL "Always use included FTGL library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_FTGL)
     find_package(FTGL)
 endif(NOT AQUARIA_INTERNAL_FTGL)
@@ -647,7 +646,8 @@ SET_SOURCE_FILES_PROPERTIES(
     PROPERTIES COMPILE_FLAGS "-fpermissive"
 )
 
-if(FTGL_FOUND)
+if(NOT FTGL_FOUND)
+    message(STATUS "Using internal FTGL library")
     SET(FTGL_SRCS
         ${FTGLSRCDIR}/FTCharmap.cpp
         ${FTGLSRCDIR}/FTContour.cpp
@@ -661,7 +661,7 @@ if(FTGL_FOUND)
         ${FTGLSRCDIR}/FTSize.cpp
         ${FTGLSRCDIR}/FTTextureGlyph.cpp
     )
-endif(FTGL_FOUND)
+endif(NOT FTGL_FOUND)
 
 SET_SOURCE_FILES_PROPERTIES(
     ${FTGL_SRCS}
