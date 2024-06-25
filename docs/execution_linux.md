@@ -36,11 +36,6 @@ Since the Aquaria game is not an official game for Archipelago (yet), you will h
 
 Please note that if you just double-click on the `Aquaria_Randomizer` file, you should see a launcher. The launcher let you select a JSON file for a local offline randomizer or server information for an Archipelago multiworld game.
 
-### Known bug
-
-There is a known bug. When using one of the multiple Arc GTK themes, the filter self checkbox do not appear and is then unusable. The workaround is then to change the GTK theme to another theme (or using command line option).
-
-
 ## Local randomizer via command line
 
 If you want to launch the randomizer using the command line, you will need a command line interpreter (sometime called terminal). You will have to go into the directory of the randomizer with `cd /home/user/Aquaria_Randomizer/` or some thing like that. Some file explorer have an option to open a directory in a terminal.
