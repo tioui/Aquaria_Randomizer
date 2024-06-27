@@ -32,12 +32,15 @@ Compilation on Linux Ubuntu
 ---------------------------
 
 First, be sure to have git to clone the project and the
-development libraries: liblua5, libogg, libvorbis, libopenal,
-libsdl2 and libwxWidgets. For example, with apt (for Debian OS
+development libraries: liblua5, libogg, libvorbis, libfreetype-dev, libftgl-dev, libopenal,
+libsdl2, libpng and libwxWidgets. For example, with apt (for Debian OS
 including Ubuntu):
+
 ```bash
-sudo apt install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libopenal-dev libsdl2-dev libwxgtk3.0-gtk3-dev git
+sudo apt install liblua5.1-0-dev libogg-dev libvorbis-dev libfreetype-dev libftgl-dev libpng-dev libopenal-dev libsdl2-dev libssl-dev libwxgtk3.0-gtk3-dev
 ```
+
+Note that on the latest Debian system, you should use `libwxgtk3.2-dev` instead of `libwxgtk3.0-gtk3-dev`.
 
 Then, clone the project with the --recursive flag some place
 
