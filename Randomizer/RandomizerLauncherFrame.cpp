@@ -83,6 +83,8 @@ void RandomizerLauncherFrame::loadLauncherLocalInfo() {
                 passwordText->SetValue(wxString::FromUTF8(xml_archipelago->Attribute("password")));
                 xmlFilter = xml_archipelago->IntAttribute("filterself");
                 filterSelf->SetValue(xmlFilter);
+                xmlDeathLink = xml_archipelago->IntAttribute("deathLink");
+                deathLink->SetValue(xmlDeathLink);
             }
         }
     }
@@ -140,7 +142,6 @@ wxPanel *RandomizerLauncherFrame::prepareFieldPanel(wxWindow *aParent, const std
     wxBoxSizer* lfieldPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     lFieldPanel->SetSizer(lfieldPanelSizer);
     aParent->GetSizer()->Add(lFieldPanel, 0, wxEXPAND);
-
     wxStaticText * lTextLabel = new wxStaticText(lFieldPanel, wxID_ANY, aLabelText);
     lfieldPanelSizer->Add(lTextLabel, 0, wxALIGN_CENTER_VERTICAL);
     return lFieldPanel;
@@ -243,6 +244,9 @@ wxWindow *RandomizerLauncherFrame::buildArchipelagoPanel(wxWindow *aParent){
     passwordText = createField(lArchipelagoPanel, "Server password (leave empty if none): ");
     includeSpace(lArchipelagoPanel, 10);
     filterSelf = createCheckBox(lArchipelagoPanel, "Filter messages not related to me: ");
+    includeSpace(lArchipelagoPanel, 10);
+    deathLink = createCheckBox(lArchipelagoPanel, "Activate Death Link: ");
+    includeSpace(lArchipelagoPanel, 10);
     createButtonPanel(lArchipelagoPanel,[this](wxCommandEvent & aEvent){
         OnArchipelagoOKButton(aEvent);
     });
@@ -275,7 +279,8 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
             serverText->GetValue().ToStdString(),
             slotNameText->GetValue().ToStdString(),
             passwordText->GetValue().ToStdString(),
-            filterSelf->GetValue());
+            filterSelf->GetValue(),
+            deathLink->GetValue());
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
@@ -299,6 +304,7 @@ void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
             xml_archipelago->SetAttribute("slotname", slotNameText->GetValue().utf8_str());
             xml_archipelago->SetAttribute("password", passwordText->GetValue().utf8_str());
             xml_archipelago->SetAttribute("filterself", filterSelf->GetValue());
+            xml_archipelago->SetAttribute("deathLink", deathLink->GetValue());
         }
         doc.InsertEndChild(xml_archipelago);
     }
@@ -323,6 +329,7 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
             xml_archipelago->SetAttribute("slotname", xmlSlotName.c_str());
             xml_archipelago->SetAttribute("password", xmlPassword.c_str());
             xml_archipelago->SetAttribute("filterself", xmlFilter);
+            xml_archipelago->SetAttribute("deathLink", xmlDeathLink);
         }
         doc.InsertEndChild(xml_archipelago);
     }

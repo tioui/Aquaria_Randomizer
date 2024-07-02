@@ -84,6 +84,11 @@ private:
     wxCheckBox *filterSelf;
 
     /**
+     * Checkbox used to know if the randomizer should filter message.
+     */
+    wxCheckBox* deathLink;
+
+    /**
      * File dialog used to select the local randomizer json file.
      */
     wxFileDialog *openFileDialog;
@@ -198,6 +203,11 @@ private:
      * The filter boolean of the archipelago randomizer in the XML save file.
      */
     bool xmlFilter;
+
+    /**
+     * The filter boolean of the archipelago randomizer in the XML save file.
+     */
+    bool xmlDeathLink;
 
 };
 

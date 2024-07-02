@@ -56,9 +56,10 @@ public:
      * @param server The address and port of the Archipelago server
      * @param name The player name on the archipelago server
      * @param password The password of the room on the archipelago server
+     * @param deathLink True if Archipelago Death link packets should be used.
      */
     explicit RandomizerArchipelago(const std::string& server, const std::string& name, const std::string& password,
-                                   bool selfMessage);
+                                   bool selfMessage, bool deathLink);
 
     /**
      * Destructor of the current object

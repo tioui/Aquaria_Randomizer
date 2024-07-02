@@ -13,7 +13,12 @@ You can generate a local randomizer json file by going at the address https://aq
 
 ## Generating an archipelago multiworld randomizer game
 
-Since the Aquaria game is not an official game for Archipelago (yet), you will have to generate the game locally. Here is the simplest way to do it.
+Since the Aquaria game is an official game for Archipelago, you can generate the game at this address: https://archipelago.gg/games/Aquaria/player-options
+
+Please note that the "Death Link" option of the Archipelago site is not working. This option will be removed from the
+option in the future. Now, the way to activate death link is via the game launcher of the command line (see below).
+
+To generate a Multiworld Archipelago locally, here is the simplest way to do it:
 
 * Download the Archipelago Release here: https://github.com/ArchipelagoMW/Archipelago/releases ;
 * Extract the release;
@@ -78,9 +83,26 @@ or with a password:
 ./Aquaria_Randomizer-*.AppImage --name YourName --server theServer:thePort --password thePassword --message self
 ```
 
+Also, you can activate Archipelago death link by adding `--deathlink` in the command line. Like this:
+```bash
+./Aquaria_Randomizer-*.AppImage --name YourName --server theServer:thePort --deathlink
+```
+
 Note: If you have a permission denied error when using the command line, you can use a file editor or this command line to be sure that your executable has executable permission:
 
 ```bash
 chmod +x  Aquaria_Randomizer-*.AppImage 
 ```
 
+## Errors that can occured:
+
+If, when using the appimage, you get an error like this one:
+
+```
+dlopen(): error loading libfuse.so.2
+```
+you need to install libfuse2 from on your system. On Ubuntu 24.04, you have to use this command line:
+
+```bash
+sudo apt install libfuse2t64
+```

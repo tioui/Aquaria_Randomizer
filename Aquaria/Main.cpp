@@ -71,6 +71,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         if (argc >= 5 && strncmp(argv[1], "--name", 6) == 0 && strncmp(argv[3], "--server", 8) == 0) {
             std::string lPassword;
             bool lSelfMessage = false;
+            bool lDeathLink = false;
             int lMessageIndex = 5;
             if (argc >= 7 && strncmp(argv[5], "--password", 10) == 0) {
                 lPassword = argv[6];
@@ -80,9 +81,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             }
             if (argc >= lMessageIndex + 2 && strncmp(argv[lMessageIndex], "--message", 9) == 0) {
                 lSelfMessage =  strncmp(argv[lMessageIndex + 1], "self", 4) == 0;
+                lMessageIndex = lMessageIndex + 2;
             }
-            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage);
-        } else if (argc == 2) {
+            if (argc >= lMessageIndex + 1 && strncmp(argv[lMessageIndex], "--deathlink", 1) == 0) {
+                lDeathLink = true;
+                lMessageIndex = lMessageIndex + 1;
+            }
+            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lDeathLink);
+        } else if (argc == 2 && strncmp(argv[1], "--help", 6) != 0) {
             lRandomizer = new RandomizerLocal(argv[1]);
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
@@ -106,7 +112,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
             std::cerr << "Usage: " << argv[0] << " <local filename>" << std::endl;
             std::cerr << "Usage: " << argv[0] <<
-                      " --name <Name> --server <ServerIP:Port>[ --password <Room password>][ --message self]" << std::endl;
+                      " --name <Name> --server <ServerIP:Port>[ --password <Room password>]" <<
+                      "[ --message self][ --deathlink]" << std::endl;
             std::cerr.flush();
             exit(1);
         }

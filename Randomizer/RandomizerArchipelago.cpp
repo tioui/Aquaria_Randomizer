@@ -20,9 +20,10 @@
  * @param aServer The address and port of the Archipelago server
  * @param aName The player name on the archipelago server
  * @param aPassword The password of the room on the archipelago server
+ * @param aDeathLink True if Archipelago Death link packets should be used.
  */
 RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const std::string& aName,
-                                             const std::string& aPassword, bool aSelfMessage): Randomizer(){
+                                             const std::string& aPassword, bool aSelfMessage, bool aDeathLink): Randomizer(){
     name = aName;
     password = aPassword;
     serverAddress = aServer;
@@ -31,7 +32,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     hasSlotInfo = false;
     syncing = true;
     secretsNeeded = false;
-    deathLink = false;
+    deathLink = aDeathLink;
     currentQuickMessageTime = 0;
     deathLinkPause = false;
     nextQuickMessages = new std::queue<std::string>();
@@ -168,16 +169,16 @@ void RandomizerArchipelago::onSlotRefused (const std::list<std::string>& aTexts)
  * Launched when the the Archipelago send Room Info message
  */
 void RandomizerArchipelago::onRoomInfoHandler(){
+    std::list<std::string> tags;
+    if (deathLink) {
+        tags.emplace_back("DeathLink");
+    }
     if (inGame) {
         const int item_handling_flags_all = 7;
-        std::list<std::string> tags;
-        if (deathLink) {
-            tags.emplace_back("DeathLink");
-        }
         apClient->ConnectSlot(name, password, item_handling_flags_all, tags, AP_VERSION_SUPPORT);
     } else {
         apClient->ConnectSlot(name, password, 0,
-                              {}, AP_VERSION_SUPPORT);
+                              tags, AP_VERSION_SUPPORT);
     }
     hasRoomInfo = true;
 }
@@ -190,12 +191,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     int lAquarianTranslated = false;
     int lBlindGoal = false;
     hasSlotInfo = true;
-    deathLink = false;
     std::string lstr = aJsonText.dump();
-
-    if (aJsonText.contains("death_link")) {
-        deathLink = aJsonText.at("death_link");
-    }
     if (aJsonText.contains("aquarian_translate")) {
         lAquarianTranslated = aJsonText["aquarian_translate"];
         setIsAquarianTranslated(lAquarianTranslated);
