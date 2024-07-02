@@ -187,16 +187,23 @@ void RandomizerArchipelago::onRoomInfoHandler(){
  * @param aJsonText The "slot_data" json file
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
-    bool lAquarianTranslated;
-    bool lBlindGoal;
+    int lAquarianTranslated;
+    int lBlindGoal;
     hasSlotInfo = true;
+    std::string lstr = aJsonText.dump();
+
     if (aJsonText.contains("death_link")) {
         deathLink = aJsonText.at("death_link");
     } else {
         deathLink = false;
     }
-    lAquarianTranslated = aJsonText["aquarian_translate"];
-    setIsAquarianTranslated(lAquarianTranslated);
+    if (aJsonText.contains("aquarian_translate")) {
+        lAquarianTranslated = aJsonText["aquarian_translate"];
+        setIsAquarianTranslated(lAquarianTranslated);
+    } else if (aJsonText.contains("aquarianTranslate")){
+        lAquarianTranslated = aJsonText["aquarianTranslate"];
+        setIsAquarianTranslated(lAquarianTranslated);
+    }
     if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
     }
