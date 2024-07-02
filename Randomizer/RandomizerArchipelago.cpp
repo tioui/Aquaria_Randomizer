@@ -187,20 +187,19 @@ void RandomizerArchipelago::onRoomInfoHandler(){
  * @param aJsonText The "slot_data" json file
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
-    int lAquarianTranslated;
-    int lBlindGoal;
+    int lAquarianTranslated = false;
+    int lBlindGoal = false;
     hasSlotInfo = true;
+    deathLink = false;
     std::string lstr = aJsonText.dump();
 
     if (aJsonText.contains("death_link")) {
         deathLink = aJsonText.at("death_link");
-    } else {
-        deathLink = false;
     }
     if (aJsonText.contains("aquarian_translate")) {
         lAquarianTranslated = aJsonText["aquarian_translate"];
         setIsAquarianTranslated(lAquarianTranslated);
-    } else if (aJsonText.contains("aquarianTranslate")){
+    } else if (aJsonText.contains("aquarianTranslate")){ // To remove when the PR 3533 has been accepted
         lAquarianTranslated = aJsonText["aquarianTranslate"];
         setIsAquarianTranslated(lAquarianTranslated);
     }
@@ -224,6 +223,9 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     }
     if (aJsonText.contains("blind_goal")) {
         lBlindGoal = aJsonText["blind_goal"];
+        setBlindGoal(lBlindGoal);
+    } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
+        lBlindGoal = aJsonText["blindGoal"];
         setBlindGoal(lBlindGoal);
     }
     for (int lElement : aJsonText["ingredientReplacement"]) {
