@@ -9,8 +9,10 @@
 #define AQUARIA_RANDOMIZERLAUNCHERFRAME_H
 
 
+
 #include <wx/wx.h>
 #include "Randomizer.h"
+#include "RandomizerBoxing.h"
 
 class wxNotebook;
 
@@ -19,15 +21,11 @@ class RandomizerLauncherFrame : public wxFrame
 public:
     /**
      * Initialisation of the window
-     */
-    RandomizerLauncherFrame(std::string userDataFolder);
-
-    /**
-     * Retreuve the generated randomizer.
      *
-     * @return The randomizer
+     * @param userDataFolder The folder to store the launcher.xml save file
+     * @param boxing The box to store the generated randomizer
      */
-    Randomizer *getRandomizer();
+    RandomizerLauncherFrame(std::string userDataFolder, RandomizerBoxing *boxing);
 
 private:
     /**
@@ -52,11 +50,6 @@ private:
      * @param parent The panel to put the archipelago panel in.
      */
     wxWindow *buildArchipelagoPanel(wxWindow *parent);
-
-    /**
-     * The randomizer that is generated after clicking the OK button.
-     */
-    Randomizer *randomizer;
 
     /**
      * The text box used to get the json file path of the local randomizer.
@@ -209,6 +202,10 @@ private:
      */
     bool xmlDeathLink;
 
+    /**
+     * The boxing used to store the generated randomizer
+     */
+    RandomizerBoxing *randomizerBoxing;
 };
 
 

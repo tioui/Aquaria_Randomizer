@@ -9,8 +9,9 @@
 
 #include <filesystem>
 
-RandomizerLauncher::RandomizerLauncher(std::string aUserFolderName) {
+RandomizerLauncher::RandomizerLauncher(const std::string& aUserFolderName, RandomizerBoxing *aBoxing) {
     error = false;
+    randomizerBoxing = aBoxing;
     #if defined(BBGE_BUILD_UNIX)
         const char *envr = getenv("HOME");
         if (envr == NULL)
@@ -42,7 +43,7 @@ bool RandomizerLauncher::OnInit() {
         messageBox("Randomizer error", "The randomizer_files directory is not found. Closing.");
     } else {
 
-        frame = new RandomizerLauncherFrame(userDataFolder);
+        frame = new RandomizerLauncherFrame(userDataFolder, randomizerBoxing);
         frame->Show();
     }
     return true;
@@ -56,11 +57,4 @@ bool RandomizerLauncher::hasError() const {
     return error;
 }
 
-/**
- * Retreive the generated randomizer.
- * @return The randomizer
- */
-Randomizer *RandomizerLauncher::getRandomizer() {
-    return frame->getRandomizer();
-}
 

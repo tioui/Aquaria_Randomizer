@@ -8,6 +8,7 @@
 #ifndef AQUARIA_RANDOMIZER_LAUNCHER_H
 #define AQUARIA_RANDOMIZER_LAUNCHER_H
 
+#include "RandomizerBoxing.h"
 #include <wx/wx.h>
 #include "Randomizer.h"
 #include "RandomizerLauncherFrame.h"
@@ -17,8 +18,11 @@ public:
 
     /**
      * Constructor for the Launcher
+     *
+     * @param userFolderName The folder to store the launcher.xml save file
+     * @param boxing The box to store the generated randomizer
      */
-    explicit RandomizerLauncher(std::string userFolderName);
+    explicit RandomizerLauncher(const std::string& userFolderName, RandomizerBoxing *boxing);
 
     /**
      * Initialisation of the Launcher
@@ -26,12 +30,6 @@ public:
      * @return Always true
      */
     bool OnInit() override;
-
-    /**
-     * Retreive the generated randomizer.
-     * @return The randomizer
-     */
-    Randomizer *getRandomizer();
 
     /**
      * True if an error occured at creation
@@ -53,6 +51,11 @@ private:
      * The preference directory of the user
      */
     std::string userDataFolder;
+
+    /**
+     * The boxing used to store the generated randomizer
+     */
+    RandomizerBoxing *randomizerBoxing;
 };
 
 

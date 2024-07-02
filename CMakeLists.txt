@@ -451,6 +451,7 @@ SET(RANDOMIZER_SRCS
 
 IF(wxWidgets_FOUND)
     SET(RANDOMIZER_SRCS ${RANDOMIZER_SRCS}
+            ${RANDOMIZERDIR}/RandomizerBoxing.cpp
 			${RANDOMIZERDIR}/RandomizerLauncherFrame.cpp
             ${RANDOMIZERDIR}/RandomizerLauncher.cpp
     )

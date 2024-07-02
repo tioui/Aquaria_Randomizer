@@ -15,11 +15,14 @@
 
 /**
  * Initialisation of the window
+ *
+ * @param userDataFolder The folder to store the launcher.xml save file
+ * @param boxing The box to store the generated randomizer
  */
-RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder) :
+RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder, RandomizerBoxing *aBoxing) :
                                 wxFrame(nullptr, wxID_ANY, "Aquaria Randomizer Launcher") {
     userDataFolder = std::move(aUserDataFolder);
-    randomizer = nullptr;
+    randomizerBoxing = aBoxing;
     wxPanel* lMainPanel = new wxPanel(this, wxID_ANY);
     lMainPanel->SetMinSize(wxSize(600, 300));
     wxNotebook *lNotebook = new wxNotebook(lMainPanel, wxID_ANY);
@@ -222,7 +225,7 @@ void RandomizerLauncherFrame::OnLocalOKButton(wxCommandEvent& aEvent) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
         saveLauncherLocalInfo();
-        randomizer = lRandomizer;
+        randomizerBoxing->setRandomizer(lRandomizer);
         Close();
     }
 }
@@ -285,7 +288,7 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {
         saveLauncherArchipelagoInfo();
-        randomizer = lRandomizer;
+        randomizerBoxing->setRandomizer(lRandomizer);
         Close();
     }
 }
@@ -340,11 +343,3 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
 #endif
 }
 
-/**
- * Retreuve the generated randomizer.
- *
- * @return The randomizer
- */
-Randomizer *RandomizerLauncherFrame::getRandomizer() {
-    return randomizer;
-}

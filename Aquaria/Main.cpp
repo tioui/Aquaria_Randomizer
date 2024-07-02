@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <iostream>
 #include <filesystem>
+#include <RandomizerBoxing.h>
 
 #include "DSQ.h"
 #include "../Randomizer/RandomizerLocal.h"
@@ -92,14 +93,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             lRandomizer = new RandomizerLocal(argv[1]);
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
-            RandomizerLauncher *lLauncher = new RandomizerLauncher("Aquaria_Randomizer");
+            RandomizerBoxing * lBoxing = new RandomizerBoxing();
+            RandomizerLauncher *lLauncher = new RandomizerLauncher("Aquaria_Randomizer", lBoxing);
             wxApp::SetInstance( lLauncher );
             wxEntryStart( argc, argv );
             wxTheApp->CallOnInit();
             if (!lLauncher->hasError()) {
                 wxTheApp->OnRun();
             }
-            lRandomizer = lLauncher->getRandomizer();
+            lRandomizer = lBoxing->getRandomizer();
+            delete lBoxing;
             wxTheApp->OnExit();
             wxEntryCleanup();
             if (lRandomizer == nullptr) {
