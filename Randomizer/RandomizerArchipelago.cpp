@@ -440,7 +440,8 @@ void RandomizerArchipelago::endingGame() {
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
     connectionUpdate();
-    syncing = !aNewGame;
+    apClient->Sync();
+    syncing = true;
 }
 
 /**
