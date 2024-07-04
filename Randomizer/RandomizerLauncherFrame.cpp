@@ -42,6 +42,11 @@ RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder, Ra
     openFileDialog = new wxFileDialog(this, ("Open JSON file"),wxEmptyString, wxEmptyString,
                                       "JSON files (*.json)|*.json", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     loadLauncherLocalInfo();
+    if (xmlArchipelagoTabOpen) {
+        lNotebook->SetSelection(1);
+    } else {
+        lNotebook->SetSelection(0);
+    }
 }
 
 /**
@@ -69,15 +74,13 @@ void RandomizerLauncherFrame::loadLauncherLocalInfo() {
         TinyXMLDocument doc;
         if (doc.Parse(fileBuffer.str().c_str()) == XML_SUCCESS) {
             XMLElement *xml_local = doc.FirstChildElement("Local");
-            if (xml_local)
-            {
+            if (xml_local) {
                 xmlLocalPath = xml_local->Attribute("path");
                 jsonFileText->SetValue(wxString::FromUTF8(xml_local->Attribute("path")));
             }
 
             XMLElement *xml_archipelago = doc.FirstChildElement("Archipelago");
-            if (xml_archipelago)
-            {
+            if (xml_archipelago) {
                 xmlServer = xml_archipelago->Attribute("server");
                 serverText->SetValue(wxString::FromUTF8(xml_archipelago->Attribute("server")));
                 xmlSlotName = xml_archipelago->Attribute("slotname");
@@ -88,6 +91,7 @@ void RandomizerLauncherFrame::loadLauncherLocalInfo() {
                 filterSelf->SetValue(xmlFilter);
                 xmlDeathLink = xml_archipelago->IntAttribute("deathLink");
                 deathLink->SetValue(xmlDeathLink);
+                xmlArchipelagoTabOpen = xml_archipelago->IntAttribute("activeTab");
             }
         }
     }
@@ -299,6 +303,7 @@ void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
         XMLElement *xml_local = doc.NewElement("Local");
         {
             xml_local->SetAttribute("path", xmlLocalPath.c_str());
+            xml_local->SetAttribute("activeTab", false);
         }
         doc.InsertEndChild(xml_local);
         XMLElement *xml_archipelago = doc.NewElement("Archipelago");
@@ -308,6 +313,7 @@ void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
             xml_archipelago->SetAttribute("password", passwordText->GetValue().utf8_str());
             xml_archipelago->SetAttribute("filterself", filterSelf->GetValue());
             xml_archipelago->SetAttribute("deathLink", deathLink->GetValue());
+            xml_archipelago->SetAttribute("activeTab", true);
         }
         doc.InsertEndChild(xml_archipelago);
     }
@@ -324,6 +330,7 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
         XMLElement *xml_local = doc.NewElement("Local");
         {
             xml_local->SetAttribute("path", jsonFileText->GetValue().utf8_str());
+            xml_local->SetAttribute("activeTab", true);
         }
         doc.InsertEndChild(xml_local);
         XMLElement *xml_archipelago = doc.NewElement("Archipelago");
@@ -333,6 +340,7 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
             xml_archipelago->SetAttribute("password", xmlPassword.c_str());
             xml_archipelago->SetAttribute("filterself", xmlFilter);
             xml_archipelago->SetAttribute("deathLink", xmlDeathLink);
+            xml_archipelago->SetAttribute("activeTab", false);
         }
         doc.InsertEndChild(xml_archipelago);
     }

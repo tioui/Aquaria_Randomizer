@@ -807,15 +807,15 @@ function update(me, dt)
 								entity_setNaijaReaction(me, "")
 							end
 							
-							if avatar_getStillTimer() > 4 and not avatar_isOnWall() and v.nearNaijaTimer > 8 then
-								if not isInputEnabled() or avatar_isSinging() then 
-									v.nearNaijaTimer = 0
-								else
-									if entity_getRiding(getNaija()) == 0 then
-										entity_setState(me, STATE_HUG)
-									end
-								end
-							end
+							--if avatar_getStillTimer() > 4 and not avatar_isOnWall() and v.nearNaijaTimer > 8 then
+							--	if not isInputEnabled() or avatar_isSinging() then 
+							--		v.nearNaijaTimer = 0
+							--	else
+							--		if entity_getRiding(getNaija()) == 0 then
+							--			entity_setState(me, STATE_HUG)
+							--		end
+							--	end
+							--end
 						end
 					end
 				end

@@ -203,6 +203,11 @@ private:
     bool xmlDeathLink;
 
     /**
+     * The tab to open at the start as specified in the XML save file.
+     */
+    bool xmlArchipelagoTabOpen;
+
+    /**
      * The boxing used to store the generated randomizer
      */
     RandomizerBoxing *randomizerBoxing;
