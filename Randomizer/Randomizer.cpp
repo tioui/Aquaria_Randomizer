@@ -21,6 +21,7 @@ Randomizer::Randomizer() {
     error = false;
     inGame = false;
     errorMessage = "";
+    blindGoal = 0;
     skipFirstVision = false;
     unconfine_home_water_transturtle = false;
     unconfine_home_water_energy_door = false;
@@ -1292,6 +1293,7 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendSecretHelpData(std::string &aData) {
+
     std::stringstream lMessageStream;
     lMessageStream << "[Secrets obtained]\n";
     writeHelpData(&lMessageStream, "First secret", dsq->continuity.getFlag(FLAG_SECRET01));

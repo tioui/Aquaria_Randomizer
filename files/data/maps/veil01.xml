@@ -27,9 +27,6 @@
 <Path name="licave">
     <Node pos="24584 10709" rect="64 64" shape="0" />
 </Path>
-<Path name="spawnli">
-    <Node pos="19033 10387" rect="474 414" shape="0" />
-</Path>
 <Path name="warp licave r">
     <Node pos="24606 10883" rect="456 962" shape="0" />
 </Path>
