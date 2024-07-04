@@ -22,9 +22,7 @@ To generate a Multiworld Archipelago locally, here is the simplest way to do it:
 
 * Download the Archipelago Release here: https://github.com/ArchipelagoMW/Archipelago/releases ;
 * Extract the release;
-* Download the `aquaria.apworld` from the Aquaria randomizer [release page](https://github.com/tioui/Aquaria_Randomizer/releases)
-* Put the `aquaria.apworld` file in the `lib/world` directory of Archipelago;
-* Then, launch `ArchipelagoLauncher.exe`;
+* Launch `ArchipelagoLauncher.exe`;
 * In archipelago launcher, select "Generate Template Options".
 ![Generate Template Options](images/template_archipelago.png)
 * This will create the directory `Players/Templates` in the Archipelago root directory.
