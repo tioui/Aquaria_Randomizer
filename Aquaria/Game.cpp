@@ -7904,32 +7904,32 @@ void Game::toggleHelpScreen(bool on, const std::string &label)
 		helpWasPaused = isPaused();
 		togglePause(true);
 		
-		std::string data;
+		std::string data = "~ Aquaria randomizer tracker ~\n\n";
 
 // These say "Mac" but we use them on Linux, too.
-#if defined(BBGE_BUILD_UNIX)
-		std::string fname = localisePath("data/help_header_mac.txt");
-		appendFileToString(data, fname);
-#else
-		std::string fname = localisePath("data/help_header.txt");
-		appendFileToString(data, fname);
-#endif
+// #if defined(BBGE_BUILD_UNIX)
+// 		std::string fname = localisePath("data/help_header_mac.txt");
+// 		appendFileToString(data, fname);
+// #else
+// 		std::string fname = localisePath("data/help_header.txt");
+// 		appendFileToString(data, fname);
+// #endif
         dsq->randomizer->appendItemHelpData(data);
         dsq->randomizer->appendMiniBossHelpData(data);
         dsq->randomizer->appendBigBossHelpData(data);
         dsq->randomizer->appendSecretHelpData(data);
         dsq->randomizer->appendLocationsHelpData(data);
 
-		if (dsq->continuity.hasSong(SONG_BIND)) {
-			fname = localisePath("data/help_bindsong.txt");
-			appendFileToString(data, fname);
-		}
-		if (dsq->continuity.hasSong(SONG_ENERGYFORM)) {
-			fname = localisePath("data/help_energyform.txt");
-			appendFileToString(data, fname);
-		}
-		fname = localisePath("data/help_start.txt");
-		appendFileToString(data, fname);
+		// if (dsq->continuity.hasSong(SONG_BIND)) {
+		// 	fname = localisePath("data/help_bindsong.txt");
+		// 	appendFileToString(data, fname);
+		// }
+		// if (dsq->continuity.hasSong(SONG_ENERGYFORM)) {
+		// 	fname = localisePath("data/help_energyform.txt");
+		// 	appendFileToString(data, fname);
+		// }
+		// fname = localisePath("data/help_start.txt");
+		// appendFileToString(data, fname);
 		
 // These say "Mac" but we use them on Linux, too.
 //#if defined(BBGE_BUILD_UNIX)
