@@ -72,7 +72,6 @@ void RandomizerArchipelago::tryConnection(const std::string& aServer) {
         lcacert = "/usr/share/cacert.pem";
         lcacert.insert(0, appAppImageMountDir);
     }
-    std::cout << "The cacert file: " << lcacert << "\n";
     apClient = new APClient(uuid, "Aquaria",lServer, lcacert);
     initialiseCallback();
     std::chrono::time_point lStart = std::chrono::system_clock::now();
