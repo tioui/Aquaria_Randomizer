@@ -51,7 +51,7 @@ jobs:
           path: aquaria_randomizer
           retention-days: 1
   build-ubuntu:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
@@ -95,7 +95,7 @@ jobs:
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
           cp -rp ../files AppDir/usr/bin/randomizer_files
           cp -rp ../usersettings.xml AppDir/usr/bin/
-          cp -rp ../cacert.pem AppDir/usr/share/
+          cp -rp ../cacert.pem AppDir/usr/bin/
           ./appimagetool-x86_64.AppImage AppDir/
           cp -p Aquaria_Randomizer-x86_64.AppImage ${{ github.workspace }}/Releases/Aquaria_Randomizer-wx3.0-x86_64.AppImage
       - name: 'Upload artifact'
