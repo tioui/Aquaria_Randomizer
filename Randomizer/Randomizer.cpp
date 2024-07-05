@@ -343,7 +343,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1208, "bulb_starting_cave_1","ingredient_fishoil",1, "Fish oil",
                        "Verse Cave, bulb in the skeleton room"});
     checks->push_back({1209, "bulb_starting_cave_2","ingredient_smallegg",1, "Small egg",
-                       "Verse Cave, bulb in the path left of the skeleton room"});
+                       "Verse Cave, bulb in the path right of the skeleton room"});
     checks->push_back({1210, "bulb_abyss_r_1","ingredient_dumboicecream",1, "Dumbo ice cream",
                        "Abyss right area, bulb behind the rock in the whale room"});
     checks->push_back({1211, "bulb_abyss_r_2","ingredient_tastyroll",1, "Tasty roll",
