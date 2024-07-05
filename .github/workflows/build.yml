@@ -51,7 +51,7 @@ jobs:
           path: aquaria_randomizer
           retention-days: 1
   build-ubuntu:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
@@ -105,7 +105,7 @@ jobs:
           path: ${{ github.workspace }}/Releases
           retention-days: 1
   build-ubuntu24:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
