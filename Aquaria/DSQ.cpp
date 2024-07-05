@@ -24,6 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../BBGE/ProfRender.h"
 
 #include "DSQ.h"
+
+#include <Randomizer.h>
+
 #include "States.h"
 #include "Game.h"
 #include "Logo.h"
@@ -5037,6 +5040,7 @@ void DSQ::cutsceneEffects(bool on)
 
 void DSQ::onBackgroundUpdate()
 {
+	randomizer->update();
 	Network::update();
 	Core::onBackgroundUpdate();
 }
