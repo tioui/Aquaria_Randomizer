@@ -54,6 +54,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
  */
 void RandomizerArchipelago::tryConnection(const std::string& aServer) {
     bool mustRetry = true;
+    std::string lcacert = "cacert.pem";
     std::string lServer = aServer;
     std::transform(lServer.begin(), lServer.end(), lServer.begin(), ::tolower);
     if (lServer.compare(0, 6, "wss://") == 0 || lServer.compare(0, 5, "ws://") == 0) {
@@ -66,7 +67,13 @@ void RandomizerArchipelago::tryConnection(const std::string& aServer) {
     hasRoomInfo = false;
     hasSlotInfo = false;
     clearError();
-    apClient = new APClient(uuid, "Aquaria",lServer, "cacert.pem");
+    const char *appAppImageMountDir = getenv("APPDIR");
+    if (appAppImageMountDir) {
+        lcacert = "/usr/share/cacert.pem";
+        lcacert.insert(0, appAppImageMountDir);
+    }
+    std::cout << "The cacert file: " << lcacert << "\n";
+    apClient = new APClient(uuid, "Aquaria",lServer, lcacert);
     initialiseCallback();
     std::chrono::time_point lStart = std::chrono::system_clock::now();
     while (!(hasRoomInfo && hasSlotInfo) && !hasError() && !timeOut) {
