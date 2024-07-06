@@ -298,14 +298,14 @@ void GameOver::applyState()
 	// }
 	// addRenderObject(frame2, LR_BACKGROUND);
 	//
-	// frame3 = new Quad;
-	// {
-	// 	frame3->setTexture("gameover-0002");
-	// 	frame3->position = Vector(400,300);
-	// 	frame3->setWidthHeight(600, 600);
-	// }
-	// addRenderObject(frame3, LR_BACKGROUND);
-	//
+	frame3 = new Quad;
+	{
+		frame3->setTexture("gameover-0002");
+		frame3->position = Vector(400,300);
+		frame3->setWidthHeight(600, 600);
+	}
+	addRenderObject(frame3, LR_BACKGROUND);
+
 	Quad *frame4 = new Quad;
 	{
 		frame4->setTexture("gameover-0001");
@@ -341,9 +341,9 @@ void GameOver::applyState()
 	frame4->alpha.interpolateTo(0, GO_ANIM_TIME);
 	core->main(GO_ANIM_TIME);
 
-	// frame3->alpha.interpolateTo(0, GO_ANIM_TIME);
-	// core->main(GO_ANIM_TIME);
-	//
+	frame3->alpha.interpolateTo(0, GO_ANIM_TIME);
+	core->main(GO_ANIM_TIME);
+	
 	// frame2->alpha.interpolateTo(0, GO_ANIM_TIME);
 	// core->main(GO_ANIM_TIME);
 	//
