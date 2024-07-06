@@ -1353,20 +1353,20 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
         }
     } else {
-        dsq->toggleCursor(true);
-        if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
-            if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
-                dsq->game->sceneToLoad = "naijacave";
-                dsq->game->positionToAvatar = Vector(8880, 3881);
-            }
-        } else {
-            if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
-                dsq->game->sceneToLoad = "vedhacave";
-                dsq->game->positionToAvatar = Vector(1743, 2888);
-            }
-        }
-
-        dsq->toggleCursor(false);
+        // dsq->toggleCursor(true);
+        // if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
+        //     if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
+        //         dsq->game->sceneToLoad = "naijacave";
+        //         dsq->game->positionToAvatar = Vector(8880, 3881);
+        //     }
+        // } else {
+        //     if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
+        //         dsq->game->sceneToLoad = "vedhacave";
+        //         dsq->game->positionToAvatar = Vector(1743, 2888);
+        //     }
+        // }
+        //
+        // dsq->toggleCursor(false);
     }
     if (skipFirstVision) {
         dsq->continuity.setFlag(FLAG_VISION_ENERGYTEMPLE, 1);

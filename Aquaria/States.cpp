@@ -282,14 +282,14 @@ void GameOver::applyState()
 
 
 
-	// frame1 = new Quad;
-	// {
-	// 	frame1->setTexture("gameover-0004");
-	// 	frame1->position = Vector(400,300);
-	// 	frame1->setWidthHeight(600, 600);
-	// }
-	// addRenderObject(frame1, LR_BACKGROUND);
-	//
+	frame1 = new Quad;
+	{
+		frame1->setTexture("gameover-0004");
+		frame1->position = Vector(400,300);
+		frame1->setWidthHeight(600, 600);
+	}
+	addRenderObject(frame1, LR_BACKGROUND);
+
 	frame2 = new Quad;
 	{
 		frame2->setTexture("gameover-0003");
@@ -347,10 +347,10 @@ void GameOver::applyState()
 	frame2->alpha.interpolateTo(0, GO_ANIM_TIME);
 	core->main(GO_ANIM_TIME);
 
-	// frame1->alpha.interpolateTo(0, GO_ANIM_TIME);
-	// core->main(GO_ANIM_TIME);
-	//
-	// core->main(1.5);
+	frame1->alpha.interpolateTo(0, GO_ANIM_TIME);
+	core->main(GO_ANIM_TIME);
+
+	core->main(1.5);
 	//core->sound->streamMusic("Requiem", 0);
 
 
@@ -360,15 +360,15 @@ void GameOver::applyState()
 		dsq->sound->stopMusic();
 		float transferSeconds = dsq->continuity.seconds;
 		dsq->continuity.loadFile(dsq->recentSaveSlot);
-		
+
 		/*
 		//float lastLoadSeconds = dsq->continuity.seconds;
-		// time spent on a session that ended with death is the 
+		// time spent on a session that ended with death is the
 		// difference between the current total time and the last save time?
 		// nope.
 		// ignore doing the above for now!
 		*/
-		
+
 		dsq->continuity.seconds = transferSeconds;
 		dsq->game->transitionToScene(dsq->game->sceneToLoad);
 	}
