@@ -562,9 +562,6 @@ void Randomizer::initialiseChecks(){
                        "Simon Says area, Transturtle"});
     checks->push_back({1318, "transturtle_seahorse","transport_seahorse",1, "Transport to Arnassi Ruins right area",
                        "Arnassi Ruins, Transturtle"});
-
-
-
 }
 
 
@@ -627,6 +624,7 @@ Randomizer::~Randomizer() {
  * @param aCheck The transport item to activate
  */
 void Randomizer::receivingTransport(check_t *aCheck) {
+	debugLog("Start Randomizer::receivingTransport\n");
     int lAreaStringIndex = 0;
     if (aCheck->flag == 1310) {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL01, 1);
@@ -660,6 +658,7 @@ void Randomizer::receivingTransport(check_t *aCheck) {
             dsq->continuity.stringBank.get(226) + " " + dsq->continuity.stringBank.get(lAreaStringIndex),
             false, false, false, 10
             );
+	debugLog("End Randomizer::receivingTransport\n");
 }
 
 /**
@@ -667,6 +666,7 @@ void Randomizer::receivingTransport(check_t *aCheck) {
  * @param aCheck The collectible check item to activate
  */
 void Randomizer::receivingCollectible(check_t *aCheck) {
+	debugLog("Start Randomizer::receivingCollectible\n");
     collectible_t *lCollectible = nullptr;
     for (int i = 0; i < collectibles->size() && !lCollectible; i = i + 1) {
         if (collectibles->at(i).name == aCheck->item) {
@@ -702,6 +702,7 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
     }
 
 
+	debugLog("End Randomizer::receivingCollectible\n");
 }
 
 /**
@@ -709,6 +710,7 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
  * @param aCheck The song check item to activate
  */
 void Randomizer::receivingSong(check_t *aCheck) {
+	debugLog("Start Randomizer::receivingSong\n");
     if (aCheck->flag == 1300) { // Li song
         if (dsq->continuity.getFlag(FLAG_LI) == 0) {
             dsq->continuity.setFlag(FLAG_LI, 100);
@@ -774,6 +776,7 @@ void Randomizer::receivingSong(check_t *aCheck) {
                                       false, 8, "", false, SONG_SPIRITFORM);
         }
     }
+	debugLog("End Randomizer::receivingSong\n");
 }
 
 /**
@@ -782,6 +785,7 @@ void Randomizer::receivingSong(check_t *aCheck) {
  * @param aCount The number of element to receive
  */
 void Randomizer::receivingItem(const std::string& aItem, int aCount) {
+	debugLog("Start Randomizer::receivingItem\n");
 	std::stringstream lMessageStream;
 	if (aItem.compare(0, 10, "ingredient") == 0) {
 		check_t * lCheck = getCheckByItem(aItem);
@@ -819,6 +823,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		assert(false && "The receving item is not valid!");
 	}
     showQuickMessage(lMessageStream.str());
+	debugLog("End Randomizer::receivingItem\n");
 }
 
 /**
@@ -826,7 +831,9 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
  * @param aText The text to show
  */
 void Randomizer::showQuickMessage(const std::string &aText){
+	debugLog("Start Randomizer::showQuickMessage\n");
     dsq->screenMessage(aText);
+	debugLog("End Randomizer::showQuickMessage\n");
 }
 
 /**
@@ -834,14 +841,15 @@ void Randomizer::showQuickMessage(const std::string &aText){
  * @param aCheckId The Id of the check to retreive
  * @return A pointer to the check_t object
  */
-check_t *Randomizer::getCheck(const std::string& aCheckId)
-{
+check_t *Randomizer::getCheck(const std::string& aCheckId) {
+	debugLog("Start Randomizer::getCheck\n");
 	check_t *result = nullptr;
     int lCheckIndex = getCheckIndex(aCheckId);
     if (lCheckIndex != -1) {
         result = getCheckByIndex(lCheckIndex);
     }
 	return result;
+	debugLog("End Randomizer::getCheck\n");
 }
 
 /**
@@ -849,8 +857,8 @@ check_t *Randomizer::getCheck(const std::string& aCheckId)
  * @param aCheckId The Id of the check to retreive
  * @return The index of the check in the CHECKS vector
  */
-int Randomizer::getCheckIndex(const std::string& aCheckId)
-{
+int Randomizer::getCheckIndex(const std::string& aCheckId) {
+	debugLog("Start Randomizer::getCheckIndex\n");
     int result = -1;
     for (int i = 0; i < checks->size() && result == -1; i = i + 1) {
         if (getCheckByIndex(i)->id == aCheckId) {
@@ -858,6 +866,7 @@ int Randomizer::getCheckIndex(const std::string& aCheckId)
         }
     }
     return result;
+	debugLog("End Randomizer::getCheckIndex\n");
 }
 
 /**
@@ -865,8 +874,8 @@ int Randomizer::getCheckIndex(const std::string& aCheckId)
  * @param aItem The item Id of the check to retreive
  * @return A pointer to the check_t object
  */
-check_t *Randomizer::getCheckByItem(const std::string& aItem)
-{
+check_t *Randomizer::getCheckByItem(const std::string& aItem) {
+	debugLog("Start Randomizer::getCheckByItem\n");
 	check_t *result = nullptr;
 	for (int i = 0; i < checks->size() && !result; i = i + 1) {
         check_t * lCheck = getCheckByIndex(i);
@@ -875,6 +884,7 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
 		}
 	}
 	return result;
+	debugLog("End Randomizer::getCheckByItem\n");
 }
 
 /**
@@ -883,6 +893,7 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
  * @return the ingredient
  */
 ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHING) {
+	debugLog("Start Randomizer::getRandomIngredient\n");
     std::vector<ingredient_t *> lIngredients;
     ingredient_t *lIngredient = nullptr;
     for (auto lIterator = ingredients->begin(); lIterator != ingredients->end(); ++lIterator) {
@@ -894,6 +905,7 @@ ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHIN
         lIngredient = lIngredients.at(rand()%lIngredients.size());
     }
     assert(lIngredient && "getRandomIngredient: The ingredient is not valid");
+	debugLog("End Randomizer::getRandomIngredient\n");
     return lIngredient;
 }
 
@@ -906,6 +918,7 @@ ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHIN
  * @return The (last) spawned ingredient;
  */
 Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int aTimes, int aOut) {
+	debugLog("Start Randomizer::spawnRecipe\n");
     Entity *lResult = nullptr;
     if (aRecipe->result == "PoisonLoaf") {
         lResult = spawnIngredient("RottenMeat", aPosition,
@@ -929,6 +942,7 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
         }
     }
     return lResult;
+	debugLog("End Randomizer::spawnRecipe\n");
 }
 
 /**
@@ -941,6 +955,7 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
  * @return The (last) spawned ingredient;
  */
 Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector &aPosition, int aTimes, int aOut, bool aRandomized) {
+	debugLog("Start Randomizer::spawnIngredient\n");
     Entity *lResult = nullptr;
     IngredientData *lIngredientData;
     std::string lIngredientName = aIngredient;
@@ -969,6 +984,7 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
             lResult = spawnRecipe(lRecipe, aPosition, aTimes, aOut);
         }
     }
+	debugLog("End Randomizer::spawnIngredient\n");
     return lResult;
 }
 
@@ -979,6 +995,7 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
  * @param aIngredientData The ingredient that represent the recipe
  */
 void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, IngredientData *aIngredientData) {
+	debugLog("Start Randomizer::spawnRecipeFromEntity\n");
     if (aRecipe->result == "PoisonLoaf") {
         IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName("RottenMeat");
         spawnIngredientFromEntity(aEntity, lIngredientData, false);
@@ -1006,6 +1023,7 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, Ingred
             }
         }
     }
+	debugLog("End Randomizer::spawnRecipeFromEntity\n");
 }
 
 /**
@@ -1014,8 +1032,8 @@ void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, Ingred
  * @param aIngredientData The ingredient to spawn
  * @param aRandomized Is aIngredientData should be randomized before spawning (default true)
  */
-void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIngredientData, bool aRandomized)
-{
+void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIngredientData, bool aRandomized) {
+	debugLog("Start Randomizer::spawnIngredientFromEntity\n");
     IngredientData *lIngredientData = aIngredientData;
     if (aRandomized) {
         lIngredientData = getRandomizedIngredientData(aIngredientData);
@@ -1037,6 +1055,7 @@ void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIng
         }
     }
 
+	debugLog("End Randomizer::spawnIngredientFromEntity\n");
 }
 
 /**
@@ -1044,8 +1063,8 @@ void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIng
  * @param aData The IngredientData to randomize
  * @return The randomized IngredientData.
  */
-IngredientData *Randomizer::getRandomizedIngredientData(IngredientData* aData)
-{
+IngredientData *Randomizer::getRandomizedIngredientData(IngredientData* aData) {
+	debugLog("Start Randomizer::getRandomizedIngredientData\n");
 	IngredientData* lRandomizedData = aData;
 	if (dsq) {
         int lIndex = -1;
@@ -1061,6 +1080,7 @@ IngredientData *Randomizer::getRandomizedIngredientData(IngredientData* aData)
 		assert(lRandomizedData && "The ingredient is not valid");
 	}
 	return lRandomizedData;
+	debugLog("End Randomizer::getRandomizedIngredientData\n");
 }
 
 /**
@@ -1069,7 +1089,9 @@ IngredientData *Randomizer::getRandomizedIngredientData(IngredientData* aData)
  * @return True if an error occured at initialization. False if not.
  */
 bool Randomizer::hasError() const{
+	debugLog("Start Randomizer::hasError\n");
     return error;
+	debugLog("End Randomizer::hasError\n");
 }
 
 /**
@@ -1077,7 +1099,9 @@ bool Randomizer::hasError() const{
  * @return The error message
  */
 std::string Randomizer::getErrorMessage(){
+	debugLog("Start Randomizer::getErrorMessage\n");
     return errorMessage;
+	debugLog("End Randomizer::getErrorMessage\n");
 }
 
 /**
@@ -1085,15 +1109,19 @@ std::string Randomizer::getErrorMessage(){
  * @param message The message to assign to getErrorMessage
  */
 void Randomizer::setError(std::string message) {
+	debugLog("Start Randomizer::setError\n");
     errorMessage = std::move(message);
     error = true;
+	debugLog("End Randomizer::setError\n");
 }
 
 /**
  * Remove pending error
  */
 void Randomizer::clearError() {
+	debugLog("Start Randomizer::clearError\n");
     error = false;
+	debugLog("End Randomizer::clearError\n");
 }
 
 
@@ -1103,11 +1131,13 @@ void Randomizer::clearError() {
  * @return The check
  */
 check_t *Randomizer::getCheckByIndex(int aIndex) {
+	debugLog("Start Randomizer::getCheckByIndex\n");
     check_t * lResult = nullptr;
     if (aIndex >= 0 && aIndex < checks->size()) {
         lResult = &(checks->at(aIndex));
     }
     return lResult;
+	debugLog("End Randomizer::getCheckByIndex\n");
 }
 
 /**
@@ -1115,7 +1145,9 @@ check_t *Randomizer::getCheckByIndex(int aIndex) {
  * @param aUid The ID of the Randomizer
  */
 void Randomizer::setUid(std::string aUid) {
+	debugLog("Start Randomizer::setUid\n");
     uid = std::move(aUid);
+	debugLog("End Randomizer::setUid\n");
 }
 
 
@@ -1124,7 +1156,9 @@ void Randomizer::setUid(std::string aUid) {
  * @return The ID of the Randomizer
  */
 std::string Randomizer::getUid() {
+	debugLog("Start Randomizer::getUid\n");
     return uid;
+	debugLog("End Randomizer::getUid\n");
 }
 
 /**
@@ -1132,7 +1166,9 @@ std::string Randomizer::getUid() {
  * @param value The value to assign to `blindGoal`
  */
 void Randomizer::setBlindGoal(bool value) {
+	debugLog("Start Randomizer::setBlindGoal\n");
     blindGoal = value;
+	debugLog("End Randomizer::setBlindGoal\n");
 }
 
 /**
@@ -1140,7 +1176,9 @@ void Randomizer::setBlindGoal(bool value) {
  * @return The value to assign to `blindGoal`
  */
 bool Randomizer::getBlindGoal() {
+	debugLog("Start Randomizer::getBlindGoal\n");
     return blindGoal;
+	debugLog("End Randomizer::getBlindGoal\n");
 }
 
 /**
@@ -1148,7 +1186,9 @@ bool Randomizer::getBlindGoal() {
  * @param aValue The value to assign to `isAquarianTranslated`
  */
 void Randomizer::setIsAquarianTranslated(bool aValue){
+	debugLog("Start Randomizer::setIsAquarianTranslated\n");
     isAquarianTranslated = aValue;
+	debugLog("End Randomizer::setIsAquarianTranslated\n");
 }
 
 /**
@@ -1156,7 +1196,9 @@ void Randomizer::setIsAquarianTranslated(bool aValue){
  * @return True if the text should be translated
  */
 bool Randomizer::getIsAquarianTranslated(){
+	debugLog("Start Randomizer::getIsAquarianTranslated\n");
     return isAquarianTranslated;
+	debugLog("End Randomizer::getIsAquarianTranslated\n");
 }
 
 /**
@@ -1164,11 +1206,13 @@ bool Randomizer::getIsAquarianTranslated(){
  * @return The filename
  */
 std::string Randomizer::getAquarianGfx(){
+	debugLog("Start Randomizer::getAquarianGfx\n");
     std::string lResult = "aquarian";
     if (isAquarianTranslated) {
         lResult = "aquarian_alt";
     }
     return lResult;
+	debugLog("End Randomizer::getAquarianGfx\n");
 }
 
 /**
@@ -1176,7 +1220,9 @@ std::string Randomizer::getAquarianGfx(){
  * @param aAvatar Naija
  */
 void Randomizer::setAvatar(Avatar *aAvatar) {
+	debugLog("Start Randomizer::setAvatar\n");
     avatar = aAvatar;
+	debugLog("End Randomizer::setAvatar\n");
 }
 
 /**
@@ -1187,6 +1233,7 @@ void Randomizer::setAvatar(Avatar *aAvatar) {
      * @param aFlag write a check if true
      */
 void Randomizer::writeHelpData(std::stringstream *aMessageStream, std::string aText, int aFlag){
+	debugLog("Start Randomizer::writeHelpData\n");
     if (aFlag) {
         *aMessageStream << "[X] ";
     } else {
@@ -1194,6 +1241,7 @@ void Randomizer::writeHelpData(std::stringstream *aMessageStream, std::string aT
     }
     *aMessageStream << aText;
     *aMessageStream << "\n";
+	debugLog("End Randomizer::writeHelpData\n");
 }
 
 /**
@@ -1202,6 +1250,7 @@ void Randomizer::writeHelpData(std::stringstream *aMessageStream, std::string aT
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendItemHelpData(std::string &aData) {
+	debugLog("Start Randomizer::appendItemHelpData\n");
     std::stringstream lMessageStream;
     lMessageStream << "[Progression item obtained]\n";
     writeHelpData(&lMessageStream, "Bind song", dsq->continuity.hasSong(SONG_BIND));
@@ -1226,6 +1275,7 @@ void Randomizer::appendItemHelpData(std::string &aData) {
 
     lMessageStream << "\n";
     aData += lMessageStream.str();
+	debugLog("End Randomizer::appendItemHelpData\n");
 }
 
 /**
@@ -1234,6 +1284,7 @@ void Randomizer::appendItemHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendMiniBossHelpData(std::string &aData) {
+	debugLog("Start Randomizer::appendMiniBossHelpData\n");
     std::stringstream lMessageStream;
     lMessageStream << "[Mini bosses beaten]\n";
     writeHelpData(&lMessageStream, "Nautilus Prime", dsq->continuity.getFlag(FLAG_MINIBOSS_NAUTILUSPRIME));
@@ -1257,6 +1308,7 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
     }
 
     aData += lMessageStream.str();
+	debugLog("End Randomizer::appendMiniBossHelpData\n");
 }
 
 /**
@@ -1265,6 +1317,7 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
+	debugLog("Start Randomizer::appendBigBossHelpData\n");
     std::stringstream lMessageStream;
     lMessageStream << "[Bosses beaten]\n";
     writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
@@ -1285,6 +1338,7 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
     }
 
     aData += lMessageStream.str();
+	debugLog("End Randomizer::appendBigBossHelpData\n");
 }
 
 /**
@@ -1293,6 +1347,7 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendSecretHelpData(std::string &aData) {
+	debugLog("Start Randomizer::appendSecretHelpData\n");
 
     std::stringstream lMessageStream;
     lMessageStream << "[Secrets obtained]\n";
@@ -1310,6 +1365,7 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
     }
 
     aData += lMessageStream.str();
+	debugLog("End Randomizer::appendSecretHelpData\n");
 }
 
 /**
@@ -1318,6 +1374,7 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendLocationsHelpData(std::string &aData) {
+	debugLog("Start Randomizer::appendLocationsHelpData\n");
     const int order[218] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63, 64, 65, 194, 213, 119, 120,
                             206, 71, 72, 73, 74, 75, 160, 178, 162, 205, 27, 170, 28, 163, 29, 169, 195, 1, 2, 3, 4, 5,
                             6, 7, 8, 148, 149, 150, 9, 211, 11, 10, 12, 13, 177, 14, 15, 16, 179, 191, 164, 217, 187,
@@ -1337,6 +1394,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
     }
     lMessageStream << "\n\n";
     aData += lMessageStream.str();
+	debugLog("End Randomizer::appendLocationsHelpData\n");
 }
 
 
@@ -1346,6 +1404,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
+	debugLog("Start Randomizer::onLoad\n");
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
@@ -1353,20 +1412,20 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
         }
     } else {
-        // dsq->toggleCursor(true);
-        // if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
-        //     if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
-        //         dsq->game->sceneToLoad = "naijacave";
-        //         dsq->game->positionToAvatar = Vector(8880, 3881);
-        //     }
-        // } else {
-        //     if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
-        //         dsq->game->sceneToLoad = "vedhacave";
-        //         dsq->game->positionToAvatar = Vector(1743, 2888);
-        //     }
-        // }
-        //
-        // dsq->toggleCursor(false);
+        dsq->toggleCursor(true);
+        if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
+            if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
+                dsq->game->sceneToLoad = "naijacave";
+                dsq->game->positionToAvatar = Vector(8880, 3881);
+            }
+        } else {
+            if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
+                dsq->game->sceneToLoad = "vedhacave";
+                dsq->game->positionToAvatar = Vector(1743, 2888);
+            }
+        }
+
+        dsq->toggleCursor(false);
     }
     if (skipFirstVision) {
         dsq->continuity.setFlag(FLAG_VISION_ENERGYTEMPLE, 1);
@@ -1378,13 +1437,16 @@ void Randomizer::onLoad(bool aNewGame){
         dsq->continuity.setFlag(FLAG_ENERGYSLOT_MAINAREA, 29);
     }
     inGame = true;
+	debugLog("End Randomizer::onLoad\n");
 }
 
 /**
  * When a game is quitting.
  */
 void Randomizer::onClose() {
+	debugLog("Start Randomizer::onClose\n");
     inGame = false;
+	debugLog("End Randomizer::onClose\n");
 }
 
 
@@ -1392,6 +1454,7 @@ void Randomizer::onClose() {
  * Lunched at each game loop iteration
  */
 void Randomizer::update(){
+	debugLog("Start Randomizer::update\n");
     auto lNow = std::chrono::system_clock::now();
     if (currentMessageTime) {
         auto lTime = std::chrono::system_clock::from_time_t (currentMessageTime);
@@ -1405,6 +1468,7 @@ void Randomizer::update(){
             }
         }
     }
+	debugLog("End Randomizer::update\n");
 }
 
 /**
@@ -1413,6 +1477,7 @@ void Randomizer::update(){
  * @return the number of mini bosses that as been beaten by the player
  */
 int Randomizer::miniBossCount() {
+	debugLog("Start Randomizer::miniBossCount\n");
     int lMiniBosses = 0;
     for (int i = FLAG_MINIBOSS_START; i <= FLAG_MINIBOSS_END; i = i + 1) {
         if (dsq->continuity.getFlag(i) > 0) {
@@ -1420,6 +1485,7 @@ int Randomizer::miniBossCount() {
         }
     }
     return lMiniBosses;
+	debugLog("End Randomizer::miniBossCount\n");
 }
 
 /**
@@ -1428,6 +1494,7 @@ int Randomizer::miniBossCount() {
  * @return the number of big bosses that as been beaten by the player
  */
 int Randomizer::bigBossCount() {
+	debugLog("Start Randomizer::bigBossCount\n");
     int lBigBosses = 0;
     if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) > 0) {
         lBigBosses = lBigBosses + 1;
@@ -1445,6 +1512,7 @@ int Randomizer::bigBossCount() {
         lBigBosses = lBigBosses + 1;
     }
     return lBigBosses;
+	debugLog("End Randomizer::bigBossCount\n");
 }
 
 /**
@@ -1453,6 +1521,7 @@ int Randomizer::bigBossCount() {
  * @return the number of secrets founded by the player
  */
 int Randomizer::secretsFound() {
+	debugLog("Start Randomizer::secretsFound\n");
     int lSecretsCount = 0;
     if (dsq->continuity.getFlag(FLAG_SECRET01) != 0) {
         lSecretsCount = lSecretsCount + 1;
@@ -1464,6 +1533,7 @@ int Randomizer::secretsFound() {
         lSecretsCount = lSecretsCount + 1;
     }
     return lSecretsCount;
+	debugLog("End Randomizer::secretsFound\n");
 }
 
 
@@ -1472,25 +1542,30 @@ int Randomizer::secretsFound() {
  * @return True if the final boss is accessible. False if not.
  */
 bool Randomizer::accessFinalBoss() {
+	debugLog("Start Randomizer::accessFinalBoss\n");
     return dsq->continuity.hasLi() and dsq->continuity.hasSong(SONG_DUALFORM) and
            dsq->continuity.hasSong(SONG_ENERGYFORM) and dsq->continuity.hasSong(SONG_SUNFORM)
            and dsq->continuity.hasSong(SONG_BIND) and miniBossCount() >= miniBossesToKill and
            bigBossCount() >= bigBossesToKill and (!secretsNeeded || (secretsFound() == 3));
+	debugLog("End Randomizer::accessFinalBoss\n");
 }
 
 void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
+	debugLog("Start Randomizer::showHint\n");
     if (aCount < aObjective) {
         std::stringstream lMessageStream;
         lMessageStream << "You have " << aCount << " " << aMessage << ". Needing " << aObjective <<
                             " to access final boss.";
         showText(lMessageStream.str());
     }
+	debugLog("End Randomizer::showHint\n");
 }
 
 /**
  * Show what is missing to access final boss.
  */
 void Randomizer::showHintFinalBoss() {
+	debugLog("Start Randomizer::showHintFinalBoss\n");
     if (!dsq->continuity.hasLi()) {
         showText("Li needed to access final boss..");
     }
@@ -1512,6 +1587,7 @@ void Randomizer::showHintFinalBoss() {
         showHint(secretsFound(), 3, "secret memories founded");
     }
     dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+	debugLog("End Randomizer::showHintFinalBoss\n");
 }
 
 /**
@@ -1520,8 +1596,8 @@ void Randomizer::showHintFinalBoss() {
  * @param aX The horizontal coordinate of the top corner of the text to show
  * @param aX The vertical coordinate of the top corner of the text to show
  */
-void Randomizer::showText(const std::string &aText, float aX, float aY)
-{
+void Randomizer::showText(const std::string &aText, float aX, float aY) {
+	debugLog("Start Randomizer::showText\n");
     if (currentMessageTime) {
         nextMessages->push({aText, aX, aY});
     } else {
@@ -1568,5 +1644,6 @@ void Randomizer::showText(const std::string &aText, float aX, float aY)
         t->setText(aText);
         dsq->getTopStateData()->addRenderObject(t, LR_HUD);
     }
+	debugLog("End Randomizer::showText\n");
 }
 

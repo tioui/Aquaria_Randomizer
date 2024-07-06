@@ -53,6 +53,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
  * @param server The server URI (including port number
  */
 void RandomizerArchipelago::tryConnection(const std::string& aServer) {
+	debugLog("Start RandomizerArchipelago::tryConnection\n");
     bool mustRetry = true;
     std::string lcacert = "cacert.pem";
     std::string lServer = aServer;
@@ -85,6 +86,7 @@ void RandomizerArchipelago::tryConnection(const std::string& aServer) {
     if (hasError() && mustRetry) {
         tryConnection("ws://" + aServer);
     }
+	debugLog("End RandomizerArchipelago::tryConnection\n");
 }
 
 /**
@@ -100,6 +102,7 @@ RandomizerArchipelago::~RandomizerArchipelago(){
  * Set every APClient callback
  */
 void RandomizerArchipelago::initialiseCallback(){
+	debugLog("Start RandomizerArchipelago::initialiseCallback\n");
     apClient->set_socket_connected_handler([&](){
         onSocketConnected();
     });
@@ -127,20 +130,25 @@ void RandomizerArchipelago::initialiseCallback(){
     apClient->set_bounced_handler([&](const nlohmann::json& aJson){
         onBounceMessageReceived(aJson);
     });
+	debugLog("End RandomizerArchipelago::initialiseCallback\n");
 }
 
 /**
  * Launched when the socket has been connected to the Archipelago server
  */
 void RandomizerArchipelago::onSocketConnected(){
+	debugLog("Start RandomizerArchipelago::onSocketConnected\n");
     connected = true;
+	debugLog("End RandomizerArchipelago::onSocketConnected\n");
 }
 
 /**
  * Launched when the socket has been disconnected to the Archipelago server
  */
 void RandomizerArchipelago::onSocketDisconnected(){
+	debugLog("Start RandomizerArchipelago::onSocketDisconnected\n");
     connected = false;
+	debugLog("End RandomizerArchipelago::onSocketDisconnected\n");
 }
 
 /**
@@ -148,7 +156,9 @@ void RandomizerArchipelago::onSocketDisconnected(){
  * \param aText The error message
  */
 void RandomizerArchipelago::onSockerError (const std::string& aText) {
+	debugLog("Start RandomizerArchipelago::onSockerError \n");
     setError(aText);
+	debugLog("End RandomizerArchipelago::onSockerError \n");
 }
 
 /**
@@ -156,6 +166,7 @@ void RandomizerArchipelago::onSockerError (const std::string& aText) {
  * \param aTexts Every text message
  */
 void RandomizerArchipelago::onSlotRefused (const std::list<std::string>& aTexts){
+	debugLog("Start RandomizerArchipelago::onSlotRefused\n");
     std::stringstream lMessageStream;
     bool first = true;
     lMessageStream << "Connection to slot refused: ";
@@ -169,12 +180,14 @@ void RandomizerArchipelago::onSlotRefused (const std::list<std::string>& aTexts)
     }
 
     setError(lMessageStream.str());
+	debugLog("End RandomizerArchipelago::onSlotRefused\n");
 }
 
 /**
  * Launched when the the Archipelago send Room Info message
  */
 void RandomizerArchipelago::onRoomInfoHandler(){
+	debugLog("Start RandomizerArchipelago::onRoomInfoHandler\n");
     std::list<std::string> tags;
     if (deathLink) {
         tags.emplace_back("DeathLink");
@@ -187,6 +200,7 @@ void RandomizerArchipelago::onRoomInfoHandler(){
                               tags, AP_VERSION_SUPPORT);
     }
     hasRoomInfo = true;
+	debugLog("End RandomizerArchipelago::onRoomInfoHandler\n");
 }
 
 /**
@@ -194,6 +208,7 @@ void RandomizerArchipelago::onRoomInfoHandler(){
  * @param aJsonText The "slot_data" json file
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
+	debugLog("Start RandomizerArchipelago::onSlotConnected\n");
     int lAquarianTranslated = false;
     int lBlindGoal = false;
     hasSlotInfo = true;
@@ -234,6 +249,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         ingredientReplacement->push_back(lElement);
     }
 
+	debugLog("End RandomizerArchipelago::onSlotConnected\n");
 }
 
 /**
@@ -241,6 +257,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
  * @param aItems A list of item to received
  */
 void RandomizerArchipelago::onItemsReceived (const std::list<APClient::NetworkItem>& aItems){
+	debugLog("Start RandomizerArchipelago::onItemsReceived\n");
     for (APClient::NetworkItem lItem : aItems) {
         if (lItem.index > dsq->continuity.getFlag(ITEM_INDEX_FLAG)) {
             apClient->Sync();
@@ -251,6 +268,7 @@ void RandomizerArchipelago::onItemsReceived (const std::list<APClient::NetworkIt
             dsq->continuity.setFlag(ITEM_INDEX_FLAG, lItem.index + 1);
         }
     }
+	debugLog("End RandomizerArchipelago::onItemsReceived\n");
 }
 
 
@@ -259,6 +277,7 @@ void RandomizerArchipelago::onItemsReceived (const std::list<APClient::NetworkIt
  * @param aJson The message th show
  */
 void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
+	debugLog("Start RandomizerArchipelago::onPrintJson\n");
     if (aJson.type != "Tutorial" && aJson.type != "Join" && aJson.type != "Part" && aJson.type != "Hint" &&
         aJson.type != "TagsChanged" && aJson.type != "CommandResult" && aJson.type != "AdminCommandResult") {
         if (aJson.type != "ItemSend" || !selfMessageOnly || selfRelatedJson(aJson.data)) {
@@ -270,15 +289,18 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
             showText(lMessageStream.str());
         }
     }
+	debugLog("End RandomizerArchipelago::onPrintJson\n");
 }
 
 bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>& aData) {
+	debugLog("Start RandomizerArchipelago::selfRelatedJson\n");
     bool lResult = false;
     for (const APClient::TextNode& lNode : aData) {
         if (lNode.type == "player_id" and apClient->get_player_alias(std::stoi(lNode.text)) == name) {
             lResult = true;
         };
     }
+	debugLog("End RandomizerArchipelago::selfRelatedJson\n");
     return lResult;
 }
 
@@ -287,6 +309,7 @@ bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>&
  * @param aJson The message
  */
 void RandomizerArchipelago::onBounceMessageReceived (const nlohmann::json& aJson){
+	debugLog("Start RandomizerArchipelago::onBounceMessageReceived\n");
     if (deathLink) {
         auto lTags = aJson.find("tags");
         auto lDatas = aJson.find("data");
@@ -309,6 +332,7 @@ void RandomizerArchipelago::onBounceMessageReceived (const nlohmann::json& aJson
             }
         }
     }
+	debugLog("End RandomizerArchipelago::onBounceMessageReceived\n");
 }
 
 /**
@@ -317,6 +341,7 @@ void RandomizerArchipelago::onBounceMessageReceived (const nlohmann::json& aJson
  * @return The translated text
  */
 std::string RandomizerArchipelago::translateJsonDataToString(const APClient::TextNode& aNode) {
+	debugLog("Start RandomizerArchipelago::translateJsonDataToString\n");
     std::string lResult;
     if (aNode.type == "player_id") {
         lResult = apClient->get_player_alias(std::stoi(aNode.text));
@@ -328,6 +353,7 @@ std::string RandomizerArchipelago::translateJsonDataToString(const APClient::Tex
         lResult = aNode.text;
     }
     return lResult;
+	debugLog("End RandomizerArchipelago::translateJsonDataToString\n");
 }
 
 /**
@@ -336,6 +362,7 @@ std::string RandomizerArchipelago::translateJsonDataToString(const APClient::Tex
  * @return The apitem_t associate to the ID
  */
 apitem_t *RandomizerArchipelago::getApItemById(int64_t aId) {
+	debugLog("Start RandomizerArchipelago::getApItemById\n");
     apitem_t *lResult = nullptr;
     for (int i = 0; i < apItems->size() && !lResult; i = i + 1) {
         if (apItems->at(i).itemId == aId) {
@@ -343,6 +370,7 @@ apitem_t *RandomizerArchipelago::getApItemById(int64_t aId) {
         }
     }
     return lResult;
+	debugLog("End RandomizerArchipelago::getApItemById\n");
 }
 
 /**
@@ -350,6 +378,7 @@ apitem_t *RandomizerArchipelago::getApItemById(int64_t aId) {
  * @param aCheck The check to activate
 */
 void RandomizerArchipelago::activateCheck(std::string aCheck) {
+	debugLog("Start RandomizerArchipelago::activateCheck\n");
     check_t *lCheck = getCheck(aCheck);
     dsq->continuity.setFlag(lCheck->flag, 1);
     std::list<int64_t> lIds;
@@ -360,12 +389,14 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
             apClient->LocationChecks(lIds);
         }
     }
+	debugLog("End RandomizerArchipelago::activateCheck\n");
 }
 
 /**
  * Update the APClient to handle items.
  */
 void RandomizerArchipelago::connectionUpdate() {
+	debugLog("Start RandomizerArchipelago::connectionUpdate\n");
     const int item_handling_flags_all = 7;
     std::list<std::string> tags;
     if (deathLink) {
@@ -374,12 +405,14 @@ void RandomizerArchipelago::connectionUpdate() {
     std::lock_guard<std::mutex> lock(apMutex);
     apClient->ConnectUpdate(item_handling_flags_all,tags);
     apClient->poll();
+	debugLog("End RandomizerArchipelago::connectionUpdate\n");
 }
 
 /**
  * Lunched at each game loop iteration
  */
 void RandomizerArchipelago::update(){
+	debugLog("Start RandomizerArchipelago::update\n");
     Randomizer::update();
     try {
         std::lock_guard<std::mutex> lock(apMutex);
@@ -397,7 +430,7 @@ void RandomizerArchipelago::update(){
             }
         }
         if (avatar->isEntityDead()) {
-            if (!deathLinkPause) {
+            if (deathLink && !deathLinkPause) {
                 deathLinkPause = true;
                 nlohmann::json data{
                         {"time", apClient->get_server_time()},
@@ -423,12 +456,14 @@ void RandomizerArchipelago::update(){
             }
         }
     }
+	debugLog("End RandomizerArchipelago::update\n");
 }
 
 /**
  * Launched when the game is ending
  */
 void RandomizerArchipelago::endingGame() {
+	debugLog("Start RandomizerArchipelago::endingGame\n");
     if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
         (!secretsNeeded || (secretsFound() == 3))) {
         std::lock_guard<std::mutex> lock(apMutex);
@@ -437,6 +472,7 @@ void RandomizerArchipelago::endingGame() {
         showText("You are missing some prerequisite to get the goal.");
     }
 
+	debugLog("End RandomizerArchipelago::endingGame\n");
 }
 
 /**
@@ -444,19 +480,23 @@ void RandomizerArchipelago::endingGame() {
    @param aNewGame True if a new game is launched.
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
+	debugLog("Start RandomizerArchipelago::onLoad\n");
     Randomizer::onLoad(aNewGame);
     connectionUpdate();
     apClient->Sync();
     syncing = true;
+	debugLog("End RandomizerArchipelago::onLoad\n");
 }
 
 /**
  * When a game is closing a game (return to menu).
  */
 void RandomizerArchipelago::onClose(){
+	debugLog("Start RandomizerArchipelago::onClose\n");
     Randomizer::onClose();
     std::lock_guard<std::mutex> lock(apMutex);
     apClient->ConnectUpdate(0, {});
+	debugLog("End RandomizerArchipelago::onClose\n");
 }
 
 
@@ -465,6 +505,7 @@ void RandomizerArchipelago::onClose(){
  * @param aText The text to show
  */
 void RandomizerArchipelago::showQuickMessage(const std::string &aText){
+	debugLog("Start RandomizerArchipelago::showQuickMessage\n");
     if (currentQuickMessageTime) {
         nextQuickMessages->push(aText);
     } else {
@@ -473,6 +514,7 @@ void RandomizerArchipelago::showQuickMessage(const std::string &aText){
         currentQuickMessageTime = currentTime;
         dsq->screenMessage(aText);
     }
+	debugLog("End RandomizerArchipelago::showQuickMessage\n");
 }
 
 /**
