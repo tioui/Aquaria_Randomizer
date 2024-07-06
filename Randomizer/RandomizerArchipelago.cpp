@@ -397,7 +397,7 @@ void RandomizerArchipelago::update(){
             }
         }
         if (avatar->isEntityDead()) {
-            if (!deathLinkPause) {
+            if (deathLink && !deathLinkPause) {
                 deathLinkPause = true;
                 nlohmann::json data{
                         {"time", apClient->get_server_time()},
