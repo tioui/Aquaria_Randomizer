@@ -282,54 +282,54 @@ void GameOver::applyState()
 
 
 
-	frame1 = new Quad;
-	{
-		frame1->setTexture("gameover-0004");
-		frame1->position = Vector(400,300);
-		frame1->setWidthHeight(600, 600);
-	}
-	addRenderObject(frame1, LR_BACKGROUND);
-
-	frame2 = new Quad;
-	{
-		frame2->setTexture("gameover-0003");
-		frame2->position = Vector(400,300);
-		frame2->setWidthHeight(600, 600);
-	}
-	addRenderObject(frame2, LR_BACKGROUND);
-
-	frame3 = new Quad;
-	{
-		frame3->setTexture("gameover-0002");
-		frame3->position = Vector(400,300);
-		frame3->setWidthHeight(600, 600);
-	}
-	addRenderObject(frame3, LR_BACKGROUND);
-
-	Quad *frame4 = new Quad;
-	{
-		frame4->setTexture("gameover-0001");
-		frame4->position = Vector(400,300);
-		frame4->setWidthHeight(600, 600);
-	}
-	addRenderObject(frame4, LR_BACKGROUND);
-
-	Quad *shockLines = new Quad;
-	{
-		shockLines->setTexture("shock-lines");
-		shockLines->position = Vector(400,300);
-		shockLines->setWidthHeight(800, 600);
-		shockLines->setBlendType(RenderObject::BLEND_ADD);
-		shockLines->scale.interpolateTo(Vector(4,4), 1);
-	}
-	addRenderObject(shockLines, LR_BACKGROUND);
-
-	core->main(0.033);
-	if (core->afterEffectManager)
-	{
-		core->afterEffectManager->clear();
-		core->afterEffectManager->addEffect(new ShockEffect(Vector(core->width/2, core->height/2),core->screenCenter, 0.07,0.03,30,0.2f, 1.1));
-	}
+	// frame1 = new Quad;
+	// {
+	// 	frame1->setTexture("gameover-0004");
+	// 	frame1->position = Vector(400,300);
+	// 	frame1->setWidthHeight(600, 600);
+	// }
+	// addRenderObject(frame1, LR_BACKGROUND);
+	//
+	// frame2 = new Quad;
+	// {
+	// 	frame2->setTexture("gameover-0003");
+	// 	frame2->position = Vector(400,300);
+	// 	frame2->setWidthHeight(600, 600);
+	// }
+	// addRenderObject(frame2, LR_BACKGROUND);
+	//
+	// frame3 = new Quad;
+	// {
+	// 	frame3->setTexture("gameover-0002");
+	// 	frame3->position = Vector(400,300);
+	// 	frame3->setWidthHeight(600, 600);
+	// }
+	// addRenderObject(frame3, LR_BACKGROUND);
+	//
+	// Quad *frame4 = new Quad;
+	// {
+	// 	frame4->setTexture("gameover-0001");
+	// 	frame4->position = Vector(400,300);
+	// 	frame4->setWidthHeight(600, 600);
+	// }
+	// addRenderObject(frame4, LR_BACKGROUND);
+	//
+	// Quad *shockLines = new Quad;
+	// {
+	// 	shockLines->setTexture("shock-lines");
+	// 	shockLines->position = Vector(400,300);
+	// 	shockLines->setWidthHeight(800, 600);
+	// 	shockLines->setBlendType(RenderObject::BLEND_ADD);
+	// 	shockLines->scale.interpolateTo(Vector(4,4), 1);
+	// }
+	// addRenderObject(shockLines, LR_BACKGROUND);
+	//
+	// core->main(0.033);
+	// if (core->afterEffectManager)
+	// {
+	// 	core->afterEffectManager->clear();
+	// 	core->afterEffectManager->addEffect(new ShockEffect(Vector(core->width/2, core->height/2),core->screenCenter, 0.07,0.03,30,0.2f, 1.1));
+	// }
 
 	//dsq->screenTransition->transition(0);
 	dsq->overlay->alpha = 0;
@@ -337,20 +337,20 @@ void GameOver::applyState()
 	//core->main(0.1);
 	//frame3->alpha.interpolateTo(0, GO_ANIM_TIME);
 
-	core->main(GO_ANIM_TIME);
-	frame4->alpha.interpolateTo(0, GO_ANIM_TIME);
-	core->main(GO_ANIM_TIME);
-
-	frame3->alpha.interpolateTo(0, GO_ANIM_TIME);
-	core->main(GO_ANIM_TIME);
-
-	frame2->alpha.interpolateTo(0, GO_ANIM_TIME);
-	core->main(GO_ANIM_TIME);
-
-	frame1->alpha.interpolateTo(0, GO_ANIM_TIME);
-	core->main(GO_ANIM_TIME);
-
-	core->main(1.5);
+	// core->main(GO_ANIM_TIME);
+	// frame4->alpha.interpolateTo(0, GO_ANIM_TIME);
+	// core->main(GO_ANIM_TIME);
+	//
+	// frame3->alpha.interpolateTo(0, GO_ANIM_TIME);
+	// core->main(GO_ANIM_TIME);
+	//
+	// frame2->alpha.interpolateTo(0, GO_ANIM_TIME);
+	// core->main(GO_ANIM_TIME);
+	//
+	// frame1->alpha.interpolateTo(0, GO_ANIM_TIME);
+	// core->main(GO_ANIM_TIME);
+	//
+	// core->main(1.5);
 	//core->sound->streamMusic("Requiem", 0);
 
 
