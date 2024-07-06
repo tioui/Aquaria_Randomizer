@@ -314,22 +314,22 @@ void GameOver::applyState()
 	// }
 	// addRenderObject(frame4, LR_BACKGROUND);
 	//
-	// Quad *shockLines = new Quad;
-	// {
-	// 	shockLines->setTexture("shock-lines");
-	// 	shockLines->position = Vector(400,300);
-	// 	shockLines->setWidthHeight(800, 600);
-	// 	shockLines->setBlendType(RenderObject::BLEND_ADD);
-	// 	shockLines->scale.interpolateTo(Vector(4,4), 1);
-	// }
-	// addRenderObject(shockLines, LR_BACKGROUND);
-	//
-	// core->main(0.033);
-	// if (core->afterEffectManager)
-	// {
-	// 	core->afterEffectManager->clear();
-	// 	core->afterEffectManager->addEffect(new ShockEffect(Vector(core->width/2, core->height/2),core->screenCenter, 0.07,0.03,30,0.2f, 1.1));
-	// }
+	Quad *shockLines = new Quad;
+	{
+		shockLines->setTexture("shock-lines");
+		shockLines->position = Vector(400,300);
+		shockLines->setWidthHeight(800, 600);
+		shockLines->setBlendType(RenderObject::BLEND_ADD);
+		shockLines->scale.interpolateTo(Vector(4,4), 1);
+	}
+	addRenderObject(shockLines, LR_BACKGROUND);
+
+	core->main(0.033);
+	if (core->afterEffectManager)
+	{
+		core->afterEffectManager->clear();
+		core->afterEffectManager->addEffect(new ShockEffect(Vector(core->width/2, core->height/2),core->screenCenter, 0.07,0.03,30,0.2f, 1.1));
+	}
 
 	//dsq->screenTransition->transition(0);
 	dsq->overlay->alpha = 0;
