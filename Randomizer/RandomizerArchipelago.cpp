@@ -266,7 +266,6 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
             for (const APClient::TextNode& lNode : aJson.data) {
                 lMessageStream << translateJsonDataToString(lNode);
             }
-            debugLog(lMessageStream.str());
             showText(lMessageStream.str());
         }
     }
@@ -398,7 +397,6 @@ void RandomizerArchipelago::update(){
             }
         }
         if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
-            debugLog("Naija is dead.\n");
             if (deathLink && !deathLinkPause) {
                 deathLinkPause = true;
                 nlohmann::json data{
