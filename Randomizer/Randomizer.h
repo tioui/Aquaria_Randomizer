@@ -141,12 +141,6 @@ public:
     virtual void endingGame() {};
 
     /**
-     * Set the avatar (Naija) object
-     * @param avatar Naija
-     */
-    void setAvatar(Avatar *avatar);
-
-    /**
      * A new or saves game has been load
      * @param newGame True if a new game is launched.
      */
@@ -307,11 +301,6 @@ protected:
      * @return The value to assign to `blindGoal`
      */
     bool getBlindGoal();
-
-    /**
-     * Naija
-     */
-    Avatar *avatar;
 
     /**
      * Every checks of the Randomizer

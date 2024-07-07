@@ -291,7 +291,8 @@ void RandomizerArchipelago::onBounceMessageReceived (const nlohmann::json& aJson
         auto lTags = aJson.find("tags");
         auto lDatas = aJson.find("data");
         if (lTags != aJson.end() && lTags->is_array()
-            && std::find(lTags->begin(), lTags->end(), "DeathLink") != lTags->end())
+            && std::find(lTags->begin(), lTags->end(), "DeathLink") != lTags->end()
+            && dsq->game->avatar)
         {
             if (lDatas != aJson.end() && lDatas->is_object()) {
                 nlohmann::json lData = *lDatas;
@@ -301,7 +302,7 @@ void RandomizerArchipelago::onBounceMessageReceived (const nlohmann::json& aJson
                     std::string cause = lData["cause"].is_string() ?
                             lData["cause"].get<std::string>().c_str() : "Unknown";
                     showText("Died by the hands of " + source + " : " + cause);
-                    avatar->health = 0;
+                    dsq->game->avatar->health = 0;
                 }
             }
             else {
@@ -396,7 +397,8 @@ void RandomizerArchipelago::update(){
                 }
             }
         }
-        if (avatar->isEntityDead()) {
+        if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
+            debugLog("Naija is dead.\n");
             if (deathLink && !deathLinkPause) {
                 deathLinkPause = true;
                 nlohmann::json data{

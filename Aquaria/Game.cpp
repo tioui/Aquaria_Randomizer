@@ -6480,7 +6480,6 @@ void Game::applyState()
 
 	if (verbose) debugLog("Creating Avatar");
 	avatar = new Avatar();
-    dsq->randomizer->setAvatar(avatar);
 	if (verbose) debugLog("Done new Avatar");
 
 	if (warpAreaType.empty())

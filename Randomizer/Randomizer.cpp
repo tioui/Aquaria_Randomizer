@@ -715,8 +715,10 @@ void Randomizer::receivingSong(check_t *aCheck) {
             dsq->continuity.learnSong(SONG_LI);
             dsq->game->setControlHint(dsq->continuity.stringBank.get(42), false, false,
                                       false, 8, "", false, SONG_LI);
-            dsq->game->li = dsq->game->createEntity("li", 0, Vector (avatar->position.x, avatar->position.y), 0,
-                                                    false, "Li", ET_ENEMY, true);
+            if (dsq->game->avatar) {
+                dsq->game->li = dsq->game->createEntity("li", 0, Vector (dsq->game->avatar->position.x, dsq->game->avatar->position.y), 0,
+                                                        false, "Li", ET_ENEMY, true);
+            }
         }
 
     } else if (aCheck->flag == 1301) { // Shield song
@@ -800,7 +802,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
 	} else if (aItem.compare(0, 14, "upgrade_health") == 0) {
 		lMessageStream << "Upgrade: Health";
-        if (avatar->health < 10) {
+        if (dsq->game->avatar && dsq->game->avatar->health < 10) {
             dsq->continuity.upgradeHealth();
         }
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
@@ -1171,13 +1173,6 @@ std::string Randomizer::getAquarianGfx(){
     return lResult;
 }
 
-/**
- * Set the avatar (Naija) object
- * @param aAvatar Naija
- */
-void Randomizer::setAvatar(Avatar *aAvatar) {
-    avatar = aAvatar;
-}
 
 /**
      * Write the `text` to `messageStream` and put a check if `flag` is true
