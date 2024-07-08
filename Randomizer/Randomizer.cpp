@@ -405,7 +405,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1239, "urn_cathedral_r_03","ingredient_toughcake",1, "Tough cake",
                        "Mithalas Cathedral, third urn in the top right room"});
     checks->push_back({1240, "urn_cathedral_r_04","ingredient_spicyroll",1, "Spicy roll",
-                       "Mithalas Cathedral, urn in the flesh room with fleas"});
+                       "Mithalas Cathedral, bulb in the flesh room with fleas"});
     checks->push_back({1241, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rotten meat",
                        "Mithalas Cathedral, first urn in the bottom right path"});
     checks->push_back({1242, "urn_cathedral_r_06","ingredient_plantleaf",1, "Plant leaf",
