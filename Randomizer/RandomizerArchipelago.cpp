@@ -42,8 +42,12 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     apLocations = new std::vector<aplocation_t>();
     initialiseApLocations();
     tryConnection(aServer);
-    if (hasRoomInfo) {
+    if (hasRoomInfo && hasSlotInfo) {
         setUid(apClient->get_seed());
+    } else {
+        if (!hasError()) {
+            setError("Connection failed!");
+        }
     }
 }
 
