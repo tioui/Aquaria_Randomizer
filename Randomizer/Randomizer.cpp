@@ -1509,6 +1509,16 @@ void Randomizer::showHintFinalBoss() {
     dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
 }
 
+
+/**
+ * The number of messages that need to be shown to screen.
+ *
+ * @return The size of the nextMessages queue.
+ */
+ulong Randomizer::nextMessagesSize() {
+    return nextMessages->size();
+}
+
 /**
  * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
  * @param aText The text to show in game

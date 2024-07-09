@@ -388,6 +388,11 @@ void RandomizerArchipelago::update(){
     try {
         std::lock_guard<std::mutex> lock(apMutex);
         apClient->poll();
+        if (apClient->get_state() == APClient::State::DISCONNECTED) {
+            if (nextMessagesSize() == 0) {
+                showText("Disconnected from server. Trying to reconnect.");
+            }
+        }
     } catch (const websocketpp::exception& lException) {
         showText("Disconnected from server. Trying to reconnect.");
     }

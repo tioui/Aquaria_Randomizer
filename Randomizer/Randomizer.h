@@ -366,6 +366,13 @@ protected:
      */
     int secretsFound();
 
+    /**
+     * The number of messages that need to be shown to screen.
+     *
+     * @return The size of the nextMessages queue.
+     */
+    ulong nextMessagesSize();
+
 private:
 
     /**
