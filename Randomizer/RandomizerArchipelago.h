@@ -279,6 +279,11 @@ private:
     bool selfMessageOnly;
 
     /**
+     * True if the server has been disconnected and is trying to reconnect.
+     */
+    bool hasBeenDisconnected;
+
+    /**
      * Check if the Text node is related to the current player.
      * @param aData
      * @return

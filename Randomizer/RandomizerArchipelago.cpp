@@ -28,6 +28,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     password = aPassword;
     serverAddress = aServer;
     selfMessageOnly = aSelfMessage;
+    hasBeenDisconnected = false;
     hasRoomInfo = false;
     hasSlotInfo = false;
     syncing = true;
@@ -237,7 +238,6 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
-
 }
 
 /**
@@ -389,11 +389,20 @@ void RandomizerArchipelago::update(){
         std::lock_guard<std::mutex> lock(apMutex);
         apClient->poll();
         if (apClient->get_state() == APClient::State::DISCONNECTED) {
+            hasBeenDisconnected = true;
             if (nextMessagesSize() == 0) {
                 showText("Disconnected from server. Trying to reconnect.");
             }
+        } else if (apClient->get_state() == APClient::State::SOCKET_CONNECTED ||
+                   apClient->get_state() == APClient::State::SLOT_CONNECTED) {
+            if (hasBeenDisconnected) {
+                apClient->Sync();
+                syncing = true;
+            }
+            hasBeenDisconnected = false;
         }
     } catch (const websocketpp::exception& lException) {
+        hasBeenDisconnected = true;
         showText("Disconnected from server. Trying to reconnect.");
     }
     if (inGame) {
