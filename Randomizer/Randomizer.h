@@ -371,7 +371,7 @@ protected:
      *
      * @return The size of the nextMessages queue.
      */
-    ulong nextMessagesSize();
+    unsigned long nextMessagesSize();
 
 private:
 

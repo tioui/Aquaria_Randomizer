@@ -1515,7 +1515,7 @@ void Randomizer::showHintFinalBoss() {
  *
  * @return The size of the nextMessages queue.
  */
-ulong Randomizer::nextMessagesSize() {
+unsigned long Randomizer::nextMessagesSize() {
     return nextMessages->size();
 }
 
