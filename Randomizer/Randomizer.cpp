@@ -1341,6 +1341,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
+    dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);

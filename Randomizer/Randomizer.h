@@ -561,6 +561,7 @@ const int FLAG_MAINAREA_TRANSTURTLE_ROCK   = 245;
 const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 
 // Other flags
+const int FLAG_ENERGYSLOT_FIRST            = 106;
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
 
