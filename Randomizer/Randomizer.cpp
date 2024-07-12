@@ -934,6 +934,23 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
 }
 
 /**
+ * Get the recipe with a certain name.
+ *
+ * @param aName The name of the recipe to find
+ * @return The recipe found.
+ */
+Recipe * Randomizer::getRecipe(const std::string &aName) {
+    std::vector<Recipe> lRecipes = dsq->continuity.recipes;
+    Recipe * lRecipe = nullptr;
+    for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
+        if (nocasecmp(lRecipes.at(i).result, aName)==0) {
+            lRecipe = &lRecipes.at(i);
+        }
+    }
+    return lRecipe;
+}
+
+/**
  * Spawn a number of ingredient at a position in space, at a certain time.
  * @param aIngredient The ingredient to spawn
  * @param aPosition At what position to spawn the ingredient
@@ -958,17 +975,15 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
     if (nocasecmp(lIngredientData->name, "SeaLoaf")==0 || (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND)) {
         lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
     } else {
-        std::vector<Recipe> lRecipes = dsq->continuity.recipes;
-        Recipe * lRecipe = nullptr;
-        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
-            if (nocasecmp(lRecipes.at(i).result, lIngredientData->name)==0) {
-                lRecipe = &lRecipes.at(i);
+        Recipe * lRecipe = getRecipe(lIngredientData->name);
+        if (lRecipe) {
+            if (lRecipe->isKnown()) {
+                lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
+            } else {
+                lResult = spawnRecipe(lRecipe, aPosition, aTimes, aOut);
             }
-        }
-        if (lRecipe->isKnown()) {
-            lResult = dsq->game->spawnIngredient(lIngredientData->name, aPosition, aTimes, aOut);
         } else {
-            lResult = spawnRecipe(lRecipe, aPosition, aTimes, aOut);
+            debugLog("The recipe " + lIngredientData->name + " does not exists\n");
         }
     }
     return lResult;
@@ -1025,20 +1040,17 @@ void Randomizer::spawnIngredientFromEntity(Entity *aEntity, IngredientData *aIng
     if (lIngredientData->type > IT_NONE && lIngredientData->type < IT_INGREDIENTSEND ) {
         dsq->game->spawnIngredientFromEntityRandomized(aEntity, lIngredientData);
     } else {
-        std::vector<Recipe> lRecipes = dsq->continuity.recipes;
-        Recipe * lRecipe = nullptr;
-        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
-            if (nocasecmp(lRecipes.at(i).result, lIngredientData->name)==0) {
-                lRecipe = &lRecipes.at(i);
+        Recipe * lRecipe = getRecipe(lIngredientData->name);
+        if (lRecipe) {
+            if (lRecipe->isKnown()) {
+                dsq->game->spawnIngredientFromEntityRandomized(aEntity,lIngredientData);
+            } else {
+                spawnRecipeFromEntity(aEntity,lRecipe, lIngredientData);
             }
-        }
-        if (lRecipe->isKnown()) {
-            dsq->game->spawnIngredientFromEntityRandomized(aEntity,lIngredientData);
         } else {
-            spawnRecipeFromEntity(aEntity,lRecipe, lIngredientData);
+            debugLog("The recipe " + lIngredientData->name + " does not exists\n");
         }
     }
-
 }
 
 /**
@@ -1209,6 +1221,9 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Spirit form", dsq->continuity.hasSong(SONG_SPIRITFORM));
     writeHelpData(&lMessageStream, "Dual form", dsq->continuity.hasSong(SONG_DUALFORM));
     writeHelpData(&lMessageStream, "Li and Li song", dsq->continuity.hasSong(SONG_LI));
+    Recipe *lRecipe = getRecipe("hotsoup");
+    writeHelpData(&lMessageStream, "Hot soup", lRecipe && lRecipe->isKnown());
+    writeHelpData(&lMessageStream, "Arnassi armor", dsq->continuity.getFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME));
     writeHelpData(&lMessageStream, "Transport to The Veil top left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01));
     writeHelpData(&lMessageStream, "Transport to The Veil top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02));
     writeHelpData(&lMessageStream, "Transport to Open water top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
@@ -1341,7 +1356,6 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
-    dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
@@ -1364,6 +1378,7 @@ void Randomizer::onLoad(bool aNewGame){
 
         dsq->toggleCursor(false);
     }
+    dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
     if (skipFirstVision) {
         dsq->continuity.setFlag(FLAG_VISION_ENERGYTEMPLE, 1);
     }

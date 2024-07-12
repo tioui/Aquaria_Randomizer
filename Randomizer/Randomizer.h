@@ -373,6 +373,14 @@ protected:
      */
     unsigned long nextMessagesSize();
 
+    /**
+     * Get the recipe with a certain name.
+     *
+     * @param aName The name of the recipe to find
+     * @return The recipe found.
+     */
+    Recipe * getRecipe(const std::string &aName);
+
 private:
 
     /**

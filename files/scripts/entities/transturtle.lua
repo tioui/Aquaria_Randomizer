@@ -73,8 +73,6 @@ function init(me)
 		v.sbank = 1014
 		v.check = "transturtle_veil02"
 	elseif isMapName("OPENWATER03") then
-		debugLog("Here I am: ")
-		debugLog(FLAG_TRANSTURTLE_VEIL01_CHECK)
 		v.myCheckFlag = FLAG_TRANSTURTLE_OPENWATER03_CHECK
 		v.myFlag = FLAG_TRANSTURTLE_OPENWATER03
 		v.sbank = 1009
@@ -271,6 +269,10 @@ function activate(me)
 	if anyOtherFlag() then
 		entity_setActivation(me, AT_NONE)
 		
+		setFlag(v.myCheckFlag, 1)
+		randomizerCheck(v.check)
+		pickupGem("Turtle")
+
 		if isFlag(FLAG_FIRSTTRANSTURTLE, 0) then
 			local x, y = bone_getWorldPosition(v.tame)
 			entity_swimToPosition(v.n, x, y)
