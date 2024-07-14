@@ -269,9 +269,11 @@ function activate(me)
 	if anyOtherFlag() then
 		entity_setActivation(me, AT_NONE)
 		
-		setFlag(v.myCheckFlag, 1)
-		randomizerCheck(v.check)
-		pickupGem("Turtle")
+		if not isFlag(v.myCheckFlag, 1) then
+			setFlag(v.myCheckFlag, 1)
+			randomizerCheck(v.check)
+			pickupGem("Turtle")
+		end
 
 		if isFlag(FLAG_FIRSTTRANSTURTLE, 0) then
 			local x, y = bone_getWorldPosition(v.tame)
