@@ -129,31 +129,31 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1101, "bulb_turtlecave","ingredient_leafpoultice",3, "Leaf poultice",
                        "Turtle cave, bulb in Bubble Cliff"});
     checks->push_back({1102, "bulb_openwater_tl_1","ingredient_handroll",1, "Hand roll",
-                       "Open Water top left area, bulb under the rock in the right path"});
+                       "Open Waters top left area, bulb under the rock in the right path"});
     checks->push_back({1103, "bulb_openwater_tl_2","ingredient_veggiesoup",1, "Veggie soup",
-                       "Open Water top left area, bulb under the rock in the left path"});
+                       "Open Waters top left area, bulb under the rock in the left path"});
     checks->push_back({1104, "bulb_openwater_tl_3","ingredient_butterysealoaf",1, "Buttery sea loaf",
-                       "Open Water top left area, bulb to the right of the save crystal"});
+                       "Open Waters top left area, bulb to the right of the save crystal"});
     checks->push_back({1105, "bulb_openwater_tr_1","ingredient_healingpoultice",1, "Healing poultice",
-                       "Open Water top right area, bulb in the small path before Mithalas"});
+                       "Open Waters top right area, bulb in the small path before Mithalas"});
     checks->push_back({1106, "bulb_openwater_tr_2","ingredient_sealoaf",2, "Sea loaf",
-                       "Open Water top right area, bulb in the path from the left entrance"});
+                       "Open Waters top right area, bulb in the path from the left entrance"});
     checks->push_back({1107, "bulb_openwater_tr_3","ingredient_spicyroll",1, "Spicy roll",
-                       "Open Water top right area, bulb in the clearing close to the bottom exit"});
+                       "Open Waters top right area, bulb in the clearing close to the bottom exit"});
     checks->push_back({1108, "bulb_openwater_tr_4","ingredient_spicymeat",2, "Spicy meat",
-                       "Open Water top right area, bulb in the big clearing close to the save crystal"});
+                       "Open Waters top right area, bulb in the big clearing close to the save crystal"});
     checks->push_back({1109, "bulb_openwater_tr_5","ingredient_crabcake",1, "Crab cake",
-                       "Open Water top right area, bulb in the big clearing to the top exit"});
+                       "Open Waters top right area, bulb in the big clearing to the top exit"});
     checks->push_back({1110, "bulb_openwater_tr_6","ingredient_spicyroll",1, "Spicy roll",
-                       "Open Water top right area, bulb in the turtle room"});
+                       "Open Waters top right area, bulb in the turtle room"});
     checks->push_back({1111, "bulb_openwater_bl_1","ingredient_leadershiproll",2, "Leadership roll",
-                       "Open Water bottom left area, bulb inside the lowest fish pass"});
+                       "Open Waters bottom left area, bulb inside the lowest fish pass"});
     checks->push_back({1112, "bulb_openwater_bl_2","ingredient_healingpoultice",2, "Healing poultice",
-                       "Open Water bottom left area, bulb behind the chomper fish"});
+                       "Open Waters bottom left area, bulb behind the chomper fish"});
     checks->push_back({1113, "bulb_skeleton_path_1","ingredient_tastycake",1, "Tasty cake",
-                       "Open Water skeleton path, bulb close to the right exit"});
+                       "Open Waters skeleton path, bulb close to the right exit"});
     checks->push_back({1114, "bulb_skeleton_path_2","ingredient_perogi",1, "Perogi",
-                       "Open Water skeleton path, bulb behind the chomper fish"});
+                       "Open Waters skeleton path, bulb behind the chomper fish"});
     checks->push_back({1115, "bulb_arnassi_1","ingredient_tastyroll",1, "Tasty roll",
                        "Arnassi Ruins, bulb in the right part"});
     checks->push_back({1116, "bulb_arnassi_2","ingredient_specialbulb",1, "Special bulb",
@@ -243,21 +243,21 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1158, "bulb_forest_sprite_cave_2","ingredient_veggiesoup",1, "Veggie soup",
                        "Kelp Forest sprite cave, bulb in the second room"});
     checks->push_back({1159, "bulb_home_water_1","ingredient_smallegg",2, "Small egg",
-                       "Home Water, bulb below the grouper fish"});
+                       "Home Waters, bulb below the grouper fish"});
     checks->push_back({1160, "bulb_home_water_2","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Home Water, bulb in the path below Nautilus Prime"});
+                       "Home Waters, bulb in the path below Nautilus Prime"});
     checks->push_back({1161, "bulb_home_water_3","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Home Water, bulb in the little room above the grouper fish"});
+                       "Home Waters, bulb in the little room above the grouper fish"});
     checks->push_back({1162, "bulb_home_water_4","ingredient_plantleaf",3, "Plant leaf",
-                       "Home Water, bulb in the end of the left path from the Verse Cave"});
+                       "Home Waters, bulb in the end of the left path from the Verse Cave"});
     checks->push_back({1163, "bulb_home_water_5","ingredient_redbulb",2, "Red bulb",
-                       "Home Water, bulb in the top left path"});
+                       "Home Waters, bulb in the top left path"});
     checks->push_back({1164, "bulb_home_water_6","ingredient_hotsoup",1, "Hot soup",
-                       "Home Water, bulb in the bottom left room"});
+                       "Home Waters, bulb in the bottom left room"});
     checks->push_back({1165, "bulb_home_water_7","ingredient_fishmeat",2, "Fish meat",
-                       "Home Water, bulb close to Naija's Home"});
+                       "Home Waters, bulb close to Naija's Home"});
     checks->push_back({1166, "bulb_home_water_8","ingredient_seacake",1, "Sea cake",
-                       "Home Water, bulb under the rock in the left path from the Verse Cave"});
+                       "Home Waters, bulb under the rock in the left path from the Verse Cave"});
     checks->push_back({1167, "bulb_final_l_1","ingredient_arcanepoultice",1, "Arcane poultice",
                        "The Body left area, first bulb in the top face room"});
     checks->push_back({1168, "bulb_final_l_2","ingredient_divinesoup",1, "Divine soup",
@@ -423,11 +423,11 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1248, "urn_cathedral_r_12","ingredient_poisonsoup",1, "Poison soup",
                        "Mithalas Cathedral, fourth urn in the top right room"});
     checks->push_back({1249, "urn_openwater_tr_1","ingredient_smallbone",3, "Small bone",
-                       "Open Water top right area, first urn in the Mithalas exit"});
+                       "Open Waters top right area, first urn in the Mithalas exit"});
     checks->push_back({1250, "urn_openwater_tr_2","ingredient_rottenmeat",1, "Rotten meat",
-                       "Open Water top right area, second urn in the Mithalas exit"});
+                       "Open Waters top right area, second urn in the Mithalas exit"});
     checks->push_back({1251, "urn_openwater_tr_3","ingredient_sealoaf",1, "Sea loaf",
-                       "Open Water top right area, third urn in the Mithalas exit"});
+                       "Open Waters top right area, third urn in the Mithalas exit"});
     checks->push_back({1252, "crate_sunkencity_2_1","ingredient_fishoil",3, "Fish oil",
                        "Sunken City left area, crate in the little pipe room"});
     checks->push_back({1253, "crate_sunkencity_2_2","ingredient_mushroom",2, "Mushroom",
@@ -481,7 +481,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1277, "collect_seed_bag","collectible_seed_bag",1, "Seed bag",
                        "Kelp Forest sprite cave, Seed Bag"});
     checks->push_back({1278, "collect_skull","collectible_skull",1, "King's Skull",
-                       "Open Water skeleton path, King Skull"});
+                       "Open Waters skeleton path, King Skull"});
     checks->push_back({1279, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon",
                        "Song Cave, Jelly Beacon"});
     checks->push_back({1280, "collect_spore_seed","collectible_spore_seed",1, "Song plant spore",
@@ -515,7 +515,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1294, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume",
                        "Turtle cave, Urchin Costume"});
     checks->push_back({1295, "collect_nautilus","collectible_nautilus",1, "Baby nautilus",
-                       "Home Water, Nautilus Egg"});
+                       "Home Waters, Nautilus Egg"});
     checks->push_back({1296, "collect_blaster","collectible_blaster",1, "Baby blaster",
                        "Energy Temple blaster room, Blaster Egg"});
     checks->push_back({1297, "collect_dumbo","collectible_dumbo",1, "Baby dumbo",
@@ -548,12 +548,12 @@ void Randomizer::initialiseChecks(){
                        "The Veil top left area, Transturtle"});
     checks->push_back({1311, "transturtle_veil02","transport_veil02",1, "Transport to The Veil top right area",
                        "The Veil top right area, Transturtle"});
-    checks->push_back({1312, "transturtle_openwater03","transport_openwater03",1, "Transport to Open water top right area",
-                       "Open Water top right area, Transturtle"});
+    checks->push_back({1312, "transturtle_openwater03","transport_openwater03",1, "Transport to Open waters top right area",
+                       "Open Waters top right area, Transturtle"});
     checks->push_back({1313, "transturtle_forest04","transport_forest04",1, "Transport to Kelp Forest bottom left area",
                        "Kelp Forest bottom left area, Transturtle"});
-    checks->push_back({1314, "transturtle_mainarea","transport_mainarea",1, "Transport to home water",
-                       "Home Water, Transturtle"});
+    checks->push_back({1314, "transturtle_mainarea","transport_mainarea",1, "Transport to home waters",
+                       "Home Waters, Transturtle"});
     checks->push_back({1315, "transturtle_abyss03","transport_abyss03",1, "Transport to The Abyss right area",
                        "Abyss right area, Transturtle"});
     checks->push_back({1316, "transturtle_finalboss","transport_finalboss",1, "Transport to The Creator",
@@ -1223,12 +1223,12 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Li and Li song", dsq->continuity.hasSong(SONG_LI));
     Recipe *lRecipe = getRecipe("hotsoup");
     writeHelpData(&lMessageStream, "Hot soup", lRecipe && lRecipe->isKnown());
-    writeHelpData(&lMessageStream, "Arnassi armor", dsq->continuity.getFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME));
+    writeHelpData(&lMessageStream, "Arnassi Armor", dsq->continuity.getFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME));
     writeHelpData(&lMessageStream, "Transport to The Veil top left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01));
     writeHelpData(&lMessageStream, "Transport to The Veil top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02));
-    writeHelpData(&lMessageStream, "Transport to Open water top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
+    writeHelpData(&lMessageStream, "Transport to Open waters top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
     writeHelpData(&lMessageStream, "Transport to Kelp Forest bottom left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04));
-    writeHelpData(&lMessageStream, "Transport to home water", dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA));
+    writeHelpData(&lMessageStream, "Transport to home waters", dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA));
     writeHelpData(&lMessageStream, "Transport to The Abyss right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03));
     writeHelpData(&lMessageStream, "Transport to The Creator", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
     writeHelpData(&lMessageStream, "Transport to Simon says", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
