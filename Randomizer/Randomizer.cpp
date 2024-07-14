@@ -293,15 +293,15 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1183, "bulb_veil_b_2","ingredient_swampcake",1, "Swamp cake",
                        "The Veil bottom area, bulb in the left path"});
     checks->push_back({1184, "bulb_ice_cave_1","ingredient_icecream",1, "Ice cream",
-                       "Ice Cave, bulb in the room to the right"});
+                       "Ice Cavern, bulb in the room to the right"});
     checks->push_back({1185, "bulb_ice_cave_2","ingredient_berryicecream",1, "Berry ice cream",
-                       "Ice Cave, first bulb in the top exit room"});
+                       "Ice Cavern, first bulb in the top exit room"});
     checks->push_back({1186, "bulb_ice_cave_3","ingredient_veggieicecream",1, "Veggie ice cream",
-                       "Ice Cave, second bulb in the top exit room"});
+                       "Ice Cavern, second bulb in the top exit room"});
     checks->push_back({1187, "bulb_ice_cave_4","ingredient_dumboicecream",1, "Dumbo ice cream",
-                       "Ice Cave, third bulb in the top exit room"});
+                       "Ice Cavern, third bulb in the top exit room"});
     checks->push_back({1188, "bulb_ice_cave_5","ingredient_icecream",1, "Ice cream",
-                       "Ice Cave, bulb in the left room"});
+                       "Ice Cavern, bulb in the left room"});
     checks->push_back({1189, "bulb_king_jellyfish_cave_1","ingredient_specialbulb",1, "Special bulb",
                        "King Jellyfish Cave, bulb in the right path from King Jelly"});
     checks->push_back({1190, "bulb_bubble_cave_1","ingredient_coldsoup",1, "Cold soup",
@@ -1375,7 +1375,6 @@ void Randomizer::onLoad(bool aNewGame){
                 dsq->game->positionToAvatar = Vector(1743, 2888);
             }
         }
-
         dsq->toggleCursor(false);
     }
     dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
