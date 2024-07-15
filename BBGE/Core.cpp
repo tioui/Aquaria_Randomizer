@@ -3676,8 +3676,9 @@ void Core::pollEvents()
 				if ((event.key.keysym.sym == SDLK_F4) && (event.key.keysym.mod & KMOD_ALT))
 				#endif
 				{
-					quitNestedMain();
-					quit();
+					instantQuit();
+					// quitNestedMain();
+					// quit();
 				}
 
 				if ((event.key.keysym.sym == SDLK_g) && (event.key.keysym.mod & KMOD_CTRL))
