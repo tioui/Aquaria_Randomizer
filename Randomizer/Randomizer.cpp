@@ -249,7 +249,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1161, "bulb_home_water_3","ingredient_leafpoultice",1, "Leaf poultice",
                        "Home Waters, bulb in the little room above the grouper fish"});
     checks->push_back({1162, "bulb_home_water_4","ingredient_plantleaf",3, "Plant leaf",
-                       "Home Waters, bulb in the end of the left path from the Verse Cave"});
+                       "Home Waters, bulb in the end of the path close to the Verse Cave"});
     checks->push_back({1163, "bulb_home_water_5","ingredient_redbulb",2, "Red bulb",
                        "Home Waters, bulb in the top left path"});
     checks->push_back({1164, "bulb_home_water_6","ingredient_hotsoup",1, "Hot soup",
@@ -269,7 +269,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1171, "bulb_final_l_5","ingredient_arcanepoultice",1, "Arcane poultice",
                        "The Body left area, bulb in the bottom face room"});
     checks->push_back({1172, "bulb_song_cave_1","ingredient_specialbulb",1, "Special bulb",
-                       "Song Cave, bulb in the top left part"});
+                       "Song Cave, bulb in the top right part"});
     checks->push_back({1173, "bulb_song_cave_2","ingredient_handroll",1, "Hand roll",
                        "Song Cave, bulb in the big anemone room"});
     checks->push_back({1174, "bulb_song_cave_3","ingredient_eeloil",2, "Eel oil",
