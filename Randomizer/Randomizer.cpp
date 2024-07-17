@@ -341,9 +341,9 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1207, "bulb_final_boss_4","ingredient_dumboicecream",1, "Dumbo ice cream",
                        "Final Boss area, bulb in the boss third form room"});
     checks->push_back({1208, "bulb_starting_cave_1","ingredient_fishoil",1, "Fish oil",
-                       "Verse Cave, bulb in the skeleton room"});
+                       "Verse Cave right area, bulb in the skeleton room"});
     checks->push_back({1209, "bulb_starting_cave_2","ingredient_smallegg",1, "Small egg",
-                       "Verse Cave, bulb in the path right of the skeleton room"});
+                       "Verse Cave right area, bulb in the path right of the skeleton room"});
     checks->push_back({1210, "bulb_abyss_r_1","ingredient_dumboicecream",1, "Dumbo ice cream",
                        "Abyss right area, bulb behind the rock in the whale room"});
     checks->push_back({1211, "bulb_abyss_r_2","ingredient_tastyroll",1, "Tasty roll",
@@ -527,7 +527,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1300, "li_cave","song_li",1, "Li and Li song",
                        "The Veil top left area, In Li's cave"});
     checks->push_back({1301, "song_shield_hint","song_shield",1, "Shield song",
-                       "Verse Cave, the Naija hint about the shield ability"});
+                       "Verse Cave left area, the Naija hint about the shield ability"});
     checks->push_back({1302, "breaking_li_cage","song_dual",1, "Dual Form",
                        "The Body center area, breaking Li's cage"});
     checks->push_back({1303, "beating_mithalas","song_beast",1, "Beast Form",
