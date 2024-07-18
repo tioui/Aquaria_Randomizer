@@ -916,7 +916,9 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
         for (int j = 0; j < aRecipe->names.size(); j = j + 1) {
             int lIndex = -1;
             for (int i = 0; lIndex < 0 && i < ingredients->size(); i = i + 1) {
-                if (ingredients->at(i).name == aRecipe->names.at(j).name) {
+                std::string lRecipeName = aRecipe->names.at(j).name;
+                std::string lIngredientName = ingredients->at(i).name;
+                if (lRecipeName == lIngredientName) {
                     lIndex = i;
                 }
             }
@@ -940,11 +942,10 @@ Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int a
  * @return The recipe found.
  */
 Recipe * Randomizer::getRecipe(const std::string &aName) {
-    std::vector<Recipe> lRecipes = dsq->continuity.recipes;
     Recipe * lRecipe = nullptr;
-    for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
-        if (nocasecmp(lRecipes.at(i).result, aName)==0) {
-            lRecipe = &lRecipes.at(i);
+    for (int i = 0; !lRecipe && i < dsq->continuity.recipes.size(); i = i + 1) {
+        if (nocasecmp(dsq->continuity.recipes.at(i).result, aName)==0) {
+            lRecipe = &(dsq->continuity.recipes.at(i));
         }
     }
     return lRecipe;
