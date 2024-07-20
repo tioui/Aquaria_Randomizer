@@ -12,11 +12,12 @@
 #include <vector>
 #include "apclient.hpp"
 #include "../Aquaria/Avatar.h"
+#include "../BBGE/Event.h"
 
 /**
  * Constructor for the Randomizer
  */
-Randomizer::Randomizer() {
+Randomizer::Randomizer() : ActionMapper() {
 	ingredientReplacement = new std::vector<int>();
     error = false;
     inGame = false;
@@ -1358,6 +1359,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
  */
 void Randomizer::onLoad(bool aNewGame){
     if (aNewGame) {
+        askTransportation();
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
         } else {
@@ -1590,4 +1592,670 @@ void Randomizer::showText(const std::string &aText, float aX, float aY)
         dsq->getTopStateData()->addRenderObject(t, LR_HUD);
     }
 }
+
+/**
+ * Event for the Transportation menu to cancel the process.
+ */
+void Randomizer::onCancelTransportation() {
+	transporatationDone = true;
+}
+
+/**
+ * Event for the Transportation menu to manage the Naija's home destination.
+ */
+void Randomizer::onNaijaHomeTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_NAIJAHOME;
+	if (dsq->confirm("Go to Naija's home?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Naija's rock destination
+ */
+void Randomizer::onNaijaRockTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_NAIJAROCK;
+	if (dsq->confirm("Go to Naija's rock?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Veil left area destination
+ */
+void Randomizer::onVeil1Transportation() {
+	transportationSelected = FLAG_TRANSTURTLE_VEIL01;
+	if (dsq->confirm("Go to the Veil left area?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Veil right area destination
+ */
+void Randomizer::onVeil2Transportation() {
+	transportationSelected = FLAG_TRANSTURTLE_VEIL02;
+	if (dsq->confirm("Go to the Veil right area?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Arnassi Ruins destination
+ */
+void Randomizer::onArnassiTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_SEAHORSE;
+	if (dsq->confirm("Go to Arnassi Ruins?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Kelp Forest destination
+ */
+void Randomizer::onForestTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_FOREST04;
+	if (dsq->confirm("Go to Kelp Forest?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Simon says destination
+ */
+void Randomizer::onSimonTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_FOREST05;
+	if (dsq->confirm("Go to Simon Says?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Abyss destination
+ */
+void Randomizer::onAbyssTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_ABYSS03;
+	if (dsq->confirm("Go to the Abyss?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Body destination
+ */
+void Randomizer::onBodyTransportation() {
+	transportationSelected = FLAG_TRANSTURTLE_FINALBOSS;
+	if (dsq->confirm("Go to the Body?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Open Waters destination
+ */
+void Randomizer::onOpenWaterTransportation() {
+    transportationSelected = FLAG_TRANSTURTLE_OPENWATER03;
+	if (dsq->confirm("Go to Open Waters?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Event for the Transportation menu to manage the Home Waters destination
+ */
+void Randomizer::onHomeWaterTransportation() {
+    transportationSelected = FLAG_TRANSTURTLE_MAINAREA;
+	if (dsq->confirm("Go to Home Waters?","", false, 0.0)) {
+		transporatationDone = true;
+	}
+}
+
+/**
+ * Setup a menu item and a label for an option of the transportation menu
+ *
+ * @param aItem The menu item
+ * @param aItemLabel The menu item label
+ * @param aIcon The icon to show on the `aItem`
+ * @param aX The horizontal position of the menu item
+ * @param aY The vertical position of the menu item
+ * @param aText The text to put on the `aItemLabel`
+ */
+void Randomizer::setupTransportationItem(AquariaMenuItem *aItem, BitmapText *aItemLabel, const std::string& aIcon,
+                                         float aX, float aY, const std::string& aText) {
+	aItem->useQuad(aIcon);
+	aItem->useSound("click");
+	aItem->useGlow("particles/glow", 64, 64);
+	aItem->position = Vector(aX, aY);
+	aItem->followCamera = 1;
+	aItem->scale = Vector(2.0, 2.0);
+	aItem->guiInputLevel = GUILEVEL_TRANSPORT;
+    aItem->setCanDirMove(true);
+	dsq->game->addRenderObject(aItem, LR_TRANSPORT);
+
+	aItemLabel->color = 0;
+	aItemLabel->setText(aText);
+	aItemLabel->color = 0;
+	aItemLabel->followCamera = 1;
+	aItemLabel->position = Vector(aX, aY + 30);
+	aItemLabel->scale = Vector(1.0, 1.0);
+	game->addRenderObject(aItemLabel, LR_TRANSPORT);
+}
+
+/**
+ * When the user pressed escape.
+ */
+void Randomizer::onPressEscape() {
+    onCancelTransportation();
+}
+
+/**
+ * Show the transportation menu and return the selected destination flag.
+ *
+ * @return the selected destination flag
+ */
+int Randomizer::askTransportation() {
+	transportationSelected = 0;
+	if (!game->isSceneEditorActive() && !core->getShiftState() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
+		dsq->saveSlotMode == SSM_NONE) {
+	    transporatationDone = false;
+	    dsq->game->togglePause(true);
+	    sound->playSfx("menu-open");
+	    Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));
+	    bgimage->followCamera = 1;
+	    bgimage->alpha = 0;
+	    bgimage->alpha.interpolateTo(1, 0.5);
+	    //bgLabel->setWidthHeight(512*0.9f, 256*0.9f);
+	    bgimage->scale = Vector(0, 0);
+	    bgimage->scale.interpolateTo(Vector(1.5,1), 0.5);
+	    game->addRenderObject(bgimage, LR_TRANSPORT);
+	    dsq->main(0.5);
+
+	    BitmapText *lTitle = new BitmapText(&dsq->font);
+	    lTitle->color = 0;
+	    lTitle->setFontSize(50);
+	    lTitle->followCamera = 1;
+	    lTitle->position = Vector(400,75);
+	    lTitle->setText("Transportation turtle\nDestinations");
+	    lTitle->scale = Vector(1.0, 1.0);
+	    game->addRenderObject(lTitle, LR_TRANSPORT);
+
+	    float lVerticalPosition = 200.0;
+	    float lHorizontalPosition = 175.0;
+	    bool lFirst = true;
+
+		AquariaMenuItem *menuCancel = new AquariaMenuItem;
+
+	    AquariaMenuItem *lHomeWater = new AquariaMenuItem;
+	    BitmapText *lHomeWaterText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA)) {
+	        setupTransportationItem(lHomeWater, lHomeWaterText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Home Waters");
+	        lHomeWater->event.set(MakeFunctionEvent(Randomizer,onHomeWaterTransportation));
+            if (lFirst) {
+	            lHomeWater->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lHomeWater);
+                lHomeWater->setFocus(true);
+                lFirst = false;
+            }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lHomeWater->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lOpenWater = new AquariaMenuItem;
+	    BitmapText *lOpenWaterText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03)) {
+	        setupTransportationItem(lOpenWater, lOpenWaterText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Open Waters");
+	        lOpenWater->event.set(MakeFunctionEvent(Randomizer,onOpenWaterTransportation));
+	        if (lFirst) {
+	            lOpenWater->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lOpenWater);
+	            lOpenWater->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lOpenWater->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lForest = new AquariaMenuItem;
+	    BitmapText *lForestText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04)) {
+	        setupTransportationItem(lForest, lForestText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Kelp Forest");
+	        lForest->event.set(MakeFunctionEvent(Randomizer,onForestTransportation));
+	        if (lFirst) {
+	            lForest->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lForest);
+	            lForest->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lForest->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lVeil1 = new AquariaMenuItem;
+	    BitmapText *lVeil1Text = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01)) {
+	        setupTransportationItem(lVeil1, lVeil1Text, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Left Veil");
+	        lVeil1->event.set(MakeFunctionEvent(Randomizer,onVeil1Transportation));
+	        if (lFirst) {
+	            lVeil1->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lVeil1);
+	            lVeil1->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lVeil1->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lVeil2 = new AquariaMenuItem;
+	    BitmapText *lVeil2Text = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	        setupTransportationItem(lVeil2, lVeil2Text, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Right Veil");
+	        lVeil2->event.set(MakeFunctionEvent(Randomizer,onVeil2Transportation));
+	        if (lFirst) {
+	            lVeil2->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lVeil2);
+	            lVeil2->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lVeil2->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lArnassi = new AquariaMenuItem;
+	    BitmapText *lArnassiText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	        setupTransportationItem(lArnassi, lArnassiText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Arnassi Ruins");
+	        lArnassi->event.set(MakeFunctionEvent(Randomizer,onArnassiTransportation));
+	        if (lFirst) {
+	            lArnassi->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lArnassi->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lAbyss = new AquariaMenuItem;
+	    BitmapText *lAbyssText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	        setupTransportationItem(lAbyss, lAbyssText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Abyss");
+	        lAbyss->event.set(MakeFunctionEvent(Randomizer,onAbyssTransportation));
+	        if (lFirst) {
+	            lAbyss->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lAbyss->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lBody = new AquariaMenuItem;
+	    BitmapText *lBodyText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	        setupTransportationItem(lBody, lBodyText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Body");
+	        lBody->event.set(MakeFunctionEvent(Randomizer,onBodyTransportation));
+	        if (lFirst) {
+	            lBody->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	            if (lVerticalPosition > 350) {
+	                lHorizontalPosition = 325.0;
+	            }
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lBody->setCanDirMove(false);
+	    }
+
+	    AquariaMenuItem *lSimon = new AquariaMenuItem;
+	    BitmapText *lSimonText = new BitmapText(&dsq->smallFont);
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	        setupTransportationItem(lSimon, lSimonText, "gems/turtle", lHorizontalPosition,
+                            lVerticalPosition, "Simon says");
+	        lSimon->event.set(MakeFunctionEvent(Randomizer,onSimonTransportation));
+	        if (lFirst) {
+	            lSimon->setDirMove(DIR_LEFT, menuCancel);
+                menuCancel->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setFocus(true);
+	            lFirst = false;
+	        }
+	        if (lHorizontalPosition > 500) {
+	            lHorizontalPosition = 175.0;
+	            lVerticalPosition = lVerticalPosition + 100.0;
+	            if (lVerticalPosition > 350) {
+	                lHorizontalPosition = 325.0;
+	            }
+	        } else {
+	            lHorizontalPosition = lHorizontalPosition + 150;
+	        }
+	    } else {
+	        lSimon->setCanDirMove(false);
+	    }
+
+		AquariaMenuItem *lReturnBase = new AquariaMenuItem;
+		BitmapText *lReturnBaseText = new BitmapText(&dsq->smallFont);
+		if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
+			setupTransportationItem(lReturnBase, lReturnBaseText, "gems/naija-token", lHorizontalPosition,
+				lVerticalPosition, "Naija's rock");
+			lReturnBase->event.set(MakeFunctionEvent(Randomizer,onNaijaRockTransportation));
+		} else {
+			setupTransportationItem(lReturnBase, lReturnBaseText, "gems/naija-token", lHorizontalPosition,
+				lVerticalPosition, "Naija's home");
+			lReturnBase->event.set(MakeFunctionEvent(Randomizer,onNaijaHomeTransportation));
+		}
+	    if (lFirst) {
+	        lReturnBase->setDirMove(DIR_LEFT, menuCancel);
+	        menuCancel->setDirMove(DIR_RIGHT, lReturnBase);
+	        lReturnBase->setFocus(true);
+	        lFirst = false;
+	    }
+
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lOpenWater);
+	            lOpenWater->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lForest);
+	            lForest->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lVeil1);
+	            lVeil1->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lVeil2);
+	            lVeil2->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lHomeWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lHomeWater->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lHomeWater);
+	        } else {
+	            lHomeWater->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lHomeWater);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lForest);
+	            lForest->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lVeil1);
+	            lVeil1->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lVeil2);
+	            lVeil2->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lOpenWater);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lOpenWater->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lOpenWater);
+	        } else {
+	            lOpenWater->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lOpenWater);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01)) {
+	            lForest->setDirMove(DIR_RIGHT, lVeil1);
+	            lVeil1->setDirMove(DIR_LEFT, lForest);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	            lForest->setDirMove(DIR_RIGHT, lVeil2);
+	            lVeil2->setDirMove(DIR_LEFT, lForest);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	            lForest->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setDirMove(DIR_LEFT, lForest);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lForest->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lForest);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lForest->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lForest);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lForest->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lForest);
+	        } else {
+	            lForest->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lForest);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	            lVeil1->setDirMove(DIR_RIGHT, lVeil2);
+	            lVeil2->setDirMove(DIR_LEFT, lVeil1);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	            lVeil1->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setDirMove(DIR_LEFT, lVeil1);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lVeil1->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lVeil1);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lVeil1->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lVeil1);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lVeil1->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lVeil1);
+	        } else {
+	            lVeil1->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lVeil1);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	            lVeil2->setDirMove(DIR_RIGHT, lArnassi);
+	            lArnassi->setDirMove(DIR_LEFT, lVeil2);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lVeil2->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lVeil2);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lVeil2->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lVeil2);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lVeil2->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lVeil2);
+	        } else {
+	            lVeil2->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lVeil2);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	            lArnassi->setDirMove(DIR_RIGHT, lAbyss);
+	            lAbyss->setDirMove(DIR_LEFT, lArnassi);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lArnassi->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lArnassi);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lArnassi->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lArnassi);
+	        } else {
+	            lArnassi->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lArnassi);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	            lAbyss->setDirMove(DIR_RIGHT, lBody);
+	            lBody->setDirMove(DIR_LEFT, lAbyss);
+	        } else if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lAbyss->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lAbyss);
+	        } else {
+	            lAbyss->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lAbyss);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS)) {
+	        if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	            lBody->setDirMove(DIR_RIGHT, lSimon);
+	            lSimon->setDirMove(DIR_LEFT, lBody);
+	        } else {
+	            lBody->setDirMove(DIR_RIGHT, lReturnBase);
+	            lReturnBase->setDirMove(DIR_LEFT, lBody);
+	        }
+	    }
+	    if (dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05)) {
+	        lSimon->setDirMove(DIR_RIGHT, lReturnBase);
+	        lReturnBase->setDirMove(DIR_LEFT, lSimon);
+	    }
+
+		menuCancel->useQuad("Gui/cancel");
+		menuCancel->useSound("click");
+		menuCancel->useGlow("particles/glow", 128, 40);
+		menuCancel->position = Vector(400, 500);
+		menuCancel->followCamera = 1;
+		menuCancel->event.set(MakeFunctionEvent(Randomizer,onCancelTransportation));
+		menuCancel->scale = Vector(0.9, 0.9);
+		menuCancel->guiInputLevel = GUILEVEL_TRANSPORT;
+		dsq->game->addRenderObject(menuCancel, LR_TRANSPORT);
+
+	    lReturnBase->setDirMove(DIR_RIGHT, menuCancel);
+	    menuCancel->setDirMove(DIR_LEFT, lReturnBase);
+
+
+
+
+		AquariaGuiElement::currentGuiInputLevel = GUILEVEL_TRANSPORT;
+		dsq->toggleCursor(true);
+
+		while (!transporatationDone)
+		{
+		    transportationSelected = 0;
+			dsq->main(FRAME_TIME);
+		    if (transportationSelected == FLAG_TRANSTURTLE_MAINAREA) {
+		        lHomeWater->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_OPENWATER03) {
+		        lOpenWater->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_FOREST04) {
+		        lForest->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_VEIL01) {
+		        lVeil1->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_VEIL02) {
+		        lVeil2->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_SEAHORSE) {
+		        lArnassi->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_ABYSS03) {
+		        lAbyss->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_FINALBOSS) {
+		        lBody->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_FOREST05) {
+		        lSimon->setFocus(true);
+		    } else if (transportationSelected == FLAG_TRANSTURTLE_NAIJAHOME ||
+		        transportationSelected == FLAG_TRANSTURTLE_NAIJAROCK) {
+		        lReturnBase->setFocus(true);
+		    }
+		}
+		sound->playSfx("menu-close");
+		AquariaGuiElement::currentGuiInputLevel = 0;
+		bgimage->alpha.interpolateTo(0, 0.5);
+		bgimage->scale.interpolateTo(Vector(0.5, 0.5), 0.5);
+		menuCancel->setFocus(false);
+		menuCancel->safeKill();
+		lTitle->safeKill();
+		lHomeWater->setFocus(false);
+		lHomeWater->safeKill();
+		lHomeWaterText->safeKill();
+		lOpenWater->setFocus(false);
+		lOpenWater->safeKill();
+		lOpenWaterText->safeKill();
+		lForest->setFocus(false);
+		lForest->safeKill();
+		lForestText->safeKill();
+		lVeil1->setFocus(false);
+		lVeil1->safeKill();
+		lVeil1Text->safeKill();
+		lVeil2->setFocus(false);
+		lVeil2->safeKill();
+		lVeil2Text->safeKill();
+		lArnassi->setFocus(false);
+		lArnassi->safeKill();
+		lArnassiText->safeKill();
+		lAbyss->setFocus(false);
+		lAbyss->safeKill();
+		lAbyssText->safeKill();
+		lBody->setFocus(false);
+		lBody->safeKill();
+		lBodyText->safeKill();
+		lSimon->setFocus(false);
+		lSimon->safeKill();
+		lSimonText->safeKill();
+		lReturnBase->setFocus(false);
+		lReturnBase->safeKill();
+		lReturnBaseText->safeKill();
+		dsq->main(0.5);
+		bgimage->safeKill();
+		dsq->game->togglePause(false);
+		}
+	return transportationSelected;
+}
+
 

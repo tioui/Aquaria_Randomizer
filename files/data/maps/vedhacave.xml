@@ -5,6 +5,9 @@
 <Path name="sleep">
     <Node pos="2132 6554" rect="352 172" shape="0" />
 </Path>
+<Path name="transturtle">
+    <Node pos="1743 2888" rect="64 64" shape="0" />
+</Path>
 <Path name="savepoint">
     <Node pos="3512 1460" rect="294 298" shape="0" />
 </Path>

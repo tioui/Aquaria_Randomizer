@@ -850,6 +850,11 @@ luaFunc(onLoad)
     luaReturnNil();
 }
 
+luaFunc(askTransportation)
+{
+	luaReturnInt(dsq->randomizer->askTransportation());
+}
+
 luaFunc(randomizerCheck)
 {
     dsq->randomizer->activateCheck(getString(L, 1));
@@ -10445,6 +10450,7 @@ static const struct {
     luaRegister(randomizerAccessFinalBoss),
     luaRegister(randomizerShowHintFinalBoss),
     luaRegister(randomizerClose),
+    luaRegister(askTransportation),
 
 #undef MK_FUNC
 #undef MK_ALIAS

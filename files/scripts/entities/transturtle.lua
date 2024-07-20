@@ -37,6 +37,8 @@ v.myFlag = 0
 v.check = 0
 v.turtleType = TURTLE_REGULAR
 
+v.destination = 0
+
 v.light1 = 0
 v.light2 = 0
 
@@ -305,231 +307,79 @@ function activate(me)
 		end
 		local x, y = bone_getWorldPosition(v.seat)
 
-		entity_swimToPosition(v.n, x, y)
-		entity_watchForPath(v.n)
-		entity_animate(v.n, "rideTurtle", -1)
-		v.avatarAttached = true
-		if entity_isfh(me) and not entity_isfh(v.n) then
-			entity_fh(v.n)
-		elseif not entity_isfh(me) and entity_isfh(v.n) then
-			entity_fh(v.n)
-		end
-		
-		if v.li ~= 0 then
-			debugLog("here!")
-			entity_setState(v.li, STATE_PUPPET, -1, 1)
-			local x2, y2 = bone_getWorldPosition(v.seat2)
-			entity_swimToPosition(v.li, x2, y2)
-			entity_watchForPath(v.li)
-			entity_animate(v.li, "rideTurtle", -1)
-			v.liAttached = true
-			entity_setRiding(v.li, me)
-		end
-		
-		
-		entity_setRiding(v.n, me)
-		overrideZoom(0.75, 1.5)
-		if isMapName("VEIL01") then
-			entity_rotate(me, -80, 2, 0, 0, 1)
-		end
-		entity_animate(me, "swimPrep")
-		while entity_isAnimating(me) do
-			watch(FRAME_TIME)
-		end
-		
+		v.destination = askTransportation()
 
-		entity_moveToNode(me, v.leave, SPEED_FAST)
-		entity_animate(me, "swim", -1)
-		
-		playSfx("transturtle-takeoff")
-		watch(1)
-		fade(1, 1)
-		watch(1)
-		
-		-- HACK: Keep the mouse cursor from reappearing for an instant
-		-- when under keyboard or joystick control.
-		disableInput()
-		
-		
-		-- rotation
-		
-		--[[
-		VEIL02
-		VEIL01
-		OPENWATER03
-		MAINAREA
-		FOREST04
-		
-		VEIL02
-		]]--
-				
-		-- regular cycle:
-		if v.turtleType == TURTLE_REGULAR then
-			if isMapName("VEIL01") then
-				if isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				end
-			elseif isMapName("VEIL02") then
-				if isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				end
-			elseif isMapName("OPENWATER03") then
-				if isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				end
-			elseif isMapName("FOREST04") then
-				if isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				end
-			elseif isMapName("MAINAREA") then
-				if isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				end
-			elseif isMapName("ABYSS03") then
-				if isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				end
-			elseif isMapName("FINALBOSS") then
-				if isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				end
-			elseif isMapName("SEAHORSE") then
-				if isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				end
-			elseif isMapName("FOREST05") then
-				if isFlag(FLAG_TRANSTURTLE_FOREST04, 1) then
-					warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_SEAHORSE, 1) then
-					warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL02, 1) then
-					warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_VEIL01, 1) then
-					warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_ABYSS03, 1) then
-					warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FINALBOSS, 1) then
-					warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_OPENWATER03, 1) then
-					warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_MAINAREA, 1) then
-					warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
-				elseif isFlag(FLAG_TRANSTURTLE_FOREST05, 1) then
-					warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
-				end
+		if v.destination > 0 then
+			entity_swimToPosition(v.n, x, y)
+			entity_watchForPath(v.n)
+			entity_animate(v.n, "rideTurtle", -1)
+			v.avatarAttached = true
+			if entity_isfh(me) and not entity_isfh(v.n) then
+				entity_fh(v.n)
+			elseif not entity_isfh(me) and entity_isfh(v.n) then
+				entity_fh(v.n)
 			end
+			
+			if v.li ~= 0 then
+				debugLog("here!")
+				entity_setState(v.li, STATE_PUPPET, -1, 1)
+				local x2, y2 = bone_getWorldPosition(v.seat2)
+				entity_swimToPosition(v.li, x2, y2)
+				entity_watchForPath(v.li)
+				entity_animate(v.li, "rideTurtle", -1)
+				v.liAttached = true
+				entity_setRiding(v.li, me)
+			end
+			
+			
+			entity_setRiding(v.n, me)
+			overrideZoom(0.75, 1.5)
+			if isMapName("VEIL01") then
+				entity_rotate(me, -80, 2, 0, 0, 1)
+			end
+			entity_animate(me, "swimPrep")
+			while entity_isAnimating(me) do
+				watch(FRAME_TIME)
+			end
+			
+	
+			entity_moveToNode(me, v.leave, SPEED_FAST)
+			entity_animate(me, "swim", -1)
+			
+			playSfx("transturtle-takeoff")
+			watch(1)
+			fade(1, 1)
+			watch(1)
+			
+			-- HACK: Keep the mouse cursor from reappearing for an instant
+			-- when under keyboard or joystick control.
+			disableInput()
+
+			if v.destination == FLAG_TRANSTURTLE_ABYSS03 then
+				warpNaijaToSceneNode("ABYSS03", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_FINALBOSS then
+				warpNaijaToSceneNode("FINALBOSS", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_OPENWATER03 then
+				warpNaijaToSceneNode("OPENWATER03", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_MAINAREA then
+				warpNaijaToSceneNode("MAINAREA", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_FOREST05 then
+				warpNaijaToSceneNode("FOREST05", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_FOREST04 then
+				warpNaijaToSceneNode("FOREST04", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_SEAHORSE then
+				warpNaijaToSceneNode("SEAHORSE", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_VEIL02 then
+				warpNaijaToSceneNode("VEIL02", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_VEIL01 then
+				warpNaijaToSceneNode("VEIL01", "TRANSTURTLE")
+			elseif v.destination == FLAG_TRANSTURTLE_NAIJAHOME then
+				warpNaijaToSceneNode("VEDHACAVE", "TRANSTURTLE")
+			else
+				warpNaijaToSceneNode("NAIJACAVE", "TRANSTURTLE")
+			end
+		else
+			entity_setActivation(me, AT_CLICK, 128, 512)
 		end
 		
 	else

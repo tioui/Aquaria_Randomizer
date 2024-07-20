@@ -818,6 +818,29 @@ public:
 	void toggleMiniMapRender(int v);
 	bool runGameOverScript;
 
+	// Transportation destinations menu
+	int askTransportation();
+	void setupTransportationItem(AquariaMenuItem *item, BitmapText *itemLabel, const std::string& icon,
+								   float x, float y, const std::string& text);
+
+
+	// Transportation destinations events
+	void onCancelTransportation();
+	void onNaijaHomeTransportation();
+	void onNaijaRockTransportation();
+	void onVeil1Transportation();
+	void onVeil2Transportation();
+	void onArnassiTransportation();
+	void onForestTransportation();
+	void onSimonTransportation();
+	void onAbyssTransportation();
+	void onBodyTransportation();
+	void onOpenWaterTransportation();
+	void onHomeWaterTransportation();
+
+	// Transportation destinations attributes
+	bool transporatationDone;
+	int transportationSelected;
 
 	void setTimerTextAlpha(float a, float t);
 	void setTimerText(float time);

@@ -8090,6 +8090,7 @@ void Game::toggleHelpScreen(bool on, const std::string &label)
 
 	inHelpScreen = on;
 }
+
 bool Game::updateMusic()
 {
 	std::string musicToPlay = this->musicToPlay;
@@ -8148,6 +8149,7 @@ void Game::onPressEscape()
 	}
 	else
 	{
+		dsq->randomizer->onPressEscape();
 		if (inHelpScreen)
 		{
 			toggleHelpScreen(false);
@@ -8172,7 +8174,6 @@ void Game::onPressEscape()
 			}
 			return;
 		}
-
 		if (!paused)
 		{
 			if (core->getNestedMains() == 1 && !core->isStateJumpPending())
@@ -8187,7 +8188,6 @@ void Game::onPressEscape()
 					autoMap->toggle(false);
 			}
 		}
-
 
 		if ((dsq->saveSlotMode != SSM_NONE || dsq->inModSelector) && core->isNested())
 		{

@@ -3,6 +3,9 @@
 <Path name="warp trainingcave l">
     <Node pos="1821 6169" rect="192 662" shape="0" />
 </Path>
+<Path name="transturtle">
+    <Node pos="8880 3881" rect="64 64" shape="0" />
+</Path>
 <Path name="clearcontrolhints">
     <Node pos="4646 6422" rect="680 780" shape="0" />
 </Path>

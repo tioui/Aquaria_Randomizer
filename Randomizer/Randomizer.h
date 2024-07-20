@@ -11,6 +11,7 @@
 
 
 #include "../Aquaria/DSQ.h"
+#include "../BBGE/ActionMapper.h"
 #include <chrono>
 
 typedef struct check {
@@ -45,7 +46,7 @@ float y;
 /**
 * Class that encapsulate every randomization functionalities
 */
-class Randomizer
+class Randomizer : public ActionMapper
 {
 public:
     // /**
@@ -203,6 +204,17 @@ public:
      */
     void appendLocationsHelpData(std::string &data);
 
+    /**
+     * Show the transportation menu and return the selected destination flag.
+     *
+     * @return the selected destination flag
+     */
+    int askTransportation();
+
+    /**
+     * When the user pressed escape.
+     */
+    void onPressEscape();
 
 
 protected:
@@ -497,7 +509,96 @@ private:
      */
     void writeHelpData(std::stringstream *messageStream, std::string text, int flag);
 
+    void toggleHelpScreen();
+
+    /**
+     * Setup a menu item and a label for an option of the transportation menu
+     *
+     * @param item The menu item
+     * @param itemLabel The menu item label
+     * @param icon The icon to show on the `aItem`
+     * @param x The horizontal position of the menu item
+     * @param y The vertical position of the menu item
+     * @param text The text to put on the `aItemLabel`
+     */
+    void setupTransportationItem(AquariaMenuItem *item, BitmapText *itemLabel, const std::string& icon,
+                                 float x, float y, const std::string& text);
+
+    /**
+     * Event for the Transportation menu to cancel the process.
+     */
+   	void onCancelTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Naija's home destination.
+     */
+   	void onNaijaHomeTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Naija's rock destination
+     */
+   	void onNaijaRockTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Veil left area destination
+     */
+   	void onVeil1Transportation();
+
+    /**
+     * Event for the Transportation menu to manage the Veil right area destination
+     */
+   	void onVeil2Transportation();
+
+    /**
+     * Event for the Transportation menu to manage the Arnassi Ruins destination
+     */
+   	void onArnassiTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Kelp Forest destination
+     */
+   	void onForestTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Simon says destination
+     */
+   	void onSimonTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Abyss destination
+     */
+   	void onAbyssTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Body destination
+     */
+   	void onBodyTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Open Waters destination
+     */
+   	void onOpenWaterTransportation();
+
+    /**
+     * Event for the Transportation menu to manage the Home Waters destination
+     */
+   	void onHomeWaterTransportation();
+
+    /**
+     * True if an item of the Transportation menu has been selected.
+     */
+    bool transporatationDone;
+
+    /**
+     * The transportation flag selected, or 0 if no selected
+     */
+    int transportationSelected;
+
 };
+
+
+const int GUILEVEL_TRANSPORT = 201;
+
 
 const int FLAG_COLLECTIBLE_SONGCAVE        = 500;
 const int FLAG_COLLECTIBLE_ENERGYTEMPLE    = 501;
@@ -563,6 +664,8 @@ const int FLAG_TRANSTURTLE_SEAHORSE        = 136;
 const int FLAG_TRANSTURTLE_VEIL02          = 137;
 const int FLAG_TRANSTURTLE_ABYSS03         = 138;
 const int FLAG_TRANSTURTLE_FINALBOSS       = 139;
+const int FLAG_TRANSTURTLE_NAIJAHOME       = 150;
+const int FLAG_TRANSTURTLE_NAIJAROCK       = 151;
 
 // Unconfine Home water
 const int FLAG_MAINAREA_TRANSTURTLE_ROCK   = 245;
