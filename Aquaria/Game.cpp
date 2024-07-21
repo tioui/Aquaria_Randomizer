@@ -291,11 +291,10 @@ void Game::updatePreviewRecipe()
 			previewRecipe->setTexture("ingredients/"+data->gfx);
 		}
 		else if (r && nocasecmp(r->result, "spicysoup") == 0) {
-            std::vector<Recipe> lRecipes = dsq->continuity.recipes;
             Recipe * lRecipe = nullptr;
-            for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
-                if (nocasecmp(lRecipes.at(i).result, "heartysoup")==0) {
-                    lRecipe = &lRecipes.at(i);
+            for (int i = 0; !lRecipe && i < dsq->continuity.recipes.size(); i = i + 1) {
+                if (nocasecmp(dsq->continuity.recipes.at(i).result, "heartysoup")==0) {
+                    lRecipe = &(dsq->continuity.recipes.at(i));
                 }
             }
             if (lRecipe && lRecipe->isKnown()) {
@@ -7387,11 +7386,10 @@ void Game::onCook()
 	Recipe *r = findRecipe(cookList);
 
     if (r && !r->isKnown() && nocasecmp(r->result, "spicysoup") == 0) {
-        std::vector<Recipe> lRecipes = dsq->continuity.recipes;
         Recipe * lRecipe = nullptr;
-        for (int i = 0; !lRecipe && i < lRecipes.size(); i = i + 1) {
-            if (nocasecmp(lRecipes.at(i).result, "heartysoup")==0) {
-                lRecipe = &lRecipes.at(i);
+        for (int i = 0; !lRecipe && i < dsq->continuity.recipes.size(); i = i + 1) {
+            if (nocasecmp(dsq->continuity.recipes.at(i).result, "heartysoup")==0) {
+                lRecipe = &(dsq->continuity.recipes.at(i));
             }
         }
         if (lRecipe && lRecipe->isKnown()) {
