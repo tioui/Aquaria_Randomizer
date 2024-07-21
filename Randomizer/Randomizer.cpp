@@ -1359,7 +1359,6 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
  */
 void Randomizer::onLoad(bool aNewGame){
     if (aNewGame) {
-        askTransportation();
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
         } else {
