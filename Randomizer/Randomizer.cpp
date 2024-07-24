@@ -312,7 +312,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1192, "bulb_sun_temple_1","ingredient_glowingegg",2, "Glowing egg",
                        "Sun Temple, first bulb of the temple"});
     checks->push_back({1193, "bulb_sun_temple_2","ingredient_magicsoup",1, "Magic soup",
-                       "Sun Temple, bulb on the left part"});
+                       "Sun Temple, bulb on the right part"});
     checks->push_back({1194, "bulb_sun_temple_3","ingredient_royalsoup",1, "Royal soup",
                        "Sun Temple, bulb in the hidden room of the right part"});
     checks->push_back({1195, "bulb_sun_temple_4","ingredient_leadershiproll",1, "Leadership roll",
