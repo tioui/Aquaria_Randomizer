@@ -334,8 +334,17 @@ function exitState(me)
 		if v.phase == PHASE_LURE then
 			v.lureNode = v.lureNode + 1
 			if v.lureNode > 7 then
-				v.phase = PHASE_HIDE
-				entity_setState(me, STATE_MOVE)
+				-- If we want to skip the 3rd form, set v.phase = PHASE_FINAL and v.hits1 = 0
+				if skipFinalBoss3rdForm() then
+					v.hits1 = 0
+					v.hits2 = 1
+					v.phase = PHASE_FINAL
+					entity_setState(me, STATE_MOVE)
+				else
+					v.phase = PHASE_HIDE
+					entity_setState(me, STATE_MOVE)
+
+				end
 			else
 				entity_setState(me, STATE_LUREWAIT)
 			end
