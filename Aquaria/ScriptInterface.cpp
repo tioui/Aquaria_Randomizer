@@ -855,6 +855,11 @@ luaFunc(askTransportation)
 	luaReturnInt(dsq->randomizer->askTransportation());
 }
 
+luaFunc(skipFinalBoss3rdForm)
+{
+	luaReturnBool(dsq->randomizer->mustSkipFinalBoss3rdForm());
+}
+
 luaFunc(randomizerCheck)
 {
     dsq->randomizer->activateCheck(getString(L, 1));
@@ -10451,6 +10456,9 @@ static const struct {
     luaRegister(randomizerShowHintFinalBoss),
     luaRegister(randomizerClose),
     luaRegister(askTransportation),
+    luaRegister(skipFinalBoss3rdForm),
+
+
 
 #undef MK_FUNC
 #undef MK_ALIAS

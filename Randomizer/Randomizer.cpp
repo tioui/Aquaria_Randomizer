@@ -24,6 +24,7 @@ Randomizer::Randomizer() : ActionMapper() {
     errorMessage = "";
     blindGoal = 0;
     skipFirstVision = false;
+    skipFinalBoss3rdForm = false;
     unconfine_home_water_transturtle = false;
     unconfine_home_water_energy_door = false;
     isAquarianTranslated = false;
@@ -701,8 +702,6 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
                                       false, 6, "collectibles/egg-piranha");
         }
     }
-
-
 }
 
 /**
@@ -1417,6 +1416,13 @@ void Randomizer::update(){
             }
         }
     }
+}
+
+/**
+ * True when the game should skip the final boss 3rd form (hide and seek)
+ */
+bool Randomizer::mustSkipFinalBoss3rdForm() {
+    return skipFinalBoss3rdForm;
 }
 
 /**

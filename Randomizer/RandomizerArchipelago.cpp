@@ -222,6 +222,9 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (aJsonText.contains("skip_first_vision")) {
         skipFirstVision = aJsonText["skip_first_vision"];
     }
+    if (aJsonText.contains("skip_final_boss_3rd_form")) {
+        skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
+    }
     if (aJsonText.contains("unconfine_home_water_energy_door")) {
         unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
     }

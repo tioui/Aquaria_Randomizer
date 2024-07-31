@@ -216,6 +216,11 @@ public:
      */
     void onPressEscape();
 
+    /**
+     * True when the game should skip the final boss 3rd form (hide and seek)
+     */
+    bool mustSkipFinalBoss3rdForm();
+
 
 protected:
 
@@ -356,6 +361,11 @@ protected:
      * Skip first vision in the verse cave
      */
     bool skipFirstVision;
+
+    /**
+     * Skip the third form of the final boss
+     */
+    bool skipFinalBoss3rdForm;
 
     /**
      * Tne number of mini bosses that as been slain.
