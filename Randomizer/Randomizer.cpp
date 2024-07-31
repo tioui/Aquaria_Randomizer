@@ -1421,7 +1421,7 @@ void Randomizer::update(){
         Recipe * lHotSoup = getRecipe("hotsoup");
         if (lHotSoup && lHotSoup->isKnown()) {
             IngredientData * lIngredient = dsq->continuity.getIngredientDataByName("hotsoup");
-            if (lIngredient->amount < 1) {
+            if (lIngredient && lIngredient->amount < 1) {
                 dsq->continuity.pickupIngredient(lIngredient, 1, false, false);
             }
         }
