@@ -368,6 +368,11 @@ protected:
     bool skipFinalBoss3rdForm;
 
     /**
+     * As soon as the hot soup is learn, it will always be accessible never 0 count
+     */
+    bool infiniteHotSoup;
+
+    /**
      * Tne number of mini bosses that as been slain.
      *
      * @return the number of mini bosses that as been beaten by the player

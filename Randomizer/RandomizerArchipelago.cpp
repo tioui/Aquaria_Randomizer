@@ -225,6 +225,9 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (aJsonText.contains("skip_final_boss_3rd_form")) {
         skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
     }
+    if (aJsonText.contains("infinite_hot_soup")) {
+        infiniteHotSoup = aJsonText["infinite_hot_soup"];
+    }
     if (aJsonText.contains("unconfine_home_water_energy_door")) {
         unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
     }

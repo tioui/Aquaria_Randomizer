@@ -25,6 +25,7 @@ Randomizer::Randomizer() : ActionMapper() {
     blindGoal = 0;
     skipFirstVision = false;
     skipFinalBoss3rdForm = false;
+    infiniteHotSoup = false;
     unconfine_home_water_transturtle = false;
     unconfine_home_water_energy_door = false;
     isAquarianTranslated = false;
@@ -1413,6 +1414,15 @@ void Randomizer::update(){
                 randomessage_t lMessage = nextMessages->front();
                 nextMessages->pop();
                 showText(lMessage.text, lMessage.x, lMessage.y);
+            }
+        }
+    }
+    if (infiniteHotSoup) {
+        Recipe * lHotSoup = getRecipe("hotsoup");
+        if (lHotSoup && lHotSoup->isKnown()) {
+            IngredientData * lIngredient = dsq->continuity.getIngredientDataByName("hotsoup");
+            if (lIngredient->amount < 1) {
+                dsq->continuity.pickupIngredient(lIngredient, 1, false, false);
             }
         }
     }
