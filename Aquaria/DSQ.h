@@ -166,6 +166,7 @@ enum AquariaActions
 	ACTION_LOOK						,
 	ACTION_TOGGLEHELPSCREEN,
 	ACTION_PLACE_AVATAR,
+	ACTION_HOTSOUP,
 };
 
 typedef std::list<Entity*> EntityList;

@@ -1545,10 +1545,16 @@ void Game::showInGameMenu(bool ignoreInput, bool optionsOnly, MenuPage menuPage)
 	}
 }
 
-void Game::pickupIngredientEffects(IngredientData *data)
+/**
+ * Show an image for a received item.
+ *
+ * @param aImageFile The file name of the image to show.
+ */
+void Game::pickupItemEffects(std::string aImageFile)
 {
-	Quad *q = new Quad("gfx/ingredients/" + data->gfx, Vector(800-20 + core->getVirtualOffX(), (570-2*(100*miniMapRender->scale.y))+ingOffY));
-	q->scale = Vector(0.8, 0.8);
+	Quad *q = new Quad(aImageFile, Vector(800-40 + core->getVirtualOffX(), (570-2*(100*miniMapRender->scale.y))+ingOffY));
+	double lRatio = 50.0/q->getWidth();
+	q->scale = Vector(lRatio, lRatio);
 	q->followCamera = 1;
 	q->alpha.ensureData();
 	q->alpha.data->path.addPathNode(0, 0);
@@ -1558,8 +1564,13 @@ void Game::pickupIngredientEffects(IngredientData *data)
 	q->setLife(1);
 	q->setDecayRate(0.5);
 	addRenderObject(q, LR_HELP);
-	ingOffY -= 40;
+	ingOffY -= q->getHeight() * lRatio + 10;
 	ingOffYTimer = 2;
+}
+
+void Game::pickupIngredientEffects(IngredientData *data)
+{
+	pickupItemEffects("gfx/ingredients/" + data->gfx);
 }
 
 void Game::hideInGameMenu(bool effects, bool cancel)
@@ -3607,8 +3618,8 @@ void Game::createInGameMenu()
 	RoundedRect *kcb = new RoundedRect();
 	//kcb->color = 0;
 	//kcb->alphaMod = 0.75;
-	kcb->position = Vector(400,276 - 10);
-	kcb->setWidthHeight(580, 455, 10);
+	kcb->position = Vector(400,276 - 5);
+	kcb->setWidthHeight(580, 480, 10);
 	group_keyConfig->addChild(kcb, PM_POINTER);
 
 	int offy = -20;
@@ -3680,6 +3691,7 @@ void Game::createInGameMenu()
 	addKeyConfigLine(group_keyConfig, SB(2127), "Look",			460+offy);
 	
 	addKeyConfigLine(group_keyConfig, SB(2128), "ToggleHelp",	480+offy);
+	addKeyConfigLine(group_keyConfig, SB(2129), "HotSoup",	500+offy);
 
 #undef SB
 
@@ -5331,6 +5343,7 @@ bool Game::loadScene(std::string scene)
 
 	loadingScene = true;
 	bool ret = loadSceneXML(scene);
+	dsq->randomizer->onLoadScene(scene);
 	loadingScene = false;
 
 	return ret;
@@ -5986,6 +5999,18 @@ void Game::action(int id, int state)
 
 	if(isIgnoreAction((AquariaActions)id))
 		return;
+
+	if (id == ACTION_HOTSOUP && !state)
+	{
+		debugLog("Test hot soup");
+		IngredientData * lIngredient = dsq->continuity.getIngredientDataByName("hotsoup");
+		if (lIngredient->amount > 0) {
+			dsq->continuity.applyIngredientEffects(lIngredient);
+			lIngredient->amount = lIngredient->amount - 1;
+		} else {
+			dsq->sound->playSfx("denied");
+		}
+	}
 
 	if (id == ACTION_TOGGLEHELPSCREEN && !state)
 	{
@@ -7008,6 +7033,8 @@ void Game::bindInput()
 	dsq->user.control.actionSet.importAction(this, "WorldMap",		ACTION_TOGGLEWORLDMAP);
 
 	dsq->user.control.actionSet.importAction(this, "ToggleHelp",	ACTION_TOGGLEHELPSCREEN);
+
+	dsq->user.control.actionSet.importAction(this, "HotSoup",	ACTION_HOTSOUP);
 
 	// used for scrolling help text
 	dsq->user.control.actionSet.importAction(this, "SwimUp",		ACTION_SWIMUP);
@@ -9381,8 +9408,8 @@ void Game::toggleKeyConfigMenu(bool f)
 		opt_save->alpha = 1;
 		
 
-		opt_save->position = opt_save_original + Vector(0, 120);
-		opt_cancel->position = opt_cancel_original + Vector(0, 120);
+		opt_save->position = opt_save_original + Vector(0, 135);
+		opt_cancel->position = opt_cancel_original + Vector(0, 135);
 
 		opt_cancel->setFocus(true);
 		

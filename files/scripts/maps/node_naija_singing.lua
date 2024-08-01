@@ -28,6 +28,7 @@ function update(me, dt)
 		if node_isEntityIn(me, getNaija()) then
 			randomizerCheck("song_shield_hint")
 			setFlag(FLAG_NAIJA_SINGING, 1)
+			playSfx("secret")
 		end
 	end
 end

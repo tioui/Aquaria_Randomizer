@@ -1012,6 +1012,7 @@ public:
 	bool invincibleOnNested;
 	bool hasPlayedLow;
 
+	void pickupItemEffects(std::string aImageFile);
 	void pickupIngredientEffects(IngredientData *data);
 
 	void bindInput();

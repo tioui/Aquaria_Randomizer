@@ -39,6 +39,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     nextQuickMessages = new std::queue<std::string>();
     apuuid_generate(uuid);
     apItems = new std::vector<apitem_t>();
+    locationsItemTypes = new std::vector<int>();
     initialiseApItems();
     apLocations = new std::vector<aplocation_t>();
     initialiseApLocations();
@@ -244,6 +245,11 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
+    if (aJsonText.contains("locations_item_types")) {
+        for (int lElement : aJsonText["locations_item_types"]) {
+            locationsItemTypes->push_back(lElement);
+        }
+    }
 }
 
 /**
@@ -366,6 +372,18 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
         if (aCheck == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
+            if (apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
+                int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
+                if (lItemType == 0) {
+                    dsq->game->pickupItemEffects("ap/trash");
+                } else if (lItemType == 1) {
+                    dsq->game->pickupItemEffects("ap/progression");
+                } else if (lItemType == 2) {
+                    dsq->game->pickupItemEffects("ap/useful");
+                } else if (lItemType == 4) {
+                    dsq->game->pickupItemEffects("ap/trap");
+                }
+            }
             std::lock_guard<std::mutex> lock(apMutex);
             apClient->LocationChecks(lIds);
         }
@@ -481,6 +499,19 @@ void RandomizerArchipelago::onClose(){
     Randomizer::onClose();
     std::lock_guard<std::mutex> lock(apMutex);
     apClient->ConnectUpdate(0, {});
+}
+
+/**
+ * Launched when a scene is loading
+ *
+ * @param aScene The scene name that is loading
+ */
+void RandomizerArchipelago::onLoadScene(std::string aScene) {
+    Randomizer::onLoadScene(aScene);
+    dsq->game->tileCache.precacheTex("ap/progression");
+    dsq->game->tileCache.precacheTex("ap/useful");
+    dsq->game->tileCache.precacheTex("ap/trash");
+    dsq->game->tileCache.precacheTex("ap/trap");
 }
 
 

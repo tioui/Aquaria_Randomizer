@@ -54,6 +54,7 @@
         <Action name="FoodLeft" input="0 KEY_S KEY_DOWN JOY_BUTTON_2 " />
         <Action name="Look" input="MOUSE_BUTTON_MIDDLE KEY_E 0 0 " />
         <Action name="ToggleHelp" input="0 KEY_H KEY_F1 0 " />
+        <Action name="HotSoup" input="0 KEY_T 0 0 " />
     </ActionSet>
 </Control>
 <Demo>

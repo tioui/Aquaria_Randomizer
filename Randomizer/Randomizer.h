@@ -32,6 +32,7 @@ IngredientType category;
 typedef struct collectible {
 int flag;
 std::string name;
+std::string imageFile;
 } collectible_t;
 
 /**
@@ -221,6 +222,12 @@ public:
      */
     bool mustSkipFinalBoss3rdForm();
 
+    /**
+     * Launched when a scene is loading
+     *
+     * @param scene The scene name that is loading
+     */
+    virtual void onLoadScene(std::string scene) {};
 
 protected:
 
@@ -608,6 +615,13 @@ private:
      * The transportation flag selected, or 0 if no selected
      */
     int transportationSelected;
+
+    /**
+     * Show an image for a received item.
+     *
+     * @param imageFile The file name of the image to show.
+     */
+    void pickupItemEffects(std::string imageFile);
 
 };
 

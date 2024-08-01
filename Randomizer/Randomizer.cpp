@@ -575,43 +575,42 @@ void Randomizer::initialiseChecks(){
  * Initialize `collectibles`
  */
 void Randomizer::initialiseCollectibles() {
-    collectibles->push_back({
-        FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone"});
-    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collectible_energy_temple"});
-    collectibles->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collectible_arnassi_statue"});
-    collectibles->push_back({FLAG_COLLECTIBLE_BANNER, "collectible_mithalas_banner"});
-    collectibles->push_back({FLAG_COLLECTIBLE_BIOSEED, "collectible_bio_seed"});
-    collectibles->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collectible_blackpearl"});
-    collectibles->push_back({FLAG_COLLECTIBLE_CHEST, "collectible_treasure_chest"});
-    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collectible_energy_boss"});
-    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collectible_energy_statue"});
-    collectibles->push_back({FLAG_COLLECTIBLE_GEAR, "collectible_golden_gear"});
-    collectibles->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collectible_jelly_plant"});
-    collectibles->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collectible_mithala_doll"});
-    collectibles->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collectible_mithalas_pot"});
-    collectibles->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collectible_big_seed"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collectible_seed_bag"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SKULL, "collectible_skull"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collectible_jelly_beacon"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SPORESEED, "collectible_spore_seed"});
-    collectibles->push_back({FLAG_COLLECTIBLE_STARFISH, "collectible_gold_star"});
-    collectibles->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collectible_stone_head"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SUNKEY, "collectible_sun_key"});
-    collectibles->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collectible_trident_head"});
-    collectibles->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collectible_turtle_egg"});
-    collectibles->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collectible_upsidedown_seed"});
-    collectibles->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collectible_walker"});
-    collectibles->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collectible_crab_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collectible_jelly_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collectible_mithalan_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collectible_mutant_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collectible_seahorse_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collectible_teen_costume"});
-    collectibles->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collectible_urchin_costume"});
-    collectibles->push_back({FLAG_PET_NAUTILUS, "collectible_nautilus"});
-    collectibles->push_back({FLAG_PET_BLASTER, "collectible_blaster"});
-    collectibles->push_back({FLAG_PET_DUMBO, "collectible_dumbo"});
-    collectibles->push_back({FLAG_PET_PIRANHA, "collectible_piranha"});
+    collectibles->push_back({ FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone", "anemone-seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collectible_energy_temple", "energytemple"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collectible_arnassi_statue", "arnassi-statue"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BANNER, "collectible_mithalas_banner", "mithalas-banner"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BIOSEED, "collectible_bio_seed", "bio-seed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_BLACKPEARL, "collectible_blackpearl", "blackpearl"});
+    collectibles->push_back({FLAG_COLLECTIBLE_CHEST, "collectible_treasure_chest", "treasure-chest"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYBOSS, "collectible_energy_boss", "energyboss"});
+    collectibles->push_back({FLAG_COLLECTIBLE_ENERGYSTATUE, "collectible_energy_statue", "energystatue"});
+    collectibles->push_back({FLAG_COLLECTIBLE_GEAR, "collectible_golden_gear", "golden-gear"});
+    collectibles->push_back({FLAG_COLLECTIBLE_JELLYPLANT, "collectible_jelly_plant", "jellyplant"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALADOLL, "collectible_mithala_doll", "mithala-doll"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALASPOT, "collectible_mithalas_pot", "mithalaspot"});
+    collectibles->push_back({FLAG_COLLECTIBLE_NAIJACAVE, "collectible_big_seed", "naijacave"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SEEDBAG, "collectible_seed_bag", "seed-bag"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SKULL, "collectible_skull", "skull"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SONGCAVE, "collectible_jelly_beacon", "songcave"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SPORESEED, "collectible_spore_seed", "sporeseed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_STARFISH, "collectible_gold_star", "goldstar"});
+    collectibles->push_back({FLAG_COLLECTIBLE_STONEHEAD, "collectible_stone_head", "stonehead"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SUNKEY, "collectible_sun_key", "sun-key"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TRIDENTHEAD, "collectible_trident_head", "trident-head"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TURTLEEGG, "collectible_turtle_egg", "turtle-egg"});
+    collectibles->push_back({FLAG_COLLECTIBLE_UPSIDEDOWNSEED, "collectible_upsidedown_seed", "upsidedownseed"});
+    collectibles->push_back({FLAG_COLLECTIBLE_WALKERBABY, "collectible_walker", "walker-baby"});
+    collectibles->push_back({FLAG_COLLECTIBLE_CRABCOSTUME, "collectible_crab_costume", "crabcostume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_JELLYCOSTUME, "collectible_jelly_costume", "jelly-costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MITHALANCOSTUME, "collectible_mithalan_costume", "mithalan-costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_MUTANTCOSTUME, "collectible_mutant_costume", "mutant-costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_SEAHORSECOSTUME, "collectible_seahorse_costume", "seahorse-costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_TEENCOSTUME, "collectible_teen_costume", "teen-costume"});
+    collectibles->push_back({FLAG_COLLECTIBLE_URCHINCOSTUME, "collectible_urchin_costume", "urchin-costume"});
+    collectibles->push_back({FLAG_PET_NAUTILUS, "collectible_nautilus", "egg-nautilus"});
+    collectibles->push_back({FLAG_PET_BLASTER, "collectible_blaster", "egg-blaster"});
+    collectibles->push_back({FLAG_PET_DUMBO, "collectible_dumbo", "egg-dumbo"});
+    collectibles->push_back({FLAG_PET_PIRANHA, "collectible_piranha", "egg-piranha"});
 }
 
 /**
@@ -677,6 +676,9 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
         }
     }
     assert(lCollectible && "The Collectible is not valid!");
+    std::ostringstream lFileNameStream;
+    lFileNameStream << "collectibles/" << lCollectible->imageFile;
+    dsq->game->pickupItemEffects(lFileNameStream.str());
     dsq->continuity.setFlag(lCollectible->flag, 1);
     if (lCollectible->flag == FLAG_PET_BLASTER) {
         if (dsq->continuity.getFlag(FLAG_COLLECTIBLE_BLASTER) != 1) {
@@ -710,72 +712,71 @@ void Randomizer::receivingCollectible(check_t *aCheck) {
  * @param aCheck The song check item to activate
  */
 void Randomizer::receivingSong(check_t *aCheck) {
+    int lSongType = 0;
+    int lStrId = 0;
     if (aCheck->flag == 1300) { // Li song
         if (dsq->continuity.getFlag(FLAG_LI) == 0) {
             dsq->continuity.setFlag(FLAG_LI, 100);
-            dsq->continuity.learnSong(SONG_LI);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(42), false, false,
-                                      false, 8, "", false, SONG_LI);
+            lSongType = SONG_LI;
+            lStrId = 42;
             if (dsq->game->avatar) {
                 dsq->game->li = dsq->game->createEntity("li", 0, Vector (dsq->game->avatar->position.x, dsq->game->avatar->position.y), 0,
                                                         false, "Li", ET_ENEMY, true);
             }
         }
-
     } else if (aCheck->flag == 1301) { // Shield song
         if (!dsq->continuity.hasSong(SONG_SHIELDAURA)) {
-            dsq->continuity.learnSong(SONG_SHIELDAURA);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(35), false, false,
-                                      false, 8, "", false, SONG_SHIELDAURA);
+            lSongType = SONG_SHIELDAURA;
+            lStrId = 35;
         }
     } else if (aCheck->flag == 1302) { // Dual song
         if (!dsq->continuity.hasSong(SONG_DUALFORM)) {
-            dsq->continuity.learnSong(SONG_DUALFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(43), false, false,
-                                      false, 8, "", false, SONG_DUALFORM);
+            lSongType = SONG_DUALFORM;
+            lStrId = 43;
         }
     } else if (aCheck->flag == 1303) { // Beast song
         if (!dsq->continuity.hasSong(SONG_BEASTFORM)) {
-            dsq->continuity.learnSong(SONG_BEASTFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(38), false, false,
-                                      false, 8, "", false, SONG_BEASTFORM);
+            lSongType = SONG_BEASTFORM;
+            lStrId = 38;
         }
     } else if (aCheck->flag == 1304) { // Sun song
         if (!dsq->continuity.hasSong(SONG_SUNFORM)) {
-            dsq->continuity.learnSong(SONG_SUNFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(41), false, false,
-                                      false, 8, "", false, SONG_SUNFORM);
+            lSongType = SONG_SUNFORM;
+            lStrId = 41;
         }
     } else if (aCheck->flag == 1305) { // Nature song
         if (!dsq->continuity.hasSong(SONG_NATUREFORM)) {
-            dsq->continuity.learnSong(SONG_NATUREFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(40), false, false,
-                                      false, 8, "", false, SONG_NATUREFORM);
+            lSongType = SONG_NATUREFORM;
+            lStrId = 40;
         }
     } else if (aCheck->flag == 1306) { // Energy song
         if (!dsq->continuity.hasSong(SONG_ENERGYFORM)) {
-            dsq->continuity.learnSong(SONG_ENERGYFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(37), false, false,
-                                      false, 8, "", false, SONG_ENERGYFORM);
+            lSongType = SONG_ENERGYFORM;
+            lStrId = 37;
         }
     } else if (aCheck->flag == 1307) { // Bind song
         if (!dsq->continuity.hasSong(SONG_BIND)) {
-            dsq->continuity.learnSong(SONG_BIND);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(36), false, false,
-                                      false, 8, "", false, SONG_BIND);
+            lSongType = SONG_BIND;
+            lStrId = 36;
         }
     } else if (aCheck->flag == 1308) { // Fish song
         if (!dsq->continuity.hasSong(SONG_FISHFORM)) {
-            dsq->continuity.learnSong(SONG_FISHFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(39), false, false,
-                                      false, 8, "", false, SONG_FISHFORM);
+            lSongType = SONG_FISHFORM;
+            lStrId = 39;
         }
     } else if (aCheck->flag == 1309) { // Fish song
         if (!dsq->continuity.hasSong(SONG_SPIRITFORM)) {
-            dsq->continuity.learnSong(SONG_SPIRITFORM);
-            dsq->game->setControlHint(dsq->continuity.stringBank.get(44), false, false,
-                                      false, 8, "", false, SONG_SPIRITFORM);
+            lSongType = SONG_SPIRITFORM;
+            lStrId = 44;
         }
+    }
+    if (lSongType != 0) {
+        dsq->continuity.learnSong(lSongType);
+        dsq->game->setControlHint(dsq->continuity.stringBank.get(lStrId), false, false,
+                                  false, 8, "", false, lSongType);
+        std::ostringstream lFileNameStream;
+        lFileNameStream << "song/songslot-" << dsq->continuity.getSongSlotByType(lSongType);
+        dsq->game->pickupItemEffects(lFileNameStream.str());
     }
 }
 
@@ -801,11 +802,13 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 	} else if (aItem.compare(0, 11, "upgrade_wok") == 0) {
 		lMessageStream << "Upgrade: Wok";
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
+	    dsq->game->pickupItemEffects("gui/wok");
 	} else if (aItem.compare(0, 14, "upgrade_health") == 0) {
 		lMessageStream << "Upgrade: Health";
         if (dsq->game->avatar && dsq->game->avatar->health < 10) {
             dsq->continuity.upgradeHealth();
         }
+	    dsq->game->pickupItemEffects("healthupgrade/whole");
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
@@ -818,6 +821,7 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
         receivingTransport(lCheck);
+        dsq->game->pickupItemEffects("gems/turtle");
 	} else {
 		assert(false && "The receving item is not valid!");
 	}

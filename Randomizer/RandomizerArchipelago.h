@@ -106,6 +106,13 @@ public:
      */
     void showQuickMessage(const std::string &aText) override;
 
+    /**
+     * Launched when a scene is loading
+     *
+     * @param scene The scene name that is loading
+     */
+    void onLoadScene(std::string scene) override;
+
 private:
 
     /**
@@ -289,5 +296,11 @@ private:
      * @return
      */
     bool selfRelatedJson(const std::list<APClient::TextNode>& aData);
+
+    /**
+     * The types of items in each location.
+     */
+    std::vector<int> *locationsItemTypes;
+
 };
 
