@@ -23,7 +23,7 @@ Randomizer::Randomizer() : ActionMapper() {
     inGame = false;
     errorMessage = "";
     blindGoal = 0;
-    maximumIngredientAmount = 12;
+    maximumIngredientAmount = 8;
     skipFirstVision = false;
     skipFinalBoss3rdForm = false;
     infiniteHotSoup = false;
