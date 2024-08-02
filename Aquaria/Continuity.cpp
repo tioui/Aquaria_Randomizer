@@ -978,6 +978,7 @@ void Continuity::loadIngredientData(const std::string &file)
 
 	clearIngredientData();
 	recipes.clear();
+	int maximumIngredientAmount = dsq->randomizer->getMaximumIngredientAmount();
 
 	InStream in(file.c_str());
 
@@ -1003,7 +1004,7 @@ void Continuity::loadIngredientData(const std::string &file)
 
 		std::getline(inLine, effects);
 
-		IngredientData *data = new IngredientData(name, gfx, getIngredientTypeFromName(type));
+		IngredientData *data = new IngredientData(name, gfx, getIngredientTypeFromName(type), maximumIngredientAmount);
 
 		if (!effects.empty())
 		{
@@ -1129,7 +1130,7 @@ void Continuity::loadIngredientData(const std::string &file)
 		while (std::getline(in, line))
 		{
 			SimpleIStringStream inLine(line.c_str(), SimpleIStringStream::REUSE);
-			int maxAmount = MAX_INGREDIENT_AMOUNT;
+			int maxAmount = maximumIngredientAmount;
 			int rotKind = 1;
 			inLine >> name >> maxAmount >> rotKind;
 			if (name == "==Recipes==")

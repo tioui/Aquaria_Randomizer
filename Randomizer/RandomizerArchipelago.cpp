@@ -235,6 +235,10 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (aJsonText.contains("unconfine_home_water_transturtle")) {
         unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
     }
+    if (aJsonText.contains("maximum_ingredient_amount")) {
+        maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
+    }
+
     if (aJsonText.contains("blind_goal")) {
         lBlindGoal = aJsonText["blind_goal"];
         setBlindGoal(lBlindGoal);

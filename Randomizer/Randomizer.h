@@ -229,12 +229,23 @@ public:
      */
     virtual void onLoadScene(std::string scene) {};
 
+    /**
+     * Retreive the maximum number of the same ingredients that can be stacked on the ingredient inventory
+     * @return The maximum number
+     */
+    int getMaximumIngredientAmount();
+
 protected:
 
     /**
      * A game is presently running. (not in title)
      */
     bool inGame;
+
+    /**
+     * The maximum number of the same ingredients that can be stacked on the ingredient inventory
+     */
+    int maximumIngredientAmount;
 
     /**
      * Replacement of every ingredients.

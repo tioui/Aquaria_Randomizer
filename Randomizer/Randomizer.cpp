@@ -23,6 +23,7 @@ Randomizer::Randomizer() : ActionMapper() {
     inGame = false;
     errorMessage = "";
     blindGoal = 0;
+    maximumIngredientAmount = 12;
     skipFirstVision = false;
     skipFinalBoss3rdForm = false;
     infiniteHotSoup = false;
@@ -882,6 +883,14 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
 		}
 	}
 	return result;
+}
+
+/**
+ * Retreive the maximum number of the same ingredients that can be stacked on the ingredient inventory
+ * @return The maximum number
+ */
+int Randomizer::getMaximumIngredientAmount() {
+    return maximumIngredientAmount;
 }
 
 /**

@@ -35,6 +35,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         skipFirstVision = lJsonData["skipFirstVision"];
         //skipFinalBoss3rdForm = lJsonData["skipFinalBoss3rdForm"];
         //infiniteHotSoup = lJsonData["infiniteHotSoup"];
+        //maximumIngredientAmount = lJsonData["maximumIngredientAmount"];
         unconfine_home_water_energy_door = lJsonData["unconfineHomeWaterEnergyDoor"];
         unconfine_home_water_transturtle = lJsonData["unconfineHomeWaterTransturtle"];
         for (int lElement : lJsonData["ingredientReplacement"]) {

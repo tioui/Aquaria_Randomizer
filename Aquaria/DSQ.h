@@ -53,7 +53,7 @@ class ProfRender;
 
 const float FRAME_TIME = 0.04;
 
-const int MAX_INGREDIENT_AMOUNT = 8;
+//const int MAX_INGREDIENT_AMOUNT = 8;
 
 const float MENUSELECTDELAY		= 0.2;
 
@@ -720,7 +720,7 @@ struct IngredientEffect
 class IngredientData
 {
 public:
-	IngredientData(const std::string &name, const std::string &gfx, IngredientType type);
+	IngredientData(const std::string &name, const std::string &gfx, IngredientType type, int maximumIngredientAmount);
 	int getIndex() const;
 	const std::string name, gfx;
 	std::string displayName;
