@@ -16,6 +16,41 @@
 #define ITEM_INDEX_FLAG 1399
 
 /**
+ * Base constructor
+ */
+RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
+    name = "";
+    password = "";
+    serverAddress = "";
+    selfMessageOnly = false;;
+    hasBeenDisconnected = false;
+    hasRoomInfo = false;
+    hasSlotInfo = false;
+    syncing = false;
+    secretsNeeded = false;
+    deathLink = false;
+    isOffline = true;
+    currentQuickMessageTime = 0;
+    deathLinkPause = false;
+    apClient = nullptr;
+    clearError();
+    nextQuickMessages = new std::queue<std::string>();
+    apItems = new std::vector<apitem_t>();
+    locationsItemTypes = new std::vector<int>();
+    initialiseApItems();
+    apLocations = new std::vector<aplocation_t>();
+    initialiseApLocations();
+}
+
+/**
+ * Constructor that does not connect to a server
+ * @param seedNumber
+ */
+RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumber): RandomizerArchipelago(){
+    setUid(aSeedNumber);
+}
+
+/**
  * Constructor that connect to an Archipelago server
  * @param aServer The address and port of the Archipelago server
  * @param aName The player name on the archipelago server
@@ -23,28 +58,19 @@
  * @param aDeathLink True if Archipelago Death link packets should be used.
  */
 RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const std::string& aName,
-                                             const std::string& aPassword, bool aSelfMessage, bool aDeathLink): Randomizer(){
+                                             const std::string& aPassword, bool aSelfMessage,
+                                             bool aDeathLink): RandomizerArchipelago(){
     name = aName;
     password = aPassword;
     serverAddress = aServer;
     selfMessageOnly = aSelfMessage;
-    hasBeenDisconnected = false;
-    hasRoomInfo = false;
-    hasSlotInfo = false;
     syncing = true;
-    secretsNeeded = false;
     deathLink = aDeathLink;
-    currentQuickMessageTime = 0;
-    deathLinkPause = false;
-    nextQuickMessages = new std::queue<std::string>();
+    isOffline = false;
     apuuid_generate(uuid);
-    apItems = new std::vector<apitem_t>();
-    locationsItemTypes = new std::vector<int>();
-    initialiseApItems();
-    apLocations = new std::vector<aplocation_t>();
-    initialiseApLocations();
     tryConnection(aServer);
     if (hasRoomInfo && hasSlotInfo) {
+        std::cout << "Seed number:" << apClient->get_seed() << std::endl;
         setUid(apClient->get_seed());
     } else {
         if (!hasError()) {
@@ -203,7 +229,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     int lAquarianTranslated = false;
     int lBlindGoal = false;
     hasSlotInfo = true;
-    std::string lstr = aJsonText.dump();
+    std::string ldump = aJsonText.dump();
     if (aJsonText.contains("aquarian_translate")) {
         lAquarianTranslated = aJsonText["aquarian_translate"];
         setIsAquarianTranslated(lAquarianTranslated);
@@ -253,6 +279,47 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         for (int lElement : aJsonText["locations_item_types"]) {
             locationsItemTypes->push_back(lElement);
         }
+    }
+}
+
+/**
+ * Save information about the Archipelago slot. Usefull if the user want to play offline.
+ */
+void RandomizerArchipelago::saveConnectionInfo() {
+    dsq->continuity.setFlag(FLAG_SAVE_HAS_INFO, 1);
+    dsq->continuity.setFlag(FLAG_SAVE_AQUARIAN_TRANSLATE, getIsAquarianTranslated());
+    dsq->continuity.setFlag(FLAG_SAVE_SECRET_NEEDED, secretsNeeded);
+    dsq->continuity.setFlag(FLAG_SAVE_MINI_BOSSES_TO_KILLED, miniBossesToKill);
+    dsq->continuity.setFlag(FLAG_SAVE_BIG_BOSSES_TO_KILLED, bigBossesToKill);
+    dsq->continuity.setFlag(FLAG_SAVE_INFINITE_HOT_SOUP, infiniteHotSoup);
+    dsq->continuity.setFlag(FLAG_SAVE_MAX_INGREDIENTS_AMOUNT, maximumIngredientAmount);
+    dsq->continuity.setFlag(FLAG_SAVE_RANDOMIZED_INGREDIENTS_SIZE, ingredientReplacement->size());
+    for (int i = 0; i < ingredientReplacement->size() || i > FLAG_SAVE_RANDOMIZED_INGREDIENTS_END; i = i + 1) {
+        dsq->continuity.setFlag(FLAG_SAVE_RANDOMIZED_INGREDIENTS_START + i, ingredientReplacement->at(i));
+    }
+    dsq->continuity.setFlag(FLAG_SAVE_LOCATION_ITEM_TYPES_SIZE, locationsItemTypes->size());
+    for (int i = 0; i < locationsItemTypes->size() || i > FLAG_SAVE_LOCATION_ITEM_TYPES_END; i = i + 1) {
+        dsq->continuity.setFlag(FLAG_SAVE_LOCATION_ITEM_TYPES_START + i, locationsItemTypes->at(i));
+    }
+}
+
+/**
+ * Save information about the Archipelago slot. Usefull if the user want to play offline.
+ */
+void RandomizerArchipelago::loadConnectionInfo() {
+    setIsAquarianTranslated(dsq->continuity.getFlag(FLAG_SAVE_AQUARIAN_TRANSLATE));
+    secretsNeeded = dsq->continuity.getFlag(FLAG_SAVE_SECRET_NEEDED);
+    miniBossesToKill = dsq->continuity.getFlag(FLAG_SAVE_MINI_BOSSES_TO_KILLED);
+	bigBossesToKill = dsq->continuity.getFlag(FLAG_SAVE_BIG_BOSSES_TO_KILLED);
+	infiniteHotSoup = dsq->continuity.getFlag(FLAG_SAVE_INFINITE_HOT_SOUP);
+	maximumIngredientAmount = dsq->continuity.getFlag(FLAG_SAVE_MAX_INGREDIENTS_AMOUNT);
+	ingredientReplacement->clear();
+    for (int i = 0; i < dsq->continuity.getFlag(FLAG_SAVE_RANDOMIZED_INGREDIENTS_SIZE); i = i + 1) {
+        ingredientReplacement->push_back(dsq->continuity.getFlag(FLAG_SAVE_RANDOMIZED_INGREDIENTS_START + i));
+    }
+    locationsItemTypes->clear();
+    for (int i = 0; i < dsq->continuity.getFlag(FLAG_SAVE_LOCATION_ITEM_TYPES_SIZE); i = i + 1) {
+        locationsItemTypes->push_back(dsq->continuity.getFlag(FLAG_SAVE_LOCATION_ITEM_TYPES_START + i));
     }
 }
 
@@ -366,9 +433,37 @@ apitem_t *RandomizerArchipelago::getApItemById(int64_t aId) {
 }
 
 /**
+ * Get a new ingredient to receive in the local game
+ * @param aIngredientName The name of the ingredient to receive
+ * @param aCount The number of ingredient to receive
+ */
+void RandomizerArchipelago::receivingIngredient(const std::string& aIngredientName, int aCount) {
+    if (isOffline) {
+        if (infiniteHotSoup && aIngredientName == "hotsoup") {
+            Randomizer::receivingIngredient(aIngredientName, aCount);
+        } else {
+            dsq->game->pickupItemEffects("ap/useful");
+        }
+    } else {
+        Randomizer::receivingIngredient(aIngredientName, aCount);
+    }
+}
+
+/**
+ * Received an health upgrade
+ */
+void RandomizerArchipelago::receivingUpgradeHealth() {
+    if (!isOffline) {
+        Randomizer::receivingUpgradeHealth();
+    } else {
+        dsq->game->pickupItemEffects("ap/useful");
+    }
+}
+
+/**
  * Activate a randomizer check
  * @param aCheck The check to activate
-*/
+ */
 void RandomizerArchipelago::activateCheck(std::string aCheck) {
     check_t *lCheck = getCheck(aCheck);
     dsq->continuity.setFlag(lCheck->flag, 1);
@@ -378,18 +473,23 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
             lIds.push_back(apLocations->at(i).locationId);
             if (apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
-                if (lItemType == 0) {
+                if (lItemType == -1) {
                     dsq->game->pickupItemEffects("ap/trash");
-                } else if (lItemType == 1) {
+                } else if (lItemType == -2) {
                     dsq->game->pickupItemEffects("ap/progression");
-                } else if (lItemType == 2) {
+                } else if (lItemType == -3) {
                     dsq->game->pickupItemEffects("ap/useful");
-                } else if (lItemType == 4) {
+                } else if (lItemType == -5) {
                     dsq->game->pickupItemEffects("ap/trap");
+                } else if (isOffline) {
+                    apitem_t *lApItem = getApItemById(lItemType + AP_BASE);
+                    receivingItem(lApItem->item, lApItem->count);
                 }
             }
-            std::lock_guard<std::mutex> lock(apMutex);
-            apClient->LocationChecks(lIds);
+            if (!isOffline) {
+                std::lock_guard<std::mutex> lock(apMutex);
+                apClient->LocationChecks(lIds);
+            }
         }
     }
 }
@@ -399,13 +499,15 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
  */
 void RandomizerArchipelago::connectionUpdate() {
     const int item_handling_flags_all = 7;
-    std::list<std::string> tags;
-    if (deathLink) {
-        tags.emplace_back("DeathLink");
+    if (!isOffline) {
+        std::list<std::string> tags;
+        if (deathLink) {
+            tags.emplace_back("DeathLink");
+        }
+        std::lock_guard<std::mutex> lock(apMutex);
+        apClient->ConnectUpdate(item_handling_flags_all,tags);
+        apClient->poll();
     }
-    std::lock_guard<std::mutex> lock(apMutex);
-    apClient->ConnectUpdate(item_handling_flags_all,tags);
-    apClient->poll();
 }
 
 /**
@@ -413,47 +515,49 @@ void RandomizerArchipelago::connectionUpdate() {
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
-    try {
-        std::lock_guard<std::mutex> lock(apMutex);
-        apClient->poll();
-        if (apClient->get_state() == APClient::State::DISCONNECTED) {
+    if (!isOffline) {
+        try {
+            std::lock_guard<std::mutex> lock(apMutex);
+            apClient->poll();
+            if (apClient->get_state() == APClient::State::DISCONNECTED) {
+                hasBeenDisconnected = true;
+                if (nextMessagesSize() == 0) {
+                    showText("Disconnected from server. Trying to reconnect.");
+                }
+            } else if (apClient->get_state() == APClient::State::SOCKET_CONNECTED ||
+                       apClient->get_state() == APClient::State::SLOT_CONNECTED) {
+                if (hasBeenDisconnected) {
+                    apClient->Sync();
+                    syncing = true;
+                }
+                hasBeenDisconnected = false;
+                       }
+        } catch (const websocketpp::exception& lException) {
             hasBeenDisconnected = true;
-            if (nextMessagesSize() == 0) {
-                showText("Disconnected from server. Trying to reconnect.");
-            }
-        } else if (apClient->get_state() == APClient::State::SOCKET_CONNECTED ||
-                   apClient->get_state() == APClient::State::SLOT_CONNECTED) {
-            if (hasBeenDisconnected) {
-                apClient->Sync();
-                syncing = true;
-            }
-            hasBeenDisconnected = false;
+            showText("Disconnected from server. Trying to reconnect.");
         }
-    } catch (const websocketpp::exception& lException) {
-        hasBeenDisconnected = true;
-        showText("Disconnected from server. Trying to reconnect.");
-    }
-    if (inGame) {
-        if (syncing) {
-            syncing = false;
-            for (const check_t& lCheck : *checks) {
-                if (dsq->continuity.getFlag(lCheck.flag)) {
-                    activateCheck(lCheck.id);
+        if (inGame) {
+            if (syncing) {
+                syncing = false;
+                for (const check_t& lCheck : *checks) {
+                    if (dsq->continuity.getFlag(lCheck.flag)) {
+                        activateCheck(lCheck.id);
+                    }
                 }
             }
-        }
-        if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
-            if (deathLink && !deathLinkPause) {
-                deathLinkPause = true;
-                nlohmann::json data{
-                        {"time", apClient->get_server_time()},
-                        {"cause", "Naija did not make it."},
-                        {"source", apClient->get_slot()},
-                };
-                apClient->Bounce(data, {}, {}, { "DeathLink" });
+            if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
+                if (deathLink && !deathLinkPause) {
+                    deathLinkPause = true;
+                    nlohmann::json data{
+                            {"time", apClient->get_server_time()},
+                            {"cause", "Naija did not make it."},
+                            {"source", apClient->get_slot()},
+                    };
+                    apClient->Bounce(data, {}, {}, { "DeathLink" });
+                }
+            } else {
+                deathLinkPause = false;
             }
-        } else {
-            deathLinkPause = false;
         }
     }
     auto lNow = std::chrono::system_clock::now();
@@ -475,14 +579,15 @@ void RandomizerArchipelago::update(){
  * Launched when the game is ending
  */
 void RandomizerArchipelago::endingGame() {
-    if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
+    if (!isOffline) {
+        if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
         (!secretsNeeded || (secretsFound() == 3))) {
-        std::lock_guard<std::mutex> lock(apMutex);
-        apClient->StatusUpdate(APClient::ClientStatus::GOAL);
-    } else {
-        showText("You are missing some prerequisite to get the goal.");
+            std::lock_guard<std::mutex> lock(apMutex);
+            apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+        } else {
+            showText("You are missing some prerequisite to get the goal.");
+        }
     }
-
 }
 
 /**
@@ -491,9 +596,30 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
-    connectionUpdate();
-    apClient->Sync();
-    syncing = true;
+    if (aNewGame) {
+        if (isOffline) {
+            dsq->toggleCursor(true);
+            dsq->confirm("Error, cannot start a new game\nwhen offline. Closing...","", true, 0.0);
+            dsq->Core::instantQuit();
+        } else {
+            saveConnectionInfo();
+        }
+    } else {
+        if (isOffline) {
+            if (dsq->continuity.getFlag(FLAG_SAVE_HAS_INFO)) {
+                loadConnectionInfo();
+            } else {
+                dsq->toggleCursor(true);
+                dsq->confirm("Error, cannot use this save\ngame offline. Closing...","", true, 0.0);
+                dsq->Core::instantQuit();
+            }
+        }
+    }
+    if (!isOffline) {
+        connectionUpdate();
+        apClient->Sync();
+        syncing = true;
+    }
 }
 
 /**
@@ -501,8 +627,10 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
  */
 void RandomizerArchipelago::onClose(){
     Randomizer::onClose();
-    std::lock_guard<std::mutex> lock(apMutex);
-    apClient->ConnectUpdate(0, {});
+    if (!isOffline) {
+        std::lock_guard<std::mutex> lock(apMutex);
+        apClient->ConnectUpdate(0, {});
+    }
 }
 
 /**
@@ -518,6 +646,23 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
     dsq->game->tileCache.precacheTex("ap/trap");
 }
 
+/**
+ * Is the final boss is accessible.
+ * @return True if the final boss is accessible. False if not.
+ */
+bool RandomizerArchipelago::accessFinalBoss() {
+    return !isOffline and Randomizer::accessFinalBoss();
+}
+
+/**
+ * Show what is missing to access final boss.
+ */
+void RandomizerArchipelago::showHintFinalBoss() {
+    Randomizer::showHintFinalBoss();
+    if (isOffline) {
+        showText("You cannot beat the final boss while offline. Please connect to the Archipelago server.");
+    }
+}
 
 /**
  * Show a quick message on the screen.

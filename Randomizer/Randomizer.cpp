@@ -22,6 +22,7 @@ Randomizer::Randomizer() : ActionMapper() {
     error = false;
     inGame = false;
     errorMessage = "";
+    mustUpgradeHealth = false;
     blindGoal = 0;
     maximumIngredientAmount = 8;
     skipFirstVision = false;
@@ -31,6 +32,7 @@ Randomizer::Randomizer() : ActionMapper() {
     unconfine_home_water_energy_door = false;
     isAquarianTranslated = false;
     secretsNeeded = false;
+    seedNumberText = nullptr;
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
@@ -782,6 +784,33 @@ void Randomizer::receivingSong(check_t *aCheck) {
 }
 
 /**
+ * Get a new ingredient to receive in the local game
+ * @param aIngredientName The name of the ingredient to receive
+ * @param aCount The number of ingredient to receive
+ */
+void Randomizer::receivingIngredient(const std::string& aIngredientName, int aCount) {
+    IngredientData *lIngredient = dsq->continuity.getIngredientDataByName(aIngredientName);
+    dsq->continuity.pickupIngredient(lIngredient, aCount);
+    for (int i = 0; i < aCount; i = i + 1) {
+        dsq->game->pickupIngredientEffects(lIngredient);
+    }
+}
+
+/**
+ * Received an health upgrade
+ */
+void Randomizer::receivingUpgradeHealth() {
+    if (dsq->game->avatar) {
+        if (dsq->game->avatar->health < 10) {
+            dsq->continuity.upgradeHealth();
+        }
+    } else {
+        mustUpgradeHealth = true;
+    }
+    dsq->game->pickupItemEffects("healthupgrade/whole");
+}
+
+/**
  * Get a new item to activate in the local game
  * @param aItem The item to activate
  * @param aCount The number of element to receive
@@ -789,27 +818,20 @@ void Randomizer::receivingSong(check_t *aCheck) {
 void Randomizer::receivingItem(const std::string& aItem, int aCount) {
 	std::stringstream lMessageStream;
 	if (aItem.compare(0, 10, "ingredient") == 0) {
-		check_t * lCheck = getCheckByItem(aItem);
-		lMessageStream << lCheck->message;
-		if (aCount > 1) {
-			lMessageStream << " x " << aCount;
-		}
-		std::string lIngredientName = aItem.substr(11);
-		IngredientData *lIngredient = dsq->continuity.getIngredientDataByName(lIngredientName);
-		dsq->continuity.pickupIngredient(lIngredient, aCount);
-        for (int i = 0; i < aCount; i = i + 1) {
-            dsq->game->pickupIngredientEffects(lIngredient);
-        }
+	    check_t * lCheck = getCheckByItem(aItem);
+	    lMessageStream << lCheck->message;
+	    if (aCount > 1) {
+	        lMessageStream << " x " << aCount;
+	    }
+	    std::string lIngredientName = aItem.substr(11);
+	    receivingIngredient(lIngredientName, aCount);
 	} else if (aItem.compare(0, 11, "upgrade_wok") == 0) {
 		lMessageStream << "Upgrade: Wok";
 		dsq->continuity.setFlag(FLAG_UPGRADE_WOK, 1);
 	    dsq->game->pickupItemEffects("gui/wok");
 	} else if (aItem.compare(0, 14, "upgrade_health") == 0) {
 		lMessageStream << "Upgrade: Health";
-        if (dsq->game->avatar && dsq->game->avatar->health < 10) {
-            dsq->continuity.upgradeHealth();
-        }
-	    dsq->game->pickupItemEffects("healthupgrade/whole");
+	    receivingUpgradeHealth();
 	} else if (aItem.compare(0, 11, "collectible") == 0) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
@@ -1439,6 +1461,9 @@ void Randomizer::update(){
             }
         }
     }
+    if (mustUpgradeHealth && dsq->game->avatar) {
+        receivingUpgradeHealth();
+    }
 }
 
 /**
@@ -1536,16 +1561,16 @@ void Randomizer::showHintFinalBoss() {
         showText("Li needed to access final boss..");
     }
     if (!dsq->continuity.hasSong(SONG_BIND)) {
-        showText("Bind song needed to access final boss..");
+        showText("Bind song needed to access final boss.");
     }
     if (!dsq->continuity.hasSong(SONG_ENERGYFORM)) {
-        showText("Energy form needed to access final boss..");
+        showText("Energy form needed to access final boss.");
     }
     if (!dsq->continuity.hasSong(SONG_SUNFORM)) {
-        showText("Sun form needed to access final boss..");
+        showText("Sun form needed to access final boss.");
     }
     if (!dsq->continuity.hasSong(SONG_DUALFORM)) {
-        showText("Dual form needed to access final boss..");
+        showText("Dual form needed to access final boss.");
     }
     showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
     showHint(bigBossCount(), bigBossesToKill, "big bosses beaten");
@@ -1618,6 +1643,34 @@ void Randomizer::showText(const std::string &aText, float aX, float aY)
         //t->scrollText(text, 0.1);
         t->setText(aText);
         dsq->getTopStateData()->addRenderObject(t, LR_HUD);
+    }
+}
+
+/**
+ * Launched when a scene is loading
+ *
+ * @param aScene The scene name that is loading
+ */
+void Randomizer::onLoadScene(std::string aScene) {
+    if (aScene == "title") {
+        seedNumberText = new BitmapText(&dsq->smallFont);
+        {
+            std::stringstream lStream;
+            lStream << "Seed number: " << getUid();
+            seedNumberText->setText(lStream.str());
+            seedNumberText->position = Vector(640, 575);
+            seedNumberText->followCamera = 1;
+            seedNumberText->setAlign(ALIGN_LEFT);
+            seedNumberText->scale = Vector(0.7, 0.7);
+            seedNumberText->alphaMod = 0.75;
+            seedNumberText->alpha = 1;
+        }
+        dsq->addRenderObject(seedNumberText, LR_REGISTER_TEXT);
+    } else {
+        if (seedNumberText) {
+            seedNumberText->safeKill();
+            seedNumberText = nullptr;
+        }
     }
 }
 

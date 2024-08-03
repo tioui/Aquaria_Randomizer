@@ -52,9 +52,21 @@ private:
     wxWindow *buildArchipelagoPanel(wxWindow *parent);
 
     /**
+     * Build the panel used in the archipelago randomizer offline tab
+     *
+     * @param parent The panel to put the archipelago offline panel in.
+     */
+    wxWindow *buildArchipelagoOfflinePanel(wxWindow *parent);
+
+    /**
      * The text box used to get the json file path of the local randomizer.
      */
     wxTextCtrl *jsonFileText;
+
+    /**
+     * The text box used to get the seed number of the archipelago randomizer offline.
+     */
+    wxComboBox *seedNumberText;
 
     /**
      * Text box used to enter the slot name for the archipelago randomizer.
@@ -105,6 +117,12 @@ private:
     void OnArchipelagoOKButton(wxCommandEvent& event);
 
     /**
+     * Launched when the user click the "OK" button of the archipelago randomizer offline
+     * @param event Information about the event (Not used)
+     */
+    void OnArchipelagoOfflineOKButton(wxCommandEvent& event);
+
+    /**
      * Launched when the user click one of the "Cancel" button
      * @param event Information about the event (Not used)
      */
@@ -137,6 +155,22 @@ private:
     wxCheckBox *createCheckBox(wxWindow *parent, const std::string& labelText);
 
     /**
+     * Create a panel that contain a label and a combobox.
+     *
+     * @param parent the panel to put the new field panel in.
+     * @param labelText The text to put on the label.
+     * @param choices The choice in the combobox
+     * @return The combobox of the field .
+     */
+    wxComboBox *createComboBox(wxWindow *parent, const std::string& labelText, const wxArrayString & choices);
+
+    /**
+    * Fill an array with every seed in the save directory
+    * @param aChoice The array that has to be filled
+    */
+    void fillSeedNumber(wxArrayString *aChoice);
+
+    /**
      * Create a panel that contain a label.
      *
      * @param parent the panel to put the new field panel in.
@@ -158,6 +192,11 @@ private:
     void saveLauncherArchipelagoInfo();
 
     /**
+     * Save the offline Archipelago launcher info in an XML file.
+     */
+    void saveLauncherArchipelagoOfflineInfo();
+
+    /**
      * Save the local launcher info in an XML file.
      */
     void saveLauncherLocalInfo();
@@ -165,7 +204,7 @@ private:
     /**
      * Load the save XML values
      */
-    void loadLauncherLocalInfo();
+    void loadLauncherInfo();
 
     /**
      * The preference directory of the user
@@ -198,14 +237,29 @@ private:
     bool xmlFilter;
 
     /**
+     * The seed number of the archipelago randomizer in the XML save file.
+     */
+    std::string xmlSeedNumber;
+
+    /**
      * The filter boolean of the archipelago randomizer in the XML save file.
      */
     bool xmlDeathLink;
 
     /**
-     * The tab to open at the start as specified in the XML save file.
+     * The tab to open at the start must be the local as specified in the XML save file.
+     */
+    bool xmlLocalTabOpen;
+
+    /**
+     * The tab to open at the start must be the archipelago tab as specified in the XML save file.
      */
     bool xmlArchipelagoTabOpen;
+
+    /**
+     * The tab to open at the start must be the Offline tab as specified in the XML save file.
+     */
+    bool xmlOfflineTabOpen;
 
     /**
      * The boxing used to store the generated randomizer

@@ -91,6 +91,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lDeathLink);
         } else if (argc == 2 && strncmp(argv[1], "--help", 6) != 0) {
             lRandomizer = new RandomizerLocal(argv[1]);
+        } else if (argc == 3 && strncmp(argv[1], "--offline", 9) != 0) {
+            lRandomizer = new RandomizerArchipelago(argv[2]);
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
             RandomizerBoxing * lBoxing = new RandomizerBoxing();
@@ -117,6 +119,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             std::cerr << "Usage: " << argv[0] <<
                       " --name <Name> --server <ServerIP:Port>[ --password <Room password>]" <<
                       "[ --message self][ --deathlink]" << std::endl;
+            std::cerr << "Usage: " << argv[0] << " --offline seed_number" << std::endl;
             std::cerr.flush();
             exit(1);
         }

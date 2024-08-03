@@ -163,12 +163,12 @@ public:
      * Is the final boss is accessible.
      * @return True if the final boss is accessible. False if not.
      */
-    bool accessFinalBoss();
+    virtual bool accessFinalBoss();
 
     /**
      * Show what is missing to access the final boss.
      */
-    void showHintFinalBoss();
+    virtual void showHintFinalBoss();
 
     /**
      * Add information about receiving important item in `data`.
@@ -227,7 +227,7 @@ public:
      *
      * @param scene The scene name that is loading
      */
-    virtual void onLoadScene(std::string scene) {};
+    virtual void onLoadScene(std::string scene);
 
     /**
      * Retreive the maximum number of the same ingredients that can be stacked on the ingredient inventory
@@ -426,6 +426,19 @@ protected:
      */
     Recipe * getRecipe(const std::string &aName);
 
+
+    /**
+     * Get a new ingredient to receive in the local game
+     * @param ingredientName The name of the ingredient to receive
+     * @param count The number of ingredient to receive
+     */
+    virtual void receivingIngredient(const std::string& ingredientName, int count);
+
+    /**
+    * Received an health upgrade
+    */
+    virtual void receivingUpgradeHealth();
+
 private:
 
     /**
@@ -472,6 +485,7 @@ private:
      * @param check The song check item to activate
      */
     void receivingSong(check_t *check);
+
 
     /**
      * Get a new transport to location
@@ -525,6 +539,11 @@ private:
     bool blindGoal;
 
     /**
+     * A health upgrade received must be apply again since the last time, naija was dead.
+     */
+    bool mustUpgradeHealth;
+
+    /**
      * Show a hint if the count is lower than the objective.
      *
      * @param aCount The number to valid
@@ -542,7 +561,12 @@ private:
      */
     void writeHelpData(std::stringstream *messageStream, std::string text, int flag);
 
+    /**
+     * Launched when the game help screen has to be (un)spawn
+     */
     void toggleHelpScreen();
+
+    BitmapText *seedNumberText;
 
     /**
      * Setup a menu item and a label for an option of the transportation menu
@@ -720,6 +744,9 @@ const int FLAG_ENTER_HOMECAVE              = 654;
 const int FLAG_LOCATION_START              = 1100;
 const int FLAG_LOCATION_END                = 1318;
 const int FLAG_BLIND_GOAL                  = 1499;
+
+const int FLAG_CHILDREN_RESERVED_START     = 1500;
+const int FLAG_CHILDREN_RESERVED_END       = 1999;
 
 
 #endif /* end of include guard RANDOMIZER_H */

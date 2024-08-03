@@ -6,6 +6,9 @@
 */
 
 #include "RandomizerLauncherFrame.h"
+
+#include <Path.h>
+
 #include "RandomizerLocal.h"
 #include "RandomizerArchipelago.h"
 #include <wx/notebook.h>
@@ -32,6 +35,9 @@ RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder, Ra
     createPage(lNotebook, L"Archipelago randomizer", [this](wxWindow *aParent) -> wxWindow*{
         return buildArchipelagoPanel(aParent);
     });
+    createPage(lNotebook, L"Archipelago randomizer offline", [this](wxWindow *aParent) -> wxWindow*{
+        return buildArchipelagoOfflinePanel(aParent);
+    });
     wxBoxSizer* lMainPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     lMainPanelSizer->Add(lNotebook, 1, wxEXPAND);
     lMainPanel->SetSizer(lMainPanelSizer);
@@ -41,9 +47,11 @@ RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder, Ra
     SetSizerAndFit(lTopSizer);
     openFileDialog = new wxFileDialog(this, ("Open JSON file"),wxEmptyString, wxEmptyString,
                                       "JSON files (*.json)|*.json", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
-    loadLauncherLocalInfo();
+    loadLauncherInfo();
     if (xmlArchipelagoTabOpen) {
         lNotebook->SetSelection(1);
+    } else if (xmlOfflineTabOpen) {
+        lNotebook->SetSelection(2);
     } else {
         lNotebook->SetSelection(0);
     }
@@ -52,7 +60,7 @@ RandomizerLauncherFrame::RandomizerLauncherFrame(std::string aUserDataFolder, Ra
 /**
  * Load the save XML values
  */
-void RandomizerLauncherFrame::loadLauncherLocalInfo() {
+void RandomizerLauncherFrame::loadLauncherInfo() {
     std::string filename;
     xmlLocalPath = "";
     xmlServer = "";
@@ -77,6 +85,7 @@ void RandomizerLauncherFrame::loadLauncherLocalInfo() {
             if (xml_local) {
                 xmlLocalPath = xml_local->Attribute("path");
                 jsonFileText->SetValue(wxString::FromUTF8(xml_local->Attribute("path")));
+                xmlLocalTabOpen = xml_local->IntAttribute("activeTab");
             }
 
             XMLElement *xml_archipelago = doc.FirstChildElement("Archipelago");
@@ -92,6 +101,13 @@ void RandomizerLauncherFrame::loadLauncherLocalInfo() {
                 xmlDeathLink = xml_archipelago->IntAttribute("deathLink");
                 deathLink->SetValue(xmlDeathLink);
                 xmlArchipelagoTabOpen = xml_archipelago->IntAttribute("activeTab");
+            }
+
+            XMLElement *xml_offline = doc.FirstChildElement("Offline");
+            if (xml_offline) {
+                xmlSeedNumber = xml_offline->Attribute("seednumber");
+                seedNumberText->SetValue(wxString::FromUTF8(xml_offline->Attribute("seednumber")));
+                xmlOfflineTabOpen = xml_offline->IntAttribute("activeTab");
             }
         }
     }
@@ -167,6 +183,24 @@ wxTextCtrl *RandomizerLauncherFrame::createField(wxWindow *aParent, const std::s
     wxTextCtrl *lText = new wxTextCtrl(lFieldPanel, wxID_EDIT);
     lFieldPanel->GetSizer()->Add(lText, 1, wxALIGN_TOP);
     return lText;
+}
+
+
+/**
+ * Create a panel that contain a label and a text view.
+ *
+ * @param aParent the panel to put the new field panel in.
+ * @param aLabelText The text to put on the label.
+ * @param aChoices The choice in the combobox
+ * @return The text view of the field .
+ */
+wxComboBox *RandomizerLauncherFrame::createComboBox(wxWindow *aParent, const std::string& aLabelText,
+                                                    const wxArrayString & aChoices) {
+    wxPanel *lFieldPanel = prepareFieldPanel(aParent, aLabelText);
+    wxComboBox *lBox = new wxComboBox(lFieldPanel, wxID_EDIT, wxEmptyString, wxDefaultPosition, wxDefaultSize,
+                                      aChoices, wxCB_SORT);
+    lFieldPanel->GetSizer()->Add(lBox, 1, wxALIGN_TOP);
+    return lBox;
 }
 
 /**
@@ -261,6 +295,38 @@ wxWindow *RandomizerLauncherFrame::buildArchipelagoPanel(wxWindow *aParent){
 }
 
 /**
+ * Build the panel used in the Local randomizer tab
+ *
+ * @param aParent The panel to put the local panel in.
+ */
+wxWindow *RandomizerLauncherFrame::buildArchipelagoOfflinePanel(wxWindow *aParent){
+    wxPanel *lOfflinePanel = new wxPanel(aParent,wxID_ANY);
+    wxBoxSizer* lPanelSizer = new wxBoxSizer(wxVERTICAL);
+    lOfflinePanel->SetSizer(lPanelSizer);
+    includeSpace(lOfflinePanel, 10);
+    wxArrayString lChoice;
+    fillSeedNumber(&lChoice);
+    seedNumberText = createComboBox(lOfflinePanel, "Seed number: ", lChoice);
+    includeSpace(lOfflinePanel, 10);
+    createButtonPanel(lOfflinePanel, [&](wxCommandEvent &aEvent){
+        OnArchipelagoOfflineOKButton(aEvent);
+    });
+    return lOfflinePanel;
+}
+
+/**
+ * Fill an array with every seed in the save directory
+ * @param aChoice The array that has to be filled
+ */
+void RandomizerLauncherFrame::fillSeedNumber(wxArrayString *aChoice) {
+    for(auto& p : std::filesystem::recursive_directory_iterator(userDataFolder)) {
+        if (p.is_directory() && strncmp(p.path().filename().c_str(), "save_", 5) == 0) {
+            aChoice->push_back(p.path().filename().string().substr(5, std::string::npos));
+        }
+    }
+}
+
+/**
  * Add a visual space of a certain size in the parent layout
  * @param aParent The panel to add the space
  * @param aSize the size of the space
@@ -297,6 +363,28 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
     }
 }
 
+/**
+ * Launched when the user click the "OK" button of the archipelago randomizer
+ * @param aEvent Information about the event (Not used)
+ */
+void RandomizerLauncherFrame::OnArchipelagoOfflineOKButton(wxCommandEvent& aEvent) {
+    std::string lFile = userDataFolder + "/save_" + seedNumberText->GetValue().ToStdString();
+    std::filesystem::path lFilepath = std::string(lFile);
+    if (std::filesystem::is_directory(lFilepath)) {
+        Randomizer *lRandomizer = new RandomizerArchipelago(seedNumberText->GetValue().ToStdString());
+        if (lRandomizer->hasError()) {
+            wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
+        } else {
+            saveLauncherArchipelagoOfflineInfo();
+            randomizerBoxing->setRandomizer(lRandomizer);
+            Close();
+        }
+    } else {
+        wxMessageBox("The seed number does not exists.", wxT("Randomizer error"), wxICON_ERROR);
+    }
+
+}
+
 void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
     TinyXMLDocument doc;
     {
@@ -316,6 +404,12 @@ void RandomizerLauncherFrame::saveLauncherArchipelagoInfo() {
             xml_archipelago->SetAttribute("activeTab", true);
         }
         doc.InsertEndChild(xml_archipelago);
+        XMLElement *xml_offline = doc.NewElement("Offline");
+        {
+            xml_offline->SetAttribute("seednumber", xmlSeedNumber.c_str());
+            xml_offline->SetAttribute("activeTab", false);
+        }
+        doc.InsertEndChild(xml_offline);
     }
 #if defined(BBGE_BUILD_UNIX)
     doc.SaveFile((userDataFolder + "/launcher.xml").c_str());
@@ -343,6 +437,12 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
             xml_archipelago->SetAttribute("activeTab", false);
         }
         doc.InsertEndChild(xml_archipelago);
+        XMLElement *xml_offline = doc.NewElement("Offline");
+        {
+            xml_offline->SetAttribute("seednumber", xmlSeedNumber.c_str());
+            xml_offline->SetAttribute("activeTab", false);
+        }
+        doc.InsertEndChild(xml_offline);
     }
 #if defined(BBGE_BUILD_UNIX)
     doc.SaveFile((userDataFolder + "/launcher.xml").c_str());
@@ -351,3 +451,37 @@ void RandomizerLauncherFrame::saveLauncherLocalInfo() {
 #endif
 }
 
+
+
+void RandomizerLauncherFrame::saveLauncherArchipelagoOfflineInfo() {
+    TinyXMLDocument doc;
+    {
+        XMLElement *xml_local = doc.NewElement("Local");
+        {
+            xml_local->SetAttribute("path", xmlLocalPath.c_str());
+            xml_local->SetAttribute("activeTab", false);
+        }
+        doc.InsertEndChild(xml_local);
+        XMLElement *xml_archipelago = doc.NewElement("Archipelago");
+        {
+            xml_archipelago->SetAttribute("server", xmlServer.c_str());
+            xml_archipelago->SetAttribute("slotname", xmlSlotName.c_str());
+            xml_archipelago->SetAttribute("password", xmlPassword.c_str());
+            xml_archipelago->SetAttribute("filterself", xmlFilter);
+            xml_archipelago->SetAttribute("deathLink", xmlDeathLink);
+            xml_archipelago->SetAttribute("activeTab", false);
+        }
+        doc.InsertEndChild(xml_archipelago);
+        XMLElement *xml_offline = doc.NewElement("Offline");
+        {
+            xml_offline->SetAttribute("seednumber", seedNumberText->GetValue().utf8_str());
+            xml_offline->SetAttribute("activeTab", true);
+        }
+        doc.InsertEndChild(xml_offline);
+    }
+#if defined(BBGE_BUILD_UNIX)
+    doc.SaveFile((userDataFolder + "/launcher.xml").c_str());
+#elif defined(BBGE_BUILD_WINDOWS)
+    doc.SaveFile("launcher.xml");
+#endif
+}

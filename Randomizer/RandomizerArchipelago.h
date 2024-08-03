@@ -5,6 +5,12 @@
  * Class that encapsulate Archipelago server randomization
  */
 
+
+
+#ifndef RANDOMIZER_ARCHIPELAGO_H
+
+#define RANDOMIZER_ARCHIPELAGO_H
+
 #include "Randomizer.h"
 #include "subprojects/apclientpp/apclient.hpp"
 
@@ -50,6 +56,14 @@ typedef struct apLocation {
 class RandomizerArchipelago : public Randomizer {
 
 public:
+
+
+
+    /**
+     * Constructor that does not connect to a server
+     * @param seedNumber
+     */
+    explicit RandomizerArchipelago(std::string seedNumber);
 
     /**
      * Constructor that connect to an Archipelago server
@@ -113,7 +127,37 @@ public:
      */
     void onLoadScene(std::string scene) override;
 
+    /**
+     * Is the final boss is accessible.
+     * @return True if the final boss is accessible. False if not.
+     */
+    bool accessFinalBoss() override;
+
+    /**
+     * Show what is missing to access the final boss.
+     */
+    void showHintFinalBoss() override;
+
+protected:
+
+    /**
+     * Get a new ingredient to receive in the local game
+     * @param ingredientName The name of the ingredient to receive
+     * @param count The number of ingredient to receive
+     */
+    void receivingIngredient(const std::string& ingredientName, int count) override;
+
+    /**
+     * Received an health upgrade
+     */
+    void receivingUpgradeHealth() override;
+
 private:
+
+    /**
+     * Constructor that does not connect to a server
+     */
+    RandomizerArchipelago();
 
     /**
      * Unique identifier of the `apClient`
@@ -302,5 +346,37 @@ private:
      */
     std::vector<int> *locationsItemTypes;
 
+    /**
+     * Save information about the Archipelago slot. Usefull if the user want to play offline.
+     */
+    void saveConnectionInfo();
+
+    /**
+     * Load information about the Archipelago slot. Usefull if the user want to play offline.
+     */
+    void loadConnectionInfo();
+
+    /**
+     * True if the player is playing offline
+     */
+    bool isOffline;
+
 };
 
+const int FLAG_SAVE_HAS_INFO                     = 1500;
+const int FLAG_SAVE_AQUARIAN_TRANSLATE           = 1501;
+const int FLAG_SAVE_SECRET_NEEDED                = 1502;
+const int FLAG_SAVE_MINI_BOSSES_TO_KILLED        = 1503;
+const int FLAG_SAVE_BIG_BOSSES_TO_KILLED         = 1504;
+const int FLAG_SAVE_INFINITE_HOT_SOUP            = 1505;
+const int FLAG_SAVE_MAX_INGREDIENTS_AMOUNT       = 1506;
+const int FLAG_SAVE_RANDOMIZED_INGREDIENTS_SIZE  = 1520;
+const int FLAG_SAVE_RANDOMIZED_INGREDIENTS_START = 1521;
+const int FLAG_SAVE_RANDOMIZED_INGREDIENTS_END   = 1599;
+
+const int FLAG_SAVE_LOCATION_ITEM_TYPES_SIZE     = 1600;
+const int FLAG_SAVE_LOCATION_ITEM_TYPES_START    = 1601;
+const int FLAG_SAVE_LOCATION_ITEM_TYPES_END      = 1999;
+
+
+#endif /* end of include guard RANDOMIZER_ARCHIPELAGO_H */
