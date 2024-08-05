@@ -539,7 +539,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1303, "beating_mithalas","song_beast",1, "Beast Form",
                        "Mithalas boss area, beating Mithalan God"});
     checks->push_back({1304, "beating_sun_god","song_sun",1, "Sun Form",
-                       "Sun Temple boss area, beating Sun God"});
+                       "Sun Temple boss area, beating Lumerean God"});
     checks->push_back({1305, "beating_drunian_god","song_nature",1, "Nature Form",
                        "Kelp Forest boss area, beating Drunian God"});
     checks->push_back({1306, "beating_energy_statue","song_energy",1, "Energy Form",
@@ -1317,7 +1317,7 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
     writeHelpData(&lMessageStream, "Mithalan God", dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
     writeHelpData(&lMessageStream, "Drunian God", dsq->continuity.getFlag(FLAG_BOSS_FOREST));
-    writeHelpData(&lMessageStream, "Sun God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
+    writeHelpData(&lMessageStream, "Lumerean God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
     writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
 
     lMessageStream << "\n";
