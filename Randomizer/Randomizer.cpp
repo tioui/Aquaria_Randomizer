@@ -167,13 +167,13 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1117, "bulb_arnassi_3","ingredient_specialcake",1, "Special cake",
                        "Arnassi Ruins, bulb in the center part"});
     checks->push_back({1118, "bulb_sunworm_1","ingredient_plantleaf",3, "Plant leaf",
-                       "Sun Worm path, first path bulb"});
+                       "Sun temple boss path, first path bulb"});
     checks->push_back({1119, "bulb_sunworm_2","ingredient_turtlesoup",1, "Turtle soup",
-                       "Sun Worm path, second path bulb"});
+                       "Sun temple boss path, second path bulb"});
     checks->push_back({1120, "bulb_sunworm_3","ingredient_specialcake",1, "Special cake",
-                       "Sun Worm path, first cliff bulb"});
+                       "Sun temple boss path, first cliff bulb"});
     checks->push_back({1121, "bulb_sunworm_4","ingredient_specialbulb",1, "Special bulb",
-                       "Sun Worm path, second cliff bulb"});
+                       "Sun temple boss path, second cliff bulb"});
     checks->push_back({1122, "bulb_tutorial_1","ingredient_handroll",1, "Hand roll",
                        "Verse Cave left area, bulb in the center part"});
     checks->push_back({1123, "bulb_tutorial_2","ingredient_hotsoup",1, "Hot soup",
@@ -473,7 +473,7 @@ void Randomizer::initialiseChecks(){
     checks->push_back({1270, "collect_energy_boss","collectible_energy_boss",1, "Tooth",
                        "Energy Temple boss area, Fallen God Tooth"});
     checks->push_back({1271, "collect_energy_statue","collectible_energy_statue",1, "Energy statue",
-                       "Energy Temple first area, Energy Idol"});
+                       "Energy Temple, Energy Idol"});
     checks->push_back({1272, "collect_golden_gear","collectible_golden_gear",1, "Golden gear",
                        "Sun Temple, Golden Gear"});
     checks->push_back({1273, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant",
