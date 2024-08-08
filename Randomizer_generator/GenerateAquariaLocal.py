@@ -23,7 +23,12 @@ from worlds.aquaria import AquariaWorld
 from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, DishRandomizer, Objective, \
                                    TurtleRandomizer, EarlyEnergyForm, BigBossesToBeat, MiniBossesToBeat, \
                                    SkipFirstVision, NoProgressionHardOrHiddenLocation, LightNeededToGetToDarkPlaces, \
-                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater, BlindGoal
+                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater, BlindGoal,
+                                   InfiniteHotSoup, OpenBodyTongue, SkipFinalBoss3rdForm, MaximumIngredientAmount,
+                                   NoProgressionSimonSays, NoProgressionKelpForest, NoProgressionVeil,
+                                   NoProgressionMithalas, NoProgressionEnergyTemple, NoProgressionArnassiRuins,
+                                   NoProgressionFrozenVeil, NoProgressionAbyss, NoProgressionSunkenCity,
+                                   NoProgressionBody
 
 # Every checks (association Location -> Item)
 checks: Dict[int, int] = {
@@ -300,6 +305,10 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.early_energy_form = {1: EarlyEnergyForm(options["earlyEnergyForm"])}
     else:
         arguments.early_energy_form = {1: EarlyEnergyForm(1)}
+    if "earlyBindSong" in options:
+        arguments.early_bind_song = {1: EarlyBindSong(options["earlyBindSong"])}
+    else:
+        arguments.early_energy_form = {1: EarlyEnergyForm(1)}
     if "bigBossesToBeat" in options and 0 <= options["bigBossesToBeat"] <= 5:
         arguments.big_bosses_to_beat = {1: BigBossesToBeat(options["bigBossesToBeat"])}
     else:
@@ -316,19 +325,74 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.no_progression_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(1)}
     else:
         arguments.no_progression_hard_or_hidden_locations = {1: NoProgressionHardOrHiddenLocation(0)}
+    if "noProgressionSimonSays" in options and options["noProgressionSimonSays"]:
+        arguments.no_progression_simon_says = {1: NoProgressionSimonSays(1)}
+    else:
+        arguments.no_progression_simon_says = {1: NoProgressionSimonSays(0)}
+    if "noProgressionKelpForest" in options and options["noProgressionKelpForest"]:
+        arguments.no_progression_kelp_forest = {1: NoProgressionKelpForest(1)}
+    else:
+        arguments.no_progression_kelp_forest = {1: NoProgressionKelpForest(0)}
+    if "noProgressionVeil" in options and options["noProgressionVeil"]:
+        arguments.no_progression_veil = {1: NoProgressionVeil(1)}
+    else:
+        arguments.no_progression_veil = {1: NoProgressionVeil(0)}
+    if "noProgressionMithalas" in options and options["noProgressionMithalas"]:
+        arguments.no_progression_mithalas = {1: NoProgressionMithalas(1)}
+    else:
+        arguments.no_progression_mithalas = {1: NoProgressionMithalas(0)}
+    if "noProgressionEnergyTemple" in options and options["noProgressionEnergyTemple"]:
+        arguments.no_progression_energy_temple = {1: NoProgressionEnergyTemple(1)}
+    else:
+        arguments.no_progression_energy_temple = {1: NoProgressionEnergyTemple(0)}
+    if "noProgressionArnassiRuins" in options and options["noProgressionArnassiRuins"]:
+        arguments.no_progression_arnassi_ruins = {1: NoProgressionArnassiRuins(1)}
+    else:
+        arguments.no_progression_arnassi_ruins = {1: NoProgressionArnassiRuins(0)}
+    if "noProgressionFrozenVeil" in options and options["noProgressionFrozenVeil"]:
+        arguments.no_progression_frozen_veil = {1: NoProgressionFrozenVeil(1)}
+    else:
+        arguments.no_progression_frozen_veil = {1: NoProgressionFrozenVeil(0)}
+    if "noProgressionAbyss" in options and options["noProgressionAbyss"]:
+        arguments.no_progression_abyss = {1: NoProgressionAbyss(1)}
+    else:
+        arguments.no_progression_abyss = {1: NoProgressionAbyss(0)}
+    if "noProgressionSunkenCity" in options and options["noProgressionSunkenCity"]:
+        arguments.no_progression_sunken_city = {1: NoProgressionSunkenCity(1)}
+    else:
+        arguments.no_progression_sunken_city = {1: NoProgressionSunkenCity(0)}
+    if "noProgressionBody" in options and options["noProgressionBody"]:
+        arguments.no_progression_body = {1: NoProgressionBody(1)}
+    else:
+        arguments.no_progression_body = {1: NoProgressionBody(0)}
     if "lightNeededInDarkPlaces" in options and options["lightNeededInDarkPlaces"]:
-        arguments.light_needed_to_get_to_dark_places = {1: LightNeededToGetToDarkPlaces(
-            options["lightNeededInDarkPlaces"])}
-    else:
         arguments.light_needed_to_get_to_dark_places = {1: LightNeededToGetToDarkPlaces(1)}
+    else:
+        arguments.light_needed_to_get_to_dark_places = {1: LightNeededToGetToDarkPlaces(0)}
     if "bindSongNeededForBulbUnderRock" in options and options["bindSongNeededForBulbUnderRock"]:
-        arguments.bind_song_needed_to_get_under_rock_bulb = {1: BindSongNeededToGetUnderRockBulb(0)}
+        arguments.bind_song_needed_to_get_under_rock_bulb = {1: BindSongNeededToGetUnderRockBulb(1)}
     else:
         arguments.bind_song_needed_to_get_under_rock_bulb = {1: BindSongNeededToGetUnderRockBulb(0)}
+    if "infiniteHotSoup" in options and options["infiniteHotSoup"]:
+        arguments.infinite_hot_soup = {1: InfiniteHotSoup(1)}
+    else:
+        arguments.infinite_hot_soup = {1: InfiniteHotSoup(0)}
+    if "openBodyTongue" in options and options["openBodyTongue"]:
+        arguments.open_body_tongue = {1: OpenBodyTongue(1)}
+    else:
+        arguments.open_body_tongue = {1: OpenBodyTongue(0)}
+    if "skipFinalBoss3rdForm" in options and options["skipFinalBoss3rdForm"]:
+        arguments.skip_final_boss_3rd_form = {1: SkipFinalBoss3rdForm(1)}
+    else:
+        arguments.skip_final_boss_3rd_form = {1: SkipFinalBoss3rdForm(0)}
     if "unconfineHomeWater" in options and 0 <= options["unconfineHomeWater"] <= 3:
         arguments.unconfine_home_water ={1: UnconfineHomeWater(options["unconfineHomeWater"])}
     else:
         arguments.unconfine_home_water ={1: UnconfineHomeWater(0)}
+    if "maximumIngredientAmount" in options and 2 <= options["maximumIngredientAmount"] <= 20:
+        arguments.maximum_ingredient_amount ={1: MaximumIngredientAmount(options["maximumIngredientAmount"])}
+    else:
+        arguments.maximum_ingredient_amount ={1: MaximumIngredientAmount(8)}
 
 
 def generate_aquaria_multiworld(options: Dict) -> MultiWorld:
@@ -376,6 +440,10 @@ def generate_json(options: Dict) -> str:
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
         "skipFirstVision": bool(options["skipFirstVision"]),
+        "infiniteHotSoup": bool(options["infiniteHotSoup"]),
+        "openBodyTongue": bool(options["openBodyTongue"]),
+        "skipFinalBoss3rdForm": bool(options["skipFinalBoss3rdForm"]),
+        "maximumIngredientAmount": int(options["maximumIngredientAmount"]),
         "ingredientReplacement": [i for i in range(76)],
         "unconfineHomeWaterEnergyDoor": options["unconfineHomeWater"] in [1, 3],
         "unconfineHomeWaterTransturtle": options["unconfineHomeWater"] in [2, 3],
@@ -419,10 +487,25 @@ def view_generation(request) -> Response:
             "randomizeDishes": False,
             "randomizeTurtles": 0,
             "earlyEnergyForm": 1,
+            "earlyBindSong": 1,
             "excludeHardItem": 0,
             "lightNeededInDarkPlaces": 1,
             "bindSongNeededForBulbUnderRock": 0,
             "unconfineHomeWater": 0,
+            "skipFinalBoss3rdForm": 0,
+            "openBodyTongue": 0,
+            "infiniteHotSoup": 1,
+            "maximumIngredientAmount": 8,
+            "noProgressionSimonSays": 0,
+            "noProgressionKelpForest": 0,
+            "noProgressionVeil": 0,
+            "noProgressionMithalas": 0,
+            "noProgressionEnergyTemple": 0,
+            "noProgressionArnassiRuins": 0,
+            "noProgressionFrozenVeil": 0,
+            "noProgressionAbyss": 0,
+            "noProgressionSunkenCity": 0,
+            "noProgressionBody": 0,
         }
         for key, value in request.POST.items():
             try:

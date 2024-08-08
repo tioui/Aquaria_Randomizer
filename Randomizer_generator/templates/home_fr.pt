@@ -34,6 +34,7 @@
                     <option value="3">Via les deux sorties</option>
                 </select></p>
 		<p><label for="earlyEnergyForm">Placer la forme de l'énergie tôt dans le jeu:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
+		<p><label for="earlyBindSong">Early bind song:</label> <input type="checkbox" id="earlyBindSong" name="earlyBindSong" value="1" checked></p>
 		<p><label for="aquarianTranslate">Traduire les écritures Aquarienne:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
 		<p><label for="secretsNeeded">Les secrets sont nécessaires pour accéder au créateur:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>
         <p><label for="miniBossesToBeat">Mini boss à battre avant d'accéder au créateur:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
@@ -55,9 +56,45 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select></p>
+        <p><label for="maximumIngredientAmount">Le nombre maximal du même ingrédients qui peut être accumulé dans l'inventaire:</label> <select id="maximumIngredientAmount" name="maximumIngredientAmount">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select></p>
+
 		<p><label for="bindSongNeededForBulbUnderRock">Rendre le chant d'attraction nécessaire pour les bulbes en dessous des roches:</label> <input type="checkbox" id="bindSongNeededForBulbUnderRock" name="bindSongNeededForBulbUnderRock" value="1"></p>
 		<p><label for="skipFirstVision">Passer la première vision dans la caverne des versets:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
 		<p><label for="excludeHardItem">Ne pas mettre d'éléments important dans les endroits difficiles d'atteinte ou bien cachés:</label> <input type="checkbox" id="excludeHardItem" name="excludeHardItem" value="1"></p>
+		<p><label for="noProgressionSimonSays">Aucun objet de progression dans Simon dit:</label> <input type="checkbox" id="noProgressionSimonSays" name="noProgressionSimonSays" value="0"></p>
+		<p><label for="noProgressionKelpForest">Aucun objet de progression dans la forêt:</label> <input type="checkbox" id="noProgressionKelpForest" name="noProgressionKelpForest" value="0"></p>
+		<p><label for="noProgressionVeil">Aucun objet de progression dans le voile:</label> <input type="checkbox" id="noProgressionVeil" name="noProgressionVeil" value="0"></p>
+		<p><label for="noProgressionMithalas">Aucun objet de progression à Mithalas:</label> <input type="checkbox" id="noProgressionMithalas" name="noProgressionMithalas" value="0"></p>
+		<p><label for="noProgressionEnergyTemple">Aucun objet de progression dans le temple de l'énergie:</label> <input type="checkbox" id="noProgressionEnergyTemple" name="noProgressionEnergyTemple" value="0"></p>
+		<p><label for="noProgressionArnassiRuins">Aucun objet de progression dans la ruine d'Arnassi:</label> <input type="checkbox" id="noProgressionArnassiRuins" name="noProgressionArnassiRuins" value="0"></p>
+		<p><label for="noProgressionFrozenVeil">Aucun objet de progression le voile gelé:</label> <input type="checkbox" id="noProgressionFrozenVeil" name="noProgressionFrozenVeil" value="0"></p>
+		<p><label for="noProgressionAbyss">Aucun objet de progression dans les Abysses:</label> <input type="checkbox" id="noProgressionAbyss" name="noProgressionAbyss" value="0"></p>
+		<p><label for="noProgressionSunkenCity">Aucun objet de progression dans la cité engloutie:</label> <input type="checkbox" id="noProgressionSunkenCity" name="noProgressionSunkenCity" value="0"></p>
+		<p><label for="noProgressionBody">Aucun objet de progression dans le corps:</label> <input type="checkbox" id="noProgressionBody" name="noProgressionBody" value="0"></p>
+		<p><label for="infiniteHotSoup">Rend la soupe chaude impossible à vider:</label> <input type="checkbox" id="infiniteHotSoup" name="infiniteHotSoup" value="1"></p>
+		<p><label for="openBodyTongue">Enlever la langue du corps:</label> <input type="checkbox" id="openBodyTongue" name="openBodyTongue" value="0"></p>
+		<p><label for="skipFinalBoss3rdForm">sauter la 3è forme du boss de la fin:</label> <input type="checkbox" id="skipFinalBoss3rdForm" name="skipFinalBoss3rdForm" value="0"></p>
+		<p><label for="lightNeededInDarkPlaces">Lumière nécessaire pour se déplacer dans le noir:</label> <input type="checkbox" id="lightNeededInDarkPlaces" name="lightNeededInDarkPlaces" value="1"></p>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Générer...</button>
         </div>

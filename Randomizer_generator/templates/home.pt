@@ -33,6 +33,7 @@
                     <option value="3">Via both</option>
                 </select></p>
 		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
+		<p><label for="earlyBindSong">Early bind song:</label> <input type="checkbox" id="earlyBindSong" name="earlyBindSong" value="1" checked></p>
 		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
 		<p><label for="secretsNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>
         <p><label for="miniBossesToBeat">Mini boss to beat to access the Creator:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
@@ -54,9 +55,46 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select></p>
+        <p><label for="maximumIngredientAmount">The maximum number of the same ingredients that can be stacked on the ingredient inventory:</label> <select id="maximumIngredientAmount" name="maximumIngredientAmount">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select></p>
 		<p><label for="bindSongNeededForBulbUnderRock">Makes bind song necessary to get under rocks locations:</label> <input type="checkbox" id="bindSongNeededForBulbUnderRock" name="bindSongNeededForBulbUnderRock" value="1"></p>
-		<p><label for="skipFirstVision">Skip the first vision in the verse cave:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
+		<p><label for="lightNeededInDarkPlaces">Light needed to get to dark places:</label> <input type="checkbox" id="lightNeededInDarkPlaces" name="lightNeededInDarkPlaces" value="1"></p>
 		<p><label for="excludeHardItem">No progression items on hard to get and well hidden locations:</label> <input type="checkbox" id="excludeHardItem" name="excludeHardItem" value="1"></p>
+
+		<p><label for="noProgressionSimonSays">No progression on Simon says area:</label> <input type="checkbox" id="noProgressionSimonSays" name="noProgressionSimonSays" value="0"></p>
+		<p><label for="noProgressionKelpForest">No progression in Kelp Forest:</label> <input type="checkbox" id="noProgressionKelpForest" name="noProgressionKelpForest" value="0"></p>
+		<p><label for="noProgressionVeil">No progression in the Veil:</label> <input type="checkbox" id="noProgressionVeil" name="noProgressionVeil" value="0"></p>
+		<p><label for="noProgressionMithalas">No progression in Mithalas:</label> <input type="checkbox" id="noProgressionMithalas" name="noProgressionMithalas" value="0"></p>
+		<p><label for="noProgressionEnergyTemple">No progression in Energy Temple:</label> <input type="checkbox" id="noProgressionEnergyTemple" name="noProgressionEnergyTemple" value="0"></p>
+		<p><label for="noProgressionArnassiRuins">No progression in Arnassi Ruins:</label> <input type="checkbox" id="noProgressionArnassiRuins" name="noProgressionArnassiRuins" value="0"></p>
+		<p><label for="noProgressionFrozenVeil">No progression in Frozen Veil:</label> <input type="checkbox" id="noProgressionFrozenVeil" name="noProgressionFrozenVeil" value="0"></p>
+		<p><label for="noProgressionAbyss">No progression in the Abyss:</label> <input type="checkbox" id="noProgressionAbyss" name="noProgressionAbyss" value="0"></p>
+		<p><label for="noProgressionSunkenCity">No progression in the Sunken City:</label> <input type="checkbox" id="noProgressionSunkenCity" name="noProgressionSunkenCity" value="0"></p>
+		<p><label for="noProgressionBody">No progression in the Body:</label> <input type="checkbox" id="noProgressionBody" name="noProgressionBody" value="0"></p>
+		<p><label for="infiniteHotSoup">Make hot soup undeplatable:</label> <input type="checkbox" id="infiniteHotSoup" name="infiniteHotSoup" value="1"></p>
+		<p><label for="openBodyTongue">Remove the body tongue:</label> <input type="checkbox" id="openBodyTongue" name="openBodyTongue" value="0"></p>
+		<p><label for="skipFinalBoss3rdForm">Skip the 3rd form of the final boss:</label> <input type="checkbox" id="skipFinalBoss3rdForm" name="skipFinalBoss3rdForm" value="0"></p>
+
+		<p><label for="skipFirstVision">Skip the first vision in the verse cave:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Generate...</button>
         </div>
