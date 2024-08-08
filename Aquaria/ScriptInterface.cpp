@@ -11082,6 +11082,7 @@ static const struct {
 	{"FLAG_SEAL_KING",					900},
 	{"FLAG_SEAL_QUEEN",					901},
 	{"FLAG_SEAL_PRINCE",				902},
+	{"FLAG_REMOVE_TONGUE",				930},
 
 	{"FLAG_HEALTHUPGRADES",				950},
 	{"FLAG_HEALTHUPGRADES_END",			960},

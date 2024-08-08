@@ -228,6 +228,7 @@ void RandomizerArchipelago::onRoomInfoHandler(){
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     int lAquarianTranslated = false;
     int lBlindGoal = false;
+    int lRemoveTongue = false;
     hasSlotInfo = true;
     std::string ldump = aJsonText.dump();
     if (aJsonText.contains("aquarian_translate")) {
@@ -263,6 +264,10 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     }
     if (aJsonText.contains("maximum_ingredient_amount")) {
         maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
+    }
+    if (aJsonText.contains("open_body_tongue")) {
+        lRemoveTongue = aJsonText["open_body_tongue"];
+        setRemoveTongue(lRemoveTongue);
     }
 
     if (aJsonText.contains("blind_goal")) {

@@ -1195,6 +1195,22 @@ bool Randomizer::getBlindGoal() {
 }
 
 /**
+ * True if the body tongue should be removed
+ * @param value The value to assign to `removeTongue`
+ */
+void Randomizer::setRemoveTongue(bool value) {
+    removeTongue = value;
+}
+
+/**
+ * True if the body tongue should be removed
+ * @return The value to assign to `removeTongue`
+ */
+bool Randomizer::getRemoveTongue() {
+    return removeTongue;
+}
+
+/**
  * Is the Aquarian text in the game should be translated
  * @param aValue The value to assign to `isAquarianTranslated`
  */
@@ -1398,6 +1414,11 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
         } else {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+        }
+        if (removeTongue) {
+            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+        } else {
+            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
         dsq->toggleCursor(true);

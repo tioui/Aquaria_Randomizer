@@ -31,6 +31,9 @@ v.tonguecollision = 0
 v.naija = 0
 
 function init(me)
+	if isFlag(FLAG_REMOVE_TONGUE, 1) then
+		entity_setFlag(me, 1)
+	end
 	setupEntity(me, "Final-Tongue", -2)
 	entity_scale(me, 4.5, 4.5)
 	entity_setFillGrid(me, true)

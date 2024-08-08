@@ -338,6 +338,18 @@ protected:
     bool getBlindGoal();
 
     /**
+     * Ste the `removeTongue` attribute
+     * @param value The value to assign to `removeTongue`
+     */
+    void setRemoveTongue(bool value);
+
+    /**
+     * True if the body tongue should be removed
+     * @return The value to assign to `removeTongue`
+     */
+    bool getRemoveTongue();
+
+    /**
      * Every checks of the Randomizer
      */
     std::vector<check_t> *checks;
@@ -539,6 +551,11 @@ private:
     bool blindGoal;
 
     /**
+     * True if the body tongue should be removed
+     */
+    bool removeTongue;
+
+    /**
      * A health upgrade received must be apply again since the last time, naija was dead.
      */
     bool mustUpgradeHealth;
@@ -702,7 +719,7 @@ const int FLAG_COLLECTIBLE_NAUTILUS        = 534;
 const int FLAG_COLLECTIBLE_DUMBO           = 535;
 const int FLAG_COLLECTIBLE_PIRANHA         = 536;
 
-// Bosses flags to open the way to the body
+// Bosses flags
 const int FLAG_MINIBOSS_START              = 700;
 const int FLAG_MINIBOSS_NAUTILUSPRIME      = 700;
 const int FLAG_MINIBOSS_KINGJELLY          = 701;
@@ -739,6 +756,7 @@ const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 const int FLAG_ENERGYSLOT_FIRST            = 106;
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
+const int FLAG_REMOVE_TONGUE               = 920;
 
 // Randomizer FLAGS
 const int FLAG_LOCATION_START              = 1100;

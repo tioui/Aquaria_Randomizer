@@ -20,6 +20,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
     bool lBlindGoal = false;
+    bool lRemoveTongue = false;
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
         version = lJsonData["version"];
@@ -36,6 +37,8 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         //skipFinalBoss3rdForm = lJsonData["skipFinalBoss3rdForm"];
         //infiniteHotSoup = lJsonData["infiniteHotSoup"];
         //maximumIngredientAmount = lJsonData["maximumIngredientAmount"];
+        // lRemoveTongue = lJsonData["removeTongue"];
+        // setRemoveTongue(lRemoveTongue);
         unconfine_home_water_energy_door = lJsonData["unconfineHomeWaterEnergyDoor"];
         unconfine_home_water_transturtle = lJsonData["unconfineHomeWaterTransturtle"];
         for (int lElement : lJsonData["ingredientReplacement"]) {
