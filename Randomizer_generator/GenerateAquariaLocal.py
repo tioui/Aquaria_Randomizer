@@ -259,7 +259,7 @@ def generate_basic_arguments() -> Namespace:
     arguments.skip_output = True
     arguments.plando_arguments = []
     arguments.plando_options = []
-    arguments.accessibility = {1: Accessibility(1)}
+    arguments.accessibility = {1: Accessibility(2)}
     arguments.progression_balancing = {1: ProgressionBalancing(50)}
     arguments.local_items = {1: LocalItems([])}
     arguments.non_local_items = {1: NonLocalItems([])}
