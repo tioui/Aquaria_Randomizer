@@ -28,7 +28,7 @@ from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, Di
                                    NoProgressionSimonSays, NoProgressionKelpForest, NoProgressionVeil, \
                                    NoProgressionMithalas, NoProgressionEnergyTemple, NoProgressionArnassiRuins, \
                                    NoProgressionFrozenVeil, NoProgressionAbyss, NoProgressionSunkenCity, \
-                                   NoProgressionBody
+                                   NoProgressionBody, EarlyBindSong
 
 # Every checks (association Location -> Item)
 checks: Dict[int, int] = {
