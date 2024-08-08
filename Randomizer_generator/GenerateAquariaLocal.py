@@ -23,11 +23,11 @@ from worlds.aquaria import AquariaWorld
 from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, DishRandomizer, Objective, \
                                    TurtleRandomizer, EarlyEnergyForm, BigBossesToBeat, MiniBossesToBeat, \
                                    SkipFirstVision, NoProgressionHardOrHiddenLocation, LightNeededToGetToDarkPlaces, \
-                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater, BlindGoal,
-                                   InfiniteHotSoup, OpenBodyTongue, SkipFinalBoss3rdForm, MaximumIngredientAmount,
-                                   NoProgressionSimonSays, NoProgressionKelpForest, NoProgressionVeil,
-                                   NoProgressionMithalas, NoProgressionEnergyTemple, NoProgressionArnassiRuins,
-                                   NoProgressionFrozenVeil, NoProgressionAbyss, NoProgressionSunkenCity,
+                                   BindSongNeededToGetUnderRockBulb, UnconfineHomeWater, BlindGoal, \
+                                   InfiniteHotSoup, OpenBodyTongue, SkipFinalBoss3rdForm, MaximumIngredientAmount, \
+                                   NoProgressionSimonSays, NoProgressionKelpForest, NoProgressionVeil, \
+                                   NoProgressionMithalas, NoProgressionEnergyTemple, NoProgressionArnassiRuins, \
+                                   NoProgressionFrozenVeil, NoProgressionAbyss, NoProgressionSunkenCity, \
                                    NoProgressionBody
 
 # Every checks (association Location -> Item)
