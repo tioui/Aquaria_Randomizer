@@ -39,6 +39,8 @@ local function runScene(me)
 	local oldx, oldy = entity_getPosition(ghost)
 	
 	setCameraLerpDelay(1.0)
+
+	changeForm(FORM_NORMAL)
 	
 	cam_toNode(getNode("CRYSTALCAM1"))
 	
