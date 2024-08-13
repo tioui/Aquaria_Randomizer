@@ -89,6 +89,11 @@ private:
     wxCheckBox *filterSelf;
 
     /**
+     * Checkbox used to know if the randomizer should filter chat message.
+     */
+    wxCheckBox *noChat;
+
+    /**
      * Checkbox used to know if the randomizer should filter message.
      */
     wxCheckBox* deathLink;
@@ -235,6 +240,11 @@ private:
      * The filter boolean of the archipelago randomizer in the XML save file.
      */
     bool xmlFilter;
+
+    /**
+     * The chat boolean of the archipelago randomizer in the XML save file.
+     */
+    bool xmlNoChat;
 
     /**
      * The seed number of the archipelago randomizer in the XML save file.

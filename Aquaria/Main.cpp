@@ -72,6 +72,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         if (argc >= 5 && strncmp(argv[1], "--name", 6) == 0 && strncmp(argv[3], "--server", 8) == 0) {
             std::string lPassword;
             bool lSelfMessage = false;
+            bool lNoChat = false;
             bool lDeathLink = false;
             int lMessageIndex = 5;
             if (argc >= 7 && strncmp(argv[5], "--password", 10) == 0) {
@@ -81,14 +82,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 lPassword = "";
             }
             if (argc >= lMessageIndex + 2 && strncmp(argv[lMessageIndex], "--message", 9) == 0) {
-                lSelfMessage =  strncmp(argv[lMessageIndex + 1], "self", 4) == 0;
+                if (strncmp(argv[lMessageIndex + 1], "self", 4) == 0) {
+                    lSelfMessage =  true;
+                    if (strncmp(argv[lMessageIndex + 1], "selfnochat", 10) == 0) {
+                        lNoChat = true;
+                    }
+                } else if (strncmp(argv[lMessageIndex + 1], "nochat", 6) == 0) {
+                    lNoChat = true;
+                }
                 lMessageIndex = lMessageIndex + 2;
             }
             if (argc >= lMessageIndex + 1 && strncmp(argv[lMessageIndex], "--deathlink", 1) == 0) {
                 lDeathLink = true;
                 lMessageIndex = lMessageIndex + 1;
             }
-            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lDeathLink);
+            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lNoChat, lDeathLink);
         } else if (argc == 2 && strncmp(argv[1], "--help", 6) != 0) {
             lRandomizer = new RandomizerLocal(argv[1]);
         } else if (argc == 3 && strncmp(argv[1], "--offline", 9) != 0) {
@@ -119,7 +127,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             std::cerr << "Usage: " << argv[0] <<
                       " --name <Name> --server <ServerIP:Port>[ --password <Room password>]" <<
                       "[ --message self][ --deathlink]" << std::endl;
-            std::cerr << "Usage: " << argv[0] << " --offline seed_number" << std::endl;
+            std::cerr << "Usage: " << argv[0] << " --offline <seed number>_<player name>" << std::endl;
             std::cerr.flush();
             exit(1);
         }
@@ -155,7 +163,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         if (lRandomizer){
             DSQ dsql(dsqParam, extraDataDir, appImageExtraDir,
-                     "Aquaria_Randomizer", lRandomizer, lRandomizer->getUid());
+                     "Aquaria_Randomizer", lRandomizer, lRandomizer->getUniqueString());
             dsql.init();
             dsql.main();
             dsql.shutdown();

@@ -70,10 +70,12 @@ public:
      * @param server The address and port of the Archipelago server
      * @param name The player name on the archipelago server
      * @param password The password of the room on the archipelago server
+     * @param selfMessage the user want only server message for or from himself.
+     * @param noChat The user don't want any chat message from server.
      * @param deathLink True if Archipelago Death link packets should be used.
      */
     explicit RandomizerArchipelago(const std::string& server, const std::string& name, const std::string& password,
-                                   bool selfMessage, bool deathLink);
+                                   bool selfMessage, bool noChat, bool deathLink);
 
     /**
      * Destructor of the current object
@@ -137,6 +139,12 @@ public:
      * Show what is missing to access the final boss.
      */
     void showHintFinalBoss() override;
+
+    /**
+     * The unique String for the Randomizer
+     * @return The String of the Randomizer
+     */
+    std::string getUniqueString() override;
 
 protected:
 
@@ -328,6 +336,11 @@ private:
      * Show only message from AP Server that are related to the current player
      */
     bool selfMessageOnly;
+
+    /**
+     * Don't show chat message from AP Server
+     */
+    bool noChatMessage;
 
     /**
      * True if the server has been disconnected and is trying to reconnect.

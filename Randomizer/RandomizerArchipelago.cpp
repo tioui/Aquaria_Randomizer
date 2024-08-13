@@ -22,7 +22,8 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     name = "";
     password = "";
     serverAddress = "";
-    selfMessageOnly = false;;
+    selfMessageOnly = false;
+    noChatMessage = false;
     hasBeenDisconnected = false;
     hasRoomInfo = false;
     hasSlotInfo = false;
@@ -44,10 +45,17 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
 
 /**
  * Constructor that does not connect to a server
- * @param seedNumber
+ * @param aSeedNumberPlayerName The seed number and the player name of the game
  */
-RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumber): RandomizerArchipelago(){
-    setUid(aSeedNumber);
+RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumberPlayerName): RandomizerArchipelago(){
+    int lSeparator = aSeedNumberPlayerName.find("_");
+    if (lSeparator != std::string::npos) {
+        setUid(aSeedNumberPlayerName.substr(0, lSeparator));
+        name = aSeedNumberPlayerName.substr(lSeparator + 1, std::string::npos);
+    } else {
+        setError("Missing separator between the seed number and the user name.");
+    }
+
 }
 
 /**
@@ -55,11 +63,13 @@ RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumber): Randomize
  * @param aServer The address and port of the Archipelago server
  * @param aName The player name on the archipelago server
  * @param aPassword The password of the room on the archipelago server
+ * @param aSelfMessage the user want only server message for or from himself.
+ * @param aNoChat The user don't want any chat message from server.
  * @param aDeathLink True if Archipelago Death link packets should be used.
  */
 RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const std::string& aName,
                                              const std::string& aPassword, bool aSelfMessage,
-                                             bool aDeathLink): RandomizerArchipelago(){
+                                             bool aNoChat, bool aDeathLink): RandomizerArchipelago(){
     name = aName;
     password = aPassword;
     serverAddress = aServer;
@@ -67,6 +77,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     syncing = true;
     deathLink = aDeathLink;
     isOffline = false;
+    noChatMessage = aNoChat;
     apuuid_generate(uuid);
     tryConnection(aServer);
     if (hasRoomInfo && hasSlotInfo) {
@@ -354,11 +365,13 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
     if (aJson.type != "Tutorial" && aJson.type != "Join" && aJson.type != "Part" && aJson.type != "Hint" &&
         aJson.type != "TagsChanged" && aJson.type != "CommandResult" && aJson.type != "AdminCommandResult") {
         if (aJson.type != "ItemSend" || !selfMessageOnly || selfRelatedJson(aJson.data)) {
-            std::stringstream lMessageStream;
-            for (const APClient::TextNode& lNode : aJson.data) {
-                lMessageStream << translateJsonDataToString(lNode);
+            if (!noChatMessage || aJson.type != "Chat") {
+                std::stringstream lMessageStream;
+                for (const APClient::TextNode& lNode : aJson.data) {
+                    lMessageStream << translateJsonDataToString(lNode);
+                }
+                showText(lMessageStream.str());
             }
-            showText(lMessageStream.str());
         }
     }
 }
@@ -682,6 +695,14 @@ void RandomizerArchipelago::showQuickMessage(const std::string &aText){
         currentQuickMessageTime = currentTime;
         dsq->screenMessage(aText);
     }
+}
+
+/**
+ * The unique String for the Randomizer
+ * @return The String of the Randomizer
+ */
+std::string RandomizerArchipelago::getUniqueString() {
+    return getUid() + "_" + name;
 }
 
 /**

@@ -209,11 +209,11 @@ function update(me, dt)
 	if v.turtleType == TURTLE_REGULAR and isFlag(v.myCheckFlag, 1) and not v.lights then
 		lights(me, true, 1.5)
 	end
-	if anyOtherFlag() then
-		entity_setActivationType(me, AT_CLICK)
-	else
-		entity_setActivationType(me, AT_NONE)
-	end
+--	if anyOtherFlag() then
+--		entity_setActivationType(me, AT_CLICK)
+--	else
+--		entity_setActivationType(me, AT_NONE)
+--	end
 	
 	if v.avatarAttached then
 		--entity_flipToSame(v.n, me)
@@ -236,11 +236,11 @@ function update(me, dt)
 	if entity_isEntityInRange(me, v.n, 300) then
 		if not v.seen then
 			emote(EMOTE_NAIJAWOW)
-			if not anyOtherFlag() then
+--			if not anyOtherFlag() then
 --				setControlHint(getStringBank(226), 0, 0, 0, 5, "transturtle/headicon")
 --			else
-				setControlHint(getStringBank(225), 0, 0, 0, 5, "transturtle/headicon")
-			end
+--				setControlHint(getStringBank(225), 0, 0, 0, 5, "transturtle/headicon")
+--			end
 			v.seen = true
 		end
 	end
@@ -268,7 +268,7 @@ function activate(me)
 		return
 	end
 	
-	if anyOtherFlag() then
+--	if anyOtherFlag() then
 		entity_setActivation(me, AT_NONE)
 		
 		if not isFlag(v.myCheckFlag, 1) then
@@ -382,11 +382,11 @@ function activate(me)
 			entity_setActivation(me, AT_CLICK, 128, 512)
 		end
 		
-	else
-		debugLog("TransTurtle: no other flag set")
-		playSfx("denied")
-		setControlHint(getStringBank(225), 0, 0, 0, 4, "transturtle/headicon")
-	end
+--	else
+--		debugLog("TransTurtle: no other flag set")
+--		playSfx("denied")
+--		setControlHint(getStringBank(225), 0, 0, 0, 4, "transturtle/headicon")
+--	end
 	--end
 end
 

@@ -113,12 +113,17 @@ public:
      */
     void spawnIngredientFromEntity(Entity *entity, IngredientData *ingredientData, bool randomized = true);
 
-
     /**
      * The unique ID for the Randomizer
      * @return The ID of the Randomizer
      */
     std::string getUid();
+
+    /**
+     * The unique String for the Randomizer
+     * @return The String of the Randomizer
+     */
+    virtual std::string getUniqueString();
 
     /**
      * Lunched at each game loop iteration
@@ -561,6 +566,13 @@ private:
     bool mustUpgradeHealth;
 
     /**
+     * Show an image for a received item.
+     *
+     * @param imageFile The file name of the image to show.
+     */
+    void pickupItemEffects(std::string imageFile);
+
+    /**
      * Show a hint if the count is lower than the objective.
      *
      * @param aCount The number to valid
@@ -659,6 +671,16 @@ private:
    	void onHomeWaterTransportation();
 
     /**
+     * Temporarrly disable the transportation menu (re-enable with `enableTransportationMenu`)
+     */
+   	void disableTransportationMenu();
+
+    /**
+     * Re-enable the transportation menu after a `disableTransportationMenu`
+     */
+   	void enableTransportationMenu();
+
+    /**
      * True if an item of the Transportation menu has been selected.
      */
     bool transporatationDone;
@@ -669,11 +691,59 @@ private:
     int transportationSelected;
 
     /**
-     * Show an image for a received item.
-     *
-     * @param imageFile The file name of the image to show.
+     * The cancel button for the transportation menu
      */
-    void pickupItemEffects(std::string imageFile);
+    AquariaMenuItem *menuCancel;
+
+    /**
+     * The home waters button for the transportation menu
+     */
+    AquariaMenuItem *homeWater;
+
+    /**
+     * The Open waters button for the transportation menu
+     */
+    AquariaMenuItem *openWater;
+
+    /**
+     * TheForest button for the transportation menu
+     */
+    AquariaMenuItem *forest;
+
+    /**
+     * The Veil left button for the transportation menu
+     */
+    AquariaMenuItem *veil1;
+
+    /**
+     * The Veil right button for the transportation menu
+     */
+    AquariaMenuItem *veil2;
+
+    /**
+     * The Arnassi Ruins button for the transportation menu
+     */
+    AquariaMenuItem *arnassi;
+
+    /**
+     * The Abyss button for the transportation menu
+     */
+    AquariaMenuItem *abyss;
+
+    /**
+     * The Body (final boss) button for the transportation menu
+     */
+    AquariaMenuItem *body;
+
+    /**
+     * The Simon says button for the transportation menu
+     */
+    AquariaMenuItem *simon;
+
+    /**
+     * The Naija's home/rock button for the transportation menu
+     */
+    AquariaMenuItem *returnBase;
 
 };
 
