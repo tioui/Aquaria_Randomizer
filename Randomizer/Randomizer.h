@@ -675,6 +675,71 @@ private:
      */
     void pickupItemEffects(std::string imageFile);
 
+
+    /**
+     * Temporarrly disable the transportation menu (re-enable with `enableTransportationMenu`)
+     */
+   	void disableTransportationMenu();
+
+    /**
+     * Re-enable the transportation menu after a `disableTransportationMenu`
+     */
+   	void enableTransportationMenu();
+
+    /**
+     * The cancel button for the transportation menu
+     */
+    AquariaMenuItem *menuCancel;
+
+    /**
+     * The home waters button for the transportation menu
+     */
+    AquariaMenuItem *homeWater;
+
+    /**
+     * The Open waters button for the transportation menu
+     */
+    AquariaMenuItem *openWater;
+
+    /**
+     * TheForest button for the transportation menu
+     */
+    AquariaMenuItem *forest;
+
+    /**
+     * The Veil left button for the transportation menu
+     */
+    AquariaMenuItem *veil1;
+
+    /**
+     * The Veil right button for the transportation menu
+     */
+    AquariaMenuItem *veil2;
+
+    /**
+     * The Arnassi Ruins button for the transportation menu
+     */
+    AquariaMenuItem *arnassi;
+
+    /**
+     * The Abyss button for the transportation menu
+     */
+    AquariaMenuItem *abyss;
+
+    /**
+     * The Body (final boss) button for the transportation menu
+     */
+    AquariaMenuItem *body;
+
+    /**
+     * The Simon says button for the transportation menu
+     */
+    AquariaMenuItem *simon;
+
+    /**
+     * The Naija's home/rock button for the transportation menu
+     */
+    AquariaMenuItem *returnBase;
 };
 
 
