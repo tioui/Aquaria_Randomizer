@@ -476,7 +476,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
         if (aCheck == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
-            if (apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
+            if (!syncing && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
                 if (lItemType == -1) {
                     dsq->game->pickupItemEffects("ap/trash");
@@ -543,12 +543,12 @@ void RandomizerArchipelago::update(){
         }
         if (inGame) {
             if (syncing) {
-                syncing = false;
                 for (const check_t& lCheck : *checks) {
                     if (dsq->continuity.getFlag(lCheck.flag)) {
                         activateCheck(lCheck.id);
                     }
                 }
+                syncing = false;
             }
             if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
                 if (deathLink && !deathLinkPause) {
