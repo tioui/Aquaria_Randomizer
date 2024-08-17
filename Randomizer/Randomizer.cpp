@@ -21,9 +21,12 @@ Randomizer::Randomizer() : ActionMapper() {
     ingredientReplacement = new std::vector<int>();
     error = false;
     inGame = false;
+    removeTongue = false;
+    transportationDone = false;
+    transportationSelected = 0;
     errorMessage = "";
     mustUpgradeHealth = false;
-    blindGoal = 0;
+    blindGoal = false;
     maximumIngredientAmount = 8;
     skipFirstVision = false;
     skipFinalBoss3rdForm = false;
@@ -59,7 +62,7 @@ Randomizer::Randomizer() : ActionMapper() {
 /**
  * Initialize the ingredients vector
  */
-void Randomizer::initialiseIngredients() {
+void Randomizer::initialiseIngredients() const {
     ingredients->push_back({"PlantLeaf", IT_LEAF});
     ingredients->push_back({"TurtleMeat", IT_MEAT});
     ingredients->push_back({"SwordfishSteak", IT_MEAT});
@@ -142,7 +145,7 @@ void Randomizer::initialiseIngredients() {
 /**
  * Initialize every Checks
  */
-void Randomizer::initialiseChecks(){
+void Randomizer::initialiseChecks() const {
     checks->push_back({1101, "bulb_turtlecave","ingredient_leafpoultice",3, "Leaf poultice",
                        "Turtle cave, bulb in Bubble Cliff"});
     checks->push_back({1102, "bulb_openwater_tl_1","ingredient_handroll",1, "Hand roll",
@@ -588,7 +591,7 @@ void Randomizer::initialiseChecks(){
 /**
  * Initialize `collectibles`
  */
-void Randomizer::initialiseCollectibles() {
+void Randomizer::initialiseCollectibles() const {
     collectibles->push_back({ FLAG_COLLECTIBLE_ANEMONESEED, "collectible_anemone", "anemone-seed"});
     collectibles->push_back({FLAG_COLLECTIBLE_ENERGYTEMPLE, "collectible_energy_temple", "energytemple"});
     collectibles->push_back({FLAG_COLLECTIBLE_ARNASSISTATUE, "collectible_arnassi_statue", "arnassi-statue"});
@@ -682,7 +685,7 @@ void Randomizer::receivingTransport(check_t *aCheck) {
  * Get a new collectible item to activate in the local game
  * @param aCheck The collectible check item to activate
  */
-void Randomizer::receivingCollectible(check_t *aCheck) {
+void Randomizer::receivingCollectible(check_t *aCheck) const {
     collectible_t *lCollectible = nullptr;
     for (int i = 0; i < collectibles->size() && !lCollectible; i = i + 1) {
         if (collectibles->at(i).name == aCheck->item) {
@@ -922,7 +925,7 @@ check_t *Randomizer::getCheckByItem(const std::string& aItem)
  * Retreive the maximum number of the same ingredients that can be stacked on the ingredient inventory
  * @return The maximum number
  */
-int Randomizer::getMaximumIngredientAmount() {
+int Randomizer::getMaximumIngredientAmount() const {
     return maximumIngredientAmount;
 }
 
@@ -1039,8 +1042,8 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
 
 /**
  * Spawn a recipe desi from an entity.
- * @param entity The entity that spawn the recipe dish
- * @param recipe The recipe to spawn
+ * @param aEntity The entity that spawn the recipe dish
+ * @param aRecipe The recipe to spawn
  * @param aIngredientData The ingredient that represent the recipe
  */
 void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, IngredientData *aIngredientData) {
@@ -1161,7 +1164,7 @@ void Randomizer::clearError() {
 
 /**
  * Retreive the check at a certain index
- * @param index The index of the check to retreive
+ * @param aIndex The index of the check to retreive
  * @return The check
  */
 check_t *Randomizer::getCheckByIndex(int aIndex) {
@@ -1209,7 +1212,7 @@ void Randomizer::setBlindGoal(bool value) {
  * Is the Goal's requirement be hidden from the player?
  * @return The value to assign to `blindGoal`
  */
-bool Randomizer::getBlindGoal() {
+bool Randomizer::getBlindGoal() const {
     return blindGoal;
 }
 
@@ -1225,7 +1228,7 @@ void Randomizer::setRemoveTongue(bool value) {
  * True if the body tongue should be removed
  * @return The value to assign to `removeTongue`
  */
-bool Randomizer::getRemoveTongue() {
+bool Randomizer::getRemoveTongue() const {
     return removeTongue;
 }
 
@@ -1241,7 +1244,7 @@ void Randomizer::setIsAquarianTranslated(bool aValue){
  * Is the Aquarian text in the game should be translated
  * @return True if the text should be translated
  */
-bool Randomizer::getIsAquarianTranslated(){
+bool Randomizer::getIsAquarianTranslated() const{
     return isAquarianTranslated;
 }
 
@@ -1249,7 +1252,7 @@ bool Randomizer::getIsAquarianTranslated(){
  * Get the file name (without path and extension) of the graphic file to show Aquarian text
  * @return The filename
  */
-std::string Randomizer::getAquarianGfx(){
+std::string Randomizer::getAquarianGfx() const{
     std::string lResult = "aquarian";
     if (isAquarianTranslated) {
         lResult = "aquarian_alt";
@@ -1265,11 +1268,11 @@ std::string Randomizer::getAquarianGfx(){
      * @param aText the text to write
      * @param aFlag write a check if true
      */
-void Randomizer::writeHelpData(std::stringstream *aMessageStream, std::string aText, int aFlag){
+void Randomizer::writeHelpData(std::stringstream *aMessageStream, const std::string& aText, int aFlag){
     if (aFlag) {
         *aMessageStream << "[X] ";
     } else {
-        *aMessageStream << "[ ] ";
+        *aMessageStream << " [ ] ";
     }
     *aMessageStream << aText;
     *aMessageStream << "\n";
@@ -1400,22 +1403,11 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendLocationsHelpData(std::string &aData) {
-    const int order[218] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63, 64, 65, 194, 213, 119, 120,
-                            206, 71, 72, 73, 74, 75, 160, 178, 162, 205, 27, 170, 28, 163, 29, 169, 195, 1, 2, 3, 4, 5,
-                            6, 7, 8, 148, 149, 150, 9, 211, 11, 10, 12, 13, 177, 14, 15, 16, 179, 191, 164, 217, 187,
-                            156, 216, 30, 35, 31, 33, 34, 41, 37, 38, 39, 123, 124, 125, 126, 127, 32, 40, 36, 174,
-                            128, 173, 129, 42, 165, 130, 131, 132, 133, 134, 135, 208, 183, 136, 137, 138, 139, 140,
-                            141, 142, 143, 144, 145, 146, 147, 189, 198, 113, 114, 115, 116, 117, 118, 202, 44, 45, 46,
-                            185, 47, 158, 48, 49, 51, 52, 53, 167, 50, 54, 186, 212, 168, 204, 55, 207, 56, 57, 176,
-                            121, 197, 199, 78, 76, 209, 77, 184, 0, 193, 79, 180, 80, 210, 82, 81, 157, 181, 196, 122,
-                            94, 95, 96, 171, 91, 92, 93, 182, 17, 18, 19, 20, 203, 24, 25, 166, 172, 26, 109, 110, 111,
-                            112, 214, 83, 84, 85, 86, 87, 89, 90, 161, 88, 188, 159, 154, 155, 151, 152, 153, 192, 43,
-                            201, 97, 66, 69, 67, 68, 70, 100, 98, 99, 101, 102, 190, 103, 104, 105, 215, 106};
     std::stringstream lMessageStream;
     lMessageStream << "[Locations obtained]\n";
     for (int i = 0; i < 218; i = i + 1) {
-        writeHelpData(&lMessageStream, checks->at(order[i]).location,
-                      dsq->continuity.getFlag(checks->at(order[i]).flag));
+        writeHelpData(&lMessageStream, checks->at(locationsOrder[i]).location,
+                      dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag));
     }
     lMessageStream << "\n\n";
     aData += lMessageStream.str();
@@ -1509,7 +1501,7 @@ void Randomizer::update(){
 /**
  * True when the game should skip the final boss 3rd form (hide and seek)
  */
-bool Randomizer::mustSkipFinalBoss3rdForm() {
+bool Randomizer::mustSkipFinalBoss3rdForm() const {
     return skipFinalBoss3rdForm;
 }
 
@@ -1718,7 +1710,7 @@ void Randomizer::onLoadScene(std::string aScene) {
  * Event for the Transportation menu to cancel the process.
  */
 void Randomizer::onCancelTransportation() {
-    transporatationDone = true;
+    transportationDone = true;
 }
 
 /**
@@ -1728,7 +1720,7 @@ void Randomizer::onNaijaHomeTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_NAIJAHOME;
     disableTransportationMenu();
     if (dsq->confirm("Go to Naija's home?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
 }
 
@@ -1739,7 +1731,7 @@ void Randomizer::onNaijaRockTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_NAIJAROCK;
     disableTransportationMenu();
     if (dsq->confirm("Go to Naija's rock?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1751,7 +1743,7 @@ void Randomizer::onVeil1Transportation() {
     transportationSelected = FLAG_TRANSTURTLE_VEIL01;
     disableTransportationMenu();
     if (dsq->confirm("Go to the Veil left area?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1763,7 +1755,7 @@ void Randomizer::onVeil2Transportation() {
     transportationSelected = FLAG_TRANSTURTLE_VEIL02;
     disableTransportationMenu();
     if (dsq->confirm("Go to the Veil right area?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1775,7 +1767,7 @@ void Randomizer::onArnassiTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_SEAHORSE;
     disableTransportationMenu();
     if (dsq->confirm("Go to Arnassi Ruins?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1787,7 +1779,7 @@ void Randomizer::onForestTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_FOREST04;
     disableTransportationMenu();
     if (dsq->confirm("Go to Kelp Forest?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1799,7 +1791,7 @@ void Randomizer::onSimonTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_FOREST05;
     disableTransportationMenu();
     if (dsq->confirm("Go to Simon Says?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1811,7 +1803,7 @@ void Randomizer::onAbyssTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_ABYSS03;
     disableTransportationMenu();
     if (dsq->confirm("Go to the Abyss?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1823,7 +1815,7 @@ void Randomizer::onBodyTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_FINALBOSS;
     disableTransportationMenu();
     if (dsq->confirm("Go to the Body?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1835,7 +1827,7 @@ void Randomizer::onOpenWaterTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_OPENWATER03;
     disableTransportationMenu();
     if (dsq->confirm("Go to Open Waters?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1847,7 +1839,7 @@ void Randomizer::onHomeWaterTransportation() {
     transportationSelected = FLAG_TRANSTURTLE_MAINAREA;
     disableTransportationMenu();
     if (dsq->confirm("Go to Home Waters?","", false, 0.0)) {
-        transporatationDone = true;
+        transportationDone = true;
     }
     enableTransportationMenu();
 }
@@ -1933,7 +1925,7 @@ int Randomizer::askTransportation() {
     transportationSelected = 0;
     if (!game->isSceneEditorActive() && !core->getShiftState() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
         dsq->saveSlotMode == SSM_NONE) {
-        transporatationDone = false;
+        transportationDone = false;
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
         Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));
@@ -1973,11 +1965,11 @@ int Randomizer::askTransportation() {
                 homeWater->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             homeWater->setCanDirMove(false);
@@ -1995,11 +1987,11 @@ int Randomizer::askTransportation() {
                 openWater->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             openWater->setCanDirMove(false);
@@ -2017,11 +2009,11 @@ int Randomizer::askTransportation() {
                 forest->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             forest->setCanDirMove(false);
@@ -2039,11 +2031,11 @@ int Randomizer::askTransportation() {
                 veil1->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             veil1->setCanDirMove(false);
@@ -2061,11 +2053,11 @@ int Randomizer::askTransportation() {
                 veil2->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             veil2->setCanDirMove(false);
@@ -2083,11 +2075,11 @@ int Randomizer::askTransportation() {
                 arnassi->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             arnassi->setCanDirMove(false);
@@ -2105,11 +2097,11 @@ int Randomizer::askTransportation() {
                 abyss->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             abyss->setCanDirMove(false);
@@ -2127,14 +2119,14 @@ int Randomizer::askTransportation() {
                 body->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
-                if (lVerticalPosition > 350) {
-                    lHorizontalPosition = 325.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
+                if (lVerticalPosition > 350.0f) {
+                    lHorizontalPosition = 325.0f;
                 }
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             body->setCanDirMove(false);
@@ -2152,14 +2144,14 @@ int Randomizer::askTransportation() {
                 simon->setFocus(true);
                 lFirst = false;
             }
-            if (lHorizontalPosition > 500) {
-                lHorizontalPosition = 175.0;
-                lVerticalPosition = lVerticalPosition + 100.0;
-                if (lVerticalPosition > 350) {
-                    lHorizontalPosition = 325.0;
+            if (lHorizontalPosition > 500.0f) {
+                lHorizontalPosition = 175.0f;
+                lVerticalPosition = lVerticalPosition + 100.0f;
+                if (lVerticalPosition > 350.0f) {
+                    lHorizontalPosition = 325.0f;
                 }
             } else {
-                lHorizontalPosition = lHorizontalPosition + 150;
+                lHorizontalPosition = lHorizontalPosition + 150.0f;
             }
         } else {
             simon->setCanDirMove(false);
@@ -2363,7 +2355,7 @@ int Randomizer::askTransportation() {
         AquariaGuiElement::currentGuiInputLevel = GUILEVEL_TRANSPORT;
         dsq->toggleCursor(true);
 
-        while (!transporatationDone)
+        while (!transportationDone)
         {
             transportationSelected = 0;
             dsq->main(FRAME_TIME);

@@ -146,6 +146,13 @@ public:
      */
     std::string getUniqueString() override;
 
+    /**
+     * Add information about locations in `data`.
+     *
+     * @param data Where the information about item should be put.
+     */
+    void appendLocationsHelpData(std::string &data) override;
+
 protected:
 
     /**

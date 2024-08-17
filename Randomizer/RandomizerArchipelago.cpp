@@ -365,7 +365,8 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
     if (aJson.type != "Tutorial" && aJson.type != "Join" && aJson.type != "Part" && aJson.type != "Hint" &&
         aJson.type != "TagsChanged" && aJson.type != "CommandResult" && aJson.type != "AdminCommandResult") {
         if (aJson.type != "ItemSend" || !selfMessageOnly || selfRelatedJson(aJson.data)) {
-            if (!noChatMessage || aJson.type != "Chat") {
+            if (!noChatMessage || (aJson.type != "Chat" && aJson.type != "Goal" && aJson.type != "Collect" &&
+                aJson.type != "Release")) {
                 std::stringstream lMessageStream;
                 for (const APClient::TextNode& lNode : aJson.data) {
                     lMessageStream << translateJsonDataToString(lNode);
@@ -484,12 +485,13 @@ void RandomizerArchipelago::receivingUpgradeHealth() {
  */
 void RandomizerArchipelago::activateCheck(std::string aCheck) {
     check_t *lCheck = getCheck(aCheck);
+    bool lhad_flag = dsq->continuity.getFlag(lCheck->flag);
     dsq->continuity.setFlag(lCheck->flag, 1);
     std::list<int64_t> lIds;
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
         if (aCheck == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
-            if (apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
+            if (!syncing && !lhad_flag && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
                 if (lItemType == -1) {
                     dsq->game->pickupItemEffects("ap/trash");
@@ -556,15 +558,16 @@ void RandomizerArchipelago::update(){
         }
         if (inGame) {
             if (syncing) {
-                syncing = false;
                 for (const check_t& lCheck : *checks) {
                     if (dsq->continuity.getFlag(lCheck.flag)) {
                         activateCheck(lCheck.id);
                     }
                 }
+                syncing = false;
             }
             if (dsq->game->avatar && dsq->game->avatar->isEntityDead()) {
                 if (deathLink && !deathLinkPause) {
+                    deathLinkPause = true;
                     deathLinkPause = true;
                     nlohmann::json data{
                             {"time", apClient->get_server_time()},
@@ -703,6 +706,46 @@ void RandomizerArchipelago::showQuickMessage(const std::string &aText){
  */
 std::string RandomizerArchipelago::getUniqueString() {
     return getUid() + "_" + name;
+}
+
+/**
+ * Add information about locations in `data`.
+ *
+ * @param aData Where the information about item should be put.
+ */
+void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
+    if (isOffline) {
+        Randomizer::appendLocationsHelpData(aData);
+    } else {
+        std::stringstream lMessageStream;
+        lMessageStream << "[Locations obtained]\n[Local] (AP) Name\n";
+        for (int i = 0; i < 218; i = i + 1) {
+            if (dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag)) {
+                lMessageStream << "   [X]      ";
+            } else {
+                lMessageStream << "    [ ]       ";
+            }
+            bool lFound = false;
+            for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
+                if (apLocations->at(j).name == checks->at(locationsOrder[i]).id) {
+                    for (int64_t laLocation : apClient->get_checked_locations()) {
+                        if (laLocation == j + AP_BASE) {
+                            lMessageStream << "(X) ";
+                            lFound = true;
+                        }
+                    }
+                    if (!lFound) {
+                        lMessageStream << "( )  ";
+                        lFound = true;
+                    }
+                }
+            }
+            lMessageStream << checks->at(locationsOrder[i]).location;
+            lMessageStream << "\n";
+        }
+        lMessageStream << "\n\n";
+        aData += lMessageStream.str();
+    }
 }
 
 /**
