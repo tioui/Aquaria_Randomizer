@@ -471,12 +471,13 @@ void RandomizerArchipelago::receivingUpgradeHealth() {
  */
 void RandomizerArchipelago::activateCheck(std::string aCheck) {
     check_t *lCheck = getCheck(aCheck);
+    bool lhad_flag = dsq->continuity.getFlag(lCheck->flag);
     dsq->continuity.setFlag(lCheck->flag, 1);
     std::list<int64_t> lIds;
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
         if (aCheck == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
-            if (!syncing && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
+            if (!syncing && !lhad_flag && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
                 if (lItemType == -1) {
                     dsq->game->pickupItemEffects("ap/trash");
