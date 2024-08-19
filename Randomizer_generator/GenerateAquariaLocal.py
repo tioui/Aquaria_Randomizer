@@ -301,12 +301,12 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.turtle_randomizer = {1: TurtleRandomizer(options["randomizeTurtles"])}
     else:
         arguments.turtle_randomizer = {1: TurtleRandomizer(2)}
-    if "earlyEnergyForm" in options:
-        arguments.early_energy_form = {1: EarlyEnergyForm(options["earlyEnergyForm"])}
+    if "earlyEnergyForm" in options and !options["earlyEnergyForm"]:
+        arguments.early_energy_form = {1: EarlyEnergyForm(0)}
     else:
         arguments.early_energy_form = {1: EarlyEnergyForm(1)}
-    if "earlyBindSong" in options:
-        arguments.early_bind_song = {1: EarlyBindSong(options["earlyBindSong"])}
+    if "earlyBindSong" in options and !options["earlyBindSong"]:
+        arguments.early_bind_song = {1: EarlyBindSong(0)}
     else:
         arguments.early_energy_form = {1: EarlyEnergyForm(1)}
     if "bigBossesToBeat" in options and 0 <= options["bigBossesToBeat"] <= 5:
