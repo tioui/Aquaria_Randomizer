@@ -280,9 +280,23 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
-    if (aJsonText.contains("locations_item_types")) {
-        for (int lElement : aJsonText["locations_item_types"]) {
-            locationsItemTypes->push_back(lElement);
+    for (int i = 0; i < apLocations->size(); i = i + 1) {
+        locationsId.push_back(i + AP_BASE);
+        locationsItemTypes->push_back(-3);
+    }
+    apClient->LocationScouts(locationsId);
+}
+
+/**
+ * A reply to an AP location scout message
+ * @param aItems Every items that has been scout
+ */
+void RandomizerArchipelago::onLocationInfo(const std::list<APClient::NetworkItem>& aItems) {
+    for (APClient::NetworkItem lItem : aItems) {
+        if (lItem.player == apClient->get_player_number()) {
+            locationsItemTypes->at(lItem.location - AP_BASE) = lItem.item;
+        } else {
+            locationsItemTypes->at(lItem.location - AP_BASE) = -(static_cast<int>(lItem.flags) + 1);
         }
     }
 }
