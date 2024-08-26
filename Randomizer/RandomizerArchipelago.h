@@ -357,6 +357,12 @@ private:
     void loadConnectionInfo();
 
     /**
+     * A reply to an AP location scout message
+     * @param aItems Every items that has been scout
+     */
+    void onLocationInfo(const std::list<APClient::NetworkItem>& aItems);
+
+    /**
      * True if the player is playing offline
      */
     bool isOffline;
