@@ -15,6 +15,13 @@
 #define AP_BASE 698000
 #define ITEM_INDEX_FLAG 1399
 
+typedef enum APItemType {
+    TRASH = -1,
+    PROGRESSION = -2,
+    USEFULL = -3,
+    TRAP = -5
+} APItemType;
+
 /**
  * Base constructor
  */
@@ -170,6 +177,9 @@ void RandomizerArchipelago::initialiseCallback(){
     apClient->set_bounced_handler([&](const nlohmann::json& aJson){
         onBounceMessageReceived(aJson);
     });
+    apClient->set_location_info_handler([&](const std::list<APClient::NetworkItem>& aItems){
+        onLocationInfo(aItems);
+    });
 }
 
 /**
@@ -240,6 +250,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     int lAquarianTranslated = false;
     int lBlindGoal = false;
     int lRemoveTongue = false;
+    std::list<int64_t> locationsId;
     hasSlotInfo = true;
     std::string ldump = aJsonText.dump();
     if (aJsonText.contains("aquarian_translate")) {
@@ -291,9 +302,22 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     for (int lElement : aJsonText["ingredientReplacement"]) {
         ingredientReplacement->push_back(lElement);
     }
-    if (aJsonText.contains("locations_item_types")) {
-        for (int lElement : aJsonText["locations_item_types"]) {
-            locationsItemTypes->push_back(lElement);
+    for (int i = 0; i < apLocations->size(); i = i + 1) {
+        locationsId.push_back(i + AP_BASE);
+        locationsItemTypes->push_back(USEFULL);
+    }
+    apClient->LocationScouts(locationsId);
+}
+/**
+ * A reply to an AP location scout message
+ * @param aItems Every items that has been scout
+ */
+void RandomizerArchipelago::onLocationInfo(const std::list<APClient::NetworkItem>& aItems) {
+    for (APClient::NetworkItem lItem : aItems) {
+        if (lItem.player == apClient->get_player_number()) {
+            locationsItemTypes->at(lItem.location - AP_BASE) = lItem.item;
+        } else {
+            locationsItemTypes->at(lItem.location - AP_BASE) = -(static_cast<int>(lItem.flags) + 1);
         }
     }
 }
@@ -493,13 +517,13 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
             lIds.push_back(apLocations->at(i).locationId);
             if (!syncing && !lhad_flag && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
-                if (lItemType == -1) {
+                if (lItemType == TRASH) {
                     dsq->game->pickupItemEffects("ap/trash");
-                } else if (lItemType == -2) {
+                } else if (lItemType == PROGRESSION) {
                     dsq->game->pickupItemEffects("ap/progression");
-                } else if (lItemType == -3) {
+                } else if (lItemType == USEFULL) {
                     dsq->game->pickupItemEffects("ap/useful");
-                } else if (lItemType == -5) {
+                } else if (lItemType == TRAP) {
                     dsq->game->pickupItemEffects("ap/trap");
                 } else if (isOffline) {
                     apitem_t *lApItem = getApItemById(lItemType + AP_BASE);
