@@ -229,6 +229,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     int lAquarianTranslated = false;
     int lBlindGoal = false;
     int lRemoveTongue = false;
+    std::list<int64_t> locationsId;
     hasSlotInfo = true;
     std::string ldump = aJsonText.dump();
     if (aJsonText.contains("aquarian_translate")) {
