@@ -526,7 +526,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                 } else if (lItemType == TRAP) {
                     dsq->game->pickupItemEffects("ap/trap");
                 } else if (isOffline) {
-                    apitem_t *lApItem = getApItemById(lItemType + AP_BASE);
+                    apitem_t *lApItem = getApItemById(lItemType);
                     receivingItem(lApItem->item, lApItem->count);
                 }
             }
@@ -658,6 +658,8 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
                 dsq->confirm("Error, cannot use this save\ngame offline. Closing...","", true, 0.0);
                 dsq->Core::instantQuit();
             }
+        } else {
+            saveConnectionInfo();
         }
     }
     if (!isOffline) {
