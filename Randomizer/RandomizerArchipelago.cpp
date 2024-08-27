@@ -159,6 +159,9 @@ void RandomizerArchipelago::initialiseCallback(){
     apClient->set_bounced_handler([&](const nlohmann::json& aJson){
         onBounceMessageReceived(aJson);
     });
+    apClient->set_location_info_handler([&](const std::list<APClient::NetworkItem>& aItems){
+        onLocationInfo(aItems);
+    });
 }
 
 /**
@@ -503,7 +506,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                 } else if (lItemType == -5) {
                     dsq->game->pickupItemEffects("ap/trap");
                 } else if (isOffline) {
-                    apitem_t *lApItem = getApItemById(lItemType + AP_BASE);
+                    apitem_t *lApItem = getApItemById(lItemType);
                     receivingItem(lApItem->item, lApItem->count);
                 }
             }
@@ -634,6 +637,8 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
                 dsq->confirm("Error, cannot use this save\ngame offline. Closing...","", true, 0.0);
                 dsq->Core::instantQuit();
             }
+        } else {
+            saveConnectionInfo();
         }
     }
     if (!isOffline) {
