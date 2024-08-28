@@ -324,7 +324,8 @@ wxWindow *RandomizerLauncherFrame::buildArchipelagoOfflinePanel(wxWindow *aParen
  */
 void RandomizerLauncherFrame::fillSeedNumber(wxArrayString *aChoice) {
     for(auto& p : std::filesystem::recursive_directory_iterator(userDataFolder)) {
-        if (p.is_directory() && strncmp(p.path().filename().string().c_str(), "save_", 5) == 0) {
+        if ((p.is_directory() && strncmp(p.path().filename().string().c_str(), "save_", 5) == 0) &&
+            (p.path().filename().string().find("_", 5) != std::string::npos)) {
             aChoice->push_back(p.path().filename().string().substr(5, std::string::npos));
         }
     }
