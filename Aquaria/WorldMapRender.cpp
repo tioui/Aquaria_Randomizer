@@ -1375,7 +1375,8 @@ void WorldMapRender::toggle(bool turnON)
 	const SeeMapMode mapmode = dsq->game->avatar->getSeeMapMode();
 
 	if (mapmode == SEE_MAP_NEVER
-		|| (mapmode == SEE_MAP_DEFAULT && dsq->game->avatar->isInDarkness() && dsq->continuity.form != FORM_SUN))
+		|| (mapmode == SEE_MAP_DEFAULT && dsq->game->avatar->isInDarkness() && dsq->continuity.form != FORM_SUN &&
+			dsq->continuity.getFlag(FLAG_PET_ACTIVE) != FLAG_PET_DUMBO))
 	{
 		core->sound->playSfx("denied");
 		return;

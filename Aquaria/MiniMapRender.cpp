@@ -264,7 +264,8 @@ void MiniMapRender::onUpdate(float dt)
 			radarHide = false;
 		else if(mapmode == SEE_MAP_NEVER)
 			radarHide = true;
-		else if (dsq->continuity.form != FORM_SUN && dsq->game->avatar->isInDarkness())
+		else if (dsq->continuity.form != FORM_SUN && dsq->continuity.getFlag(FLAG_PET_ACTIVE) != FLAG_PET_DUMBO &&
+			dsq->game->avatar->isInDarkness())
 		{
 			radarHide = true;
 		}
