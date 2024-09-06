@@ -9,26 +9,10 @@
 
 #include <filesystem>
 
-RandomizerLauncher::RandomizerLauncher(const std::string& aUserFolderName, RandomizerBoxing *aBoxing) {
+RandomizerLauncher::RandomizerLauncher(const std::string& aUserDataFolder, RandomizerBoxing *aBoxing) {
     error = false;
     randomizerBoxing = aBoxing;
-    #if defined(BBGE_BUILD_UNIX)
-        const char *envr = getenv("HOME");
-        if (envr == NULL)
-            envr = ".";  // oh well.
-        const std::string home(envr);
-
-        createDir(home);  // just in case.
-        #ifdef BBGE_BUILD_MACOSX
-            const std::string prefix("Library/Application Support/");
-        #else
-            const std::string prefix(".");
-        #endif
-        userDataFolder = home + "/" + prefix + aUserFolderName;
-        createDir(userDataFolder);
-    #else
-        userDataFolder = ".";
-    #endif
+    userDataFolder = aUserDataFolder;
 }
 
 /**

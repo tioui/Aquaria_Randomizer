@@ -359,7 +359,8 @@ void RandomizerLauncherFrame::OnArchipelagoOKButton(wxCommandEvent& aEvent) {
             passwordText->GetValue().ToStdString(),
             filterSelf->GetValue(),
             noChat->GetValue(),
-            deathLink->GetValue());
+            deathLink->GetValue(),
+            userDataFolder);
     if (lRandomizer->hasError()) {
         wxMessageBox(lRandomizer->getErrorMessage(), wxT("Randomizer error"), wxICON_ERROR);
     } else {

@@ -60,6 +60,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         std::string appImageExtraDir = "";
         const char *envPath = nullptr;
         const char *appImageDir = nullptr;
+
+	    std::string userDataFolder;
+
+        #if defined(BBGE_BUILD_UNIX)
+	            const char *envr = getenv("HOME");
+	            if (envr == NULL)
+	                envr = ".";  // oh well.
+	            const std::string home(envr);
+	            createDir(home);  // just in case.
+        #ifdef BBGE_BUILD_MACOSX
+	            const std::string prefix("Library/Application Support/");
+        #else
+	            const std::string prefix(".");
+        #endif
+	            userDataFolder = home + "/" + prefix + "Aquaria_Randomizer";
+	            createDir(userDataFolder);
+        #else
+	            userDataFolder = ".";
+        #endif
+
+
         setlocale(LC_ALL, ".UTF8");
         if ((!getenv("APPIMAGE")) && argc > 1) {
             std::filesystem::path lFilepath = std::string("randomizer_files");
@@ -96,7 +117,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 lDeathLink = true;
                 lMessageIndex = lMessageIndex + 1;
             }
-            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lNoChat, lDeathLink);
+            lRandomizer = new RandomizerArchipelago(argv[4], argv[2], lPassword, lSelfMessage, lNoChat,
+                lDeathLink, userDataFolder);
         } else if (argc == 2 && strncmp(argv[1], "--help", 6) != 0) {
             lRandomizer = new RandomizerLocal(argv[1]);
         } else if (argc == 3 && strncmp(argv[1], "--offline", 9) != 0) {
@@ -104,7 +126,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef RANDOMIZER_NO_LAUNCHER
         } else if (argc == 1) {
             RandomizerBoxing * lBoxing = new RandomizerBoxing();
-            RandomizerLauncher *lLauncher = new RandomizerLauncher("Aquaria_Randomizer", lBoxing);
+            RandomizerLauncher *lLauncher = new RandomizerLauncher(userDataFolder, lBoxing);
             wxApp::SetInstance( lLauncher );
             wxEntryStart( argc, argv );
             wxTheApp->CallOnInit();

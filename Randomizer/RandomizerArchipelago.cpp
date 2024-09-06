@@ -66,6 +66,25 @@ RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumberPlayerName):
 }
 
 /**
+ * Extract the hostname from a complete server address (aka remove the port number).
+ *
+ * For example, if the server address is "archipelago.gg:12345", the return will be "archipelago.gg"
+ *
+ * @param aServer The server address (with or without the port number)
+ * @return The server hostname without the port number
+ */
+std::string extractHostname(const std::string &aServer) {
+    unsigned long lEndPosition = aServer.find(":");
+    std::string lResult;
+    if (lEndPosition != std::string::npos && lEndPosition > 0) {
+        lResult = aServer.substr(0, lEndPosition);
+    } else {
+        lResult = aServer;
+    }
+    return lResult;
+}
+
+/**
  * Constructor that connect to an Archipelago server
  * @param aServer The address and port of the Archipelago server
  * @param aName The player name on the archipelago server
@@ -73,10 +92,12 @@ RandomizerArchipelago::RandomizerArchipelago(std::string aSeedNumberPlayerName):
  * @param aSelfMessage the user want only server message for or from himself.
  * @param aNoChat The user don't want any chat message from server.
  * @param aDeathLink True if Archipelago Death link packets should be used.
+ * @param aUserDataFolder The data to store user informations.
  */
 RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const std::string& aName,
                                              const std::string& aPassword, bool aSelfMessage,
-                                             bool aNoChat, bool aDeathLink): RandomizerArchipelago(){
+                                             bool aNoChat, bool aDeathLink,
+                                             std::string aUserDataFolder): RandomizerArchipelago(){
     name = aName;
     password = aPassword;
     serverAddress = aServer;
@@ -85,7 +106,8 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
     deathLink = aDeathLink;
     isOffline = false;
     noChatMessage = aNoChat;
-    apuuid_generate(uuid);
+    std::string lHostname = extractHostname(aServer);
+    uuid = ap_get_uuid(aUserDataFolder + "/uuid.dat", lHostname);
     tryConnection(aServer);
     if (hasRoomInfo && hasSlotInfo) {
         std::cout << "Seed number:" << apClient->get_seed() << std::endl;
@@ -451,9 +473,9 @@ std::string RandomizerArchipelago::translateJsonDataToString(const APClient::Tex
     if (aNode.type == "player_id") {
         lResult = apClient->get_player_alias(std::stoi(aNode.text));
     } else if(aNode.type == "item_id") {
-        lResult = apClient->get_item_name(std::stoi(aNode.text));
+        lResult = apClient->get_item_name(std::stoi(aNode.text), apClient->get_game());
     } else if(aNode.type == "location_id") {
-        lResult = apClient->get_location_name(std::stoi(aNode.text));
+        lResult = apClient->get_location_name(std::stoi(aNode.text), apClient->get_game());
     } else {
         lResult = aNode.text;
     }

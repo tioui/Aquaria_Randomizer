@@ -73,9 +73,10 @@ public:
      * @param selfMessage the user want only server message for or from himself.
      * @param noChat The user don't want any chat message from server.
      * @param deathLink True if Archipelago Death link packets should be used.
+     * @param userDataFolder The data to store user informations.
      */
     explicit RandomizerArchipelago(const std::string& server, const std::string& name, const std::string& password,
-                                   bool selfMessage, bool noChat, bool deathLink);
+                                   bool selfMessage, bool noChat, bool deathLink, std::string userDataFolder);
 
     /**
      * Destructor of the current object
@@ -177,7 +178,7 @@ private:
     /**
      * Unique identifier of the `apClient`
      */
-    char uuid[33];
+    std::string uuid;
 
     /**
      * Used to communicate with the Archipelago server
