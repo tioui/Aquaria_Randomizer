@@ -333,7 +333,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     for (int i = 0; i < apLocations->size(); i = i + 1) {
         if (killFourGodsGoal) {
             bool lIndexFound = false;
-            for (int j = 0; !lIndexFound && j < 172; j = j + 1) {
+            for (int j = 0; !lIndexFound && j < LOCATIONS_FOUR_GODS_SIZE; j = j + 1) {
                 if (i == locationsOrderFourGods[j]) {
                     lIndexFound = true;
                 }
@@ -814,7 +814,7 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
         } else {
             std::stringstream lMessageStream;
             lMessageStream << "[Locations obtained]\n";
-            for (int i = 0; i < 172; i = i + 1) {
+            for (int i = 0; i < LOCATIONS_FOUR_GODS_SIZE; i = i + 1) {
                 writeHelpData(&lMessageStream, checks->at(locationsOrderFourGods[i]).location,
                               dsq->continuity.getFlag(checks->at(locationsOrderFourGods[i]).flag));
             }
@@ -824,10 +824,10 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
     } else {
         std::stringstream lMessageStream;
         lMessageStream << "[Locations obtained]\n[Local] (AP) Name\n";
-        int lCount = 218;
+        int lCount = LOCATIONS_SIZE;
         const int *lLocationsOrder = locationsOrder;
         if (killFourGodsGoal) {
-            lCount = 172;
+            lCount = LOCATIONS_FOUR_GODS_SIZE;
             lLocationsOrder = locationsOrderFourGods;
         }
         for (int i = 0; i < lCount; i = i + 1) {

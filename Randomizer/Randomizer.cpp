@@ -1416,7 +1416,7 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
 void Randomizer::appendLocationsHelpData(std::string &aData) {
     std::stringstream lMessageStream;
     lMessageStream << "[Locations obtained]\n";
-    for (int i = 0; i < 218; i = i + 1) {
+    for (int i = 0; i < LOCATIONS_SIZE; i = i + 1) {
         writeHelpData(&lMessageStream, checks->at(locationsOrder[i]).location,
                       dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag));
     }
