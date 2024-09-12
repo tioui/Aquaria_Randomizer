@@ -1069,6 +1069,11 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 63, "bulb_home_water_6"});
     apLocations->push_back({AP_BASE + 64, "bulb_home_water_7"});
     apLocations->push_back({AP_BASE + 65, "bulb_home_water_8"});
+    apLocations->push_back({AP_BASE + 66, "bulb_final_l_1"});
+    apLocations->push_back({AP_BASE + 67, "bulb_final_l_2"});
+    apLocations->push_back({AP_BASE + 68, "bulb_final_l_3"});
+    apLocations->push_back({AP_BASE + 69, "bulb_final_l_4"});
+    apLocations->push_back({AP_BASE + 70, "bulb_final_l_5"});
     apLocations->push_back({AP_BASE + 71, "bulb_song_cave_1"});
     apLocations->push_back({AP_BASE + 72, "bulb_song_cave_2"});
     apLocations->push_back({AP_BASE + 73, "bulb_song_cave_3"});
