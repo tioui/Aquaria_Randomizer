@@ -1453,7 +1453,6 @@ void Randomizer::onLoad(bool aNewGame){
             if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
                 dsq->game->sceneToLoad = "vedhacave";
                 dsq->game->positionToAvatar = Vector(1743, 2888);
-                // @ToDo: To remove
             }
         }
         dsq->toggleCursor(false);

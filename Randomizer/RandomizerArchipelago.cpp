@@ -10,8 +10,7 @@
 #include "../Aquaria/Avatar.h"
 #include "../Aquaria/Game.h"
 
-
-#define AP_VERSION_SUPPORT {0,4,5}
+#define AP_VERSION_SUPPORT {0,5,0}
 #define AP_BASE 698000
 #define ITEM_INDEX_FLAG 1399
 
