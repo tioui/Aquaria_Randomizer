@@ -27,6 +27,8 @@ Randomizer::Randomizer() : ActionMapper() {
     errorMessage = "";
     mustUpgradeHealth = false;
     blindGoal = false;
+    killCreatorGoal = true;
+    killFourGodsGoal = false;
     maximumIngredientAmount = 8;
     skipFirstVision = false;
     skipFinalBoss3rdForm = false;
@@ -1333,11 +1335,17 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
     lMessageStream << "\n";
     if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
         if (miniBossesToKill > 1) {
-            lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access final boss.\n\n\n";
+            lMessageStream << miniBossesToKill << " mini bosses beaten are needed to access ";
         } else if (miniBossesToKill == 1) {
-            lMessageStream << "1 mini boss beaten are needed to access final boss.\n\n\n";
+            lMessageStream << "1 mini boss beaten are needed to access ";
         } else {
-            lMessageStream << "No mini boss beaten are needed to access final boss.\n\n\n";
+            lMessageStream << "No mini boss beaten are needed to access ";
+        }
+        if (killCreatorGoal) {
+            lMessageStream << "final boss.\n\n\n";
+        } else {
+            lMessageStream << "goal.\n\n\n";
+
         }
     }
 
@@ -1350,26 +1358,28 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
-    std::stringstream lMessageStream;
-    lMessageStream << "[Bosses beaten]\n";
-    writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
-    writeHelpData(&lMessageStream, "Mithalan God", dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
-    writeHelpData(&lMessageStream, "Drunian God", dsq->continuity.getFlag(FLAG_BOSS_FOREST));
-    writeHelpData(&lMessageStream, "Lumerean God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
-    writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
+    if (killCreatorGoal) {
+        std::stringstream lMessageStream;
+        lMessageStream << "[Bosses beaten]\n";
+        writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
+        writeHelpData(&lMessageStream, "Mithalan God", dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
+        writeHelpData(&lMessageStream, "Drunian God", dsq->continuity.getFlag(FLAG_BOSS_FOREST));
+        writeHelpData(&lMessageStream, "Lumerean God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
+        writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
 
-    lMessageStream << "\n";
-    if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
-        if (bigBossesToKill > 1) {
-            lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n\n";
-        } else if (bigBossesToKill == 1) {
-            lMessageStream << "1 big boss beaten are needed to access final boss.\n\n\n";
-        } else {
-            lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
+        lMessageStream << "\n";
+        if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
+            if (bigBossesToKill > 1) {
+                lMessageStream << bigBossesToKill << " big bosses beaten are needed to access final boss.\n\n\n";
+            } else if (bigBossesToKill == 1) {
+                lMessageStream << "1 big boss beaten are needed to access final boss.\n\n\n";
+            } else {
+                lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
+            }
         }
-    }
 
-    aData += lMessageStream.str();
+        aData += lMessageStream.str();
+    }
 }
 
 /**
@@ -1378,23 +1388,24 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendSecretHelpData(std::string &aData) {
+    if (killCreatorGoal) {
+        std::stringstream lMessageStream;
+        lMessageStream << "[Secrets obtained]\n";
+        writeHelpData(&lMessageStream, "First secret", dsq->continuity.getFlag(FLAG_SECRET01));
+        writeHelpData(&lMessageStream, "Second secret", dsq->continuity.getFlag(FLAG_SECRET02));
+        writeHelpData(&lMessageStream, "Third Secret", dsq->continuity.getFlag(FLAG_SECRET03));
 
-    std::stringstream lMessageStream;
-    lMessageStream << "[Secrets obtained]\n";
-    writeHelpData(&lMessageStream, "First secret", dsq->continuity.getFlag(FLAG_SECRET01));
-    writeHelpData(&lMessageStream, "Second secret", dsq->continuity.getFlag(FLAG_SECRET02));
-    writeHelpData(&lMessageStream, "Third Secret", dsq->continuity.getFlag(FLAG_SECRET03));
-
-    lMessageStream << "\n";
-    if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
-        if (secretsNeeded) {
-            lMessageStream << "Secrets are needed to access final boss.\n\n\n";
-        } else {
-            lMessageStream << "Secrets are not needed to access final boss.\n\n\n";
+        lMessageStream << "\n";
+        if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
+            if (secretsNeeded) {
+                lMessageStream << "Secrets are needed to access final boss.\n\n\n";
+            } else {
+                lMessageStream << "Secrets are not needed to access final boss.\n\n\n";
+            }
         }
-    }
 
-    aData += lMessageStream.str();
+        aData += lMessageStream.str();
+    }
 }
 
 /**
@@ -1442,6 +1453,7 @@ void Randomizer::onLoad(bool aNewGame){
             if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
                 dsq->game->sceneToLoad = "vedhacave";
                 dsq->game->positionToAvatar = Vector(1743, 2888);
+                // @ToDo: To remove
             }
         }
         dsq->toggleCursor(false);
@@ -1579,8 +1591,12 @@ bool Randomizer::accessFinalBoss() {
 void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
     if (aCount < aObjective) {
         std::stringstream lMessageStream;
-        lMessageStream << "You have " << aCount << " " << aMessage << ". Needing " << aObjective <<
-                            " to access final boss.";
+        lMessageStream << "You have " << aCount << " " << aMessage << ". Needing " << aObjective;
+        if (killCreatorGoal) {
+            lMessageStream << " to access final boss.";
+        } else {
+            lMessageStream << " to goal.";
+        }
         showText(lMessageStream.str());
     }
 }

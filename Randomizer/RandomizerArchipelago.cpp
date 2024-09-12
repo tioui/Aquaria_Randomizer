@@ -27,6 +27,8 @@ typedef enum APItemType {
  */
 RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     name = "";
+    isGoal = false;
+    fourGodsGoalMessage = false;
     password = "";
     serverAddress = "";
     selfMessageOnly = false;
@@ -309,11 +311,16 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (aJsonText.contains("maximum_ingredient_amount")) {
         maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
     }
+    if (aJsonText.contains("kill_creator_goal")) {
+        killCreatorGoal = aJsonText["kill_creator_goal"];
+    }
+    if (aJsonText.contains("four_gods_goal")) {
+        killFourGodsGoal = aJsonText["four_gods_goal"];
+    }
     if (aJsonText.contains("open_body_tongue")) {
         lRemoveTongue = aJsonText["open_body_tongue"];
         setRemoveTongue(lRemoveTongue);
     }
-
     if (aJsonText.contains("blind_goal")) {
         lBlindGoal = aJsonText["blind_goal"];
         setBlindGoal(lBlindGoal);
@@ -325,8 +332,24 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         ingredientReplacement->push_back(lElement);
     }
     for (int i = 0; i < apLocations->size(); i = i + 1) {
-        locationsId.push_back(i + AP_BASE);
-        locationsItemTypes->push_back(USEFULL);
+        if (killFourGodsGoal) {
+            bool lIndexFound = false;
+            for (int j = 0; !lIndexFound && j < 172; j = j + 1) {
+                if (i == locationsOrderFourGods[j]) {
+                    lIndexFound = true;
+                }
+            }
+            if (lIndexFound) {
+                locationsId.push_back(i + AP_BASE);
+                locationsItemTypes->push_back(USEFULL);
+            } else {
+                locationsItemTypes->push_back(TRASH);
+            }
+        } else {
+            locationsId.push_back(i + AP_BASE);
+            locationsItemTypes->push_back(USEFULL);
+        }
+
     }
     apClient->LocationScouts(locationsId);
 }
@@ -626,6 +649,9 @@ void RandomizerArchipelago::update(){
                 deathLinkPause = false;
             }
         }
+        //if (!isGoal && killFourGodsGoal) {
+        //    manageFourGodsEnding();
+        //}
     }
     auto lNow = std::chrono::system_clock::now();
     if (currentQuickMessageTime) {
@@ -640,6 +666,27 @@ void RandomizerArchipelago::update(){
             }
         }
     }
+
+}
+
+/**
+ * Check if it is the end of the four gods run
+ */
+void RandomizerArchipelago::manageFourGodsEnding() {
+    if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
+        dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
+        if (miniBossCount() >= miniBossesToKill) {
+            std::lock_guard<std::mutex> lock(apMutex);
+            apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+            isGoal = true;
+        } else {
+            if (!fourGodsGoalMessage) {
+                showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
+                fourGodsGoalMessage = true;
+            }
+        }
+        dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+    }
 }
 
 /**
@@ -647,7 +694,7 @@ void RandomizerArchipelago::update(){
  */
 void RandomizerArchipelago::endingGame() {
     if (!isOffline) {
-        if (miniBossCount() >= miniBossesToKill and bigBossCount() >= bigBossesToKill and
+        if (killCreatorGoal && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
         (!secretsNeeded || (secretsFound() == 3))) {
             std::lock_guard<std::mutex> lock(apMutex);
             apClient->StatusUpdate(APClient::ClientStatus::GOAL);
@@ -763,21 +810,38 @@ std::string RandomizerArchipelago::getUniqueString() {
  */
 void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
     if (isOffline) {
-        Randomizer::appendLocationsHelpData(aData);
+        if (killCreatorGoal) {
+            Randomizer::appendLocationsHelpData(aData);
+        } else {
+            std::stringstream lMessageStream;
+            lMessageStream << "[Locations obtained]\n";
+            for (int i = 0; i < 172; i = i + 1) {
+                writeHelpData(&lMessageStream, checks->at(locationsOrderFourGods[i]).location,
+                              dsq->continuity.getFlag(checks->at(locationsOrderFourGods[i]).flag));
+            }
+            lMessageStream << "\n\n";
+            aData += lMessageStream.str();
+        }
     } else {
         std::stringstream lMessageStream;
         lMessageStream << "[Locations obtained]\n[Local] (AP) Name\n";
-        for (int i = 0; i < 218; i = i + 1) {
-            if (dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag)) {
+        int lCount = 218;
+        const int *lLocationsOrder = locationsOrder;
+        if (killFourGodsGoal) {
+            lCount = 172;
+            lLocationsOrder = locationsOrderFourGods;
+        }
+        for (int i = 0; i < lCount; i = i + 1) {
+            if (dsq->continuity.getFlag(checks->at(lLocationsOrder[i]).flag)) {
                 lMessageStream << "   [X]      ";
             } else {
                 lMessageStream << "    [ ]       ";
             }
             bool lFound = false;
             for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
-                if (apLocations->at(j).name == checks->at(locationsOrder[i]).id) {
+                if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
                     for (int64_t laLocation : apClient->get_checked_locations()) {
-                        if (laLocation == j + AP_BASE) {
+                        if (laLocation == apLocations->at(j).locationId) {
                             lMessageStream << "(X) ";
                             lFound = true;
                         }
@@ -788,7 +852,7 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
                     }
                 }
             }
-            lMessageStream << checks->at(locationsOrder[i]).location;
+            lMessageStream << checks->at(lLocationsOrder[i]).location;
             lMessageStream << "\n";
         }
         lMessageStream << "\n\n";
@@ -1005,11 +1069,6 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 63, "bulb_home_water_6"});
     apLocations->push_back({AP_BASE + 64, "bulb_home_water_7"});
     apLocations->push_back({AP_BASE + 65, "bulb_home_water_8"});
-    apLocations->push_back({AP_BASE + 66, "bulb_final_l_1"});
-    apLocations->push_back({AP_BASE + 67, "bulb_final_l_2"});
-    apLocations->push_back({AP_BASE + 68, "bulb_final_l_3"});
-    apLocations->push_back({AP_BASE + 69, "bulb_final_l_4"});
-    apLocations->push_back({AP_BASE + 70, "bulb_final_l_5"});
     apLocations->push_back({AP_BASE + 71, "bulb_song_cave_1"});
     apLocations->push_back({AP_BASE + 72, "bulb_song_cave_2"});
     apLocations->push_back({AP_BASE + 73, "bulb_song_cave_3"});
