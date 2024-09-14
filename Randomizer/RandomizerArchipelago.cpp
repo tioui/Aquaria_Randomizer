@@ -495,9 +495,9 @@ std::string RandomizerArchipelago::translateJsonDataToString(const APClient::Tex
     if (aNode.type == "player_id") {
         lResult = apClient->get_player_alias(std::stoi(aNode.text));
     } else if(aNode.type == "item_id") {
-        lResult = apClient->get_item_name(std::stoi(aNode.text), apClient->get_game());
+        lResult = apClient->get_item_name(std::stoi(aNode.text), apClient->get_player_game(aNode.player));
     } else if(aNode.type == "location_id") {
-        lResult = apClient->get_location_name(std::stoi(aNode.text), apClient->get_game());
+        lResult = apClient->get_location_name(std::stoi(aNode.text), apClient->get_player_game(aNode.player));
     } else {
         lResult = aNode.text;
     }
@@ -648,9 +648,9 @@ void RandomizerArchipelago::update(){
                 deathLinkPause = false;
             }
         }
-        //if (!isGoal && killFourGodsGoal) {
-        //    manageFourGodsEnding();
-        //}
+        if (!isGoal && killFourGodsGoal) {
+            manageFourGodsEnding();
+        }
     }
     auto lNow = std::chrono::system_clock::now();
     if (currentQuickMessageTime) {
@@ -684,7 +684,10 @@ void RandomizerArchipelago::manageFourGodsEnding() {
                 fourGodsGoalMessage = true;
             }
         }
-        dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+        if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) != 0) {
+            dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+        }
+
     }
 }
 
