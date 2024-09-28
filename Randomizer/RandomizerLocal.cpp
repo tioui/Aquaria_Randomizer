@@ -37,8 +37,8 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         skipFinalBoss3rdForm = lJsonData["skipFinalBoss3rdForm"];
         infiniteHotSoup = lJsonData["infiniteHotSoup"];
         maximumIngredientAmount = lJsonData["maximumIngredientAmount"];
-        killCreatorGoal = lJsonData["killCreatorGoal"];
-        killFourGodsGoal = lJsonData["killFourGodsGoal"];
+        killCreatorGoal = true;
+        killFourGodsGoal = false;
         lRemoveTongue = lJsonData["openBodyTongue"];
         setRemoveTongue(lRemoveTongue);
         unconfine_home_water_energy_door = lJsonData["unconfineHomeWaterEnergyDoor"];
