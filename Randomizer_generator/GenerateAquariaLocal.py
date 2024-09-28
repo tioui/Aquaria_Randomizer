@@ -308,7 +308,7 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
     if "earlyBindSong" in options and not options["earlyBindSong"]:
         arguments.early_bind_song = {1: EarlyBindSong(0)}
     else:
-        arguments.early_energy_form = {1: EarlyEnergyForm(1)}
+        arguments.early_bind_song = {1: EarlyBindSong(1)}
     if "bigBossesToBeat" in options and 0 <= options["bigBossesToBeat"] <= 5:
         arguments.big_bosses_to_beat = {1: BigBossesToBeat(options["bigBossesToBeat"])}
     else:
