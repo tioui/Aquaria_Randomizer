@@ -750,6 +750,7 @@ private:
 
 };
 
+
 const int LOCATIONS_SIZE = 218;
 
 const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63, 64, 65, 194, 213, 119, 120,

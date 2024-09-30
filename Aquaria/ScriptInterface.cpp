@@ -11091,7 +11091,6 @@ static const struct {
 	luaConstant(FLAG_LICOMBAT),
 
 
-
 	luaConstant(MAX_FLAGS),
 
 	{"ALPHA_NEARZERO",					0.001},

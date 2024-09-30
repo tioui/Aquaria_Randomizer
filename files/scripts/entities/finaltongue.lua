@@ -76,6 +76,7 @@ function enterState(me, state)
 		entity_alpha(me, 0)
 		reconstructEntityGrid()
 		entity_setFlag(me, 1)
+		setFlag(FLAG_REMOVE_TONGUE, 1)
 	end
 end
 

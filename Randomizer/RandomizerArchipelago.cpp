@@ -44,6 +44,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     apClient = nullptr;
     clearError();
     nextQuickMessages = new std::queue<std::string>();
+    dataStorageInfo = new std::unordered_map<std::string, int>;
     apItems = new std::vector<apitem_t>();
     locationsItemTypes = new std::vector<int>();
     initialiseApItems();
@@ -119,6 +120,7 @@ RandomizerArchipelago::RandomizerArchipelago(const std::string& aServer, const s
         }
     }
 }
+
 
 /**
  * Try to connect to the server (try secure and not secure unless specified)
@@ -625,6 +627,7 @@ void RandomizerArchipelago::update(){
             showText("Disconnected from server. Trying to reconnect.");
         }
         if (inGame) {
+            updateDataStorage();
             if (syncing) {
                 for (const check_t& lCheck : *checks) {
                     if (dsq->continuity.getFlag(lCheck.flag)) {
@@ -665,7 +668,72 @@ void RandomizerArchipelago::update(){
             }
         }
     }
+}
 
+/**
+ * Set a single Archipelago data storage value
+ * @param aId The ID of the key
+ * @param aValue The value to set
+ */
+void RandomizerArchipelago::setDataStorage(std::string aId, int aValue) {
+    if (dataStorageInfo->at(aId) != aValue) {
+        APClient::DataStorageOperation lOperation;
+        std::list<APClient::DataStorageOperation> lOperationList;
+        lOperation.operation = "replace";
+        lOperation.value = aValue;
+        lOperationList.push_back(lOperation);
+        apClient->Set(aId, 0, false, lOperationList);
+        dataStorageInfo->at(aId) = aValue;
+    }
+}
+
+/**
+ * Initialise the `dataStorageInfo` to default values.
+ */
+void RandomizerArchipelago::initialisedDataStorageInfo() {
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_NAUTILUSPRIME, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_KINGJELLY, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_MERGOG, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_CRAB, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_OCTOMUN, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_MANTISSHRIMP, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_PRIESTS, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_BLASTER, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_ENERGYBOSSDEAD, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SUNKENCITY_BOSS, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_FOREST, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_MITHALA, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_SUNWORM, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET01, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET02, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET03, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SUN_CRYSTAL_OBTAINED, 0));
+    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_REMOVE_TONGUE, 0));
+}
+
+
+/**
+ * Update the Archipelago server data storage to put new values in it.
+ */
+void RandomizerArchipelago::updateDataStorage() {
+    setDataStorage(ID_MINIBOSS_NAUTILUSPRIME, dsq->continuity.getFlag(FLAG_MINIBOSS_NAUTILUSPRIME));
+    setDataStorage(ID_MINIBOSS_KINGJELLY, dsq->continuity.getFlag(FLAG_MINIBOSS_KINGJELLY));
+    setDataStorage(ID_MINIBOSS_MERGOG, dsq->continuity.getFlag(FLAG_MINIBOSS_MERGOG));
+    setDataStorage(ID_MINIBOSS_CRAB, dsq->continuity.getFlag(FLAG_MINIBOSS_CRAB));
+    setDataStorage(ID_MINIBOSS_OCTOMUN, dsq->continuity.getFlag(FLAG_MINIBOSS_OCTOMUN));
+    setDataStorage(ID_MINIBOSS_MANTISSHRIMP, dsq->continuity.getFlag(FLAG_MINIBOSS_MANTISSHRIMP));
+    setDataStorage(ID_MINIBOSS_PRIESTS, dsq->continuity.getFlag(FLAG_MINIBOSS_PRIESTS));
+    setDataStorage(ID_MINIBOSS_BLASTER, dsq->continuity.getFlag(FLAG_MINIBOSS_BLASTER));
+    setDataStorage(ID_ENERGYBOSSDEAD, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
+    setDataStorage(ID_SUNKENCITY_BOSS, dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
+    setDataStorage(ID_BOSS_FOREST, dsq->continuity.getFlag(FLAG_BOSS_FOREST));
+    setDataStorage(ID_BOSS_MITHALA, dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
+    setDataStorage(ID_BOSS_SUNWORM, dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
+    setDataStorage(ID_SECRET01, dsq->continuity.getFlag(FLAG_SECRET01));
+    setDataStorage(ID_SECRET02, dsq->continuity.getFlag(FLAG_SECRET02));
+    setDataStorage(ID_SECRET03, dsq->continuity.getFlag(FLAG_SECRET03));
+    setDataStorage(ID_SUN_CRYSTAL_OBTAINED, dsq->continuity.getFlag(FLAG_SUNTEMPLE_LIGHTCRYSTAL));
+    setDataStorage(ID_REMOVE_TONGUE, dsq->continuity.getFlag(FLAG_REMOVE_TONGUE));
 }
 
 /**
@@ -734,6 +802,7 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
         }
     }
     if (!isOffline) {
+        initialisedDataStorageInfo();
         connectionUpdate();
         apClient->Sync();
         syncing = true;

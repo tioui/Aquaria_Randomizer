@@ -12,6 +12,7 @@
 #define RANDOMIZER_ARCHIPELAGO_H
 
 #include "Randomizer.h"
+#include <map>
 #include "subprojects/apclientpp/apclient.hpp"
 
 /**
@@ -378,6 +379,23 @@ private:
     void loadConnectionInfo();
 
     /**
+     * Update the Archipelago server data storage to put new values in it.
+     */
+    void updateDataStorage();
+
+    /**
+     * Set a single Archipelago data storage value
+     * @param id The ID of the key
+     * @param value The value to set
+     */
+    void setDataStorage(std::string id, int value);
+
+    /**
+     * Initialise the `dataStorageInfo` to default values
+     */
+    void initialisedDataStorageInfo();
+
+    /**
      * Check if it is the end of the four gods run
      */
     void manageFourGodsEnding();
@@ -403,6 +421,11 @@ private:
      */
     bool fourGodsGoalMessage;
 
+    /**
+     * Every flags that has been send to Archipelago data storage
+     */
+    std::unordered_map<std::string, int> *dataStorageInfo;
+
 };
 
 
@@ -424,6 +447,8 @@ const int locationsOrderFourGods[LOCATIONS_FOUR_GODS_SIZE] = {107, 108, 175, 200
                                                               93, 182, 17, 18, 19, 20, 203};
 
 
+const int FLAG_SUNTEMPLE_LIGHTCRYSTAL            = 112;
+
 const int FLAG_SAVE_HAS_INFO                     = 1500;
 const int FLAG_SAVE_AQUARIAN_TRANSLATE           = 1501;
 const int FLAG_SAVE_SECRET_NEEDED                = 1502;
@@ -438,6 +463,26 @@ const int FLAG_SAVE_RANDOMIZED_INGREDIENTS_END   = 1599;
 const int FLAG_SAVE_LOCATION_ITEM_TYPES_SIZE     = 1600;
 const int FLAG_SAVE_LOCATION_ITEM_TYPES_START    = 1601;
 const int FLAG_SAVE_LOCATION_ITEM_TYPES_END      = 1999;
+
+// Identifier for the `dataStorageInfo`
+#define ID_MINIBOSS_NAUTILUSPRIME "miniboss_nautilusprime"
+#define ID_MINIBOSS_KINGJELLY "miniboss_kingjelly"
+#define ID_MINIBOSS_MERGOG "miniboss_mergog"
+#define ID_MINIBOSS_CRAB "miniboss_crab"
+#define ID_MINIBOSS_OCTOMUN "miniboss_octomun"
+#define ID_MINIBOSS_MANTISSHRIMP "miniboss_mantisshrimp"
+#define ID_MINIBOSS_PRIESTS "miniboss_priests"
+#define ID_MINIBOSS_BLASTER "miniboss_blaster"
+#define ID_ENERGYBOSSDEAD "energybossdead"
+#define ID_SUNKENCITY_BOSS "sunkencity_boss"
+#define ID_BOSS_FOREST "boss_forest"
+#define ID_BOSS_MITHALA "boss_mithala"
+#define ID_BOSS_SUNWORM "boss_sunworm"
+#define ID_REMOVE_TONGUE "tongue_removed"
+#define ID_SECRET01 "secret01"
+#define ID_SECRET02 "secret02"
+#define ID_SECRET03 "secret03"
+#define ID_SUN_CRYSTAL_OBTAINED "sun_crystal_obtained"
 
 
 #endif /* end of include guard RANDOMIZER_ARCHIPELAGO_H */
