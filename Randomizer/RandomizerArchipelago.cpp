@@ -675,8 +675,8 @@ void RandomizerArchipelago::update(){
  * @param aId The ID of the key
  * @param aValue The value to set
  */
-void RandomizerArchipelago::setDataStorage(std::string aId, int aValue) {
-    if (dataStorageInfo->at(aId) != aValue) {
+void RandomizerArchipelago::setDataStorage(std::string aId, int aValue, bool aUnconditional) {
+    if (aUnconditional || (dataStorageInfo->at(aId) != aValue)) {
         APClient::DataStorageOperation lOperation;
         std::list<APClient::DataStorageOperation> lOperationList;
         lOperation.operation = "replace";
@@ -714,26 +714,27 @@ void RandomizerArchipelago::initialisedDataStorageInfo() {
 
 /**
  * Update the Archipelago server data storage to put new values in it.
+     * @param unconditional True if the value is assing even if it was not modified from before assignment
  */
-void RandomizerArchipelago::updateDataStorage() {
-    setDataStorage(ID_MINIBOSS_NAUTILUSPRIME, dsq->continuity.getFlag(FLAG_MINIBOSS_NAUTILUSPRIME));
-    setDataStorage(ID_MINIBOSS_KINGJELLY, dsq->continuity.getFlag(FLAG_MINIBOSS_KINGJELLY));
-    setDataStorage(ID_MINIBOSS_MERGOG, dsq->continuity.getFlag(FLAG_MINIBOSS_MERGOG));
-    setDataStorage(ID_MINIBOSS_CRAB, dsq->continuity.getFlag(FLAG_MINIBOSS_CRAB));
-    setDataStorage(ID_MINIBOSS_OCTOMUN, dsq->continuity.getFlag(FLAG_MINIBOSS_OCTOMUN));
-    setDataStorage(ID_MINIBOSS_MANTISSHRIMP, dsq->continuity.getFlag(FLAG_MINIBOSS_MANTISSHRIMP));
-    setDataStorage(ID_MINIBOSS_PRIESTS, dsq->continuity.getFlag(FLAG_MINIBOSS_PRIESTS));
-    setDataStorage(ID_MINIBOSS_BLASTER, dsq->continuity.getFlag(FLAG_MINIBOSS_BLASTER));
-    setDataStorage(ID_ENERGYBOSSDEAD, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
-    setDataStorage(ID_SUNKENCITY_BOSS, dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
-    setDataStorage(ID_BOSS_FOREST, dsq->continuity.getFlag(FLAG_BOSS_FOREST));
-    setDataStorage(ID_BOSS_MITHALA, dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
-    setDataStorage(ID_BOSS_SUNWORM, dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
-    setDataStorage(ID_SECRET01, dsq->continuity.getFlag(FLAG_SECRET01));
-    setDataStorage(ID_SECRET02, dsq->continuity.getFlag(FLAG_SECRET02));
-    setDataStorage(ID_SECRET03, dsq->continuity.getFlag(FLAG_SECRET03));
-    setDataStorage(ID_SUN_CRYSTAL_OBTAINED, dsq->continuity.getFlag(FLAG_SUNTEMPLE_LIGHTCRYSTAL));
-    setDataStorage(ID_REMOVE_TONGUE, dsq->continuity.getFlag(FLAG_REMOVE_TONGUE));
+void RandomizerArchipelago::updateDataStorage(bool aUnconditional) {
+    setDataStorage(ID_MINIBOSS_NAUTILUSPRIME, dsq->continuity.getFlag(FLAG_MINIBOSS_NAUTILUSPRIME), aUnconditional);
+    setDataStorage(ID_MINIBOSS_KINGJELLY, dsq->continuity.getFlag(FLAG_MINIBOSS_KINGJELLY), aUnconditional);
+    setDataStorage(ID_MINIBOSS_MERGOG, dsq->continuity.getFlag(FLAG_MINIBOSS_MERGOG), aUnconditional);
+    setDataStorage(ID_MINIBOSS_CRAB, dsq->continuity.getFlag(FLAG_MINIBOSS_CRAB), aUnconditional);
+    setDataStorage(ID_MINIBOSS_OCTOMUN, dsq->continuity.getFlag(FLAG_MINIBOSS_OCTOMUN), aUnconditional);
+    setDataStorage(ID_MINIBOSS_MANTISSHRIMP, dsq->continuity.getFlag(FLAG_MINIBOSS_MANTISSHRIMP), aUnconditional);
+    setDataStorage(ID_MINIBOSS_PRIESTS, dsq->continuity.getFlag(FLAG_MINIBOSS_PRIESTS), aUnconditional);
+    setDataStorage(ID_MINIBOSS_BLASTER, dsq->continuity.getFlag(FLAG_MINIBOSS_BLASTER), aUnconditional);
+    setDataStorage(ID_ENERGYBOSSDEAD, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD), aUnconditional);
+    setDataStorage(ID_SUNKENCITY_BOSS, dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS), aUnconditional);
+    setDataStorage(ID_BOSS_FOREST, dsq->continuity.getFlag(FLAG_BOSS_FOREST), aUnconditional);
+    setDataStorage(ID_BOSS_MITHALA, dsq->continuity.getFlag(FLAG_BOSS_MITHALA), aUnconditional);
+    setDataStorage(ID_BOSS_SUNWORM, dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), aUnconditional);
+    setDataStorage(ID_SECRET01, dsq->continuity.getFlag(FLAG_SECRET01), aUnconditional);
+    setDataStorage(ID_SECRET02, dsq->continuity.getFlag(FLAG_SECRET02), aUnconditional);
+    setDataStorage(ID_SECRET03, dsq->continuity.getFlag(FLAG_SECRET03), aUnconditional);
+    setDataStorage(ID_SUN_CRYSTAL_OBTAINED, dsq->continuity.getFlag(FLAG_SUNTEMPLE_LIGHTCRYSTAL), aUnconditional);
+    setDataStorage(ID_REMOVE_TONGUE, dsq->continuity.getFlag(FLAG_REMOVE_TONGUE), aUnconditional);
 }
 
 /**
@@ -803,6 +804,7 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
     }
     if (!isOffline) {
         initialisedDataStorageInfo();
+        updateDataStorage(true);
         connectionUpdate();
         apClient->Sync();
         syncing = true;

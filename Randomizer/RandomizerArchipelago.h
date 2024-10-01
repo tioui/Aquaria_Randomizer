@@ -380,15 +380,17 @@ private:
 
     /**
      * Update the Archipelago server data storage to put new values in it.
+     * @param unconditional True if the value is assing even if it was not modified from before assignment
      */
-    void updateDataStorage();
+    void updateDataStorage(bool unconditional = false);
 
     /**
      * Set a single Archipelago data storage value
      * @param id The ID of the key
      * @param value The value to set
+     * @param unconditional True if the value is assing even if it was not modified from before assignment
      */
-    void setDataStorage(std::string id, int value);
+    void setDataStorage(std::string id, int value, bool unconditional);
 
     /**
      * Initialise the `dataStorageInfo` to default values
