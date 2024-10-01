@@ -586,17 +586,26 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
 
 /**
  * Update the APClient to handle items.
+ * @param aNoMutex Do not use mutex protection in the update
  */
-void RandomizerArchipelago::connectionUpdate() {
+void RandomizerArchipelago::connectionUpdate(bool aNoMutex) {
     const int item_handling_flags_all = 7;
     if (!isOffline) {
         std::list<std::string> tags;
         if (deathLink) {
             tags.emplace_back("DeathLink");
         }
-        std::lock_guard<std::mutex> lock(apMutex);
-        apClient->ConnectUpdate(item_handling_flags_all,tags);
-        apClient->poll();
+        if (apClient->get_state() != APClient::State::DISCONNECTED) {
+            if (aNoMutex) {
+                apClient->ConnectUpdate(item_handling_flags_all,tags);
+                apClient->poll();
+            } else {
+                std::lock_guard<std::mutex> lock(apMutex);
+                apClient->ConnectUpdate(item_handling_flags_all,tags);
+                apClient->poll();
+            }
+
+        }
     }
 }
 
@@ -617,6 +626,7 @@ void RandomizerArchipelago::update(){
             } else if (apClient->get_state() == APClient::State::SOCKET_CONNECTED ||
                        apClient->get_state() == APClient::State::SLOT_CONNECTED) {
                 if (hasBeenDisconnected) {
+                    connectionUpdate(true);
                     apClient->Sync();
                     syncing = true;
                 }

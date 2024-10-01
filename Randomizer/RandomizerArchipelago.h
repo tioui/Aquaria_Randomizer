@@ -333,8 +333,9 @@ private:
 
     /**
      * Update the APClient to handle items.
+     * @param noMutex Do not use mutex protection in the update
      */
-    void connectionUpdate();
+    void connectionUpdate(bool noMutex = false);
 
     /**
      * The mutex used to synchrnize the apClient.
