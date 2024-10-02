@@ -429,6 +429,21 @@ private:
      */
     std::unordered_map<std::string, int> *dataStorageInfo;
 
+    /**
+     * Every scene name translated to area name
+     */
+    std::unordered_map<std::string, std::string> *areaInfo;
+
+    /**
+     * The last area send to tracker
+     */
+    std::string lastArea;
+
+    /**
+     * Initialise the values in areaInfo
+     */
+    void initialiseAreaInfo();
+
 };
 
 

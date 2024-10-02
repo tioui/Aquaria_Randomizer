@@ -45,6 +45,9 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     clearError();
     nextQuickMessages = new std::queue<std::string>();
     dataStorageInfo = new std::unordered_map<std::string, int>;
+    lastArea = "";
+    areaInfo = new std::unordered_map<std::string, std::string>;
+    initialiseAreaInfo();
     apItems = new std::vector<apitem_t>();
     locationsItemTypes = new std::vector<int>();
     initialiseApItems();
@@ -843,6 +846,16 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
     dsq->game->tileCache.precacheTex("ap/useful");
     dsq->game->tileCache.precacheTex("ap/trash");
     dsq->game->tileCache.precacheTex("ap/trap");
+    for (const auto& aArea: *areaInfo) {
+        if (aScene == aArea.first && lastArea != aArea.second) {
+            lastArea = aArea.second;
+            nlohmann::json data{
+                                {"time", apClient->get_server_time()},
+                                {"area", aArea.second},
+                        };
+            apClient->Bounce(data, {"aquaria-ap-tracker"}, {}, { "Area" });
+        }
+    }
 }
 
 /**
@@ -941,6 +954,66 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
         lMessageStream << "\n\n";
         aData += lMessageStream.str();
     }
+}
+
+/**
+ * Initialise areaInfo
+ */
+void RandomizerArchipelago::initialiseAreaInfo() {
+    areaInfo->insert(std::make_pair<std::string,std::string>("cathedral04", "cathedralunderground"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("cathedral03", "cathedralunderground"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple01", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple02", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple03", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple04", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple05", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple06", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("energytemplevision", "energytemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("mainarea", "homewater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("bubblecave02", "icecave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("frozenveil", "icecave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("icecave", "icecave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("fishcave", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forest02", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forest03", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forest04", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forest05", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forestspritecave", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("forestvision", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("mermogcave", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("tree01", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("tree02", "kelpforest"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("cathedral02", "mithalascathedral"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("mithalasvision", "mithalascathedral"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("mithalas01", "mithalascity"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("mithalas02", "mithalascitycastle"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("vedhacave", "naijashome"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("openwater02", "openwater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("openwater03", "openwater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("openwater04", "openwater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("openwater05", "openwater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("songcave02", "songcave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("songcave", "songcave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("suntemple", "suntemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("sunwormtest", "suntemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("sunkencity01", "sunkencity"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("sunkencity02", "sunkencity"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("boilerroom", "sunkencity"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("final01", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("final02", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("final03", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("final04", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("finalboss02", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("finalboss", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("finalescape", "thebody"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("licave", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("octocave", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("turtlecave", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("veil01", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("veil02", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("veil03", "theveil"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("naijacave", "versecave"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("trainingcave", "versecave"));
 }
 
 /**
