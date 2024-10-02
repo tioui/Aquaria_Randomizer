@@ -964,7 +964,6 @@ void RandomizerArchipelago::initialiseAreaInfo() {
     areaInfo->insert(std::make_pair<std::string,std::string>("cathedral03", "cathedralunderground"));
     areaInfo->insert(std::make_pair<std::string,std::string>("energytemple01", "energytemple"));
     areaInfo->insert(std::make_pair<std::string,std::string>("energytemple02", "energytemple"));
-    areaInfo->insert(std::make_pair<std::string,std::string>("energytemple03", "energytemple"));
     areaInfo->insert(std::make_pair<std::string,std::string>("energytemple04", "energytemple"));
     areaInfo->insert(std::make_pair<std::string,std::string>("energytemple05", "energytemple"));
     areaInfo->insert(std::make_pair<std::string,std::string>("energytemple06", "energytemple"));
