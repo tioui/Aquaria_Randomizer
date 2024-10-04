@@ -305,11 +305,11 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         setIsAquarianTranslated(lAquarianTranslated);
     }
     if (aJsonText.contains("goal")) {
-        if (aJsonText.contains("goal") == 1) {
+        if (aJsonText["goal"] == 1) {
             secretsNeeded = true;
             killCreatorGoal = true;
             killFourGodsGoal = false;
-        } else if (aJsonText.contains("goal") == 2) {
+        } else if (aJsonText["goal"] == 2) {
             secretsNeeded = false;
             killCreatorGoal = false;
             killFourGodsGoal = true;
