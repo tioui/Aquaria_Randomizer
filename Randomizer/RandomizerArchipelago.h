@@ -267,6 +267,12 @@ private:
     void initialiseApLocations();
 
     /**
+     * Launched when a data storage retreive message has been received.
+     * @param map Contain the key and json value in the datas torage
+     */
+    void onDataStorageRetreived(const std::map<std::string,nlohmann::json>& map);
+
+    /**
      * Launched when the socket has been connected to the Archipelago server
      */
     void onSocketConnected();
@@ -384,6 +390,11 @@ private:
      * @param unconditional True if the value is assing even if it was not modified from before assignment
      */
     void updateDataStorage(bool unconditional = false);
+
+    /**
+     * Update the `dataStorageInfo` using data in the Archipelago data storage.
+     */
+    void updateDataStorageInfo();
 
     /**
      * Set a single Archipelago data storage value

@@ -208,6 +208,9 @@ void RandomizerArchipelago::initialiseCallback(){
     apClient->set_location_info_handler([&](const std::list<APClient::NetworkItem>& aItems){
         onLocationInfo(aItems);
     });
+    apClient->set_retrieved_handler([&](const std::map<std::string,nlohmann::json>& aMap){
+        onDataStorageRetreived(aMap);
+    });
 }
 
 /**
@@ -215,6 +218,19 @@ void RandomizerArchipelago::initialiseCallback(){
  */
 void RandomizerArchipelago::onSocketConnected(){
     connected = true;
+}
+
+/**
+ * Launched when a data storage retreive message has been received.
+ * @param aMap Contain the key and json value in the datas torage
+ */
+void RandomizerArchipelago::onDataStorageRetreived(const std::map<std::string,nlohmann::json>& aMap) {
+    for (const auto& aPair : aMap) {
+        if (dataStorageInfo->find(aPair.first) == dataStorageInfo->end()) {
+            int lValue = aPair.second;
+            dataStorageInfo->at(aPair.first) = aPair.second;
+        }
+    }
 }
 
 /**
@@ -288,8 +304,29 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
         lAquarianTranslated = aJsonText["aquarianTranslate"];
         setIsAquarianTranslated(lAquarianTranslated);
     }
+    if (aJsonText.contains("goal")) {
+        if (aJsonText.contains("goal") == 1) {
+            secretsNeeded = true;
+            killCreatorGoal = true;
+            killFourGodsGoal = false;
+        } else if (aJsonText.contains("goal") == 2) {
+            secretsNeeded = false;
+            killCreatorGoal = false;
+            killFourGodsGoal = true;
+        } else {
+            secretsNeeded = false;
+            killCreatorGoal = true;
+            killFourGodsGoal = false;
+        }
+    }
     if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
+    }
+    if (aJsonText.contains("kill_creator_goal")) {
+        killCreatorGoal = aJsonText["kill_creator_goal"];
+    }
+    if (aJsonText.contains("four_gods_goal")) {
+        killFourGodsGoal = aJsonText["four_gods_goal"];
     }
     if (aJsonText.contains("minibosses_to_kill")) {
         miniBossesToKill = aJsonText["minibosses_to_kill"];
@@ -314,12 +351,6 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     }
     if (aJsonText.contains("maximum_ingredient_amount")) {
         maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
-    }
-    if (aJsonText.contains("kill_creator_goal")) {
-        killCreatorGoal = aJsonText["kill_creator_goal"];
-    }
-    if (aJsonText.contains("four_gods_goal")) {
-        killFourGodsGoal = aJsonText["four_gods_goal"];
     }
     if (aJsonText.contains("open_body_tongue")) {
         lRemoveTongue = aJsonText["open_body_tongue"];
@@ -356,6 +387,7 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
 
     }
     apClient->LocationScouts(locationsId);
+    updateDataStorageInfo();
 }
 /**
  * A reply to an AP location scout message
@@ -689,7 +721,7 @@ void RandomizerArchipelago::update(){
  * @param aValue The value to set
  */
 void RandomizerArchipelago::setDataStorage(std::string aId, int aValue, bool aUnconditional) {
-    if (aUnconditional || (dataStorageInfo->at(aId) != aValue)) {
+    if (!isOffline && (aUnconditional || (dataStorageInfo->at(aId) != aValue))) {
         APClient::DataStorageOperation lOperation;
         std::list<APClient::DataStorageOperation> lOperationList;
         lOperation.operation = "replace";
@@ -724,6 +756,33 @@ void RandomizerArchipelago::initialisedDataStorageInfo() {
     dataStorageInfo->insert(std::make_pair<std::string,int>(ID_REMOVE_TONGUE, 0));
 }
 
+/**
+ * Initialise the `dataStorageInfo` to default values.
+ */
+void RandomizerArchipelago::updateDataStorageInfo() {
+    std::list<std::string> lIdList;
+    lIdList.push_back(ID_MINIBOSS_NAUTILUSPRIME);
+    lIdList.push_back(ID_MINIBOSS_KINGJELLY);
+    lIdList.push_back(ID_MINIBOSS_MERGOG);
+    lIdList.push_back(ID_MINIBOSS_CRAB);
+    lIdList.push_back(ID_MINIBOSS_OCTOMUN);
+    lIdList.push_back(ID_MINIBOSS_MANTISSHRIMP);
+    lIdList.push_back(ID_MINIBOSS_PRIESTS);
+    lIdList.push_back(ID_MINIBOSS_BLASTER);
+    lIdList.push_back(ID_ENERGYBOSSDEAD);
+    lIdList.push_back(ID_SUNKENCITY_BOSS);
+    lIdList.push_back(ID_BOSS_FOREST);
+    lIdList.push_back(ID_BOSS_MITHALA);
+    lIdList.push_back(ID_BOSS_SUNWORM);
+    lIdList.push_back(ID_SECRET01);
+    lIdList.push_back(ID_SECRET02);
+    lIdList.push_back(ID_SECRET03);
+    lIdList.push_back(ID_SUN_CRYSTAL_OBTAINED);
+    lIdList.push_back(ID_REMOVE_TONGUE);
+    if (!isOffline) {
+        apClient->Get(lIdList);
+    }
+}
 
 /**
  * Update the Archipelago server data storage to put new values in it.
