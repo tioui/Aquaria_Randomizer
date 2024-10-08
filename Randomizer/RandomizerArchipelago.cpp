@@ -485,7 +485,8 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
 bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>& aData) {
     bool lResult = false;
     for (const APClient::TextNode& lNode : aData) {
-        if (lNode.type == "player_id" and apClient->get_player_number() == std::stoi(lNode.text)) {
+        debugLog("Player ID:" + lNode.text);
+        if (lNode.type == "player_id" && apClient->get_player_number() == std::stoi(lNode.text)) {
             lResult = true;
         };
     }
