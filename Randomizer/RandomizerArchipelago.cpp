@@ -869,8 +869,6 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
             dsq->Core::instantQuit();
         } else {
             saveConnectionInfo();
-            debugLog("Kill Creator: " + killCreatorGoal);
-            debugLog("Kill four gods: " + killFourGodsGoal);
         }
     } else {
         if (isOffline) {
