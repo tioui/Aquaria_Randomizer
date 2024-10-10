@@ -291,103 +291,107 @@ void RandomizerArchipelago::onRoomInfoHandler(){
  * @param aJsonText The "slot_data" json file
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
-    int lAquarianTranslated = false;
-    int lBlindGoal = false;
-    int lRemoveTongue = false;
-    std::list<int64_t> locationsId;
-    hasSlotInfo = true;
-    std::string ldump = aJsonText.dump();
-    if (aJsonText.contains("aquarian_translate")) {
-        lAquarianTranslated = aJsonText["aquarian_translate"];
-        setIsAquarianTranslated(lAquarianTranslated);
-    } else if (aJsonText.contains("aquarianTranslate")){ // To remove when the PR 3533 has been accepted
-        lAquarianTranslated = aJsonText["aquarianTranslate"];
-        setIsAquarianTranslated(lAquarianTranslated);
-    }
-    if (aJsonText.contains("goal")) {
-        if (aJsonText["goal"] == 1) {
-            secretsNeeded = true;
-            killCreatorGoal = true;
-            killFourGodsGoal = false;
-        } else if (aJsonText["goal"] == 2) {
-            secretsNeeded = false;
-            killCreatorGoal = false;
-            killFourGodsGoal = true;
-        } else {
-            secretsNeeded = false;
-            killCreatorGoal = true;
-            killFourGodsGoal = false;
+    if (!hasSlotInfo) {
+        int lAquarianTranslated = false;
+        int lBlindGoal = false;
+        int lRemoveTongue = false;
+        std::list<int64_t> locationsId;
+        hasSlotInfo = true;
+        std::string ldump = aJsonText.dump();
+        if (aJsonText.contains("aquarian_translate")) {
+            lAquarianTranslated = aJsonText["aquarian_translate"];
+            setIsAquarianTranslated(lAquarianTranslated);
+        } else if (aJsonText.contains("aquarianTranslate")){ // To remove when the PR 3533 has been accepted
+            lAquarianTranslated = aJsonText["aquarianTranslate"];
+            setIsAquarianTranslated(lAquarianTranslated);
         }
-    }
-    if (aJsonText.contains("secret_needed")) {
-        secretsNeeded = aJsonText["secret_needed"];
-    }
-    if (aJsonText.contains("kill_creator_goal")) {
-        killCreatorGoal = aJsonText["kill_creator_goal"];
-    }
-    if (aJsonText.contains("four_gods_goal")) {
-        killFourGodsGoal = aJsonText["four_gods_goal"];
-    }
-    if (aJsonText.contains("minibosses_to_kill")) {
-        miniBossesToKill = aJsonText["minibosses_to_kill"];
-    }
-    if (aJsonText.contains("bigbosses_to_kill")) {
-        bigBossesToKill = aJsonText["bigbosses_to_kill"];
-    }
-    if (aJsonText.contains("skip_first_vision")) {
-        skipFirstVision = aJsonText["skip_first_vision"];
-    }
-    if (aJsonText.contains("skip_final_boss_3rd_form")) {
-        skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
-    }
-    if (aJsonText.contains("infinite_hot_soup")) {
-        infiniteHotSoup = aJsonText["infinite_hot_soup"];
-    }
-    if (aJsonText.contains("unconfine_home_water_energy_door")) {
-        unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
-    }
-    if (aJsonText.contains("unconfine_home_water_transturtle")) {
-        unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
-    }
-    if (aJsonText.contains("maximum_ingredient_amount")) {
-        maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
-    }
-    if (aJsonText.contains("open_body_tongue")) {
-        lRemoveTongue = aJsonText["open_body_tongue"];
-        setRemoveTongue(lRemoveTongue);
-    }
-    if (aJsonText.contains("blind_goal")) {
-        lBlindGoal = aJsonText["blind_goal"];
-        setBlindGoal(lBlindGoal);
-    } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
-        lBlindGoal = aJsonText["blindGoal"];
-        setBlindGoal(lBlindGoal);
-    }
-    for (int lElement : aJsonText["ingredientReplacement"]) {
-        ingredientReplacement->push_back(lElement);
-    }
-    for (int i = 0; i < apLocations->size(); i = i + 1) {
-        if (killFourGodsGoal) {
-            bool lIndexFound = false;
-            for (int j = 0; !lIndexFound && j < LOCATIONS_FOUR_GODS_SIZE; j = j + 1) {
-                if (i == locationsOrderFourGods[j]) {
-                    lIndexFound = true;
-                }
+        if (aJsonText.contains("goal")) {
+            if (aJsonText["goal"] == 1) {
+                secretsNeeded = true;
+                killCreatorGoal = true;
+                killFourGodsGoal = false;
+            } else if (aJsonText["goal"] == 2) {
+                secretsNeeded = false;
+                killCreatorGoal = false;
+                killFourGodsGoal = true;
+            } else {
+                secretsNeeded = false;
+                killCreatorGoal = true;
+                killFourGodsGoal = false;
             }
-            if (lIndexFound) {
+        }
+        if (aJsonText.contains("secret_needed")) {
+            secretsNeeded = aJsonText["secret_needed"];
+        }
+        if (aJsonText.contains("kill_creator_goal")) {
+            killCreatorGoal = aJsonText["kill_creator_goal"];
+        }
+        if (aJsonText.contains("four_gods_goal")) {
+            killFourGodsGoal = aJsonText["four_gods_goal"];
+        }
+        if (aJsonText.contains("minibosses_to_kill")) {
+            miniBossesToKill = aJsonText["minibosses_to_kill"];
+        }
+        if (aJsonText.contains("bigbosses_to_kill")) {
+            bigBossesToKill = aJsonText["bigbosses_to_kill"];
+        }
+        if (aJsonText.contains("skip_first_vision")) {
+            skipFirstVision = aJsonText["skip_first_vision"];
+        }
+        if (aJsonText.contains("skip_final_boss_3rd_form")) {
+            skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
+        }
+        if (aJsonText.contains("infinite_hot_soup")) {
+            infiniteHotSoup = aJsonText["infinite_hot_soup"];
+        }
+        if (aJsonText.contains("unconfine_home_water_energy_door")) {
+            unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
+        }
+        if (aJsonText.contains("unconfine_home_water_transturtle")) {
+            unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
+        }
+        if (aJsonText.contains("maximum_ingredient_amount")) {
+            maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
+        }
+        if (aJsonText.contains("open_body_tongue")) {
+            lRemoveTongue = aJsonText["open_body_tongue"];
+            setRemoveTongue(lRemoveTongue);
+        }
+        if (aJsonText.contains("blind_goal")) {
+            lBlindGoal = aJsonText["blind_goal"];
+            setBlindGoal(lBlindGoal);
+        } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
+            lBlindGoal = aJsonText["blindGoal"];
+            setBlindGoal(lBlindGoal);
+        }
+        ingredientReplacement->clear();
+        for (int lElement : aJsonText["ingredientReplacement"]) {
+            ingredientReplacement->push_back(lElement);
+        }
+        locationsItemTypes->clear();
+        for (int i = 0; i < apLocations->size(); i = i + 1) {
+            if (killFourGodsGoal) {
+                bool lIndexFound = false;
+                for (int j = 0; !lIndexFound && j < LOCATIONS_FOUR_GODS_SIZE; j = j + 1) {
+                    if (i == locationsOrderFourGods[j]) {
+                        lIndexFound = true;
+                    }
+                }
+                if (lIndexFound) {
+                    locationsId.push_back(i + AP_BASE);
+                    locationsItemTypes->push_back(USEFULL);
+                } else {
+                    locationsItemTypes->push_back(TRASH);
+                }
+            } else {
                 locationsId.push_back(i + AP_BASE);
                 locationsItemTypes->push_back(USEFULL);
-            } else {
-                locationsItemTypes->push_back(TRASH);
             }
-        } else {
-            locationsId.push_back(i + AP_BASE);
-            locationsItemTypes->push_back(USEFULL);
-        }
 
+        }
+        apClient->LocationScouts(locationsId);
+        updateDataStorageInfo();
     }
-    apClient->LocationScouts(locationsId);
-    updateDataStorageInfo();
 }
 /**
  * A reply to an AP location scout message
@@ -485,10 +489,12 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
 bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>& aData) {
     bool lResult = false;
     for (const APClient::TextNode& lNode : aData) {
-        debugLog("Player ID:" + lNode.text);
-        if (lNode.type == "player_id" && apClient->get_player_number() == std::stoi(lNode.text)) {
-            lResult = true;
-        };
+        if (lNode.type == "player_id") {
+            debugLog("Player ID:" + lNode.text);
+            if (apClient->get_player_number() == std::stoi(lNode.text)) {
+                lResult = true;
+            };
+        }
     }
     return lResult;
 }
@@ -861,6 +867,8 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
             dsq->Core::instantQuit();
         } else {
             saveConnectionInfo();
+            debugLog("Kill Creator: " + killCreatorGoal);
+            debugLog("Kill four gods: " + killFourGodsGoal);
         }
     } else {
         if (isOffline) {
