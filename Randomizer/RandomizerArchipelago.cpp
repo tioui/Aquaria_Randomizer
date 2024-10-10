@@ -703,7 +703,7 @@ void RandomizerArchipelago::update(){
                 deathLinkPause = false;
             }
         }
-        if (!isGoal && killFourGodsGoal) {
+        if (inGame && !isGoal && killFourGodsGoal) {
             manageFourGodsEnding();
         }
     }
@@ -823,6 +823,7 @@ void RandomizerArchipelago::manageFourGodsEnding() {
     if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
         dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
         if (miniBossCount() >= miniBossesToKill) {
+            debugLog("Completed Four Gods");
             std::lock_guard<std::mutex> lock(apMutex);
             apClient->StatusUpdate(APClient::ClientStatus::GOAL);
             isGoal = true;
@@ -848,6 +849,7 @@ void RandomizerArchipelago::endingGame() {
         (!secretsNeeded || (secretsFound() == 3))) {
             std::lock_guard<std::mutex> lock(apMutex);
             apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+            debugLog("Completed Kill creator goal");
         } else {
             showText("You are missing some prerequisite to get the goal.");
         }
@@ -867,8 +869,6 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
             dsq->Core::instantQuit();
         } else {
             saveConnectionInfo();
-            debugLog("Kill Creator: " + killCreatorGoal);
-            debugLog("Kill four gods: " + killFourGodsGoal);
         }
     } else {
         if (isOffline) {
