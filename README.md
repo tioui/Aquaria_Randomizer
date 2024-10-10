@@ -1,5 +1,5 @@
-﻿Aquaria Randomizer
-==================
+﻿Aquaria Randomizer v1.3.1
+=========================
 
 This repository is a clone of the Aquaria game repository
 (https://github.com/AquariaOSE/Aquaria) and has been modified to be used as
