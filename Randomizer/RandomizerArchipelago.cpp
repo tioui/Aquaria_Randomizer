@@ -703,7 +703,7 @@ void RandomizerArchipelago::update(){
                 deathLinkPause = false;
             }
         }
-        if (!isGoal && killFourGodsGoal) {
+        if (inGame && !isGoal && killFourGodsGoal) {
             manageFourGodsEnding();
         }
     }
