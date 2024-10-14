@@ -921,7 +921,7 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
                                 {"time", apClient->get_server_time()},
                                 {"area", aArea.second},
                         };
-            apClient->Bounce(data, {"aquaria-ap-tracker"}, {}, { "Area" });
+            apClient->Bounce(data, {}, {apClient->get_player_number()}, {});
         }
     }
 }
