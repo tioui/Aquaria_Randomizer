@@ -45,6 +45,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     clearError();
     nextQuickMessages = new std::queue<std::string>();
     dataStorageInfo = new std::unordered_map<std::string, int>;
+    initialisedDataStorageInfo();
     lastArea = "";
     areaInfo = new std::unordered_map<std::string, std::string>;
     initialiseAreaInfo();
@@ -226,9 +227,16 @@ void RandomizerArchipelago::onSocketConnected(){
  */
 void RandomizerArchipelago::onDataStorageRetreived(const std::map<std::string,nlohmann::json>& aMap) {
     for (const auto& aPair : aMap) {
-        if (dataStorageInfo->find(aPair.first) == dataStorageInfo->end()) {
-            int lValue = aPair.second;
-            dataStorageInfo->at(aPair.first) = aPair.second;
+        if (!aPair.second.is_null()) {
+            int lIdPosition = aPair.first.find("@");
+            if (lIdPosition != std::string::npos) {
+                std::string lId = aPair.first.substr(lIdPosition + 1, std::string::npos);
+                auto lMap = dataStorageInfo->find(lId);
+                if (lMap != dataStorageInfo->end()) {
+                    int lValue = aPair.second.at(0);
+                    lMap->second = lValue;
+                }
+            }
         }
     }
 }
@@ -731,10 +739,12 @@ void RandomizerArchipelago::setDataStorage(std::string aId, int aValue, bool aUn
     if (!isOffline && (aUnconditional || (dataStorageInfo->at(aId) != aValue))) {
         APClient::DataStorageOperation lOperation;
         std::list<APClient::DataStorageOperation> lOperationList;
+        nlohmann::json lData{aValue};
+
         lOperation.operation = "replace";
-        lOperation.value = aValue;
+        lOperation.value = lData;
         lOperationList.push_back(lOperation);
-        apClient->Set(aId, 0, false, lOperationList);
+        apClient->Set(std::to_string(apClient->get_player_number()) + "@" + aId, 0, false, lOperationList);
         dataStorageInfo->at(aId) = aValue;
     }
 }
@@ -743,24 +753,24 @@ void RandomizerArchipelago::setDataStorage(std::string aId, int aValue, bool aUn
  * Initialise the `dataStorageInfo` to default values.
  */
 void RandomizerArchipelago::initialisedDataStorageInfo() {
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_NAUTILUSPRIME, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_KINGJELLY, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_MERGOG, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_CRAB, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_OCTOMUN, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_MANTISSHRIMP, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_PRIESTS, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_MINIBOSS_BLASTER, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_ENERGYBOSSDEAD, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SUNKENCITY_BOSS, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_FOREST, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_MITHALA, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_BOSS_SUNWORM, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET01, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET02, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SECRET03, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_SUN_CRYSTAL_OBTAINED, 0));
-    dataStorageInfo->insert(std::make_pair<std::string,int>(ID_REMOVE_TONGUE, 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_NAUTILUSPRIME), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_KINGJELLY), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_MERGOG), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_CRAB), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_OCTOMUN), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_MANTISSHRIMP), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_PRIESTS), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_MINIBOSS_BLASTER), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_ENERGYBOSSDEAD), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_SUNKENCITY_BOSS), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_BOSS_FOREST), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_BOSS_MITHALA), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_BOSS_SUNWORM), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_SECRET01), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_SECRET02), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_SECRET03), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_SUN_CRYSTAL_OBTAINED), 0));
+    dataStorageInfo->emplace(std::make_pair<std::string,int>(std::string(ID_REMOVE_TONGUE), 0));
 }
 
 /**
@@ -768,24 +778,24 @@ void RandomizerArchipelago::initialisedDataStorageInfo() {
  */
 void RandomizerArchipelago::updateDataStorageInfo() {
     std::list<std::string> lIdList;
-    lIdList.push_back(ID_MINIBOSS_NAUTILUSPRIME);
-    lIdList.push_back(ID_MINIBOSS_KINGJELLY);
-    lIdList.push_back(ID_MINIBOSS_MERGOG);
-    lIdList.push_back(ID_MINIBOSS_CRAB);
-    lIdList.push_back(ID_MINIBOSS_OCTOMUN);
-    lIdList.push_back(ID_MINIBOSS_MANTISSHRIMP);
-    lIdList.push_back(ID_MINIBOSS_PRIESTS);
-    lIdList.push_back(ID_MINIBOSS_BLASTER);
-    lIdList.push_back(ID_ENERGYBOSSDEAD);
-    lIdList.push_back(ID_SUNKENCITY_BOSS);
-    lIdList.push_back(ID_BOSS_FOREST);
-    lIdList.push_back(ID_BOSS_MITHALA);
-    lIdList.push_back(ID_BOSS_SUNWORM);
-    lIdList.push_back(ID_SECRET01);
-    lIdList.push_back(ID_SECRET02);
-    lIdList.push_back(ID_SECRET03);
-    lIdList.push_back(ID_SUN_CRYSTAL_OBTAINED);
-    lIdList.push_back(ID_REMOVE_TONGUE);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_NAUTILUSPRIME);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_KINGJELLY);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_MERGOG);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_CRAB);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_OCTOMUN);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_MANTISSHRIMP);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_PRIESTS);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_MINIBOSS_BLASTER);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_ENERGYBOSSDEAD);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_SUNKENCITY_BOSS);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_BOSS_FOREST);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_BOSS_MITHALA);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_BOSS_SUNWORM);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_SECRET01);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_SECRET02);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_SECRET03);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_SUN_CRYSTAL_OBTAINED);
+    lIdList.push_back(std::to_string(apClient->get_player_number()) + "@" + ID_REMOVE_TONGUE);
     if (!isOffline) {
         apClient->Get(lIdList);
     }
