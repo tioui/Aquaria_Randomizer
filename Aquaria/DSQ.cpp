@@ -448,6 +448,7 @@ void DSQ::destroyFonts()
 	debugLog("destroyFonts...");
 	font.destroy();
 	smallFont.destroy();
+	mediumFont.destroy();
 	subsFont.destroy();
 	goldFont.destroy();
 	smallFontRed.destroy();
@@ -474,6 +475,11 @@ void DSQ::loadFonts()
 	font.fontTopColor = Vector(0.9,0.9,1);
 	font.fontBtmColor = Vector(0.5,0.8,1);
 	font.overrideTexture = core->addTexture("font");
+
+	mediumFont.load(file, 0.7, false);
+	mediumFont.fontTopColor = Vector(0.9,0.9,1);
+	mediumFont.fontBtmColor = Vector(0.5,0.8,1);
+	mediumFont.overrideTexture = core->addTexture("font");
 
 	smallFont.load(file, 0.6, false);
 	smallFont.fontTopColor = Vector(0.9,0.9,1);

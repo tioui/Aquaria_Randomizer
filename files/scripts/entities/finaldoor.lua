@@ -31,5 +31,7 @@ function update(me, dt)
 end
 
 function activate(me)
-    randomizerShowHintFinalBoss()
+    if randomizerShowHintFinalBoss() then
+		entity_setState(me, STATE_OPEN)
+	end
 end

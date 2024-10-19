@@ -539,7 +539,7 @@ enum Layers
 	LR_REGISTER_TEXT		,
 	LR_DAMAGESPRITE			,
 	LR_HELP					,
-	LR_TRANSPORT			,
+	LR_RANDOMIZER_PANEL     ,
 	LR_TRANSITION			,
 	LR_OVERLAY				,
 	LR_FILEMENU				,
@@ -1516,7 +1516,7 @@ public:
 	BitmapText *subtext;
 	Quad *subbox;
 
-	BmpFont font, smallFont, subsFont, goldFont, smallFontRed;
+	BmpFont font, smallFont, mediumFont, subsFont, goldFont, smallFontRed;
 	TTFFont fontArialSmall, fontArialBig, fontArialSmallest;
 	unsigned char *arialFontData;
 	unsigned long arialFontDataSize;

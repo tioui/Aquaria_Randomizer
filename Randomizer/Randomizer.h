@@ -171,9 +171,30 @@ public:
     virtual bool accessFinalBoss();
 
     /**
-     * Show what is missing to access the final boss.
+     * Show a number hint of the final boss
+     *
+     * @param messageStream Where to ptint the hint
+     * @param number Number of elements that has been obtained by the user
+     * @param needed Number of elements needed
+     * @param text The hint that have to be printed.
      */
-    virtual void showHintFinalBoss();
+    void showNumberHintFinalBoss(std::stringstream *messageStream, int number, int needed, const std::string& text);
+
+    /**
+     * Show a hint of the final boss
+     *
+     * @param messageStream Where to ptint the hint
+     * @param checked If the hint must be checked or not.
+     * @param text The hint that have to be printed.
+     */
+    void showIndividualHintFinalBoss(std::stringstream *messageStream, bool checked,const std::string& text);
+
+    /**
+     * Show what is missing to access the final boss.
+     *
+     * @return true if the door should open
+     */
+    virtual bool showHintFinalBoss();
 
     /**
      * Add information about receiving important item in `data`.
@@ -216,6 +237,11 @@ public:
      * @return the selected destination flag
      */
     int askTransportation();
+
+    /**
+     * Show the requirements to pass the creator's door.
+     */
+    void showCreatorRequirements();
 
     /**
      * When the user pressed escape.
@@ -616,6 +642,24 @@ private:
     /**
      * Event for the Transportation menu to cancel the process.
      */
+    void onOkPanel();
+
+    /**
+     * Event for when the user wish to open the final boss door
+     */
+    void onYesOpenFinalDoor();
+
+    /**
+     * Show a text in a panel.
+     * @param text The text to show in the panel
+     * @param yesNo If there is a yes and no buttons in the panel. If False an Ok button will be put instead
+     * @param event The event to use when the Yes button is used.
+     */
+    void showTextPanel(const std::string& text, bool yesNo, Event *event = nullptr);
+
+    /**
+     * Event for the Transportation menu to cancel the process.
+     */
    	void onCancelTransportation();
 
     /**
@@ -689,14 +733,34 @@ private:
     bool transportationDone;
 
     /**
+     * True if The door to the final boss shoud be opened
+     */
+    bool openFinalDoor;
+
+     /**
+     * True if The Text panel has been closed.
+     */
+    bool panelDone;
+
+    /**
      * The transportation flag selected, or 0 if no selected
      */
     int transportationSelected;
 
     /**
-     * The cancel button for the transportation menu
+     * The cancel button for menus
      */
     AquariaMenuItem *menuCancel;
+
+    /**
+     * The yes button for menus
+     */
+    AquariaMenuItem *menuYes;
+
+    /**
+     * The no button for menus
+     */
+    AquariaMenuItem *menuNoOk;
 
     /**
      * The home waters button for the transportation menu
@@ -768,6 +832,7 @@ const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 
 
 
 const int GUILEVEL_TRANSPORT = 201;
+const int GUILEVEL_PANEL = 202;
 
 
 const int FLAG_COLLECTIBLE_SONGCAVE        = 500;

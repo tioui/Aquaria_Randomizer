@@ -140,7 +140,7 @@ public:
     /**
      * Show what is missing to access the final boss.
      */
-    void showHintFinalBoss() override;
+    bool showHintFinalBoss() override;
 
     /**
      * The unique String for the Randomizer
@@ -365,8 +365,8 @@ private:
 
     /**
      * Check if the Text node is related to the current player.
-     * @param aData
-     * @return
+     * @param aData The text node
+     * @return True if the text node is related to the current player
      */
     bool selfRelatedJson(const std::list<APClient::TextNode>& aData);
 

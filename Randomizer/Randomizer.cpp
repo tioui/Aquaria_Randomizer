@@ -1601,30 +1601,88 @@ void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessag
 }
 
 /**
- * Show what is missing to access final boss.
+ * Event for when the user wish to open the final boss door
  */
-void Randomizer::showHintFinalBoss() {
-    if (!dsq->continuity.hasLi()) {
-        showText("Li needed to access final boss..");
+void Randomizer::onYesOpenFinalDoor() {
+    onOkPanel();
+    openFinalDoor = true;
+}
+
+/**
+ * Show a hint of the final boss
+ *
+ * @param aMessageStream Where to ptint the hint
+ * @param aChecked If the hint must be checked or not.
+ * @param aText The hint that have to be printed.
+ */
+void Randomizer::showIndividualHintFinalBoss(std::stringstream *aMessageStream, bool aChecked,const std::string& aText) {
+    if (aChecked) {
+        *aMessageStream << "[X] ";
+    } else {
+        *aMessageStream << "[]  ";
     }
-    if (!dsq->continuity.hasSong(SONG_BIND)) {
-        showText("Bind song needed to access final boss.");
+    *aMessageStream << aText << std::endl;
+}
+
+/**
+ * Show a number hint of the final boss
+ *
+ * @param aMessageStream Where to ptint the hint
+ * @param aNumber Number of elements that has been obtained by the user
+ * @param aNeeded Number of elements needed
+ * @param aText The hint that have to be printed.
+ */
+void Randomizer::showNumberHintFinalBoss(std::stringstream *aMessageStream, int aNumber, int aNeeded,
+                                         const std::string& aText) {
+    std::stringstream lMessageStream;
+    lMessageStream << aText << " : " << aNumber << "/" << aNeeded;
+    showIndividualHintFinalBoss(aMessageStream, aNumber >= aNeeded, lMessageStream.str());
+}
+
+/**
+ * Show what is missing to access final boss.
+ *
+ * @return True if the door must be openned, False if not
+ */
+bool Randomizer::showHintFinalBoss() {
+    std::stringstream lMessageStream;
+
+    lMessageStream << "Here is the requirements to enter the door to the creator:" << std::endl;
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasLi(), "Li");
+    if (miniBossesToKill > 0) {
+        showNumberHintFinalBoss(&lMessageStream, miniBossCount(), miniBossesToKill, "Mini bosses");
     }
-    if (!dsq->continuity.hasSong(SONG_ENERGYFORM)) {
-        showText("Energy form needed to access final boss.");
+    if (bigBossesToKill > 0) {
+        showNumberHintFinalBoss(&lMessageStream, bigBossCount(), bigBossesToKill, "Big bosses");
     }
-    if (!dsq->continuity.hasSong(SONG_SUNFORM)) {
-        showText("Sun form needed to access final boss.");
-    }
-    if (!dsq->continuity.hasSong(SONG_DUALFORM)) {
-        showText("Dual form needed to access final boss.");
-    }
-    showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
-    showHint(bigBossCount(), bigBossesToKill, "big bosses beaten");
     if (secretsNeeded) {
-        showHint(secretsFound(), 3, "secret memories founded");
+        showNumberHintFinalBoss(&lMessageStream, secretsFound(), 3, "Secret memories");
+    }
+    if (killFourGodsGoal) {
+        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD), "Fallen God");
+        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_MITHALA), "Mithalan God");
+        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_FOREST), "Drunian God");
+        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), "Lumerean God");
+    }
+    lMessageStream << std::endl << std::endl << "Here is the songs and forms recommended to beat the final boss:" << std::endl;
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_BIND),
+                                "Bind Song");
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_ENERGYFORM),
+                                "Energy Form");
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_SUNFORM),
+                                "Sun Form");
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_DUALFORM),
+                                "Dual Form");
+    openFinalDoor = false;
+
+    if (dsq->continuity.hasLi() && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
+            (!secretsNeeded || secretsFound() >= 3)) {
+        showTextPanel(lMessageStream.str(), true, MakeFunctionEvent(Randomizer,onYesOpenFinalDoor));
+    } else {
+        showTextPanel(lMessageStream.str(), false);
     }
     dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
+    return openFinalDoor;
 }
 
 
@@ -1879,7 +1937,7 @@ void Randomizer::setupTransportationItem(AquariaMenuItem *aItem, BitmapText *aIt
     aItem->scale = Vector(2.0, 2.0);
     aItem->guiInputLevel = GUILEVEL_TRANSPORT;
     aItem->setCanDirMove(true);
-    dsq->game->addRenderObject(aItem, LR_TRANSPORT);
+    dsq->game->addRenderObject(aItem, LR_RANDOMIZER_PANEL);
 
     aItemLabel->color = 0;
     aItemLabel->setText(aText);
@@ -1887,7 +1945,7 @@ void Randomizer::setupTransportationItem(AquariaMenuItem *aItem, BitmapText *aIt
     aItemLabel->followCamera = 1;
     aItemLabel->position = Vector(aX, aY + 30);
     aItemLabel->scale = Vector(1.0, 1.0);
-    game->addRenderObject(aItemLabel, LR_TRANSPORT);
+    game->addRenderObject(aItemLabel, LR_RANDOMIZER_PANEL);
 }
 
 /**
@@ -1950,7 +2008,7 @@ int Randomizer::askTransportation() {
         //bgLabel->setWidthHeight(512*0.9f, 256*0.9f);
         bgimage->scale = Vector(0, 0);
         bgimage->scale.interpolateTo(Vector(1.5,1), 0.5);
-        game->addRenderObject(bgimage, LR_TRANSPORT);
+        game->addRenderObject(bgimage, LR_RANDOMIZER_PANEL);
         dsq->main(0.5);
 
         BitmapText *lTitle = new BitmapText(&dsq->font);
@@ -1960,7 +2018,7 @@ int Randomizer::askTransportation() {
         lTitle->position = Vector(400,75);
         lTitle->setText("Transportation turtle\nDestinations");
         lTitle->scale = Vector(1.0, 1.0);
-        game->addRenderObject(lTitle, LR_TRANSPORT);
+        game->addRenderObject(lTitle, LR_RANDOMIZER_PANEL);
 
         float lVerticalPosition = 200.0;
         float lHorizontalPosition = 175.0;
@@ -2359,7 +2417,7 @@ int Randomizer::askTransportation() {
         menuCancel->event.set(MakeFunctionEvent(Randomizer,onCancelTransportation));
         menuCancel->scale = Vector(0.9, 0.9);
         menuCancel->guiInputLevel = GUILEVEL_TRANSPORT;
-        dsq->game->addRenderObject(menuCancel, LR_TRANSPORT);
+        dsq->game->addRenderObject(menuCancel, LR_RANDOMIZER_PANEL);
 
         returnBase->setDirMove(DIR_RIGHT, menuCancel);
         menuCancel->setDirMove(DIR_LEFT, returnBase);
@@ -2451,4 +2509,99 @@ int Randomizer::askTransportation() {
     return transportationSelected;
 }
 
+/**
+ * Event for the Transportation menu to cancel the process.
+ */
+void Randomizer::onOkPanel() {
+    panelDone = true;
+}
 
+/**
+ * Show a text in a panel.
+ * @param aText The text to show in the panel
+ * @param aYesNo If there is a yes and no buttons in the panel. If False an Ok button will be put instead
+ * @param aEvent The event to use when the Yes button is used.
+ */
+void Randomizer::showTextPanel(const std::string& aText, bool aYesNo, Event *aEvent) {
+    if (!game->isSceneEditorActive() && !core->getShiftState() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
+        dsq->saveSlotMode == SSM_NONE) {
+        dsq->game->togglePause(true);
+        sound->playSfx("menu-open");
+        Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));
+        bgimage->followCamera = 1;
+        bgimage->alpha = 0;
+        bgimage->alpha.interpolateTo(1, 0.5);
+        //bgLabel->setWidthHeight(512*0.9f, 256*0.9f);
+        bgimage->scale = Vector(0, 0);
+        bgimage->scale.interpolateTo(Vector(1.5,1), 0.5);
+        game->addRenderObject(bgimage, LR_RANDOMIZER_PANEL);
+        dsq->main(0.5);
+
+        BitmapText *lTitle = new BitmapText(&dsq->mediumFont);
+        lTitle->setWidth(550);
+        lTitle->color = 0;
+        lTitle->setFontSize(10);
+        lTitle->setAlign(ALIGN_LEFT);
+        lTitle->followCamera = 1;
+        lTitle->position = Vector(120,100);
+        lTitle->setText(aText);
+        lTitle->scale = Vector(1.0, 1.0);
+        game->addRenderObject(lTitle, LR_RANDOMIZER_PANEL);
+
+        menuNoOk = new AquariaMenuItem;
+
+        if (aYesNo) {
+            menuNoOk->useQuad("no");
+            menuNoOk->position = Vector(500, 500);
+            menuYes = new AquariaMenuItem;
+            menuYes->useQuad("yes");
+            menuYes->position = Vector(300, 500);
+            menuYes->followCamera = 1;
+            if (aEvent) {
+                menuYes->useSound("click");
+                menuYes->useGlow("particles/glow", 128, 40);
+                menuYes->event.set(aEvent);
+            } else {
+                menuYes->useSound("denied");
+            }
+            menuYes->scale = Vector(0.9, 0.9);
+            menuYes->guiInputLevel = GUILEVEL_PANEL;
+            dsq->game->addRenderObject(menuYes, LR_RANDOMIZER_PANEL);
+            menuNoOk->setDirMove(DIR_LEFT, menuYes);
+            menuYes->setDirMove(DIR_RIGHT, menuNoOk);
+        } else {
+            menuYes = nullptr;
+            menuNoOk->useQuad("Gui/ok");
+            menuNoOk->position = Vector(400, 500);
+        }
+        menuNoOk->useSound("click");
+        menuNoOk->useGlow("particles/glow", 128, 40);
+        menuNoOk->followCamera = 1;
+        menuNoOk->event.set(MakeFunctionEvent(Randomizer,onOkPanel));
+        menuNoOk->scale = Vector(0.9, 0.9);
+        menuNoOk->guiInputLevel = GUILEVEL_PANEL;
+        menuNoOk->setFocus(true);
+        dsq->game->addRenderObject(menuNoOk, LR_RANDOMIZER_PANEL);
+        AquariaGuiElement::currentGuiInputLevel = GUILEVEL_PANEL;
+        dsq->toggleCursor(true);
+        panelDone = false;
+        while (!panelDone)
+        {
+            dsq->main(FRAME_TIME);
+        }
+        sound->playSfx("menu-close");
+        AquariaGuiElement::currentGuiInputLevel = 0;
+        bgimage->alpha.interpolateTo(0, 0.5);
+        bgimage->scale.interpolateTo(Vector(0.5, 0.5), 0.5);
+        menuNoOk->setFocus(false);
+        menuNoOk->safeKill();
+        lTitle->safeKill();
+        if (menuYes) {
+            menuYes->setFocus(false);
+            menuYes->safeKill();
+        }
+        dsq->main(0.5);
+        bgimage->safeKill();
+        dsq->game->togglePause(false);
+        }
+}

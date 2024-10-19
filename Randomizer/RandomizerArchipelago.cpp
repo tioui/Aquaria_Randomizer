@@ -228,7 +228,7 @@ void RandomizerArchipelago::onSocketConnected(){
 void RandomizerArchipelago::onDataStorageRetreived(const std::map<std::string,nlohmann::json>& aMap) {
     for (const auto& aPair : aMap) {
         if (!aPair.second.is_null()) {
-            int lIdPosition = aPair.first.find("@");
+            unsigned long lIdPosition = aPair.first.find("@");
             if (lIdPosition != std::string::npos) {
                 std::string lId = aPair.first.substr(lIdPosition + 1, std::string::npos);
                 auto lMap = dataStorageInfo->find(lId);
@@ -494,6 +494,11 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
     }
 }
 
+/**
+ * Check if the Text node is related to the current player.
+ * @param aData The text node
+ * @return True if the text node is related to the current player
+ */
 bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>& aData) {
     bool lResult = false;
     for (const APClient::TextNode& lNode : aData) {
@@ -947,11 +952,12 @@ bool RandomizerArchipelago::accessFinalBoss() {
 /**
  * Show what is missing to access final boss.
  */
-void RandomizerArchipelago::showHintFinalBoss() {
-    Randomizer::showHintFinalBoss();
+bool RandomizerArchipelago::showHintFinalBoss() {
+    bool lResult = Randomizer::showHintFinalBoss();
     if (isOffline) {
         showText("You cannot beat the final boss while offline. Please connect to the Archipelago server.");
     }
+    return lResult;
 }
 
 /**

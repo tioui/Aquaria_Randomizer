@@ -885,8 +885,7 @@ luaFunc(randomizerAccessFinalBoss)
 
 luaFunc(randomizerShowHintFinalBoss)
 {
-    dsq->randomizer->showHintFinalBoss();
-    luaReturnNil();
+    luaReturnBool(dsq->randomizer->showHintFinalBoss());
 }
 
 luaFunc(dofile_caseinsensitive)
