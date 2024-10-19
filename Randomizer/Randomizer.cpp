@@ -1443,6 +1443,18 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
+
+
+
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+1, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+2, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+3, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+4, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+5, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+6, 1);
+        dsq->continuity.setFlag(FLAG_MINIBOSS_START+7, 1);
+
         dsq->toggleCursor(true);
         if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
             if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
@@ -1647,24 +1659,23 @@ void Randomizer::showNumberHintFinalBoss(std::stringstream *aMessageStream, int 
 bool Randomizer::showHintFinalBoss() {
     std::stringstream lMessageStream;
 
-    lMessageStream << "Here is the requirements to enter the door to the creator:" << std::endl;
+    lMessageStream << "Here are the requirements to enter the door to the creator:" << std::endl;
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasLi(), "Li");
     if (miniBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, miniBossCount(), miniBossesToKill, "Mini bosses");
     }
-    if (bigBossesToKill > 0) {
+    //if (bigBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, bigBossCount(), bigBossesToKill, "Big bosses");
-    }
-    if (secretsNeeded) {
+    //}
+    //if (secretsNeeded) {
         showNumberHintFinalBoss(&lMessageStream, secretsFound(), 3, "Secret memories");
-    }
+    //}
     if (killFourGodsGoal) {
-        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD), "Fallen God");
-        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_MITHALA), "Mithalan God");
-        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_FOREST), "Drunian God");
-        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), "Lumerean God");
+        showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
+            dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
+            dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), "Four gods beaten");
     }
-    lMessageStream << std::endl << std::endl << "Here is the songs and forms recommended to beat the final boss:" << std::endl;
+    lMessageStream << std::endl << std::endl << "Here are the songs and forms recommended to beat the creator:" << std::endl;
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_BIND),
                                 "Bind Song");
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_ENERGYFORM),
@@ -1676,7 +1687,11 @@ bool Randomizer::showHintFinalBoss() {
     openFinalDoor = false;
 
     if (dsq->continuity.hasLi() && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
-            (!secretsNeeded || secretsFound() >= 3)) {
+        (!secretsNeeded || secretsFound() >= 3) && (!killFourGodsGoal || dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
+        dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
+        dsq->continuity.getFlag(FLAG_BOSS_SUNWORM))) {
+        lMessageStream << std::endl << std::endl <<
+            "You do not have what it takes to beat the creator. Do you still want to proceed?" << std::endl;
         showTextPanel(lMessageStream.str(), true, MakeFunctionEvent(Randomizer,onYesOpenFinalDoor));
     } else {
         showTextPanel(lMessageStream.str(), false);
