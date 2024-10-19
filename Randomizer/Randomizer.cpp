@@ -1443,18 +1443,6 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
-
-
-
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+1, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+2, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+3, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+4, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+5, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+6, 1);
-        dsq->continuity.setFlag(FLAG_MINIBOSS_START+7, 1);
-
         dsq->toggleCursor(true);
         if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
             if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
@@ -1664,12 +1652,12 @@ bool Randomizer::showHintFinalBoss() {
     if (miniBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, miniBossCount(), miniBossesToKill, "Mini bosses");
     }
-    //if (bigBossesToKill > 0) {
+    if (bigBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, bigBossCount(), bigBossesToKill, "Big bosses");
-    //}
-    //if (secretsNeeded) {
+    }
+    if (secretsNeeded) {
         showNumberHintFinalBoss(&lMessageStream, secretsFound(), 3, "Secret memories");
-    //}
+    }
     if (killFourGodsGoal) {
         showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
             dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
@@ -1685,7 +1673,6 @@ bool Randomizer::showHintFinalBoss() {
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_DUALFORM),
                                 "Dual Form");
     openFinalDoor = false;
-
     if (dsq->continuity.hasLi() && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
         (!secretsNeeded || secretsFound() >= 3) && (!killFourGodsGoal || dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
         dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
