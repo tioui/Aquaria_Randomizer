@@ -26,8 +26,6 @@ typedef enum APItemType {
  */
 RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     name = "";
-    isGoal = false;
-    fourGodsGoalMessage = false;
     password = "";
     serverAddress = "";
     selfMessageOnly = false;
@@ -321,6 +319,10 @@ void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
             } else if (aJsonText["goal"] == 2) {
                 secretsNeeded = false;
                 killCreatorGoal = false;
+                killFourGodsGoal = true;
+            } else if (aJsonText["goal"] == 3) {
+                secretsNeeded = false;
+                killCreatorGoal = true;
                 killFourGodsGoal = true;
             } else {
                 secretsNeeded = false;
@@ -716,9 +718,6 @@ void RandomizerArchipelago::update(){
                 deathLinkPause = false;
             }
         }
-        if (inGame && !isGoal && killFourGodsGoal) {
-            manageFourGodsEnding();
-        }
     }
     auto lNow = std::chrono::system_clock::now();
     if (currentQuickMessageTime) {
@@ -730,6 +729,33 @@ void RandomizerArchipelago::update(){
                 std::string lMessage = nextQuickMessages->front();
                 nextQuickMessages->pop();
                 showQuickMessage(lMessage);
+            }
+        }
+    }
+}
+
+/**
+ * Check if it is the end of the four gods run
+ */
+void RandomizerArchipelago::manageFourGodsEnding() {
+    if (killCreatorGoal) {
+        Randomizer::manageFourGodsEnding();
+    } else {
+        if (!isGoal && dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
+                dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
+            if (miniBossCount() >= miniBossesToKill) {
+                debugLog("Completed Four Gods");
+                std::lock_guard<std::mutex> lock(apMutex);
+                apClient->StatusUpdate(APClient::ClientStatus::GOAL);
+                isGoal = true;
+            } else {
+                if (!fourGodsGoalMessage) {
+                    showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
+                    fourGodsGoalMessage = true;
+                }
+            }
+            if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) != 0) {
+                dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
             }
         }
     }
@@ -832,39 +858,20 @@ void RandomizerArchipelago::updateDataStorage(bool aUnconditional) {
 }
 
 /**
- * Check if it is the end of the four gods run
- */
-void RandomizerArchipelago::manageFourGodsEnding() {
-    if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
-        dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
-        if (miniBossCount() >= miniBossesToKill) {
-            debugLog("Completed Four Gods");
-            std::lock_guard<std::mutex> lock(apMutex);
-            apClient->StatusUpdate(APClient::ClientStatus::GOAL);
-            isGoal = true;
-        } else {
-            if (!fourGodsGoalMessage) {
-                showHint(miniBossCount(), miniBossesToKill, "mini bosses beaten");
-                fourGodsGoalMessage = true;
-            }
-        }
-        if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) != 0) {
-            dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
-        }
-
-    }
-}
-
-/**
  * Launched when the game is ending
  */
 void RandomizerArchipelago::endingGame() {
     if (!isOffline) {
-        if (killCreatorGoal && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
-        (!secretsNeeded || (secretsFound() == 3))) {
+        if (
+                (killCreatorGoal && !killFourGodsGoal && miniBossCount() >= miniBossesToKill &&
+                    bigBossCount() >= bigBossesToKill && (!secretsNeeded || (secretsFound() == 3))) ||
+                (killFourGodsGoal && killCreatorGoal && dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
+                    dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
+                    dsq->continuity.getFlag(FLAG_BOSS_SUNWORM) && miniBossCount() >= miniBossesToKill)
+        ){
             std::lock_guard<std::mutex> lock(apMutex);
             apClient->StatusUpdate(APClient::ClientStatus::GOAL);
-            debugLog("Completed Kill creator goal");
+            debugLog("Goal completed!");
         } else {
             showText("You are missing some prerequisite to get the goal.");
         }
@@ -953,9 +960,12 @@ bool RandomizerArchipelago::accessFinalBoss() {
  * Show what is missing to access final boss.
  */
 bool RandomizerArchipelago::showHintFinalBoss() {
-    bool lResult = Randomizer::showHintFinalBoss();
-    if (isOffline) {
-        showText("You cannot beat the final boss while offline. Please connect to the Archipelago server.");
+    bool lResult = false;
+    if (!isOffline) {
+        lResult = Randomizer::showHintFinalBoss();
+    } else {
+        showText("You cannot beat the creator while offline. Please connect to the Archipelago server.");
+        dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
     }
     return lResult;
 }

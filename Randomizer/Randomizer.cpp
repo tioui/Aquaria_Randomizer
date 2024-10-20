@@ -1443,19 +1443,21 @@ void Randomizer::onLoad(bool aNewGame){
             dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
-        dsq->toggleCursor(true);
-        if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
-            if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
-                dsq->game->sceneToLoad = "naijacave";
-                dsq->game->positionToAvatar = Vector(8880, 3881);
+        if (!core->getShiftState()) {
+            dsq->toggleCursor(true);
+            if (dsq->continuity.getFlag(FLAG_ENTER_HOMECAVE) == 0) {
+                if (dsq->confirm("Restart at Naija's rock?","", false, 3.0)) {
+                    dsq->game->sceneToLoad = "naijacave";
+                    dsq->game->positionToAvatar = Vector(8880, 3881);
+                }
+            } else {
+                if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
+                    dsq->game->sceneToLoad = "vedhacave";
+                    dsq->game->positionToAvatar = Vector(1743, 2888);
+                }
             }
-        } else {
-            if (dsq->confirm("Restart at Naija's home?","", false, 3.0)) {
-                dsq->game->sceneToLoad = "vedhacave";
-                dsq->game->positionToAvatar = Vector(1743, 2888);
-            }
+            dsq->toggleCursor(false);
         }
-        dsq->toggleCursor(false);
     }
     dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
     if (skipFirstVision) {
@@ -1506,6 +1508,27 @@ void Randomizer::update(){
     }
     if (mustUpgradeHealth && dsq->game->avatar) {
         receivingUpgradeHealth();
+    }
+    if (inGame && killFourGodsGoal) {
+        manageFourGodsEnding();
+    }
+}
+
+/**
+ * Check if it is the end of the four gods run
+ */
+void Randomizer::manageFourGodsEnding() {
+    if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
+        dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
+        if (!dsq->continuity.getFlag(FLAG_FOUR_GODS_MESSAGE) and menuPanelReady()) {
+            std::stringstream lMessageStream;
+            lMessageStream << "You have beaten the four gods. Now you must beat the Creator to complete your goal. " <<
+                              "The transportation turtle inside The Body has been activated and you can travel " <<
+                              "directly to the final boss area.";
+            showTextPanel(lMessageStream.str(), &dsq->font, true ,false);
+            dsq->continuity.setFlag(FLAG_TRANSTURTLE_FINALBOSS, 1);
+            dsq->continuity.setFlag(FLAG_FOUR_GODS_MESSAGE, 1);
+        }
     }
 }
 
@@ -1619,7 +1642,7 @@ void Randomizer::showIndividualHintFinalBoss(std::stringstream *aMessageStream, 
     if (aChecked) {
         *aMessageStream << "[X] ";
     } else {
-        *aMessageStream << "[]  ";
+        *aMessageStream << "[  ] ";
     }
     *aMessageStream << aText << std::endl;
 }
@@ -1663,7 +1686,7 @@ bool Randomizer::showHintFinalBoss() {
             dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
             dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), "Four gods beaten");
     }
-    lMessageStream << std::endl << std::endl << "Here are the songs and forms recommended to beat the creator:" << std::endl;
+    lMessageStream << std::endl << std::endl << "Here are the songs and forms logically required to beat the creator:" << std::endl;
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_BIND),
                                 "Bind Song");
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_ENERGYFORM),
@@ -1679,9 +1702,10 @@ bool Randomizer::showHintFinalBoss() {
         dsq->continuity.getFlag(FLAG_BOSS_SUNWORM))) {
         lMessageStream << std::endl << std::endl <<
             "You do not have what it takes to beat the creator. Do you still want to proceed?" << std::endl;
-        showTextPanel(lMessageStream.str(), true, MakeFunctionEvent(Randomizer,onYesOpenFinalDoor));
+        showTextPanel(lMessageStream.str(), &dsq->mediumFont, false, true,
+            MakeFunctionEvent(Randomizer,onYesOpenFinalDoor));
     } else {
-        showTextPanel(lMessageStream.str(), false);
+        showTextPanel(lMessageStream.str(), &dsq->mediumFont, false, false);
     }
     dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
     return openFinalDoor;
@@ -1777,6 +1801,15 @@ void Randomizer::onLoadScene(std::string aScene) {
         if (seedNumberText) {
             seedNumberText->safeKill();
             seedNumberText = nullptr;
+        }
+    }
+    if (killFourGodsGoal && (aScene.substr(0, 5) == "abyss" || aScene == "boilerroom" || aScene == "whale" ||
+            aScene.substr(0, 5) == "final" || aScene == "frozenveil" || aScene == "icecave" ||
+            aScene == "kingjellycave" || aScene.substr(0, 10) == "sunkencity")) {
+        for (size_t i = 0; dsq->entities[i] != nullptr; i = i + 1) {
+            if (dsq->entities[i]->name == "singbulb" || dsq->entities[i]->name.substr(0, 11) == "collectible") {
+                dsq->entities[i]->safeKill();
+            }
         }
     }
 }
@@ -1998,8 +2031,7 @@ void Randomizer::enableTransportationMenu() {
  */
 int Randomizer::askTransportation() {
     transportationSelected = 0;
-    if (!game->isSceneEditorActive() && !core->getShiftState() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
-        dsq->saveSlotMode == SSM_NONE) {
+    if (menuPanelReady()) {
         transportationDone = false;
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
@@ -2519,14 +2551,23 @@ void Randomizer::onOkPanel() {
 }
 
 /**
+ * Check if the game is in a state where the showTextPanel can work.
+ *
+ * @return True when the showTextPanel can be launched. False if not
+ */
+bool Randomizer::menuPanelReady() {
+    return !game->isSceneEditorActive() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
+        dsq->saveSlotMode == SSM_NONE;
+}
+
+/**
  * Show a text in a panel.
  * @param aText The text to show in the panel
  * @param aYesNo If there is a yes and no buttons in the panel. If False an Ok button will be put instead
  * @param aEvent The event to use when the Yes button is used.
  */
-void Randomizer::showTextPanel(const std::string& aText, bool aYesNo, Event *aEvent) {
-    if (!game->isSceneEditorActive() && !core->getShiftState() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
-        dsq->saveSlotMode == SSM_NONE) {
+void Randomizer::showTextPanel(const std::string& aText, BmpFont *aFont, bool aCenter, bool aYesNo, Event *aEvent) {
+    if (menuPanelReady()) {
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
         Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));
@@ -2539,13 +2580,19 @@ void Randomizer::showTextPanel(const std::string& aText, bool aYesNo, Event *aEv
         game->addRenderObject(bgimage, LR_RANDOMIZER_PANEL);
         dsq->main(0.5);
 
-        BitmapText *lTitle = new BitmapText(&dsq->mediumFont);
+        BitmapText *lTitle = new BitmapText(aFont);
         lTitle->setWidth(550);
         lTitle->color = 0;
         lTitle->setFontSize(10);
-        lTitle->setAlign(ALIGN_LEFT);
+        if (aCenter) {
+            lTitle->setAlign(ALIGN_CENTER);
+            lTitle->position = Vector(400,100);
+        } else {
+            lTitle->setAlign(ALIGN_LEFT);
+            lTitle->position = Vector(120,100);
+        }
         lTitle->followCamera = 1;
-        lTitle->position = Vector(120,100);
+
         lTitle->setText(aText);
         lTitle->scale = Vector(1.0, 1.0);
         game->addRenderObject(lTitle, LR_RANDOMIZER_PANEL);

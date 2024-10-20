@@ -169,6 +169,11 @@ protected:
      */
     void receivingUpgradeHealth() override;
 
+    /**
+     * Check if it is the end of the four gods run
+     */
+    void manageFourGodsEnding() override;
+
 private:
 
     /**
@@ -410,11 +415,6 @@ private:
     void initialisedDataStorageInfo();
 
     /**
-     * Check if it is the end of the four gods run
-     */
-    void manageFourGodsEnding();
-
-    /**
      * A reply to an AP location scout message
      * @param aItems Every items that has been scout
      */
@@ -424,16 +424,6 @@ private:
      * True if the player is playing offline
      */
     bool isOffline;
-
-    /**
-     * Goal has been send
-     */
-    bool isGoal;
-
-    /**
-     * The four gods goal message has been shown
-     */
-    bool fourGodsGoalMessage;
 
     /**
      * Every flags that has been send to Archipelago data storage
@@ -454,6 +444,16 @@ private:
      * Initialise the values in areaInfo
      */
     void initialiseAreaInfo();
+
+    /**
+     * Goal has been send
+     */
+    bool isGoal;
+
+    /**
+     * The four gods goal message has been shown
+     */
+    bool fourGodsGoalMessage;
 
 };
 

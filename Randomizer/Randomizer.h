@@ -503,6 +503,11 @@ protected:
      */
     void writeHelpData(std::stringstream *messageStream, const std::string& text, int flag);
 
+    /**
+     * Check if it is the end of the four gods run
+     */
+    virtual void manageFourGodsEnding();
+
 private:
 
     /**
@@ -650,12 +655,21 @@ private:
     void onYesOpenFinalDoor();
 
     /**
+    * Check if the game is in a state where the showTextPanel can work.
+    *
+    * @return True when the showTextPanel can be launched. False if not
+    */
+    bool menuPanelReady();
+
+    /**
      * Show a text in a panel.
      * @param text The text to show in the panel
+     * @param font The font used to show the text.
+     * @param center If true, the text will be centered.
      * @param yesNo If there is a yes and no buttons in the panel. If False an Ok button will be put instead
      * @param event The event to use when the Yes button is used.
      */
-    void showTextPanel(const std::string& text, bool yesNo, Event *event = nullptr);
+    void showTextPanel(const std::string& text, BmpFont *font, bool center, bool yesNo, Event *event = nullptr);
 
     /**
      * Event for the Transportation menu to cancel the process.
@@ -915,6 +929,7 @@ const int FLAG_REMOVE_TONGUE               = 920;
 // Randomizer FLAGS
 const int FLAG_LOCATION_START              = 1100;
 const int FLAG_LOCATION_END                = 1318;
+const int FLAG_FOUR_GODS_MESSAGE           = 1498;
 const int FLAG_BLIND_GOAL                  = 1499;
 
 const int FLAG_CHILDREN_RESERVED_START     = 1500;
