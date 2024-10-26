@@ -884,6 +884,7 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
+    lastArea = "";
     if (aNewGame) {
         if (isOffline) {
             dsq->toggleCursor(true);
@@ -1085,10 +1086,14 @@ void RandomizerArchipelago::initialiseAreaInfo() {
     areaInfo->insert(std::make_pair<std::string,std::string>("openwater03", "openwater"));
     areaInfo->insert(std::make_pair<std::string,std::string>("openwater04", "openwater"));
     areaInfo->insert(std::make_pair<std::string,std::string>("openwater05", "openwater"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("openwater06", "arnassiruins"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("seahorse", "arnassiruins"));
     areaInfo->insert(std::make_pair<std::string,std::string>("songcave02", "songcave"));
     areaInfo->insert(std::make_pair<std::string,std::string>("songcave", "songcave"));
     areaInfo->insert(std::make_pair<std::string,std::string>("suntemple", "suntemple"));
     areaInfo->insert(std::make_pair<std::string,std::string>("sunwormtest", "suntemple"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("abyss01", "abyss"));
+    areaInfo->insert(std::make_pair<std::string,std::string>("abyss03", "abyss"));
     areaInfo->insert(std::make_pair<std::string,std::string>("sunkencity01", "sunkencity"));
     areaInfo->insert(std::make_pair<std::string,std::string>("sunkencity02", "sunkencity"));
     areaInfo->insert(std::make_pair<std::string,std::string>("boilerroom", "sunkencity"));

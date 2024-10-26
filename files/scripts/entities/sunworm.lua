@@ -429,10 +429,10 @@ function enterState(me)
 			entity_setState(v.door, STATE_OPEN)
 			-- this'll get set by SUNWORMCAVEBRAIN:
 			--setWaterLevel(node_y(getNode("ENDWATERLEVEL")), 3)
-			setFlag(FLAG_BOSS_SUNWORM, 1)
+			
+			
 			entity_setFlag(me, 1)
-			
-			
+			setFlag(FLAG_BOSS_SUNWORM, 1)
 			entity_idle(v.n)
 			watch(2)
 			pickupGem("Boss-SunWorm")
@@ -442,9 +442,8 @@ function enterState(me)
 			emote(EMOTE_NAIJAUGH)
 			entity_animate(v.n, "agony", -1)
 			watch(3)
-			fade2(1, 1, 1, 1, 1)
+			--fade2(1, 1, 1, 1, 1)
 			watch(1)
-			entity_setFlag(me, 1)
 			loadMap("SunVision")
 			--[[
 			showImage("Visions/Veil/00")
