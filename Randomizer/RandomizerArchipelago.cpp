@@ -894,11 +894,6 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
             saveConnectionInfo();
         }
     } else {
-        // @TODO: Remove those lines
-        dsq->continuity.setFlag(FLAG_ENERGYBOSSDEAD, 1);
-        //dsq->continuity.setFlag(FLAG_BOSS_MITHALA, 1);
-        dsq->continuity.setFlag(FLAG_BOSS_FOREST, 1);
-        dsq->continuity.setFlag(FLAG_BOSS_SUNWORM, 1);
         if (isOffline) {
             if (dsq->continuity.getFlag(FLAG_SAVE_HAS_INFO)) {
                 loadConnectionInfo();
