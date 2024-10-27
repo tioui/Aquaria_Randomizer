@@ -728,8 +728,8 @@ local function cutscene(me)
 
 		setCameraLerpDelay(1)
 		
-		local pn = getNode("NAIJADONE")
 		setFlag(FLAG_BOSS_MITHALA, 1)
+		local pn = getNode("NAIJADONE")
 		local ent = getFirstEntity()
 		while ent ~= 0 do
 			if entity_isName(ent, "MermanThin") then
@@ -797,7 +797,7 @@ local function cutscene(me)
 		watch(2)
 		--entity_setPosition(v.n, node_x(pn), node_y(pn), 2, 0, 0, 1)
 		overrideZoom(0.8, 5)
-		fade2(1,5,1,1,1)
+		--fade2(1,5,1,1,1)
 		watch(2)
 		cam_toEntity(v.n)
 		entity_animate(v.n, "agony", -1)
