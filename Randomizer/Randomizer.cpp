@@ -2486,7 +2486,7 @@ int Randomizer::askTransportation() {
             } else if (transportationSelected == FLAG_TRANSTURTLE_FOREST05) {
                 simon->setFocus(true);
             } else if (transportationSelected == FLAG_TRANSTURTLE_NAIJAHOME ||
-                transportationSelected == FLAG_TRANSTURTLE_NAIJAROCK) {
+                       transportationSelected == FLAG_TRANSTURTLE_NAIJAROCK) {
                 returnBase->setFocus(true);
             }
         }
