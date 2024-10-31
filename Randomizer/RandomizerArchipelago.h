@@ -293,6 +293,20 @@ private:
     void onRoomInfoHandler();
 
     /**
+     * Initialise the goal options
+     *
+     * @param jsonText The "slot_data" json file
+     */
+    void initialiseGoal(const nlohmann::json& jsonText);
+
+    /**
+    * Initialise the standard options
+    *
+    * @param jsonText The "slot_data" json file
+    */
+    void initialiseOptions(const nlohmann::json& jsonText);
+
+    /**
      * Launched when a slot has been connected.
      * @param jsonText The "slot_data" json file
      */

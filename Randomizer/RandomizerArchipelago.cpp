@@ -9,6 +9,7 @@
 #include "subprojects/apclientpp/apuuid.hpp"
 #include "../Aquaria/Avatar.h"
 #include "../Aquaria/Game.h"
+#include "../Aquaria/DSQ.h"
 
 #define AP_VERSION_SUPPORT {0,5,0}
 #define AP_BASE 698000
@@ -293,114 +294,157 @@ void RandomizerArchipelago::onRoomInfoHandler(){
 }
 
 /**
+ * Initialise the goal options
+ *
+ * @param jsonText The "slot_data" json file
+ */
+void RandomizerArchipelago::initialiseGoal(const nlohmann::json& aJsonText) {
+    if (aJsonText.contains("goal")) {
+        if (aJsonText["goal"] == 1) {
+            secretsNeeded = true;
+            killCreatorGoal = true;
+            killFourGodsGoal = false;
+        } else if (aJsonText["goal"] == 2) {
+            secretsNeeded = false;
+            killCreatorGoal = false;
+            killFourGodsGoal = true;
+        } else if (aJsonText["goal"] == 3) {
+            secretsNeeded = false;
+            killCreatorGoal = true;
+            killFourGodsGoal = true;
+        } else {
+            secretsNeeded = false;
+            killCreatorGoal = true;
+            killFourGodsGoal = false;
+        }
+    }
+    if (aJsonText.contains("secret_needed")) {
+        secretsNeeded = aJsonText["secret_needed"];
+    }
+    if (aJsonText.contains("kill_creator_goal")) {
+        killCreatorGoal = aJsonText["kill_creator_goal"];
+    }
+    if (aJsonText.contains("four_gods_goal")) {
+        killFourGodsGoal = aJsonText["four_gods_goal"];
+    }
+    if (aJsonText.contains("minibosses_to_kill")) {
+        miniBossesToKill = aJsonText["minibosses_to_kill"];
+    }
+    if (aJsonText.contains("bigbosses_to_kill")) {
+        bigBossesToKill = aJsonText["bigbosses_to_kill"];
+    }
+}
+
+/**
+ * Initialise the standard options
+ *
+ * @param jsonText The "slot_data" json file
+ */
+void RandomizerArchipelago::initialiseOptions(const nlohmann::json& aJsonText) {
+    int lAquarianTranslated = false;
+    int lBlindGoal = false;
+    int lRemoveTongue = false;
+    std::list<int64_t> locationsId;
+    if (aJsonText.contains("aquarian_translate")) {
+        lAquarianTranslated = aJsonText["aquarian_translate"];
+        setIsAquarianTranslated(lAquarianTranslated);
+    } else if (aJsonText.contains("aquarianTranslate")){ // To remove when the PR 3533 has been accepted
+        lAquarianTranslated = aJsonText["aquarianTranslate"];
+        setIsAquarianTranslated(lAquarianTranslated);
+    }
+    if (aJsonText.contains("skip_first_vision")) {
+        skipFirstVision = aJsonText["skip_first_vision"];
+    }
+    if (aJsonText.contains("skip_final_boss_3rd_form")) {
+        skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
+    }
+    if (aJsonText.contains("infinite_hot_soup")) {
+        infiniteHotSoup = aJsonText["infinite_hot_soup"];
+    }
+    if (aJsonText.contains("unconfine_home_water_energy_door")) {
+        unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
+    }
+    if (aJsonText.contains("unconfine_home_water_transturtle")) {
+        unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
+    }
+    if (aJsonText.contains("maximum_ingredient_amount")) {
+        maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
+    }
+    if (aJsonText.contains("open_body_tongue")) {
+        lRemoveTongue = aJsonText["open_body_tongue"];
+        setRemoveTongue(lRemoveTongue);
+    }
+    if (aJsonText.contains("blind_goal")) {
+        lBlindGoal = aJsonText["blind_goal"];
+        setBlindGoal(lBlindGoal);
+    } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
+        lBlindGoal = aJsonText["blindGoal"];
+        setBlindGoal(lBlindGoal);
+    }
+    ingredientReplacement->clear();
+    for (int lElement : aJsonText["ingredientReplacement"]) {
+        ingredientReplacement->push_back(lElement);
+    }
+    locationsItemTypes->clear();
+    for (int i = 0; i < apLocations->size(); i = i + 1) {
+        if (killFourGodsGoal) {
+            bool lIndexFound = false;
+            for (int j = 0; !lIndexFound && j < LOCATIONS_FOUR_GODS_SIZE; j = j + 1) {
+                if (i == locationsOrderFourGods[j]) {
+                    lIndexFound = true;
+                }
+            }
+            if (lIndexFound) {
+                locationsId.push_back(i + AP_BASE);
+                locationsItemTypes->push_back(USEFULL);
+            } else {
+                locationsItemTypes->push_back(TRASH);
+            }
+        } else {
+            locationsId.push_back(i + AP_BASE);
+            locationsItemTypes->push_back(USEFULL);
+        }
+    }
+    apClient->LocationScouts(locationsId);
+}
+
+/**
  * Launched when a slot has been connected.
  * @param aJsonText The "slot_data" json file
  */
 void RandomizerArchipelago::onSlotConnected (const nlohmann::json& aJsonText){
     if (!hasSlotInfo) {
-        int lAquarianTranslated = false;
-        int lBlindGoal = false;
-        int lRemoveTongue = false;
-        std::list<int64_t> locationsId;
         hasSlotInfo = true;
+        bool is_valid_version = true;
         std::string ldump = aJsonText.dump();
-        if (aJsonText.contains("aquarian_translate")) {
-            lAquarianTranslated = aJsonText["aquarian_translate"];
-            setIsAquarianTranslated(lAquarianTranslated);
-        } else if (aJsonText.contains("aquarianTranslate")){ // To remove when the PR 3533 has been accepted
-            lAquarianTranslated = aJsonText["aquarianTranslate"];
-            setIsAquarianTranslated(lAquarianTranslated);
-        }
-        if (aJsonText.contains("goal")) {
-            if (aJsonText["goal"] == 1) {
-                secretsNeeded = true;
-                killCreatorGoal = true;
-                killFourGodsGoal = false;
-            } else if (aJsonText["goal"] == 2) {
-                secretsNeeded = false;
-                killCreatorGoal = false;
-                killFourGodsGoal = true;
-            } else if (aJsonText["goal"] == 3) {
-                secretsNeeded = false;
-                killCreatorGoal = true;
-                killFourGodsGoal = true;
-            } else {
-                secretsNeeded = false;
-                killCreatorGoal = true;
-                killFourGodsGoal = false;
+        if (aJsonText.contains("required_client_version")) {
+            std::vector<int> *lVersion = new std::vector<int>();
+            for (int lElement : aJsonText["required_client_version"]) {
+                lVersion->push_back(lElement);
             }
-        }
-        if (aJsonText.contains("secret_needed")) {
-            secretsNeeded = aJsonText["secret_needed"];
-        }
-        if (aJsonText.contains("kill_creator_goal")) {
-            killCreatorGoal = aJsonText["kill_creator_goal"];
-        }
-        if (aJsonText.contains("four_gods_goal")) {
-            killFourGodsGoal = aJsonText["four_gods_goal"];
-        }
-        if (aJsonText.contains("minibosses_to_kill")) {
-            miniBossesToKill = aJsonText["minibosses_to_kill"];
-        }
-        if (aJsonText.contains("bigbosses_to_kill")) {
-            bigBossesToKill = aJsonText["bigbosses_to_kill"];
-        }
-        if (aJsonText.contains("skip_first_vision")) {
-            skipFirstVision = aJsonText["skip_first_vision"];
-        }
-        if (aJsonText.contains("skip_final_boss_3rd_form")) {
-            skipFinalBoss3rdForm = aJsonText["skip_final_boss_3rd_form"];
-        }
-        if (aJsonText.contains("infinite_hot_soup")) {
-            infiniteHotSoup = aJsonText["infinite_hot_soup"];
-        }
-        if (aJsonText.contains("unconfine_home_water_energy_door")) {
-            unconfine_home_water_energy_door = aJsonText["unconfine_home_water_energy_door"];
-        }
-        if (aJsonText.contains("unconfine_home_water_transturtle")) {
-            unconfine_home_water_transturtle = aJsonText["unconfine_home_water_transturtle"];
-        }
-        if (aJsonText.contains("maximum_ingredient_amount")) {
-            maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
-        }
-        if (aJsonText.contains("open_body_tongue")) {
-            lRemoveTongue = aJsonText["open_body_tongue"];
-            setRemoveTongue(lRemoveTongue);
-        }
-        if (aJsonText.contains("blind_goal")) {
-            lBlindGoal = aJsonText["blind_goal"];
-            setBlindGoal(lBlindGoal);
-        } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
-            lBlindGoal = aJsonText["blindGoal"];
-            setBlindGoal(lBlindGoal);
-        }
-        ingredientReplacement->clear();
-        for (int lElement : aJsonText["ingredientReplacement"]) {
-            ingredientReplacement->push_back(lElement);
-        }
-        locationsItemTypes->clear();
-        for (int i = 0; i < apLocations->size(); i = i + 1) {
-            if (killFourGodsGoal) {
-                bool lIndexFound = false;
-                for (int j = 0; !lIndexFound && j < LOCATIONS_FOUR_GODS_SIZE; j = j + 1) {
-                    if (i == locationsOrderFourGods[j]) {
-                        lIndexFound = true;
-                    }
+            if (lVersion->size() >= 3) {
+                int lVersionMajor = lVersion->at(0);
+                int lVersionMinor = lVersion->at(1);
+                int lVersionRevision = lVersion->at(2);
+                if (
+                        lVersionMajor > VERSION_MAJOR ||
+                        (lVersionMajor == VERSION_MAJOR && lVersionMinor > VERSION_MINOR) ||
+                        (lVersionMajor == VERSION_MAJOR && lVersionMinor == VERSION_MINOR &&
+                            lVersionRevision > VERSION_REVISION)) {
+                    std::stringstream lError;
+                    lError << "This client does not support the world. Please update the client to version ";
+                    lError << lVersionMajor << "." << lVersionMinor << "." << lVersionRevision << "\n";
+                    setError(lError.str());
+                    is_valid_version = false;
                 }
-                if (lIndexFound) {
-                    locationsId.push_back(i + AP_BASE);
-                    locationsItemTypes->push_back(USEFULL);
-                } else {
-                    locationsItemTypes->push_back(TRASH);
-                }
-            } else {
-                locationsId.push_back(i + AP_BASE);
-                locationsItemTypes->push_back(USEFULL);
             }
-
+            free(lVersion);
         }
-        apClient->LocationScouts(locationsId);
-        updateDataStorageInfo();
+        if (is_valid_version) {
+            initialiseGoal(aJsonText);
+            initialiseOptions(aJsonText);
+            updateDataStorageInfo();
+        }
     }
 }
 /**
