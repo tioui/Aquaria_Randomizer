@@ -7,6 +7,7 @@ a Randomizer.
 
 To play the Aquaria randomizer, you need to own a copy of the original Aquaria game. The game can be bought in almost every online game sellers (GOG, Steam, etc.)
 
+
 Generating a local randomize JSON file
 --------------------------------------
 
