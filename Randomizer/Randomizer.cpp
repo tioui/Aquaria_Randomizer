@@ -697,7 +697,9 @@ void Randomizer::receivingCollectible(check_t *aCheck) const {
     assert(lCollectible && "The Collectible is not valid!");
     std::ostringstream lFileNameStream;
     lFileNameStream << "collectibles/" << lCollectible->imageFile;
-    dsq->game->pickupItemEffects(lFileNameStream.str());
+    if (dsq->game->avatar != nullptr) {
+        dsq->game->pickupItemEffects(lFileNameStream.str());
+    }
     dsq->continuity.setFlag(lCollectible->flag, 1);
     if (lCollectible->flag == FLAG_PET_BLASTER) {
         if (dsq->continuity.getFlag(FLAG_COLLECTIBLE_BLASTER) != 1) {
@@ -808,7 +810,9 @@ void Randomizer::receivingIngredient(const std::string& aIngredientName, int aCo
     IngredientData *lIngredient = dsq->continuity.getIngredientDataByName(aIngredientName);
     dsq->continuity.pickupIngredient(lIngredient, aCount);
     for (int i = 0; i < aCount; i = i + 1) {
-        dsq->game->pickupIngredientEffects(lIngredient);
+        if (dsq->game->avatar != nullptr) {
+            dsq->game->pickupIngredientEffects(lIngredient);
+        }
     }
 }
 
