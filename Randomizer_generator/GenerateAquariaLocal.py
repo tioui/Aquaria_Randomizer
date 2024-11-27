@@ -271,6 +271,7 @@ def generate_basic_arguments() -> Namespace:
     arguments.item_links = {1: ItemLinks([])}
     arguments.start_inventory_from_pool = {1: StartInventoryPool({})}
     arguments.death_link = {1: DeathLink(0)}
+    argument.csv_output = None
     return arguments
 
 def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
