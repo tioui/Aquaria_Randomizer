@@ -437,7 +437,7 @@ def generate_json(options: Dict) -> str:
         "uid": str(multiworld.seed),
         "aquarianTranslate": bool(options["aquarianTranslate"]),
         "blindGoal": bool(options["blindGoal"]),
-        "objective": bool(options["objective"]),
+        "objective": options["objective"],
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
         "skipFirstVision": bool(options["skipFirstVision"]),
