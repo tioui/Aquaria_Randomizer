@@ -271,7 +271,7 @@ def generate_basic_arguments() -> Namespace:
     arguments.item_links = {1: ItemLinks([])}
     arguments.start_inventory_from_pool = {1: StartInventoryPool({})}
     arguments.death_link = {1: DeathLink(0)}
-    argument.csv_output = None
+    arguments.csv_output = None
     return arguments
 
 def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
@@ -294,8 +294,8 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.dish_randomizer = {1: DishRandomizer(1)}
     else:
         arguments.dish_randomizer = {1: DishRandomizer(0)}
-    if "secretsNeeded" in options and options["secretsNeeded"]:
-        arguments.objective = {1: Objective(1)}
+    if "objective" in options and 0 <= options["objective"] <= 2:
+        arguments.objective = {1: Objective(options["objective"])}
     else:
         arguments.objective = {1: Objective(0)}
     if "randomizeTurtles" in options and 0 <= options["randomizeTurtles"] <= 2:
@@ -433,11 +433,11 @@ def generate_json(options: Dict) -> str:
     """Generate the randomized json file to return to the player."""
     multiworld: MultiWorld = generate_aquaria_multiworld(options)
     values = {
-        "version": 1,
+        "version": 2,
         "uid": str(multiworld.seed),
         "aquarianTranslate": bool(options["aquarianTranslate"]),
         "blindGoal": bool(options["blindGoal"]),
-        "secretsNeeded": bool(options["secretsNeeded"]),
+        "objective": options["objective"],
         "bigBossesToBeat": options["bigBossesToBeat"],
         "miniBossesToBeat": options["miniBossesToBeat"],
         "skipFirstVision": bool(options["skipFirstVision"]),

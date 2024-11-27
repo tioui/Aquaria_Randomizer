@@ -928,7 +928,7 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
-    dsq->game->avatar->heal(10);
+    dsq->game->avatar->revive();
     lastArea = "";
     if (aNewGame) {
         if (isOffline) {
