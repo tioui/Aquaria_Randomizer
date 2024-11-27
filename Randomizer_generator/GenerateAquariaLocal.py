@@ -433,7 +433,7 @@ def generate_json(options: Dict) -> str:
     """Generate the randomized json file to return to the player."""
     multiworld: MultiWorld = generate_aquaria_multiworld(options)
     values = {
-        "version": 1,
+        "version": 2,
         "uid": str(multiworld.seed),
         "aquarianTranslate": bool(options["aquarianTranslate"]),
         "blindGoal": bool(options["blindGoal"]),
