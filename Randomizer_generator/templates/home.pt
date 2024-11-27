@@ -34,8 +34,13 @@
                 </select></p>
 		<p><label for="earlyEnergyForm">Early energy form:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="earlyBindSong">Early bind song:</label> <input type="checkbox" id="earlyBindSong" name="earlyBindSong" value="1" checked></p>
-		<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
-		<p><label for="secretsNeeded">Secrets needed to access the Creator:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>
+			<p><label for="objective">Objectif:</label> <select id="objective" name="objective">
+				<option value="0" selected="selected">Beat the Creator</option>
+				<option value="1">Find the 3 secret memories and beat the Creator</option>
+				<option value="2">Beat the 4 gods to access and beat the Creator</option>
+			</select></p>
+			<p>*Note that the 4 gods and Creator objective exclude every area bellow Open Water and ignore the big bosses to beat option.</p>
+	<p><label for="aquarianTranslate">Translate Aquarian:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
         <p><label for="miniBossesToBeat">Mini boss to beat to access the Creator:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
             <option value="0" selected="selected">No mini boss necessary</option>
             <option value="1">1</option>

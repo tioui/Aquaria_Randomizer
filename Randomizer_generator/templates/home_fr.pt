@@ -36,7 +36,12 @@
 		<p><label for="earlyEnergyForm">Placer la forme de l'énergie tôt dans le jeu:</label> <input type="checkbox" id="earlyEnergyForm" name="earlyEnergyForm" value="1" checked></p>
 		<p><label for="earlyBindSong">Early bind song:</label> <input type="checkbox" id="earlyBindSong" name="earlyBindSong" value="1" checked></p>
 		<p><label for="aquarianTranslate">Traduire les écritures Aquarienne:</label> <input type="checkbox" id="aquarianTranslate" name="aquarianTranslate" value="1"></p>
-		<p><label for="secretsNeeded">Les secrets sont nécessaires pour accéder au créateur:</label> <input type="checkbox" id="secretsNeeded" name="secretsNeeded" value="1"></p>
+		<p><label for="objective">Objectif:</label> <select id="objective" name="objective">
+				<option value="0" selected="selected">Battre le créateur</option>
+				<option value="1">Trouver les 3 souvenirs secrets et battre le créateur</option>
+				<option value="2">Battre les 4 dieux pour accéder et battre le créateur</option>
+			</select></p>
+			<p>*À noter que l'objectif des 4 Dieux et du créateur exclue automatiquement les régions en dessous des eaux ouverts et ignore l'option des gros boss à battre.</p>
         <p><label for="miniBossesToBeat">Mini boss à battre avant d'accéder au créateur:</label> <select id="miniBossesToBeat" name="miniBossesToBeat">
             <option value="0" selected="selected">Aucun</option>
             <option value="1">1</option>
@@ -48,7 +53,7 @@
             <option value="7">7</option>
             <option value="8">8</option>
         </select></p>
-        <p><label for="bigBossesToBeat">Gros boss à battre avant d'accéder au créateur:</label> <select id="bigBossesToBeat" name="bigBossesToBeat">
+        <p><label for="bigBossesToBeat">Gros boss à battre avant d'accéder au créateur (ignoré pour l'objectif des 4 dieux):</label> <select id="bigBossesToBeat" name="bigBossesToBeat">
             <option value="0" selected="selected">Aucun</option>
             <option value="1">1</option>
             <option value="2">2</option>
