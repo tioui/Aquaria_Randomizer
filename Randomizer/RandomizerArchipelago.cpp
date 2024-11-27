@@ -1046,18 +1046,7 @@ std::string RandomizerArchipelago::getUniqueString() {
  */
 void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
     if (isOffline) {
-        if (killCreatorGoal) {
-            Randomizer::appendLocationsHelpData(aData);
-        } else {
-            std::stringstream lMessageStream;
-            lMessageStream << "[Locations obtained]\n";
-            for (int i = 0; i < LOCATIONS_FOUR_GODS_SIZE; i = i + 1) {
-                writeHelpData(&lMessageStream, checks->at(locationsOrderFourGods[i]).location,
-                              dsq->continuity.getFlag(checks->at(locationsOrderFourGods[i]).flag));
-            }
-            lMessageStream << "\n\n";
-            aData += lMessageStream.str();
-        }
+        Randomizer::appendLocationsHelpData(aData);
     } else {
         std::stringstream lMessageStream;
         lMessageStream << "[Locations obtained]\n[Local] (AP) Name\n";

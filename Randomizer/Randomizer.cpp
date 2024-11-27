@@ -1304,16 +1304,28 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Li and Li song", dsq->continuity.hasSong(SONG_LI));
     Recipe *lRecipe = getRecipe("hotsoup");
     writeHelpData(&lMessageStream, "Hot soup", lRecipe && lRecipe->isKnown());
-    writeHelpData(&lMessageStream, "Arnassi Armor", dsq->continuity.getFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME));
-    writeHelpData(&lMessageStream, "Transport to The Veil top left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01));
-    writeHelpData(&lMessageStream, "Transport to The Veil top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02));
-    writeHelpData(&lMessageStream, "Transport to Open waters top right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
-    writeHelpData(&lMessageStream, "Transport to Kelp Forest bottom left area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04));
-    writeHelpData(&lMessageStream, "Transport to home waters", dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA));
-    writeHelpData(&lMessageStream, "Transport to The Abyss right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03));
-    writeHelpData(&lMessageStream, "Transport to The Creator", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
-    writeHelpData(&lMessageStream, "Transport to Simon says", dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
-    writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area", dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
+    writeHelpData(&lMessageStream, "Arnassi Armor",
+        dsq->continuity.getFlag(FLAG_COLLECTIBLE_SEAHORSECOSTUME));
+    writeHelpData(&lMessageStream, "Transport to The Veil top left area",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL01));
+    writeHelpData(&lMessageStream, "Transport to The Veil top right area",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_VEIL02));
+    writeHelpData(&lMessageStream, "Transport to Open waters top right area",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_OPENWATER03));
+    writeHelpData(&lMessageStream, "Transport to Kelp Forest bottom left area",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST04));
+    writeHelpData(&lMessageStream, "Transport to home waters",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_MAINAREA));
+    if (!killFourGodsGoal) {
+        writeHelpData(&lMessageStream, "Transport to The Abyss right area",
+            dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03));
+    }
+    writeHelpData(&lMessageStream, "Transport to The Creator",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
+    writeHelpData(&lMessageStream, "Transport to Simon says",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
+    writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area",
+        dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
 
     lMessageStream << "\n";
     aData += lMessageStream.str();
@@ -1362,7 +1374,7 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
-    if (killCreatorGoal) {
+    if (!killCreatorGoal) {
         std::stringstream lMessageStream;
         lMessageStream << "[Bosses beaten]\n";
         writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
@@ -1392,7 +1404,7 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendSecretHelpData(std::string &aData) {
-    if (killCreatorGoal) {
+    if (!killFourGodsGoal) {
         std::stringstream lMessageStream;
         lMessageStream << "[Secrets obtained]\n";
         writeHelpData(&lMessageStream, "First secret", dsq->continuity.getFlag(FLAG_SECRET01));
@@ -1420,9 +1432,16 @@ void Randomizer::appendSecretHelpData(std::string &aData) {
 void Randomizer::appendLocationsHelpData(std::string &aData) {
     std::stringstream lMessageStream;
     lMessageStream << "[Locations obtained]\n";
-    for (int i = 0; i < LOCATIONS_SIZE; i = i + 1) {
-        writeHelpData(&lMessageStream, checks->at(locationsOrder[i]).location,
-                      dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag));
+    if (killFourGodsGoal) {
+        for (int i = 0; i < LOCATIONS_FOUR_GODS_SIZE; i = i + 1) {
+            writeHelpData(&lMessageStream, checks->at(locationsOrderFourGods[i]).location,
+                          dsq->continuity.getFlag(checks->at(locationsOrderFourGods[i]).flag));
+        }
+    } else {
+        for (int i = 0; i < LOCATIONS_SIZE; i = i + 1) {
+            writeHelpData(&lMessageStream, checks->at(locationsOrder[i]).location,
+                          dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag));
+        }
     }
     lMessageStream << "\n\n";
     aData += lMessageStream.str();
