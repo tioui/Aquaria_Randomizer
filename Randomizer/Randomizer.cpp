@@ -1700,7 +1700,7 @@ bool Randomizer::showHintFinalBoss() {
     if (miniBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, miniBossCount(), miniBossesToKill, "Mini bosses");
     }
-    if (bigBossesToKill > 0) {
+    if (!killFourGodsGoal && bigBossesToKill > 0) {
         showNumberHintFinalBoss(&lMessageStream, bigBossCount(), bigBossesToKill, "Big bosses");
     }
     if (secretsNeeded) {
@@ -1721,7 +1721,8 @@ bool Randomizer::showHintFinalBoss() {
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_DUALFORM),
                                 "Dual Form");
     openFinalDoor = false;
-    if (dsq->continuity.hasLi() && miniBossCount() >= miniBossesToKill && bigBossCount() >= bigBossesToKill &&
+    if (dsq->continuity.hasLi() && miniBossCount() >= miniBossesToKill &&
+        (killFourGodsGoal || bigBossCount() >= bigBossesToKill) &&
         (!secretsNeeded || secretsFound() >= 3) && (!killFourGodsGoal || dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
         dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
         dsq->continuity.getFlag(FLAG_BOSS_SUNWORM))) {
