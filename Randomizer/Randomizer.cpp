@@ -1320,8 +1320,10 @@ void Randomizer::appendItemHelpData(std::string &aData) {
         writeHelpData(&lMessageStream, "Transport to The Abyss right area",
             dsq->continuity.getFlag(FLAG_TRANSTURTLE_ABYSS03));
     }
-    writeHelpData(&lMessageStream, "Transport to The Creator",
+    if (killCreatorGoal) {
+        writeHelpData(&lMessageStream, "Transport to The Creator",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
+    }
     writeHelpData(&lMessageStream, "Transport to Simon says",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
     writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area",
