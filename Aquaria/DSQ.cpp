@@ -840,7 +840,7 @@ void DSQ::setVersionLabelText()
 	os << " Demo";
 #endif
 	
-	os << " v" << VERSION_MAJOR << "." << VERSION_MINOR;
+	os << " v" << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_REVISION;
 	
 	if (!isFinalCandidate && !isGoldMaster && VERSION_BETA)
 	{

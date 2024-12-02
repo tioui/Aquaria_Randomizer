@@ -1629,10 +1629,13 @@ int Randomizer::secretsFound() {
  * @return True if the final boss is accessible. False if not.
  */
 bool Randomizer::accessFinalBoss() {
-    return dsq->continuity.hasLi() and dsq->continuity.hasSong(SONG_DUALFORM) and
-           dsq->continuity.hasSong(SONG_ENERGYFORM) and dsq->continuity.hasSong(SONG_SUNFORM)
-           and dsq->continuity.hasSong(SONG_BIND) and miniBossCount() >= miniBossesToKill and
-           bigBossCount() >= bigBossesToKill and (!secretsNeeded || (secretsFound() == 3));
+    return dsq->continuity.hasLi() && dsq->continuity.hasSong(SONG_DUALFORM) &&
+           dsq->continuity.hasSong(SONG_ENERGYFORM) && dsq->continuity.hasSong(SONG_SUNFORM)
+           && dsq->continuity.hasSong(SONG_BIND) && miniBossCount() >= miniBossesToKill &&
+           (killFourGodsGoal || bigBossCount() >= bigBossesToKill) && (!secretsNeeded || (secretsFound() == 3)) &&
+           (!killFourGodsGoal || dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
+            dsq->continuity.getFlag(FLAG_BOSS_MITHALA) && dsq->continuity.getFlag(FLAG_BOSS_FOREST) &&
+            dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
 }
 
 void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
