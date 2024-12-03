@@ -28,7 +28,7 @@ from worlds.aquaria.Options import AquarianTranslation, IngredientRandomizer, Di
                                    NoProgressionSimonSays, NoProgressionKelpForest, NoProgressionVeil, \
                                    NoProgressionMithalas, NoProgressionEnergyTemple, NoProgressionArnassiRuins, \
                                    NoProgressionFrozenVeil, NoProgressionAbyss, NoProgressionSunkenCity, \
-                                   NoProgressionBody, EarlyBindSong
+                                   NoProgressionBody, EarlyBindSong, SaveHealing
 
 # Every checks (association Location -> Item)
 checks: Dict[int, int] = {
@@ -386,6 +386,10 @@ def generate_aquaria_arguments(options: Dict, arguments: Namespace) -> None:
         arguments.skip_final_boss_3rd_form = {1: SkipFinalBoss3rdForm(1)}
     else:
         arguments.skip_final_boss_3rd_form = {1: SkipFinalBoss3rdForm(0)}
+    if "SaveHealing" in options and options["SaveHealing"]:
+        arguments.save_healing = {1: SaveHealing(1)}
+    else:
+        arguments.save_healing = {1: SaveHealing(0)}
     if "unconfineHomeWater" in options and 0 <= options["unconfineHomeWater"] <= 3:
         arguments.unconfine_home_water ={1: UnconfineHomeWater(options["unconfineHomeWater"])}
     else:
@@ -444,6 +448,7 @@ def generate_json(options: Dict) -> str:
         "infiniteHotSoup": bool(options["infiniteHotSoup"]),
         "openBodyTongue": bool(options["openBodyTongue"]),
         "skipFinalBoss3rdForm": bool(options["skipFinalBoss3rdForm"]),
+        "saveHealing": bool(options["saveHealing"]),
         "maximumIngredientAmount": int(options["maximumIngredientAmount"]),
         "ingredientReplacement": [i for i in range(76)],
         "unconfineHomeWaterEnergyDoor": options["unconfineHomeWater"] in [1, 3],
@@ -494,6 +499,7 @@ def view_generation(request) -> Response:
             "bindSongNeededForBulbUnderRock": 0,
             "unconfineHomeWater": 0,
             "skipFinalBoss3rdForm": 0,
+            "saveHealing": 1,
             "openBodyTongue": 0,
             "infiniteHotSoup": 1,
             "maximumIngredientAmount": 8,

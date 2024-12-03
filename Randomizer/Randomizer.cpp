@@ -38,6 +38,7 @@ Randomizer::Randomizer() : ActionMapper() {
     isAquarianTranslated = false;
     secretsNeeded = false;
     seedNumberText = nullptr;
+    saveHeal = true;
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
@@ -2018,6 +2019,23 @@ void Randomizer::setupTransportationItem(AquariaMenuItem *aItem, BitmapText *aIt
  */
 void Randomizer::onPressEscape() {
     onCancelTransportation();
+}
+
+/**
+ * Assing the saveHeal value to a value
+ * @param aValue The value to assing to saveHeal
+ */
+void Randomizer::setSaveHeal(bool aValue) {
+    saveHeal = aValue;
+}
+
+/**
+ * Save point must heal the user.
+
+ * @return True if the save rystal must heal the character. False if not.
+ */
+bool Randomizer::isSaveHeal() {
+    return saveHeal;
 }
 
 /**

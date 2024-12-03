@@ -2641,7 +2641,9 @@ void DSQ::doSavePoint(const Vector &position)
 	dsq->game->clearControlHint();
 	dsq->main(2);
 	dsq->game->avatar->enableInput();
-	dsq->game->avatar->revive();
+	if (randomizer->isSaveHeal()) {
+		dsq->game->avatar->revive();
+	}
 	dsq->game->togglePause(1);
 	dsq->doSaveSlotMenu(SSM_SAVE, position);
 	dsq->game->togglePause(0);

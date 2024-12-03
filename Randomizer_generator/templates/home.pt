@@ -99,6 +99,8 @@
 		<p><label for="openBodyTongue">Remove the body tongue:</label> <input type="checkbox" id="openBodyTongue" name="openBodyTongue" value="1"></p>
 		<p><label for="skipFinalBoss3rdForm">Skip the 3rd form of the final boss:</label> <input type="checkbox" id="skipFinalBoss3rdForm" name="skipFinalBoss3rdForm" value="1"></p>
 		<p><label for="skipFirstVision">Skip the first vision in the verse cave:</label> <input type="checkbox" id="skipFirstVision" name="skipFirstVision" value="1"></p>
+		<p><label for="saveHealing">Saving heal Naija:</label> <input type="checkbox" id="saveHealing" name="saveHealing" value="1" checked></p>
+        <div class="text-center">
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Generate...</button>
         </div>

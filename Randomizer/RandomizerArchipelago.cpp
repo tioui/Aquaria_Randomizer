@@ -321,6 +321,10 @@ void RandomizerArchipelago::initialiseGoal(const nlohmann::json& aJsonText) {
     if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
     }
+    if (aJsonText.contains("save_healing")) {
+        bool lSaveHeal = aJsonText["save_healing"];
+        setSaveHeal(lSaveHeal);
+    }
     if (aJsonText.contains("kill_creator_goal")) {
         killCreatorGoal = aJsonText["kill_creator_goal"];
     }
@@ -928,7 +932,13 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
-    dsq->game->avatar->revive();
+    if (dsq->game->avatar->health <= 0) {
+        if (isSaveHeal()) {
+            dsq->game->avatar->revive();
+        } else {
+            dsq->game->avatar->heal(0.5);
+        }
+    }
     lastArea = "";
     if (aNewGame) {
         if (isOffline) {

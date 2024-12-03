@@ -100,6 +100,7 @@
 		<p><label for="openBodyTongue">Enlever la langue du corps:</label> <input type="checkbox" id="openBodyTongue" name="openBodyTongue" value="1"></p>
 		<p><label for="skipFinalBoss3rdForm">sauter la 3è forme du boss de la fin:</label> <input type="checkbox" id="skipFinalBoss3rdForm" name="skipFinalBoss3rdForm" value="1"></p>
 		<p><label for="lightNeededInDarkPlaces">Lumière nécessaire pour se déplacer dans le noir:</label> <input type="checkbox" id="lightNeededInDarkPlaces" name="lightNeededInDarkPlaces" value="1"></p>
+		<p><label for="saveHealing">Sauvegarder guéris Naija:</label> <input type="checkbox" id="saveHealing" name="saveHealing" value="1" checked></p>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Générer...</button>
         </div>

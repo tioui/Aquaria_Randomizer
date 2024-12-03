@@ -266,6 +266,13 @@ public:
      */
     int getMaximumIngredientAmount() const;
 
+	/**
+	 * Save point must heal the user
+	 *
+	 * @return True if the save rystal must heal the character. False if not.
+	 */
+	bool isSaveHeal();
+
 protected:
 
     /**
@@ -293,6 +300,12 @@ protected:
      * @param message The message to assign to getErrorMessage
      */
     void setError(std::string message);
+
+	/**
+	* Assing the saveHeal value to a value
+	* @param value The value to assing to saveHeal
+    */
+	void setSaveHeal(bool value);
 
     /**
      * Remove pending error
@@ -610,12 +623,17 @@ private:
     /**
      * True if the body tongue should be removed
      */
-    bool removeTongue;
+	bool removeTongue;
 
-    /**
-     * A health upgrade received must be apply again since the last time, naija was dead.
-     */
-    bool mustUpgradeHealth;
+	/**
+	 * A health upgrade received must be apply again since the last time, naija was dead.
+	 */
+	bool mustUpgradeHealth;
+
+	/**
+	 * Save point must heal the user
+	 */
+	bool saveHeal;
 
     /**
      * Show an image for a received item.

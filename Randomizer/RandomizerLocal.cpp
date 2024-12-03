@@ -22,6 +22,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     bool lAquarianTranslated = false;
     bool lBlindGoal = false;
     bool lRemoveTongue = false;
+    bool lSaveHeal = true;
     killCreatorGoal = true;
     try {
         nlohmann::json lJsonData = nlohmann::json::parse(lFile);
@@ -119,6 +120,13 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
             lRemoveTongue = false;
         }
         setRemoveTongue(lRemoveTongue);
+        if (lJsonData.contains("saveHealing")) {
+            lSaveHeal = lJsonData["saveHealing"];
+        } else {
+            debugLog("Warning: The field 'saveHealing' is not present in the json file.");
+            lSaveHeal = false;
+        }
+        setSaveHeal(lSaveHeal);
         if (lJsonData.contains("unconfineHomeWaterEnergyDoor")) {
             unconfine_home_water_energy_door = lJsonData["unconfineHomeWaterEnergyDoor"];
         } else {
