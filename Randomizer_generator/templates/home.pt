@@ -232,6 +232,7 @@
                 <option value="transport_finalboss">Transport to The Creator</option>
                 <option value="transport_forest05">Transport to Simon says</option>
                 <option value="transport_seahorse">Transport to Arnassi Ruins right area</option>
+                <option value="door_to_cathedral">Opening door to the cathedral</option>
             </select>
             <br/>
             <input type="file" id="jsonfile" value="Import" />
@@ -457,6 +458,7 @@
             <span name="check_tips" id="transturtle_finalboss" style="display: none">Transport turtle in The Creator.</span>
             <span name="check_tips" id="transturtle_forest05" style="display: none">Transport turtle in Simon says area.</span>
             <span name="check_tips" id="transturtle_seahorse" style="display: none">Transport turtle in Arnassi Ruins right area.</span>
+            <span name="check_tips" id="sitting_on_throne" style="display: none">Mithalas City Castle, sitting on the sealed throne.</span>
         </div>
 
         <p>&nbsp</p>

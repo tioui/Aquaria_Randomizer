@@ -582,9 +582,11 @@ void Randomizer::initialiseChecks() const {
     checks->push_back({1316, "transturtle_finalboss","transport_finalboss",1, "Transport to The Creator",
                        "Final Boss area, Transturtle"});
     checks->push_back({1317, "transturtle_forest05","transport_forest05",1, "Transport to Simon says",
-                       "Simon Says area, Transturtle"});
+        "Simon Says area, Transturtle"});
     checks->push_back({1318, "transturtle_seahorse","transport_seahorse",1, "Transport to Arnassi Ruins right area",
-                       "Arnassi Ruins, Transturtle"});
+        "Arnassi Ruins, Transturtle"});
+    checks->push_back({1319, "sitting_on_throne","door_to_cathedral",1, "Opening door to the cathedral",
+                       "Mithalas City Castle, sitting on the sealed throne"});
 
 
 
@@ -832,6 +834,17 @@ void Randomizer::receivingUpgradeHealth() {
 }
 
 /**
+ * Received a door opening item
+ * @param aCheck The item check that has been received.
+ */
+void Randomizer::receivingDoorOpening(check_t *aCheck) {
+    if (aCheck->flag == 1309) {
+        dsq->continuity.setFlag(FLAG_MITHALAS_THRONEROOM, 1);
+        dsq->game->pickupItemEffects("seal-prince");
+    }
+}
+
+/**
  * Get a new item to activate in the local game
  * @param aItem The item to activate
  * @param aCount The number of element to receive
@@ -866,6 +879,10 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         lMessageStream << lCheck->message;
         receivingTransport(lCheck);
         dsq->game->pickupItemEffects("gems/turtle");
+    } else if (aItem.compare(0, 5, "door_") == 0) {
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingDoorOpening(lCheck);
     } else {
         assert(false && "The receving item is not valid!");
     }
@@ -1457,6 +1474,14 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
+    if (dsq->game->avatar->health <= 0) {
+        if (isSaveHeal()) {
+            dsq->game->avatar->revive();
+        } else {
+            dsq->game->avatar->health = 0;
+            dsq->game->avatar->heal(0.5);
+        }
+    }
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);

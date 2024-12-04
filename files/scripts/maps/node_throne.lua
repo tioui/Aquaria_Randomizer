@@ -30,6 +30,9 @@ function init(me)
 end
 
 function update(me, dt)
+	if entity_isState(v.door) ~= STATE_OPENED and v.door ~= 0 and isFlag(FLAG_MITHALAS_THRONEROOM,1) then
+		entity_setState(v.door, STATE_OPENED)
+	end
 end
 
 function activate(me)
@@ -46,19 +49,23 @@ function activate(me)
 	overrideZoom(0.5, 2)
 	
 	watch(2)
-	
-	if isFlag(FLAG_MITHALAS_THRONEROOM,0) then
-		--if isFlag(FLAG_SEAL_KING,1) and isFlag(FLAG_SEAL_QUEEN,1) and isFlag(FLAG_SEAL_PRINCE,1) then
-		if isFlag(FLAG_SEAL_PRINCE,1) then
-			debugLog("OPENED DOOR")
-			
-			entity_setState(v.door, STATE_OPEN)
-			setFlag(FLAG_MITHALAS_THRONEROOM, 1)
-			cam_toEntity(v.door)
-			watch(2)
-			cam_toEntity(n)
-		end
+
+	if isFlag(FLAG_SEAL_PRINCE,1) then
+		randomizerCheck("sitting_on_throne")
 	end
+	
+--	if isFlag(FLAG_MITHALAS_THRONEROOM,0) then
+--		--if isFlag(FLAG_SEAL_KING,1) and isFlag(FLAG_SEAL_QUEEN,1) and isFlag(FLAG_SEAL_PRINCE,1) then
+--		if isFlag(FLAG_SEAL_PRINCE,1) then
+--			debugLog("OPENED DOOR")
+--			
+--			entity_setState(v.door, STATE_OPEN)
+--			setFlag(FLAG_MITHALAS_THRONEROOM, 1)
+--			cam_toEntity(v.door)
+--			watch(2)
+--			cam_toEntity(n)
+--		end
+--	end
 	
 	while (not isLeftMouse()) and (not isRightMouse()) do
 		watch(FRAME_TIME)

@@ -17,7 +17,6 @@
  */
 RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     checksReplacement = new std::vector<int>();
-    long long int lUid = 0;
     std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
     bool lBlindGoal = false;
@@ -152,6 +151,9 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
         if (lJsonData.contains("checksReplacement")) {
             for (int lElement : lJsonData["checksReplacement"]) {
                 checksReplacement->push_back(lElement);
+            }
+            for (int i = checksReplacement->size(); i < checks->size(); i = i + 1) {
+                checksReplacement->push_back(i);
             }
         } else {
             setError("Randomizer JSON file " + aFilename +

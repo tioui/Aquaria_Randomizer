@@ -451,12 +451,12 @@ protected:
     /**
      * Skip the third form of the final boss
      */
-    bool skipFinalBoss3rdForm;
+	bool skipFinalBoss3rdForm;
 
-    /**
-     * As soon as the hot soup is learn, it will always be accessible never 0 count
-     */
-    bool infiniteHotSoup;
+	/**
+	 * As soon as the hot soup is learn, it will always be accessible never 0 count
+	 */
+	bool infiniteHotSoup;
 
     /**
      * Tne number of mini bosses that as been slain.
@@ -574,6 +574,11 @@ private:
      * @param aCheck The transport item to activate
      */
     void receivingTransport(check_t *aCheck);
+	/**
+	 * Received a door opening item
+	 * @param aCheck The item check that has been received.
+	 */
+	void receivingDoorOpening(check_t *aCheck);
 
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
@@ -847,13 +852,13 @@ private:
 };
 
 
-const int LOCATIONS_SIZE = 218;
+const int LOCATIONS_SIZE = 219;
 
 const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63, 64, 65, 194, 213, 119, 120,
                                   206, 71, 72, 73, 74, 75, 160, 178, 162, 205, 27, 170, 28, 163, 29, 169, 195, 1, 2, 3,
                                   4, 5, 6, 7, 8, 148, 149, 150, 9, 211, 11, 10, 12, 13, 177, 14, 15, 16, 179, 191, 164,
 								  217, 187, 156, 216, 30, 35, 31, 33, 34, 41, 37, 38, 39, 123, 124, 125, 126, 127, 32,
-								  40, 36, 174, 128, 173, 129, 42, 165, 130, 131, 132, 133, 134, 135, 208, 183, 136,
+								  40, 36, 174, 128, 173, 129, 42, 165, 218, 130, 131, 132, 133, 134, 135, 208, 183, 136,
 								  137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 189, 198, 113, 114, 115, 116,
 								  117, 118, 202, 44, 45, 46, 185, 47, 158, 48, 49, 51, 52, 53, 167, 50, 54, 186, 212,
 								  168, 204, 55, 207, 56, 57, 176, 121, 197, 199, 78, 76, 209, 77, 184, 0, 193, 79, 180,
@@ -862,7 +867,7 @@ const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 
 								  161, 88, 188, 159, 154, 155, 151, 152, 153, 192, 43, 201, 97, 66, 69, 67, 68, 70,
 								  100, 98, 99, 101, 102, 190, 103, 104, 105, 215, 106};
 
-const int LOCATIONS_FOUR_GODS_SIZE = 172;
+const int LOCATIONS_FOUR_GODS_SIZE = 173;
 
 const int locationsOrderFourGods[LOCATIONS_FOUR_GODS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63,
                                                               64, 65, 194, 213, 119, 120, 206, 71, 72, 73, 74, 75, 160,
@@ -870,11 +875,11 @@ const int locationsOrderFourGods[LOCATIONS_FOUR_GODS_SIZE] = {107, 108, 175, 200
                                                               5, 6, 7, 8, 148, 149, 150, 9, 211, 11, 10, 12, 13, 177,
                                                               14, 15, 16, 179, 191, 164, 217, 187, 156, 216, 30, 35, 31,
                                                               33, 34, 41, 37, 38, 39, 123, 124, 125, 126, 127, 32, 40,
-                                                              36, 174, 128, 173, 129, 42, 165, 130, 131, 132, 133, 134,
-                                                              135, 208, 183, 136, 137, 138, 139, 140, 141, 142, 143,
-                                                              144, 145, 146, 147, 189, 198, 113, 114, 115, 116, 117,
-                                                              118, 202, 44, 45, 46, 185, 47, 158, 48, 49, 51, 52, 53,
-                                                              167, 50, 54, 186, 212, 168, 204, 55, 207, 56, 57, 176,
+                                                              36, 174, 128, 173, 129, 42, 165, 218, 130, 131, 132, 133,
+	                                                          134, 135, 208, 183, 136, 137, 138, 139, 140, 141, 142,
+	                                                          143, 144, 145, 146, 147, 189, 198, 113, 114, 115, 116,
+	                                                          117, 118, 202, 44, 45, 46, 185, 47, 158, 48, 49, 51, 52,
+	                                                          53, 167, 50, 54, 186, 212, 168, 204, 55, 207, 56, 57, 176,
                                                               121, 197, 199, 78, 76, 209, 77, 184, 0, 193, 79, 180, 80,
                                                               210, 82, 81, 157, 181, 196, 122, 94, 95, 96, 171, 91, 92,
                                                               93, 182, 17, 18, 19, 20, 203};
@@ -961,6 +966,7 @@ const int FLAG_ENERGYSLOT_FIRST            = 106;
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
 const int FLAG_REMOVE_TONGUE               = 920;
+const int FLAG_MITHALAS_THRONEROOM         = 115;
 
 // Randomizer FLAGS
 const int FLAG_LOCATION_START              = 1100;

@@ -41,6 +41,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     currentQuickMessageTime = 0;
     deathLinkPause = false;
     apClient = nullptr;
+    throneAsLocationManagedByServer = false;
     clearError();
     nextQuickMessages = new std::queue<std::string>();
     dataStorageInfo = new std::unordered_map<std::string, int>;
@@ -321,10 +322,6 @@ void RandomizerArchipelago::initialiseGoal(const nlohmann::json& aJsonText) {
     if (aJsonText.contains("secret_needed")) {
         secretsNeeded = aJsonText["secret_needed"];
     }
-    if (aJsonText.contains("save_healing")) {
-        bool lSaveHeal = aJsonText["save_healing"];
-        setSaveHeal(lSaveHeal);
-    }
     if (aJsonText.contains("kill_creator_goal")) {
         killCreatorGoal = aJsonText["kill_creator_goal"];
     }
@@ -378,12 +375,19 @@ void RandomizerArchipelago::initialiseOptions(const nlohmann::json& aJsonText) {
         lRemoveTongue = aJsonText["open_body_tongue"];
         setRemoveTongue(lRemoveTongue);
     }
+    if (aJsonText.contains("throne_as_location")) {
+        throneAsLocationManagedByServer = true;
+    }
     if (aJsonText.contains("blind_goal")) {
         lBlindGoal = aJsonText["blind_goal"];
         setBlindGoal(lBlindGoal);
     } else if (aJsonText.contains("blindGoal")) { // To remove when the PR 3533 has been accepted
         lBlindGoal = aJsonText["blindGoal"];
         setBlindGoal(lBlindGoal);
+    }
+    if (aJsonText.contains("save_healing")) {
+        bool lSaveHeal = aJsonText["save_healing"];
+        setSaveHeal(lSaveHeal);
     }
     ingredientReplacement->clear();
     for (int lElement : aJsonText["ingredientReplacement"]) {
@@ -682,8 +686,12 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                 }
             }
             if (!isOffline) {
-                std::lock_guard<std::mutex> lock(apMutex);
-                apClient->LocationChecks(lIds);
+                if (lCheck->flag != 1319 || throneAsLocationManagedByServer) {
+                    std::lock_guard<std::mutex> lock(apMutex);
+                    apClient->LocationChecks(lIds);
+                } else {
+                    receivingItem(lCheck->item, 1);
+                }
             }
         }
     }
@@ -823,7 +831,8 @@ void RandomizerArchipelago::setDataStorage(std::string aId, int aValue, bool aUn
         lOperation.operation = "replace";
         lOperation.value = lData;
         lOperationList.push_back(lOperation);
-        apClient->Set(std::to_string(apClient->get_player_number()) + "@" + aId, 0, false, lOperationList);
+        apClient->Set(std::to_string(apClient->get_player_number()) + "@" + aId,
+                      0, false, lOperationList);
         dataStorageInfo->at(aId) = aValue;
     }
 }
@@ -932,13 +941,6 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
-    if (dsq->game->avatar->health <= 0) {
-        if (isSaveHeal()) {
-            dsq->game->avatar->revive();
-        } else {
-            dsq->game->avatar->heal(0.5);
-        }
-    }
     lastArea = "";
     if (aNewGame) {
         if (isOffline) {
@@ -1074,18 +1076,23 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
             }
             bool lFound = false;
             for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
-                if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
-                    for (int64_t laLocation : apClient->get_checked_locations()) {
-                        if (laLocation == apLocations->at(j).locationId) {
-                            lMessageStream << "(X) ";
+                if (checks->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
+                    lMessageStream << "    ";
+                } else {
+                    if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
+                        for (int64_t laLocation : apClient->get_checked_locations()) {
+                            if (laLocation == apLocations->at(j).locationId) {
+                                lMessageStream << "(X) ";
+                                lFound = true;
+                            }
+                        }
+                        if (!lFound) {
+                            lMessageStream << "( )  ";
                             lFound = true;
                         }
                     }
-                    if (!lFound) {
-                        lMessageStream << "( )  ";
-                        lFound = true;
-                    }
                 }
+
             }
             lMessageStream << checks->at(lLocationsOrder[i]).location;
             lMessageStream << "\n";
@@ -1519,4 +1526,5 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 215, "transturtle_finalboss"});
     apLocations->push_back({AP_BASE + 216, "transturtle_forest05"});
     apLocations->push_back({AP_BASE + 217, "transturtle_seahorse"});
+    apLocations->push_back({AP_BASE + 218, "sitting_on_throne"});
 }

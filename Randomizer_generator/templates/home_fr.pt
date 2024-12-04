@@ -232,6 +232,7 @@
                 <option value="transport_finalboss">Transport vers Le Créateur</option>
                 <option value="transport_forest05">Transport vers Simon dit</option>
                 <option value="transport_seahorse">Transport vers les Ruines d'Arnassi section de droite</option>
+                <option value="door_to_cathedral">Ouvrir la porte vers la cathédral</option>
             </select>
             <br/>
             <input type="file" id="jsonfile" value="Import" />
@@ -457,6 +458,7 @@
             <span name="check_tips" id="transturtle_finalboss" style="display: none">Tortue de transport avant le créateur</span>
             <span name="check_tips" id="transturtle_forest05" style="display: none">Tortue de transport dans la section de Simon dit.</span>
             <span name="check_tips" id="transturtle_seahorse" style="display: none">Tortue de transport dans les Ruines d'Arnassi section de droite.</span>
+            <span name="check_tips" id="sitting_on_throne" style="display: none">S'assoir sur le throne avec un sceau.</span>
         </div>
 
         <p>&nbsp</p>

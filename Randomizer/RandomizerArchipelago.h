@@ -469,6 +469,11 @@ private:
      */
     bool fourGodsGoalMessage;
 
+    /**
+     * The throne as location is managed by the server
+     */
+    bool throneAsLocationManagedByServer;
+
 };
 
 const int FLAG_SUNTEMPLE_LIGHTCRYSTAL            = 112;

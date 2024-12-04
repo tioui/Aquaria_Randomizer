@@ -257,6 +257,7 @@ class Tips {
             { "check_id":"transturtle_finalboss", "item_id":"transport_finalboss"},
             { "check_id":"transturtle_forest05", "item_id":"transport_forest05"},
             { "check_id":"transturtle_seahorse", "item_id":"transport_seahorse"}
+            { "check_id":"sitting_on_throne", "item_id":"door_to_cathedral"}
         ];
     }
 }
