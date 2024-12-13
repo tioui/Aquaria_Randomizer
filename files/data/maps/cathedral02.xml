@@ -201,7 +201,7 @@
 <Path name="doorexit">
     <Node pos="12774 21492" rect="300 220" shape="0" />
 </Path>
-<Path name="sit">
+<Path name="sleep">
     <Node pos="23795 6445" rect="162 170" shape="0" />
 </Path>
 <Path name="savepoint">
