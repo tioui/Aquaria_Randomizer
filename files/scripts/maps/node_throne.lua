@@ -30,8 +30,9 @@ function init(me)
 end
 
 function update(me, dt)
-	if entity_isState(v.door) ~= STATE_OPENED and v.door ~= 0 and isFlag(FLAG_MITHALAS_THRONEROOM,1) then
+	if entity_getState(v.door) ~= STATE_OPENED and v.door ~= 0 and isFlag(FLAG_MITHALAS_THRONEROOM,1) then
 		entity_setState(v.door, STATE_OPENED)
+
 	end
 end
 
