@@ -1343,6 +1343,8 @@ void Randomizer::appendItemHelpData(std::string &aData) {
         writeHelpData(&lMessageStream, "Transport to The Creator",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
     }
+    writeHelpData(&lMessageStream, "Door to the Cathedral opened",
+        dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
     writeHelpData(&lMessageStream, "Transport to Simon says",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
     writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area",
@@ -1395,7 +1397,7 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
-    if (!killCreatorGoal) {
+    if (!killFourGodsGoal) {
         std::stringstream lMessageStream;
         lMessageStream << "[Bosses beaten]\n";
         writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
@@ -1849,7 +1851,7 @@ void Randomizer::onLoadScene(std::string aScene) {
             std::stringstream lStream;
             lStream << "Seed number: " << getUid();
             seedNumberText->setText(lStream.str());
-            seedNumberText->position = Vector(640, 575);
+            seedNumberText->position = Vector(790 - (seedNumberText->getActualWidth() * 0.7), 575);
             seedNumberText->followCamera = 1;
             seedNumberText->setAlign(ALIGN_LEFT);
             seedNumberText->scale = Vector(0.7, 0.7);

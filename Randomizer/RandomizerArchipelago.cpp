@@ -1075,10 +1075,11 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
                 lMessageStream << "    [ ]       ";
             }
             bool lFound = false;
+            if (checks->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
+                lMessageStream << "      ";
+            }
             for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
-                if (checks->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
-                    lMessageStream << "    ";
-                } else {
+                if (checks->at(lLocationsOrder[i]).flag != 1319 || throneAsLocationManagedByServer) {
                     if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
                         for (int64_t laLocation : apClient->get_checked_locations()) {
                             if (laLocation == apLocations->at(j).locationId) {
