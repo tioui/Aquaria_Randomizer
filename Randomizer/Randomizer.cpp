@@ -37,6 +37,7 @@ Randomizer::Randomizer() : ActionMapper() {
     unconfine_home_water_energy_door = false;
     isAquarianTranslated = false;
     secretsNeeded = false;
+    justLoading = false;
     seedNumberText = nullptr;
     saveHeal = true;
     checks = new std::vector<check_t>();
@@ -1474,14 +1475,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
-    if (dsq->game->avatar && dsq->game->avatar->health <= 0) {
-        if (isSaveHeal()) {
-            dsq->game->avatar->revive();
-        } else {
-            dsq->game->avatar->health = 0;
-            dsq->game->avatar->heal(0.5);
-        }
-    }
+    justLoading = true;
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
@@ -1535,6 +1529,17 @@ void Randomizer::onClose() {
  * Lunched at each game loop iteration
  */
 void Randomizer::update(){
+    if (gameControlReady() && justLoading && dsq->game->avatar) {
+        if (dsq->game->avatar->health <= 0) {
+            if (isSaveHeal()) {
+                dsq->game->avatar->revive();
+            } else {
+                dsq->game->avatar->health = 0;
+                dsq->game->avatar->heal(0.5);
+            }
+        }
+        justLoading = false;
+    }
     auto lNow = std::chrono::system_clock::now();
     if (currentMessageTime) {
         auto lTime = std::chrono::system_clock::from_time_t (currentMessageTime);
@@ -1571,7 +1576,7 @@ void Randomizer::update(){
 void Randomizer::manageFourGodsEnding() {
     if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
         dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
-        if (!dsq->continuity.getFlag(FLAG_FOUR_GODS_MESSAGE) and menuPanelReady()) {
+        if (!dsq->continuity.getFlag(FLAG_FOUR_GODS_MESSAGE) and gameControlReady()) {
             std::stringstream lMessageStream;
             lMessageStream << "You have beaten the four gods. Now you must beat the Creator to complete your goal. " <<
                               "The transportation turtle inside The Body has been activated and you can travel " <<
@@ -2104,7 +2109,7 @@ void Randomizer::enableTransportationMenu() {
  */
 int Randomizer::askTransportation() {
     transportationSelected = 0;
-    if (menuPanelReady()) {
+    if (gameControlReady()) {
         transportationDone = false;
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
@@ -2628,7 +2633,7 @@ void Randomizer::onOkPanel() {
  *
  * @return True when the showTextPanel can be launched. False if not
  */
-bool Randomizer::menuPanelReady() {
+bool Randomizer::gameControlReady() {
     return !game->isSceneEditorActive() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
         dsq->saveSlotMode == SSM_NONE;
 }
@@ -2640,7 +2645,7 @@ bool Randomizer::menuPanelReady() {
  * @param aEvent The event to use when the Yes button is used.
  */
 void Randomizer::showTextPanel(const std::string& aText, BmpFont *aFont, bool aCenter, bool aYesNo, Event *aEvent) {
-    if (menuPanelReady()) {
+    if (gameControlReady()) {
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
         Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));

@@ -408,7 +408,15 @@ protected:
      * @param aObjective The objective to obtained
      * @param aMessage The hint message.
      */
-    void showHint(int aCount, int aObjective, const std::string& aMessage);
+	void showHint(int aCount, int aObjective, const std::string& aMessage);
+
+	/**
+	* Check if the game is in a state where the showTextPanel can work.
+	*
+	* @return True when the showTextPanel can be launched. False if not
+	*/
+	bool gameControlReady();
+
     /**
      * All secrets needed for goal achievement
      */
@@ -522,6 +530,11 @@ protected:
     virtual void manageFourGodsEnding();
 
 private:
+
+	/**
+	 * The player just load (or reload when game over) the game.
+	 */
+	bool justLoading;
 
     /**
      * Unique ID for the randomizer
@@ -676,13 +689,6 @@ private:
      * Event for when the user wish to open the final boss door
      */
     void onYesOpenFinalDoor();
-
-    /**
-    * Check if the game is in a state where the showTextPanel can work.
-    *
-    * @return True when the showTextPanel can be launched. False if not
-    */
-    bool menuPanelReady();
 
     /**
      * Show a text in a panel.
