@@ -1376,7 +1376,7 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
-    if (!killCreatorGoal) {
+    if (!killFourGodsGoal) {
         std::stringstream lMessageStream;
         lMessageStream << "[Bosses beaten]\n";
         writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
