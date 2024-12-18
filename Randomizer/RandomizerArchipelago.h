@@ -175,6 +175,10 @@ protected:
     void manageFourGodsEnding() override;
 
 private:
+    /**
+     * The player just load (or reload when game over) the game.
+     */
+    bool justLoading;
 
     /**
      * Constructor that does not connect to a server

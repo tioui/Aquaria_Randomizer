@@ -1545,7 +1545,7 @@ void Randomizer::update(){
 void Randomizer::manageFourGodsEnding() {
     if (dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
         dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
-        if (!dsq->continuity.getFlag(FLAG_FOUR_GODS_MESSAGE) and menuPanelReady()) {
+        if (!dsq->continuity.getFlag(FLAG_FOUR_GODS_MESSAGE) and gameControlReady()) {
             std::stringstream lMessageStream;
             lMessageStream << "You have beaten the four gods. Now you must beat the Creator to complete your goal. " <<
                               "The transportation turtle inside The Body has been activated and you can travel " <<
@@ -2061,7 +2061,7 @@ void Randomizer::enableTransportationMenu() {
  */
 int Randomizer::askTransportation() {
     transportationSelected = 0;
-    if (menuPanelReady()) {
+    if (gameControlReady()) {
         transportationDone = false;
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
@@ -2585,7 +2585,7 @@ void Randomizer::onOkPanel() {
  *
  * @return True when the showTextPanel can be launched. False if not
  */
-bool Randomizer::menuPanelReady() {
+bool Randomizer::gameControlReady() {
     return !game->isSceneEditorActive() && !dsq->screenTransition->isGoing() && !dsq->isNested() &&
         dsq->saveSlotMode == SSM_NONE;
 }
@@ -2597,7 +2597,7 @@ bool Randomizer::menuPanelReady() {
  * @param aEvent The event to use when the Yes button is used.
  */
 void Randomizer::showTextPanel(const std::string& aText, BmpFont *aFont, bool aCenter, bool aYesNo, Event *aEvent) {
-    if (menuPanelReady()) {
+    if (gameControlReady()) {
         dsq->game->togglePause(true);
         sound->playSfx("menu-open");
         Quad *bgimage = new Quad("gui/recipe-scroll.png", Vector(400,300));

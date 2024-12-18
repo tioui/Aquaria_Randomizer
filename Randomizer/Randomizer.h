@@ -506,7 +506,14 @@ protected:
     /**
      * Check if it is the end of the four gods run
      */
-    virtual void manageFourGodsEnding();
+	virtual void manageFourGodsEnding();
+
+	/**
+	* Check if the game is in a state where the showTextPanel can work.
+	*
+	* @return True when the showTextPanel can be launched. False if not
+	*/
+	bool gameControlReady();
 
 private:
 
@@ -653,13 +660,6 @@ private:
      * Event for when the user wish to open the final boss door
      */
     void onYesOpenFinalDoor();
-
-    /**
-    * Check if the game is in a state where the showTextPanel can work.
-    *
-    * @return True when the showTextPanel can be launched. False if not
-    */
-    bool menuPanelReady();
 
     /**
      * Show a text in a panel.

@@ -40,6 +40,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     isOffline = true;
     currentQuickMessageTime = 0;
     deathLinkPause = false;
+    justLoading = false;
     apClient = nullptr;
     clearError();
     nextQuickMessages = new std::queue<std::string>();
@@ -715,6 +716,10 @@ void RandomizerArchipelago::connectionUpdate(bool aNoMutex) {
  */
 void RandomizerArchipelago::update(){
     Randomizer::update();
+    if (gameControlReady() && justLoading && dsq->game->avatar) {
+        dsq->game->avatar->revive();
+        justLoading = false;
+    }
     if (!isOffline) {
         try {
             std::lock_guard<std::mutex> lock(apMutex);
@@ -928,7 +933,7 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
-    dsq->game->avatar->revive();
+    justLoading = true;
     lastArea = "";
     if (aNewGame) {
         if (isOffline) {
