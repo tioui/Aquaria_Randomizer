@@ -1474,7 +1474,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
-    if (dsq->game->avatar->health <= 0) {
+    if (dsq->game->avatar && dsq->game->avatar->health <= 0) {
         if (isSaveHeal()) {
             dsq->game->avatar->revive();
         } else {
