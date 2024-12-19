@@ -839,7 +839,7 @@ void Randomizer::receivingUpgradeHealth() {
  * @param aCheck The item check that has been received.
  */
 void Randomizer::receivingDoorOpening(check_t *aCheck) {
-    if (aCheck->flag == 1319) {
+    if (aCheck->flag == 1319 && dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM) != 1) {
         dsq->continuity.setFlag(FLAG_MITHALAS_THRONEROOM, 1);
         dsq->game->pickupItemEffects("seal-prince");
     }
