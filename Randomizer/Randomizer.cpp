@@ -1343,12 +1343,12 @@ void Randomizer::appendItemHelpData(std::string &aData) {
         writeHelpData(&lMessageStream, "Transport to The Creator",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FINALBOSS));
     }
-    writeHelpData(&lMessageStream, "Door to the Cathedral opened",
-        dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
     writeHelpData(&lMessageStream, "Transport to Simon says",
         dsq->continuity.getFlag(FLAG_TRANSTURTLE_FOREST05));
     writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area",
-        dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
+    dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
+    writeHelpData(&lMessageStream, "Door to the Cathedral opened",
+        dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
 
     lMessageStream << "\n";
     aData += lMessageStream.str();
