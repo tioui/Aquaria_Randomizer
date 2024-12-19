@@ -682,15 +682,21 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                     dsq->game->pickupItemEffects("ap/trap");
                 } else if (isOffline) {
                     apitem_t *lApItem = getApItemById(lItemType);
-                    receivingItem(lApItem->item, lApItem->count);
+                    // Todo: Removing the exception when the door to cathedral is official
+                    if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                        receivingItem(lApItem->item, lApItem->count);
+                    }
                 }
             }
             if (!isOffline) {
+                // Todo: Removing the exception when the door to cathedral is official
                 if (lCheck->flag != 1319 || throneAsLocationManagedByServer) {
                     std::lock_guard<std::mutex> lock(apMutex);
                     apClient->LocationChecks(lIds);
                 } else {
-                    receivingItem(lCheck->item, 1);
+                    if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                        receivingItem(lCheck->item, 1);
+                    }
                 }
             }
         }
