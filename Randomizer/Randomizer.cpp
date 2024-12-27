@@ -1321,6 +1321,7 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Spirit form", dsq->continuity.hasSong(SONG_SPIRITFORM));
     writeHelpData(&lMessageStream, "Dual form", dsq->continuity.hasSong(SONG_DUALFORM));
     writeHelpData(&lMessageStream, "Li and Li song", dsq->continuity.hasSong(SONG_LI));
+    writeHelpData(&lMessageStream, "Baby Dumbo", dsq->continuity.getFlag(FLAG_COLLECTIBLE_DUMBO));
     Recipe *lRecipe = getRecipe("hotsoup");
     writeHelpData(&lMessageStream, "Hot soup", lRecipe && lRecipe->isKnown());
     writeHelpData(&lMessageStream, "Arnassi Armor",
@@ -1349,7 +1350,6 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
     writeHelpData(&lMessageStream, "Door to the Cathedral opened",
         dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
-
     lMessageStream << "\n";
     aData += lMessageStream.str();
 }
