@@ -1726,7 +1726,7 @@ void Randomizer::showNumberHintFinalBoss(std::stringstream *aMessageStream, int 
 /**
  * Show what is missing to access final boss.
  *
- * @return True if the door must be openned, False if not
+ * @return True if the door must be opened, False if not
  */
 bool Randomizer::showHintFinalBoss() {
     std::stringstream lMessageStream;
@@ -1867,14 +1867,22 @@ void Randomizer::onLoadScene(std::string aScene) {
     }
     if (killFourGodsGoal && (aScene.substr(0, 5) == "abyss" || aScene == "boilerroom" || aScene == "whale" ||
             aScene.substr(0, 5) == "final" || aScene == "frozenveil" || aScene == "icecave" ||
-            aScene == "kingjellycave" || aScene.substr(0, 10) == "sunkencity")) {
+            aScene == "kingjellycave" || aScene.substr(0, 10) == "sunkencity") || aScene == "bubblecave02") {
         for (size_t i = 0; dsq->entities[i] != nullptr; i = i + 1) {
             if (dsq->entities[i]->name == "singbulb" || dsq->entities[i]->name == "sunkencrate" ||
-                    dsq->entities[i]->name.substr(0, 11) == "collectible") {
+                    dsq->entities[i]->name.substr(0, 11) == "collectible" ||
+                    dsq->entities[i]->name.substr(0, 13) == "healthupgrade") {
                 dsq->entities[i]->safeKill();
             }
         }
     }
+}
+
+/**
+ * The goal is a four gods mode
+ */
+bool Randomizer::isFourGodsGoal() {
+    return killFourGodsGoal;
 }
 
 /**

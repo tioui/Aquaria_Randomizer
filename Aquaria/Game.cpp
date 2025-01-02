@@ -10817,6 +10817,8 @@ void Game::removeState()
 {
 	const float fadeTime = 0.25;
 
+	dsq->randomizer->removeState();
+
 	dsq->toggleVersionLabel(false);
 	
 	dsq->subtitlePlayer.hide(fadeTime);

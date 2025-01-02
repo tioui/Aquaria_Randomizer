@@ -132,7 +132,9 @@ function postInit(me)
 	if not entity_isFlag(me, 0) then
 		entity_delete(me)
 	else
-		entity_alpha(v.item, 0)
+		if v.item ~= 0 then
+			entity_alpha(v.item, 0)
+		end
 	end
 	
 	v.startx = entity_x(me)
@@ -278,7 +280,9 @@ function exitState(me)
 		cam_toEntity(getNaija())
 		entity_delete(me)
 		
-		entity_alpha(v.item, 1)
+		if v.item ~= 0 then
+			entity_alpha(v.item, 1)
+		end
 		
 		pickupGem("boss-mantis")
 	elseif entity_isState(me, STATE_FALL) then

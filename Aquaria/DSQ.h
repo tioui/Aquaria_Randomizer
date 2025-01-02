@@ -549,6 +549,7 @@ enum Layers
 	LR_PROGRESS				,
 	LR_DEBUG_TEXT			,
 	LR_BLACKBARS			,
+	LR_SERVER_TEXT			,
 	LR_MAX
 };
 

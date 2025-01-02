@@ -874,8 +874,8 @@ luaFunc(randomizerEndingGame)
 
 luaFunc(randomizerClose)
 {
-    dsq->randomizer->onClose();
-    luaReturnNil();
+	dsq->randomizer->onClose();
+	luaReturnNil();
 }
 
 luaFunc(randomizerAccessFinalBoss)

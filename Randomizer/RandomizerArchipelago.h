@@ -52,6 +52,53 @@ typedef struct apLocation {
     std::string name;
 } aplocation_t;
 
+
+/**
+ * The color to used in a segment of server text
+ */
+typedef enum ServerTextColor {
+    SERVER_TEXT_COLOR_NORMAL,
+    SERVER_TEXT_COLOR_USER,
+    SERVER_TEXT_COLOR_LOCATION,
+    SERVER_TEXT_COLOR_TRAP_ITEM,
+    SERVER_TEXT_COLOR_FILLER_ITEM,
+    SERVER_TEXT_COLOR_USEFUL_ITEM,
+    SERVER_TEXT_COLOR_PROGRESSION_ITEM,
+    SERVER_TEXT_COLOR_LOCATION_FOUND,
+    SERVER_TEXT_COLOR_LOCATION_NOT_FOUND
+} ServerTextColor_t;
+
+/**
+ * The information about a server text segment to show to the screen
+ */
+typedef struct serverSegmentTextInfo {
+    ServerTextColor_t color;
+    std::string text;
+} serverSegmentTextInfo_t;
+
+/**
+ * A server text segment to show to the screen
+ */
+typedef struct serverSegmentText {
+    TTFText *text;
+    float width;
+} serverSegmentText_t;
+
+
+/**
+ * A server text line to show to the screen
+ */
+typedef struct serverText {
+    std::vector<serverSegmentText_t *> segments;
+    RenderObject *background;
+    float height;
+    std::time_t time;
+    bool shown;
+} serverText_t;
+
+#define PRINT_SERVER_TEXT_DELAY 5
+
+
 /**
  * A randomizer for the Archipelago system
  */
@@ -155,6 +202,11 @@ public:
      * @param data Where the information about item should be put.
      */
     void appendLocationsHelpData(std::string &data) override;
+
+    /**
+     * When a game state is removed
+     */
+    void removeState() override;
 
 protected:
 
@@ -474,6 +526,27 @@ private:
      * The throne as location is managed by the server
      */
     bool throneAsLocationManagedByServer;
+
+    /**
+     * Every item of the Arcipelago Randomizer
+     */
+    std::vector<serverText_t *> *serverTexts;
+
+    /**
+     * Print some line segments back to back to make a complete line
+     * @param segments The segments to print as a line
+     */
+    void printServerText(const std::vector<serverSegmentTextInfo_t *> &segments);
+
+    /**
+     * Update the drawing of every server textx
+     */
+    void updatePrintServerText();
+
+    /**
+     * Clear the content of the `serverTexts` list
+     */
+    void emptyServerText();
 
 };
 

@@ -273,6 +273,16 @@ public:
 	 */
 	bool isSaveHeal();
 
+    /**
+     * When a state in the game is removed
+     */
+    virtual void removeState() {}
+
+	/**
+	 * The goal is a four gods mode
+	 */
+	bool isFourGodsGoal();
+
 protected:
 
     /**

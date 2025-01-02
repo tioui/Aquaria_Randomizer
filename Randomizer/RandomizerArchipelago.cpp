@@ -44,6 +44,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     throneAsLocationManagedByServer = false;
     clearError();
     nextQuickMessages = new std::queue<std::string>();
+    serverTexts = new std::vector<serverText_t *>();
     dataStorageInfo = new std::unordered_map<std::string, int>;
     initialisedDataStorageInfo();
     lastArea = "";
@@ -170,6 +171,8 @@ void RandomizerArchipelago::tryConnection(const std::string& aServer) {
  * Destructor of the current object
  */
 RandomizerArchipelago::~RandomizerArchipelago(){
+    emptyServerText();
+    delete(serverTexts);
     delete(apClient);
     delete(apLocations);
     delete(apItems);
@@ -533,19 +536,189 @@ void RandomizerArchipelago::onItemsReceived (const std::list<APClient::NetworkIt
  * @param aJson The message th show
  */
 void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
-    if (aJson.type != "Tutorial" && aJson.type != "Join" && aJson.type != "Part" && aJson.type != "Hint" &&
-        aJson.type != "TagsChanged" && aJson.type != "CommandResult" && aJson.type != "AdminCommandResult") {
+    if (inGame && (aJson.type != "Tutorial")) {
         if (aJson.type != "ItemSend" || !selfMessageOnly || selfRelatedJson(aJson.data)) {
             if (!noChatMessage || (aJson.type != "Chat" && aJson.type != "Goal" && aJson.type != "Collect" &&
-                aJson.type != "Release")) {
-                std::stringstream lMessageStream;
+                aJson.type != "Release" && aJson.type != "Join" && aJson.type != "Part" &&
+                (aJson.type != "Hint" || selfRelatedJson(aJson.data)) && aJson.type != "TagsChanged" &&
+                aJson.type != "CommandResult" && aJson.type != "AdminCommandResult")) {
+                std::vector<serverSegmentTextInfo_t *> lSegments;
                 for (const APClient::TextNode& lNode : aJson.data) {
-                    lMessageStream << translateJsonDataToString(lNode);
+                    serverSegmentTextInfo_t *lSegment = new serverSegmentTextInfo_t;
+                    if (lNode.type == "player_id") {
+                        int lPlayerId = std::stoi(lNode.text);
+                        lSegment->text = apClient->get_player_alias(lPlayerId);
+                        if (apClient->get_player_number() == lPlayerId) {
+                            lSegment->color = SERVER_TEXT_COLOR_USER;
+                        } else {
+                            lSegment->color = SERVER_TEXT_COLOR_NORMAL;
+                        }
+                    } else if(lNode.type == "item_id") {
+                        lSegment->text = apClient->get_item_name(std::stoi(lNode.text),
+                            apClient->get_player_game(lNode.player));
+                        if (lNode.flags == 1) {
+                            lSegment->color = SERVER_TEXT_COLOR_PROGRESSION_ITEM;
+                        } else if (lNode.flags == 2) {
+                            lSegment->color = SERVER_TEXT_COLOR_USEFUL_ITEM;
+                        } else if (lNode.flags == 4) {
+                            lSegment->color = SERVER_TEXT_COLOR_TRAP_ITEM;
+                        } else {
+                            lSegment->color = SERVER_TEXT_COLOR_FILLER_ITEM;
+                        }
+                    } else if(lNode.type == "location_id") {
+                        lSegment->text = apClient->get_location_name(std::stoi(lNode.text),
+                            apClient->get_player_game(lNode.player));
+                        lSegment->color = SERVER_TEXT_COLOR_LOCATION;
+                    } else if (lNode.type == "hint_status") {
+                        lSegment->text = lNode.text;
+                        if (lNode.text == "(priority)") {
+                            lSegment->color = SERVER_TEXT_COLOR_PROGRESSION_ITEM;
+                        } else if (lNode.text == "(not found)") {
+                            lSegment->color = SERVER_TEXT_COLOR_LOCATION_NOT_FOUND;
+                        } else if (lNode.text == "(found)") {
+                            lSegment->color = SERVER_TEXT_COLOR_LOCATION_FOUND;
+                        } else {
+                            lSegment->text = lNode.text;
+                            lSegment->color = SERVER_TEXT_COLOR_NORMAL;
+                        }
+                    } else {
+                        lSegment->text = lNode.text;
+                        lSegment->color = SERVER_TEXT_COLOR_NORMAL;
+                    }
+                    lSegments.push_back(lSegment);
                 }
-                showText(lMessageStream.str());
+                printServerText(lSegments);
+                for (int i = 0; i < lSegments.size(); ++i) {
+                    delete lSegments[i];
+                }
             }
         }
     }
+
+
+}
+
+/**
+ * Print some line segments back to back to make a complete line
+ * @param aSegments The segments to print as a line
+ */
+void RandomizerArchipelago::printServerText(const std::vector<serverSegmentTextInfo_t *> &aSegments) {
+
+    serverText_t *lServerText = new serverText_t;
+    lServerText->height = 1;
+    for (int i = 0; i < aSegments.size(); i = i + 1) {
+        TTFText *lText = new TTFText(&dsq->fontArialSmallest);
+        lText->setText(aSegments[i]->text);
+        lText->followCamera = 1;
+        if (aSegments[i]->color == SERVER_TEXT_COLOR_USER) {
+            lText->color = Vector(1.0, 0.0, 1.0);
+        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_LOCATION) {
+            lText->color = Vector(0.0, 1.0, 0.0);
+        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_TRAP_ITEM) {
+            lText->color = Vector(0.5, 0.5, 0.5);
+        }else if (aSegments[i]->color == SERVER_TEXT_COLOR_USEFUL_ITEM) {
+            lText->color = Vector(0.0, 0.80, 0.80);
+        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_PROGRESSION_ITEM) {
+            lText->color = Vector(0.5, 0.60, 0.80);
+        } else {
+            lText->color = Vector(1.0, 1.0, 1.0);
+        }
+        serverSegmentText_t *lSegment = new serverSegmentText_t;
+        lSegment->text = lText;
+        lSegment->width = lText->getStringWidth(aSegments[i]->text);
+        if (aSegments[i]->text.at(aSegments[i]->text.size() - 1) == ' ') {
+            lSegment->width = lSegment->width + 5.0f;
+        }
+        if (i < aSegments.size() - 1 && aSegments[i + 1]->text.at(0) == ' ') {
+            lSegment->width = lSegment->width + 5.0f;
+        }
+        debugLog("Server text: " + aSegments[i]->text);
+        debugLog(std::string("Height: ") + std::to_string(lText->getHeight()));
+        if (lServerText->height < lText->getHeight()) {
+            lServerText->height = lText->getHeight();
+        }
+        lServerText->segments.push_back(lSegment);
+    }
+    auto lNow = std::chrono::system_clock::now();
+    debugLog(std::string("Final Height: ") + std::to_string(lServerText->height));
+    lServerText->time = std::chrono::system_clock::to_time_t(lNow);
+    lServerText->shown = false;
+    lServerText->background = nullptr;
+    serverTexts->push_back(lServerText);
+}
+
+void RandomizerArchipelago::updatePrintServerText() {
+    for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
+        auto lNow = std::chrono::system_clock::now();
+        auto lTime = std::chrono::system_clock::from_time_t ((*lIterator)->time);
+        auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
+        if (lDuration.count() > PRINT_SERVER_TEXT_DELAY) {
+            for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
+                if (! (*lSegment)->text->isDead()) {
+                    (*lSegment)->text->safeKill();
+                }
+                delete(*lSegment);
+                (*lIterator)->segments.erase(lSegment);
+            }
+            (*lIterator)->background->safeKill();
+            serverTexts->erase(lIterator);
+        } else {
+            ++lIterator;
+        }
+    }
+    for (int i = 0; i < serverTexts->size(); i = i + 1) {
+        float y = 550.0f - ((serverTexts->size() - i - 1.0f) * 20.0f);
+        float x = 50.0f;
+        int height = 1;
+        if (serverTexts->at(i)->background == nullptr) {
+            int width = 10;
+            for (auto & lSegment : (*serverTexts)[i]->segments) {
+                width = width + lSegment->width;
+            }
+            Quad *lBack = new Quad();
+            lBack->color = Vector(0.0, 0.0, 0.0);
+            lBack->alpha = 0.6f;
+            lBack->setWidthHeight(width, serverTexts->at(i)->height);
+            lBack->position = Vector(50.0f + (width / 2), y - 2.0f);
+            lBack->followCamera = 1;
+            dsq->getTopStateData()->addRenderObject(lBack, LR_SERVER_TEXT);
+
+            serverTexts->at(i)->background = lBack;
+        } else {
+            if (!serverTexts->at(i)->background->isDead()) {
+                serverTexts->at(i)->background->position = Vector(serverTexts->at(i)->background->position.x,
+                    y - 2.0f);
+            }
+
+        }
+        for (auto & lSegment : (*serverTexts)[i]->segments) {
+            if (!lSegment->text->isDead()) {
+                lSegment->text->position = Vector(x, y);
+                x = x + lSegment->width;
+                if (!serverTexts->at(i)->shown) {
+                    dsq->getTopStateData()->addRenderObject(lSegment->text, LR_SERVER_TEXT);
+                }
+            }
+        }
+
+        serverTexts->at(i)->shown = true;
+    }
+}
+
+/**
+ * Clear the content of the `serverTexts` list
+ */
+void RandomizerArchipelago::emptyServerText() {
+    for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
+        for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
+            (*lSegment)->text->safeKill();
+            delete(*lSegment);
+            (*lIterator)->segments.erase(lSegment);
+        }
+        (*lIterator)->background->safeKill();
+        serverTexts->erase(lIterator);
+    }
+    serverTexts->clear();
 }
 
 /**
@@ -557,10 +730,9 @@ bool RandomizerArchipelago::selfRelatedJson(const std::list<APClient::TextNode>&
     bool lResult = false;
     for (const APClient::TextNode& lNode : aData) {
         if (lNode.type == "player_id") {
-            debugLog("Player ID:" + lNode.text);
             if (apClient->get_player_number() == std::stoi(lNode.text)) {
                 lResult = true;
-            };
+            }
         }
     }
     return lResult;
@@ -756,6 +928,7 @@ void RandomizerArchipelago::update(){
             showText("Disconnected from server. Trying to reconnect.");
         }
         if (inGame) {
+            updatePrintServerText();
             updateDataStorage();
             if (syncing) {
                 for (const check_t& lCheck : *checks) {
@@ -1010,6 +1183,13 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
             apClient->Bounce(data, {}, {apClient->get_player_number()}, {});
         }
     }
+}
+/**
+ * When a new state is appied in the game
+ */
+void RandomizerArchipelago::removeState() {
+    Randomizer::removeState();
+    emptyServerText();
 }
 
 /**
