@@ -1182,7 +1182,7 @@ void RandomizerArchipelago::onClose(){
  */
 void RandomizerArchipelago::onLoadScene(std::string aScene) {
     Randomizer::onLoadScene(aScene);
-    int lTimeDelay = (dsq->getTicks() - removeStateTick) / 1000;
+    int lTimeDelay = ceil((dsq->getTicks() - removeStateTick) / 1000);
     for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();++lIterator) {
         createServerTextRenderObjects((*lIterator));
         (*lIterator)->time = (*lIterator)->time + lTimeDelay;
