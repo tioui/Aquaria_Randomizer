@@ -542,7 +542,7 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
                 aJson.type != "Release" && aJson.type != "Join" && aJson.type != "Part" &&
                 (aJson.type != "Hint" || selfRelatedJson(aJson.data)) && aJson.type != "TagsChanged" &&
                 aJson.type != "CommandResult" && aJson.type != "AdminCommandResult")) {
-                std::vector<serverSegmentTextInfo_t *> lSegments;
+                std::vector<serverSegmentTextInfo_t *> *lSegments = new std::vector<serverSegmentTextInfo_t *>();
                 for (const APClient::TextNode& lNode : aJson.data) {
                     serverSegmentTextInfo_t *lSegment = new serverSegmentTextInfo_t;
                     if (lNode.type == "player_id") {
@@ -585,65 +585,79 @@ void RandomizerArchipelago::onPrintJson (const APClient::PrintJSONArgs& aJson){
                         lSegment->text = lNode.text;
                         lSegment->color = SERVER_TEXT_COLOR_NORMAL;
                     }
-                    lSegments.push_back(lSegment);
+                    lSegments->push_back(lSegment);
                 }
                 printServerText(lSegments);
-                for (int i = 0; i < lSegments.size(); ++i) {
-                    delete lSegments[i];
-                }
             }
         }
     }
-
-
 }
 
 /**
- * Print some line segments back to back to make a complete line
- * @param aSegments The segments to print as a line
+ * Create the visual element of a server text
+ * @param aServerText The information of the server text
  */
-void RandomizerArchipelago::printServerText(const std::vector<serverSegmentTextInfo_t *> &aSegments) {
-
-    serverText_t *lServerText = new serverText_t;
-    lServerText->height = 1;
-    for (int i = 0; i < aSegments.size(); i = i + 1) {
+void RandomizerArchipelago::createServerTextRenderObjects(serverText_t *aServerText) {
+    int width = 10;
+    aServerText->shown = false;
+    aServerText->height = 1;
+    for (int i = 0; i < aServerText->segmentInfos->size(); i = i + 1) {
         TTFText *lText = new TTFText(&dsq->fontArialSmallest);
-        lText->setText(aSegments[i]->text);
+        lText->setText(aServerText->segmentInfos->at(i)->text);
         lText->followCamera = 1;
-        if (aSegments[i]->color == SERVER_TEXT_COLOR_USER) {
+        if (aServerText->segmentInfos->at(i)->color == SERVER_TEXT_COLOR_USER) {
             lText->color = Vector(1.0, 0.0, 1.0);
-        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_LOCATION) {
+        } else if (aServerText->segmentInfos->at(i)->color == SERVER_TEXT_COLOR_LOCATION) {
             lText->color = Vector(0.0, 1.0, 0.0);
-        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_TRAP_ITEM) {
+        } else if (aServerText->segmentInfos->at(i)->color == SERVER_TEXT_COLOR_TRAP_ITEM) {
             lText->color = Vector(0.5, 0.5, 0.5);
-        }else if (aSegments[i]->color == SERVER_TEXT_COLOR_USEFUL_ITEM) {
+        }else if (aServerText->segmentInfos->at(i)->color == SERVER_TEXT_COLOR_USEFUL_ITEM) {
             lText->color = Vector(0.0, 0.80, 0.80);
-        } else if (aSegments[i]->color == SERVER_TEXT_COLOR_PROGRESSION_ITEM) {
+        } else if (aServerText->segmentInfos->at(i)->color == SERVER_TEXT_COLOR_PROGRESSION_ITEM) {
             lText->color = Vector(0.5, 0.60, 0.80);
         } else {
             lText->color = Vector(1.0, 1.0, 1.0);
         }
         serverSegmentText_t *lSegment = new serverSegmentText_t;
         lSegment->text = lText;
-        lSegment->width = lText->getStringWidth(aSegments[i]->text);
-        if (aSegments[i]->text.at(aSegments[i]->text.size() - 1) == ' ') {
+        lSegment->width = lText->getStringWidth(aServerText->segmentInfos->at(i)->text);
+        if (aServerText->segmentInfos->at(i)->text.at(aServerText->segmentInfos->at(i)->text.size() - 1) == ' ') {
             lSegment->width = lSegment->width + 5.0f;
         }
-        if (i < aSegments.size() - 1 && aSegments[i + 1]->text.at(0) == ' ') {
+        if (i < aServerText->segmentInfos->size() - 1 && aServerText->segmentInfos->at(i + 1)->text.at(0) == ' ') {
             lSegment->width = lSegment->width + 5.0f;
         }
-        debugLog("Server text: " + aSegments[i]->text);
-        debugLog(std::string("Height: ") + std::to_string(lText->getHeight()));
-        if (lServerText->height < lText->getHeight()) {
-            lServerText->height = lText->getHeight();
+        if (aServerText->height < lText->getHeight()) {
+            aServerText->height = lText->getHeight();
         }
-        lServerText->segments.push_back(lSegment);
+        width = width + lSegment->width;
+        aServerText->segments.push_back(lSegment);
     }
+    Quad *lBack = new Quad();
+    lBack->color = Vector(0.0, 0.0, 0.0);
+    lBack->alpha = 0.6f;
+    lBack->setWidthHeight(width, aServerText->height);
+    lBack->position = Vector(50.0f + (width / 2), 0.0f);
+    lBack->followCamera = 1;
+    dsq->getTopStateData()->addRenderObject(lBack, LR_SERVER_TEXT);
+
+    aServerText->background = lBack;
+}
+
+/**
+ * Print some line segments back to back to make a complete line
+ * @param aSegments The segments to print as a line
+ */
+void RandomizerArchipelago::printServerText(std::vector<serverSegmentTextInfo_t *> *aSegments) {
+    serverText_t *lServerText = new serverText_t;
+    lServerText->segmentInfos = aSegments;
     auto lNow = std::chrono::system_clock::now();
-    debugLog(std::string("Final Height: ") + std::to_string(lServerText->height));
     lServerText->time = std::chrono::system_clock::to_time_t(lNow);
-    lServerText->shown = false;
-    lServerText->background = nullptr;
+    if (serverTexts->size() > 0 &&
+        serverTexts->at(serverTexts->size() - PRINT_SERVER_TEXT_BETWEEN_DELAY)->time + 1 > lServerText->time) {
+        lServerText->time = serverTexts->at(serverTexts->size() - PRINT_SERVER_TEXT_BETWEEN_DELAY)->time + 1;
+    }
+    createServerTextRenderObjects(lServerText);
     serverTexts->push_back(lServerText);
 }
 
@@ -654,45 +668,32 @@ void RandomizerArchipelago::updatePrintServerText() {
         auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
         if (lDuration.count() > PRINT_SERVER_TEXT_DELAY) {
             for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
-                if (! (*lSegment)->text->isDead()) {
+                if ((*lSegment)->text != nullptr) {
                     (*lSegment)->text->safeKill();
+                    (*lSegment)->text = nullptr;
                 }
                 delete(*lSegment);
                 (*lIterator)->segments.erase(lSegment);
             }
-            (*lIterator)->background->safeKill();
+            if ((*lIterator)->background != nullptr) {
+                (*lIterator)->background->safeKill();
+                (*lIterator)->background = nullptr;
+            }
             serverTexts->erase(lIterator);
         } else {
             ++lIterator;
         }
     }
     for (int i = 0; i < serverTexts->size(); i = i + 1) {
-        float y = 550.0f - ((serverTexts->size() - i - 1.0f) * 20.0f);
+        float y = 550.0f - (i * 20.0f);
         float x = 50.0f;
         int height = 1;
-        if (serverTexts->at(i)->background == nullptr) {
-            int width = 10;
-            for (auto & lSegment : (*serverTexts)[i]->segments) {
-                width = width + lSegment->width;
-            }
-            Quad *lBack = new Quad();
-            lBack->color = Vector(0.0, 0.0, 0.0);
-            lBack->alpha = 0.6f;
-            lBack->setWidthHeight(width, serverTexts->at(i)->height);
-            lBack->position = Vector(50.0f + (width / 2), y - 2.0f);
-            lBack->followCamera = 1;
-            dsq->getTopStateData()->addRenderObject(lBack, LR_SERVER_TEXT);
-
-            serverTexts->at(i)->background = lBack;
-        } else {
-            if (!serverTexts->at(i)->background->isDead()) {
-                serverTexts->at(i)->background->position = Vector(serverTexts->at(i)->background->position.x,
+        if (serverTexts->at(i)->background != nullptr) {
+            serverTexts->at(i)->background->position = Vector(serverTexts->at(i)->background->position.x,
                     y - 2.0f);
-            }
-
         }
         for (auto & lSegment : (*serverTexts)[i]->segments) {
-            if (!lSegment->text->isDead()) {
+            if (lSegment->text != nullptr) {
                 lSegment->text->position = Vector(x, y);
                 x = x + lSegment->width;
                 if (!serverTexts->at(i)->shown) {
@@ -700,7 +701,6 @@ void RandomizerArchipelago::updatePrintServerText() {
                 }
             }
         }
-
         serverTexts->at(i)->shown = true;
     }
 }
@@ -710,12 +710,25 @@ void RandomizerArchipelago::updatePrintServerText() {
  */
 void RandomizerArchipelago::emptyServerText() {
     for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
-        for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
-            (*lSegment)->text->safeKill();
+        for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin();
+             lSegment != (*lIterator)->segments.end();) {
+            if ((*lSegment)->text != nullptr) {
+                (*lSegment)->text->safeKill();
+                (*lSegment)->text = nullptr;
+            }
             delete(*lSegment);
             (*lIterator)->segments.erase(lSegment);
         }
-        (*lIterator)->background->safeKill();
+        for (std::vector<serverSegmentTextInfo_t *>::iterator lSegmentInfo = (*lIterator)->segmentInfos->begin();
+             lSegmentInfo != (*lIterator)->segmentInfos->end();) {
+            delete(*lSegmentInfo);
+        }
+        delete((*lIterator)->segmentInfos);
+        (*lIterator)->segmentInfos = nullptr;
+        if ((*lIterator)->background != nullptr) {
+            (*lIterator)->background->safeKill();
+            (*lIterator)->background = nullptr;
+        }
         serverTexts->erase(lIterator);
     }
     serverTexts->clear();
@@ -1169,6 +1182,11 @@ void RandomizerArchipelago::onClose(){
  */
 void RandomizerArchipelago::onLoadScene(std::string aScene) {
     Randomizer::onLoadScene(aScene);
+    int lTimeDelay = (dsq->getTicks() - removeStateTick) / 1000;
+    for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();++lIterator) {
+        createServerTextRenderObjects((*lIterator));
+        (*lIterator)->time = (*lIterator)->time + lTimeDelay;
+    }
     dsq->game->tileCache.precacheTex("ap/progression");
     dsq->game->tileCache.precacheTex("ap/useful");
     dsq->game->tileCache.precacheTex("ap/trash");
@@ -1189,7 +1207,21 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
  */
 void RandomizerArchipelago::removeState() {
     Randomizer::removeState();
-    emptyServerText();
+    for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();++lIterator) {
+        for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
+            if ((*lSegment)->text != nullptr) {
+                (*lSegment)->text->safeKill();
+                (*lSegment)->text = nullptr;
+            }
+            delete(*lSegment);
+            (*lIterator)->segments.erase(lSegment);
+        }
+        if ((*lIterator)->background != nullptr) {
+            (*lIterator)->background->safeKill();
+            (*lIterator)->background = nullptr;
+        }
+    }
+    removeStateTick = dsq->getTicks();
 }
 
 /**

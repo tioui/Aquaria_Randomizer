@@ -90,13 +90,15 @@ typedef struct serverSegmentText {
  */
 typedef struct serverText {
     std::vector<serverSegmentText_t *> segments;
+    std::vector<serverSegmentTextInfo_t *> *segmentInfos;
     RenderObject *background;
     float height;
     std::time_t time;
     bool shown;
 } serverText_t;
 
-#define PRINT_SERVER_TEXT_DELAY 5
+#define PRINT_SERVER_TEXT_DELAY 3
+#define PRINT_SERVER_TEXT_BETWEEN_DELAY 1
 
 
 /**
@@ -536,7 +538,13 @@ private:
      * Print some line segments back to back to make a complete line
      * @param segments The segments to print as a line
      */
-    void printServerText(const std::vector<serverSegmentTextInfo_t *> &segments);
+    void printServerText(std::vector<serverSegmentTextInfo_t *> *segments);
+
+    /**
+     * Create the visual element of a server text
+     * @param aServerText The information of the server text
+     */
+    void createServerTextRenderObjects(serverText_t *aServerText);
 
     /**
      * Update the drawing of every server textx
@@ -547,6 +555,11 @@ private:
      * Clear the content of the `serverTexts` list
      */
     void emptyServerText();
+
+    /**
+     * The timestamp when the game state is removed
+     */
+    int removeStateTick;
 
 };
 
