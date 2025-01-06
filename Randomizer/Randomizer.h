@@ -603,6 +603,12 @@ private:
 	 */
 	void receivingDoorOpening(check_t *aCheck);
 
+	/**
+	 * Received a trap
+	 * @param aCheck The item check that has been received.
+	 */
+	void receivingTrap(check_t *aCheck);
+
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
      * @param recipe The recipe to spawn
@@ -858,12 +864,17 @@ private:
     /**
      * The Simon says button for the transportation menu
      */
-    AquariaMenuItem *simon;
+	AquariaMenuItem *simon;
 
-    /**
-     * The Naija's home/rock button for the transportation menu
-     */
-    AquariaMenuItem *returnBase;
+	/**
+	 * The Naija's home/rock button for the transportation menu
+	 */
+	AquariaMenuItem *returnBase;
+
+	/**
+	 * When the Mute trap is received, get the timestamp before stopping the mute. If no trap, then equal 0.
+	 */
+	uint32 mute_timestamp;
 
 };
 

@@ -1537,6 +1537,11 @@ void Avatar::changeForm(FormType form, bool effects, bool onInit, FormType lastF
 
 	if (!canChangeForm) return;
 
+	if (blockSinging) {
+		core->sound->playSfx("Denied");
+		return;
+	}
+
 	std::ostringstream os;
 	os << "changeForm: " << form;
 	debugLog(os.str());
@@ -4616,31 +4621,40 @@ void Avatar::action(int id, int state)
 
 void Avatar::doBindSong()
 {
-	if (pullTarget)
-	{
-		pullTarget->stopPull();
-		pullTarget = 0;
-		core->sound->playSfx("Denied");
-	}
-	else
-	{
-		dsq->game->bindIngredients();
-		setNearestPullTarget();
-		if (!pullTarget)
+	if (!blockSinging) {
+		if (pullTarget)
 		{
+			pullTarget->stopPull();
+			pullTarget = 0;
 			core->sound->playSfx("Denied");
 		}
 		else
 		{
-			core->sound->playSfx("Bind");
+			dsq->game->bindIngredients();
+			setNearestPullTarget();
+			if (!pullTarget)
+			{
+				core->sound->playSfx("Denied");
+			}
+			else
+			{
+				core->sound->playSfx("Bind");
+			}
 		}
+	} else {
+		core->sound->playSfx("Denied");
 	}
+
 }
 
 void Avatar::doShieldSong()
 {
-	core->sound->playSfx("Shield-On");
-	activateAura(AURA_SHIELD);
+	if (!blockSinging) {
+		core->sound->playSfx("Shield-On");
+		activateAura(AURA_SHIELD);
+	} else {
+		core->sound->playSfx("Denied");
+	}
 }
 
 void Avatar::render()

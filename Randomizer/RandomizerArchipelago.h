@@ -31,7 +31,8 @@ enum ItemType {
     ITEM_TYPE_WOK,
     ITEM_TYPE_SONG,
     ITEM_TYPE_TRANSTURTLE,
-    ITEM_TYPE_DOOR
+    ITEM_TYPE_DOOR,
+    ITEM_TYPE_TRAP
 };
 
 /**

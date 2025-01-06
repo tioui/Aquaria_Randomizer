@@ -876,7 +876,7 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
             if (!isOffline) {
                 // Todo: Removing the exception when the door to cathedral is official
                 if (lCheck->flag != 1319 || throneAsLocationManagedByServer) {
-                    std::lock_guard<std::mutex> lock(apMutex);
+                        std::lock_guard<std::mutex> lock(apMutex);
                     apClient->LocationChecks(lIds);
                 } else {
                     if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
@@ -1523,6 +1523,10 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 132, "transport_forest05", 1, ITEM_TYPE_TRANSTURTLE});
     apItems->push_back({AP_BASE + 133, "transport_seahorse", 1, ITEM_TYPE_TRANSTURTLE});
     apItems->push_back({AP_BASE + 134, "door_to_cathedral", 1, ITEM_TYPE_DOOR});
+    apItems->push_back({AP_BASE + 135, "trap_poison", 1, ITEM_TYPE_TRAP});
+    apItems->push_back({AP_BASE + 136, "trap_blind", 1, ITEM_TYPE_TRAP});
+    apItems->push_back({AP_BASE + 137, "trap_rainbow", 1, ITEM_TYPE_TRAP});
+    apItems->push_back({AP_BASE + 138, "trap_mute", 1, ITEM_TYPE_TRAP});
 }
 /**
  * Initialise every aplocation_t element of the apLocations list

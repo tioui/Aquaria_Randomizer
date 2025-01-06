@@ -58,6 +58,7 @@ Randomizer::Randomizer() : ActionMapper() {
     abyss = nullptr;
     body = nullptr;
     returnBase = nullptr;
+    mute_timestamp = 0;
     initialiseChecks();
     initialiseIngredients();
     initialiseCollectibles();
@@ -587,7 +588,15 @@ void Randomizer::initialiseChecks() const {
     checks->push_back({1318, "transturtle_seahorse","transport_seahorse",1, "Transport to Arnassi Ruins right area",
         "Arnassi Ruins, Transturtle"});
     checks->push_back({1319, "sitting_on_throne","door_to_cathedral",1, "Opening door to the cathedral",
-                       "Mithalas City Castle, sitting on the sealed throne"});
+        "Mithalas City Castle, sitting on the sealed throne"});
+    checks->push_back({1320, "no_location","trap_poison",1, "Poison trap",
+        "No Location"});
+    checks->push_back({1321, "no_location","trap_blind",1, "Blind trap",
+        "No Location"});
+    checks->push_back({1322, "no_location","trap_rainbow",1, "Rainbow trap",
+        "No Location"});
+    checks->push_back({1323, "no_location","trap_mute",1, "Mute trap",
+                       "No Location"});
 
 
 
@@ -846,6 +855,34 @@ void Randomizer::receivingDoorOpening(check_t *aCheck) {
 }
 
 /**
+ * Received a trap
+ * @param aCheck The item check that has been received.
+ */
+void Randomizer::receivingTrap(check_t *aCheck) {
+    if (aCheck->flag == 1320) {
+        if (dsq->game->avatar != nullptr) {
+            dsq->game->avatar->setPoison(0.5, 10);
+        }
+        dsq->game->pickupItemEffects("particles/bubble");
+    } else if (aCheck->flag == 1321) {
+        if (dsq->game->avatar != nullptr) {
+            dsq->game->avatar->setBlind(10);
+        }
+        dsq->game->pickupItemEffects("particles/blinder");
+    } else if (aCheck->flag == 1322) {
+        dsq->continuity.setTrip(10);
+        dsq->game->pickupItemEffects("particles/tripper");
+    } else if (aCheck->flag == 1323) {
+        if (dsq->game->avatar != nullptr) {
+            dsq->game->avatar->changeForm(FORM_NORMAL);
+            dsq->game->avatar->setBlockSinging(true);
+            mute_timestamp = dsq->getTicks() + static_cast<uint32>(10000);
+        }
+        dsq->game->pickupItemEffects("gui/SongBubbles");
+    }
+}
+
+/**
  * Get a new item to activate in the local game
  * @param aItem The item to activate
  * @param aCount The number of element to receive
@@ -884,6 +921,10 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
         receivingDoorOpening(lCheck);
+    } else if (aItem.compare(0, 5, "trap_") == 0) {
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingTrap(lCheck);
     } else {
         assert(false && "The receving item is not valid!");
     }
@@ -1569,6 +1610,12 @@ void Randomizer::update(){
     }
     if (inGame && killFourGodsGoal) {
         manageFourGodsEnding();
+    }
+    if (mute_timestamp > 0 && mute_timestamp < dsq->getTicks()) {
+        if (dsq->game->avatar != nullptr) {
+            dsq->game->avatar->setBlockSinging(false);
+            mute_timestamp = 0;
+        }
     }
 }
 

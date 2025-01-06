@@ -6002,7 +6002,6 @@ void Game::action(int id, int state)
 
 	if (id == ACTION_HOTSOUP && !state)
 	{
-		debugLog("Test hot soup");
 		IngredientData * lIngredient = dsq->continuity.getIngredientDataByName("hotsoup");
 		if (lIngredient->amount > 0) {
 			dsq->continuity.applyIngredientEffects(lIngredient);
