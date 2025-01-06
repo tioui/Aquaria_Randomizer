@@ -1416,36 +1416,40 @@ void Avatar::clearTargets()
 
 void Avatar::openSingingInterface()
 {
-	if (!singing && health > 0 && !isEntityDead() && !blockSinging)
-	{
-		//core->mouse.position = Vector(400,300);
-		if (dsq->inputMode != INPUT_MOUSE)
+	if (!blockSinging) {
+		if (!singing && health > 0 && !isEntityDead())
 		{
-			core->centerMouse();
-			//core->setMousePosition(Vector(400,300));
+			//core->mouse.position = Vector(400,300);
+			if (dsq->inputMode != INPUT_MOUSE)
+			{
+				core->centerMouse();
+				//core->setMousePosition(Vector(400,300));
+			}
+
+			core->setMouseConstraintCircle(core->center, singingInterfaceRadius);
+			stopRoll();
+			singing = true;
+			currentSongIdx = SONG_NONE;
+
+			// make the singing icons appear
+			for (int i = 0; i < songIcons.size(); i++)
+			{
+				songIcons[i]->openInterface();
+			}
+			currentSong.notes.clear();
+
+			songInterfaceTimer = 0;
+
+			dsq->game->songLineRender->clear();
+
+
+			if (dsq->inputMode == INPUT_JOYSTICK)
+			{
+				core->setMousePosition(core->center);
+			}
 		}
-
-		core->setMouseConstraintCircle(core->center, singingInterfaceRadius);
-		stopRoll();
-		singing = true;
-		currentSongIdx = SONG_NONE;
-
-		// make the singing icons appear
-		for (int i = 0; i < songIcons.size(); i++)
-		{
-			songIcons[i]->openInterface();
-		}
-		currentSong.notes.clear();
-
-		songInterfaceTimer = 0;
-
-		dsq->game->songLineRender->clear();
-
-
-		if (dsq->inputMode == INPUT_JOYSTICK)
-		{
-			core->setMousePosition(core->center);
-		}
+	} else {
+		core->sound->playSfx("Denied");
 	}
 }
 
