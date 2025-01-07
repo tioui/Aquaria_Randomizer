@@ -4579,7 +4579,7 @@ void DSQ::onUpdate(float dt)
 		}
 	}
 	
-	
+	randomizer->onUpdate(dt);
 
 
 	updatepecue(dt);

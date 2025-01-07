@@ -123,12 +123,17 @@ public:
      * The unique String for the Randomizer
      * @return The String of the Randomizer
      */
-    virtual std::string getUniqueString();
+	virtual std::string getUniqueString();
 
-    /**
-     * Lunched at each game loop iteration
-     */
-    virtual void update();
+	/**
+	 * Lunched at each game loop iteration
+	 */
+	virtual void update();
+
+	/**
+	 * Used to delta-time elements in the game
+	 */
+	virtual void onUpdate(float aTimestamp);
 
     /**
      * Get the file name (without path and extension) of the graphic file to show Aquarian text
@@ -872,9 +877,14 @@ private:
 	AquariaMenuItem *returnBase;
 
 	/**
-	 * When the Mute trap is received, get the timestamp before stopping the mute. If no trap, then equal 0.
+	 * Timer used to manage muting
 	 */
-	uint32 mute_timestamp;
+	Timer mute_timer;
+
+	/**
+	 * The player is muted
+	 */
+	bool is_muted;
 
 };
 

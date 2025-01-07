@@ -27,6 +27,7 @@ Randomizer::Randomizer() : ActionMapper() {
     errorMessage = "";
     mustUpgradeHealth = false;
     blindGoal = false;
+    is_muted = false;
     killCreatorGoal = true;
     killFourGodsGoal = false;
     maximumIngredientAmount = 8;
@@ -58,7 +59,6 @@ Randomizer::Randomizer() : ActionMapper() {
     abyss = nullptr;
     body = nullptr;
     returnBase = nullptr;
-    mute_timestamp = 0;
     initialiseChecks();
     initialiseIngredients();
     initialiseCollectibles();
@@ -876,7 +876,8 @@ void Randomizer::receivingTrap(check_t *aCheck) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->changeForm(FORM_NORMAL);
             dsq->game->avatar->setBlockSinging(true);
-            mute_timestamp = dsq->getTicks() + static_cast<uint32>(10000);
+            mute_timer.start(10);
+            is_muted = true;
         }
         dsq->game->pickupItemEffects("gui/SongBubbles");
     }
@@ -1519,6 +1520,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
  */
 void Randomizer::onLoad(bool aNewGame){
     justLoading = true;
+    is_muted = false;
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
@@ -1611,10 +1613,18 @@ void Randomizer::update(){
     if (inGame && killFourGodsGoal) {
         manageFourGodsEnding();
     }
-    if (mute_timestamp > 0 && mute_timestamp < dsq->getTicks()) {
-        if (dsq->game->avatar != nullptr) {
+}
+
+/**
+ * Lunched at each game loop iteration
+ */
+void Randomizer::onUpdate(float aTimestamp) {
+    if (is_muted && dsq->game->isActive() && !dsq->game->isPaused()) {
+        mute_timer.update(aTimestamp);
+        if (mute_timer.isDone() && dsq->game->avatar != nullptr) {
             dsq->game->avatar->setBlockSinging(false);
-            mute_timestamp = 0;
+            mute_timer.stop();
+            is_muted = false;
         }
     }
 }
