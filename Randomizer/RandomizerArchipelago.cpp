@@ -11,7 +11,7 @@
 #include "../Aquaria/Game.h"
 #include "../Aquaria/DSQ.h"
 
-#define AP_VERSION_SUPPORT {0,5,0}
+#define AP_VERSION_SUPPORT {0,5,1}
 #define AP_BASE 698000
 #define ITEM_INDEX_FLAG 1399
 
@@ -38,6 +38,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     secretsNeeded = false;
     deathLink = false;
     isOffline = true;
+    betweenState = false;
     currentQuickMessageTime = 0;
     deathLinkPause = false;
     apClient = nullptr;
@@ -657,7 +658,10 @@ void RandomizerArchipelago::printServerText(std::vector<serverSegmentTextInfo_t 
         serverTexts->at(serverTexts->size() - PRINT_SERVER_TEXT_BETWEEN_DELAY)->time + 1 > lServerText->time) {
         lServerText->time = serverTexts->at(serverTexts->size() - PRINT_SERVER_TEXT_BETWEEN_DELAY)->time + 1;
     }
-    createServerTextRenderObjects(lServerText);
+    if (!betweenState) {
+        createServerTextRenderObjects(lServerText);
+    }
+
     serverTexts->push_back(lServerText);
 }
 
@@ -992,7 +996,6 @@ void RandomizerArchipelago::manageFourGodsEnding() {
         if (!isGoal && dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) && dsq->continuity.getFlag(FLAG_BOSS_MITHALA) &&
                 dsq->continuity.getFlag(FLAG_BOSS_FOREST) && dsq->continuity.getFlag(FLAG_BOSS_SUNWORM)) {
             if (miniBossCount() >= miniBossesToKill) {
-                debugLog("Completed Four Gods");
                 std::lock_guard<std::mutex> lock(apMutex);
                 apClient->StatusUpdate(APClient::ClientStatus::GOAL);
                 isGoal = true;
@@ -1201,11 +1204,13 @@ void RandomizerArchipelago::onLoadScene(std::string aScene) {
             apClient->Bounce(data, {}, {apClient->get_player_number()}, {});
         }
     }
+    betweenState = false;
 }
 /**
  * When a new state is appied in the game
  */
 void RandomizerArchipelago::removeState() {
+    betweenState = true;
     Randomizer::removeState();
     for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();++lIterator) {
         for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
@@ -1527,6 +1532,14 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 136, "trap_blind", 1, ITEM_TYPE_TRAP});
     apItems->push_back({AP_BASE + 137, "trap_rainbow", 1, ITEM_TYPE_TRAP});
     apItems->push_back({AP_BASE + 138, "trap_mute", 1, ITEM_TYPE_TRAP});
+    apItems->push_back({AP_BASE + 139, "progressive_recipe_loaf", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 140, "progressive_recipe_soup", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 141, "progressive_recipe_cake", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 142, "progressive_recipe_poultice", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 143, "progressive_recipe_roll", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 144, "progressive_recipe_perogi", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 145, "progressive_recipe_ice_cream", 1, ITEM_TYPE_RECIPE});
+
 }
 /**
  * Initialise every aplocation_t element of the apLocations list

@@ -562,6 +562,11 @@ private:
      */
     int removeStateTick;
 
+    /**
+     * The game has unload a game state and did not reload a new state
+     */
+    int betweenState;
+
 };
 
 const int FLAG_SUNTEMPLE_LIGHTCRYSTAL            = 112;

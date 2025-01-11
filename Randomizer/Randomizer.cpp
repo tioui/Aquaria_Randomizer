@@ -59,6 +59,13 @@ Randomizer::Randomizer() : ActionMapper() {
     abyss = nullptr;
     body = nullptr;
     returnBase = nullptr;
+    progressiveLoafIndex = 0;
+    progressiveSoupIndex = 0;
+    progressiveCakeIndex = 0;
+    progressivePoulticeIndex = 0;
+    progressiveRollIndex = 0;
+    progressivePerogiIndex = 0;
+    progressiveIceCreamIndex = 0;
     initialiseChecks();
     initialiseIngredients();
     initialiseCollectibles();
@@ -97,51 +104,50 @@ void Randomizer::initialiseIngredients() const {
     ingredients->push_back({"RukhEgg", IT_EGG});
     ingredients->push_back({"HotSoup", IT_SOUP});
     ingredients->push_back({"HeartySoup", IT_SOUP});
-    ingredients->push_back({"DivineSoup", IT_SOUP});
-    ingredients->push_back({"LongLifeSoup", IT_SOUP});
-    ingredients->push_back({"SharkFinSoup", IT_SOUP});
     ingredients->push_back({"SpicySoup", IT_SOUP});
     ingredients->push_back({"ColdSoup", IT_SOUP});
-    ingredients->push_back({"RainbowSoup", IT_SOUP});
-    ingredients->push_back({"ColdBorscht", IT_SOUP});
-    ingredients->push_back({"HotBorscht", IT_SOUP});
-    ingredients->push_back({"TurtleSoup", IT_SOUP});
-    ingredients->push_back({"PoisonSoup", IT_SOUP});
-    ingredients->push_back({"HeartySoup", IT_SOUP});
+    ingredients->push_back({"SharkFinSoup", IT_SOUP});
     ingredients->push_back({"MagicSoup", IT_SOUP});
     ingredients->push_back({"RoyalSoup", IT_SOUP});
     ingredients->push_back({"VeggieSoup", IT_SOUP});
+    ingredients->push_back({"LongLifeSoup", IT_SOUP});
+    ingredients->push_back({"ColdBorscht", IT_SOUP});
+    ingredients->push_back({"HotBorscht", IT_SOUP});
+    ingredients->push_back({"TurtleSoup", IT_SOUP});
+    ingredients->push_back({"DivineSoup", IT_SOUP});
+    ingredients->push_back({"RainbowSoup", IT_SOUP});
+    ingredients->push_back({"PoisonSoup", IT_SOUP});
     ingredients->push_back({"SeaLoaf", IT_LOAF});
     ingredients->push_back({"ButterySeaLoaf", IT_LOAF});
-    ingredients->push_back({"RottenLoaf", IT_LOAF});
     ingredients->push_back({"VedhaSeaCrisp", IT_LOAF});
+    ingredients->push_back({"RottenLoaf", IT_LOAF});
     ingredients->push_back({"PoisonLoaf", IT_LOAF});
     ingredients->push_back({"LoafOfLife", IT_LOAF});
     ingredients->push_back({"SeaCake", IT_CAKE});
     ingredients->push_back({"TastyCake", IT_CAKE});
     ingredients->push_back({"VeggieCake", IT_CAKE});
+    ingredients->push_back({"ToughCake", IT_CAKE});
     ingredients->push_back({"CrabCake", IT_CAKE});
+    ingredients->push_back({"SpecialCake", IT_CAKE});
+    ingredients->push_back({"SwampCake", IT_CAKE});
     ingredients->push_back({"LegendaryCake", IT_CAKE});
     ingredients->push_back({"RottenCake", IT_CAKE});
-    ingredients->push_back({"SwampCake", IT_CAKE});
-    ingredients->push_back({"ToughCake", IT_CAKE});
-    ingredients->push_back({"SpecialCake", IT_CAKE});
-    ingredients->push_back({"HealingPoultice", IT_POULTICE});
     ingredients->push_back({"LeafPoultice", IT_POULTICE});
-    ingredients->push_back({"ArcanePoultice", IT_POULTICE});
+    ingredients->push_back({"HealingPoultice", IT_POULTICE});
     ingredients->push_back({"SightPoultice", IT_POULTICE});
     ingredients->push_back({"LeechingPoultice", IT_POULTICE});
+    ingredients->push_back({"ArcanePoultice", IT_POULTICE});
     ingredients->push_back({"Vedha'sCure-All", IT_POULTICE});
-    ingredients->push_back({"DumboIceCream", IT_ICECREAM});
     ingredients->push_back({"IceCream", IT_ICECREAM});
+    ingredients->push_back({"DumboIceCream", IT_ICECREAM});
     ingredients->push_back({"VeggieIceCream", IT_ICECREAM});
     ingredients->push_back({"BerryIceCream", IT_ICECREAM});
     ingredients->push_back({"HandRoll", IT_ROLL});
     ingredients->push_back({"TastyRoll", IT_ROLL});
-    ingredients->push_back({"SpiderRoll", IT_ROLL});
     ingredients->push_back({"SpicyRoll", IT_ROLL});
-    ingredients->push_back({"VolcanoRoll", IT_ROLL});
+    ingredients->push_back({"SpiderRoll", IT_ROLL});
     ingredients->push_back({"LeadershipRoll", IT_ROLL});
+    ingredients->push_back({"VolcanoRoll", IT_ROLL});
     ingredients->push_back({"Perogi", IT_PEROGI});
     ingredients->push_back({"PlumpPerogi", IT_PEROGI});
     ingredients->push_back({"Zuuna'sPerogi", IT_PEROGI});
@@ -596,10 +602,21 @@ void Randomizer::initialiseChecks() const {
     checks->push_back({1322, "no_location","trap_rainbow",1, "Rainbow trap",
         "No Location"});
     checks->push_back({1323, "no_location","trap_mute",1, "Mute trap",
-                       "No Location"});
-
-
-
+        "No Location"});
+    checks->push_back({1324, "no_location","progressive_recipe_loaf",1,
+        "Progressive Loaf", "No Location"});
+    checks->push_back({1325, "no_location","progressive_recipe_soup",1,
+        "Progressive Soup", "1No Location"});
+    checks->push_back({1326, "no_location","progressive_recipe_cake",1,
+        "Progressive Cake", "No Location"});
+    checks->push_back({1327, "no_location","progressive_recipe_poultice",1,
+        "Progressive Poultice", "No Location"});
+    checks->push_back({1328, "no_location","progressive_recipe_roll",1,
+        "Progressive Roll", "No Location"});
+    checks->push_back({1329, "no_location","progressive_recipe_perogi",1,
+        "Progressive Perogi", "No Location"});
+    checks->push_back({1330, "no_location","progressive_recipe_ice_cream",1,
+        "Progressive Ice Cream", "No Location"});
 }
 
 
@@ -660,7 +677,7 @@ Randomizer::~Randomizer() {
  * Get a new transport to location
  * @param aCheck The transport item to activate
  */
-void Randomizer::receivingTransport(check_t *aCheck) {
+void Randomizer::receivingTransport(const check_t *aCheck) {
     int lAreaStringIndex = 0;
     if (aCheck->flag == 1310) {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL01, 1);
@@ -700,7 +717,7 @@ void Randomizer::receivingTransport(check_t *aCheck) {
  * Get a new collectible item to activate in the local game
  * @param aCheck The collectible check item to activate
  */
-void Randomizer::receivingCollectible(check_t *aCheck) const {
+void Randomizer::receivingCollectible(const check_t *aCheck) const {
     collectible_t *lCollectible = nullptr;
     for (int i = 0; i < collectibles->size() && !lCollectible; i = i + 1) {
         if (collectibles->at(i).name == aCheck->item) {
@@ -745,7 +762,7 @@ void Randomizer::receivingCollectible(check_t *aCheck) const {
  * Get a new song item to activate in the local game
  * @param aCheck The song check item to activate
  */
-void Randomizer::receivingSong(check_t *aCheck) {
+void Randomizer::receivingSong(const check_t *aCheck) {
     int lSongType = 0;
     int lStrId = 0;
     if (aCheck->flag == 1300) { // Li song
@@ -847,7 +864,7 @@ void Randomizer::receivingUpgradeHealth() {
  * Received a door opening item
  * @param aCheck The item check that has been received.
  */
-void Randomizer::receivingDoorOpening(check_t *aCheck) {
+void Randomizer::receivingDoorOpening(const check_t *aCheck) {
     if (aCheck->flag == 1319 && dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM) != 1) {
         dsq->continuity.setFlag(FLAG_MITHALAS_THRONEROOM, 1);
         dsq->game->pickupItemEffects("seal-prince");
@@ -858,7 +875,7 @@ void Randomizer::receivingDoorOpening(check_t *aCheck) {
  * Received a trap
  * @param aCheck The item check that has been received.
  */
-void Randomizer::receivingTrap(check_t *aCheck) {
+void Randomizer::receivingTrap(const check_t *aCheck) {
     if (aCheck->flag == 1320) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->setPoison(0.5, 10);
@@ -880,6 +897,56 @@ void Randomizer::receivingTrap(check_t *aCheck) {
             is_muted = true;
         }
         dsq->game->pickupItemEffects("gui/SongBubbles");
+    }
+}
+
+/**
+ * Received a progressive recipe
+ * @param aCheck The item check that has been received.
+ */
+void Randomizer::receivingProgressiveRecipe(const check_t *aCheck) {
+    IngredientType lCategory = IT_ANYTHING;
+    int *lProgressiveIndex = nullptr;
+    if (aCheck->flag == 1324) {
+        lCategory = IT_LOAF;
+        lProgressiveIndex = &progressiveLoafIndex;
+    } else if (aCheck->flag == 1325) {
+        lCategory = IT_SOUP;
+        lProgressiveIndex = &progressiveSoupIndex;
+    } else if (aCheck->flag == 1326) {
+        lCategory = IT_CAKE;
+        lProgressiveIndex = &progressiveCakeIndex;
+    } else if (aCheck->flag == 1327) {
+        lCategory = IT_POULTICE;
+        lProgressiveIndex = &progressivePoulticeIndex;
+    } else if (aCheck->flag == 1328) {
+        lCategory = IT_ROLL;
+        lProgressiveIndex = &progressiveRollIndex;
+    } else if (aCheck->flag == 1329) {
+        lCategory = IT_PEROGI;
+        lProgressiveIndex = &progressivePerogiIndex;
+    } else if (aCheck->flag == 1330) {
+        lCategory = IT_ICECREAM;
+        lProgressiveIndex = &progressiveIceCreamIndex;
+    }
+    if (lCategory > -1) {
+        int lIndex = 0;
+        ingredient_t *lIngredient = nullptr;
+        for (int i = 0; i < ingredients->size() && lIngredient == nullptr; i = i + 1) {
+            if (ingredients->at(i).category == lCategory) {
+                if (lIndex >= *lProgressiveIndex) {
+                    lIngredient = &(ingredients->at(i));
+                } else {
+                    lIndex = lIndex + 1;
+                }
+            }
+        }
+        if (lIngredient != nullptr) {
+            *lProgressiveIndex = *lProgressiveIndex + 1;
+        } else {
+            lIngredient = getRandomIngredient(lCategory);
+        }
+        receivingIngredient(lIngredient->name, 1);
     }
 }
 
@@ -926,6 +993,10 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         check_t *lCheck = getCheckByItem(aItem);
         lMessageStream << lCheck->message;
         receivingTrap(lCheck);
+    } else if (aItem.compare(0, 19, "progressive_recipe_") == 0) {
+        check_t *lCheck = getCheckByItem(aItem);
+        lMessageStream << lCheck->message;
+        receivingProgressiveRecipe(lCheck);
     } else {
         assert(false && "The receving item is not valid!");
     }
@@ -1024,7 +1095,7 @@ ingredient_t * Randomizer::getRandomIngredient(IngredientType aType = IT_ANYTHIN
  * @param aOut Is the entity should spawn now.
  * @return The (last) spawned ingredient;
  */
-Entity *Randomizer::spawnRecipe(Recipe * aRecipe, const Vector &aPosition, int aTimes, int aOut) {
+Entity *Randomizer::spawnRecipe(const Recipe * aRecipe, const Vector &aPosition, int aTimes, int aOut) {
     Entity *lResult = nullptr;
     if (aRecipe->result == "PoisonLoaf") {
         lResult = spawnIngredient("RottenMeat", aPosition,
@@ -1113,7 +1184,7 @@ Entity *Randomizer::spawnIngredient(const std::string &aIngredient, const Vector
  * @param aRecipe The recipe to spawn
  * @param aIngredientData The ingredient that represent the recipe
  */
-void Randomizer::spawnRecipeFromEntity(Entity *aEntity, Recipe * aRecipe, IngredientData *aIngredientData) {
+void Randomizer::spawnRecipeFromEntity(Entity *aEntity, const Recipe * aRecipe, IngredientData *aIngredientData) {
     if (aRecipe->result == "PoisonLoaf") {
         IngredientData *lIngredientData = dsq->continuity.getIngredientDataByName("RottenMeat");
         spawnIngredientFromEntity(aEntity, lIngredientData, false);
@@ -1583,6 +1654,10 @@ void Randomizer::update(){
                 dsq->game->avatar->heal(0.5);
             }
         }
+        if (dsq->game->avatar->getPoison() and dsq->game->avatar->health < 3) {
+            dsq->game->avatar->health = 0;
+            dsq->game->avatar->heal(3.0);
+        }
         justLoading = false;
     }
     auto lNow = std::chrono::system_clock::now();
@@ -1844,7 +1919,7 @@ unsigned long Randomizer::nextMessagesSize() {
  * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
  * @param aText The text to show in game
  * @param aX The horizontal coordinate of the top corner of the text to show
- * @param aX The vertical coordinate of the top corner of the text to show
+ * @param aY The vertical coordinate of the top corner of the text to show
  */
 void Randomizer::showText(const std::string &aText, float aX, float aY)
 {
@@ -2708,6 +2783,8 @@ bool Randomizer::gameControlReady() {
 /**
  * Show a text in a panel.
  * @param aText The text to show in the panel
+ * @param aFont The font to use when drawing text
+ * @param aCenter It the text must be centered
  * @param aYesNo If there is a yes and no buttons in the panel. If False an Ok button will be put instead
  * @param aEvent The event to use when the Yes button is used.
  */

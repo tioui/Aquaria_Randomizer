@@ -564,13 +564,12 @@ private:
     /**
      * Initialize ingredients
      */
-    void initialiseIngredients() const;
+	void initialiseIngredients() const;
 
-    /**
-     * Initialize `collectibles`
-     */
-    void initialiseCollectibles() const;
-
+	/**
+	 * Initialize `collectibles`
+	 */
+	void initialiseCollectibles() const;
 
     /**
      * True if an error occured at initialization. False means every thing is fine
@@ -587,32 +586,40 @@ private:
      * Get a new collectible item to activate in the local game
      * @param check The collectible check item to activate
      */
-    void receivingCollectible(check_t *check) const;
+    void receivingCollectible(const check_t *check) const;
 
 
     /**
      * Get a new song item to activate in the local game
      * @param check The song check item to activate
      */
-    void receivingSong(check_t *check);
+    void receivingSong(const check_t *check);
 
 
     /**
      * Get a new transport to location
      * @param aCheck The transport item to activate
      */
-    void receivingTransport(check_t *aCheck);
+    void receivingTransport(const check_t *aCheck);
 	/**
 	 * Received a door opening item
 	 * @param aCheck The item check that has been received.
 	 */
-	void receivingDoorOpening(check_t *aCheck);
+	void receivingDoorOpening(const check_t *aCheck);
 
 	/**
 	 * Received a trap
 	 * @param aCheck The item check that has been received.
 	 */
-	void receivingTrap(check_t *aCheck);
+	void receivingTrap(const check_t *aCheck);
+
+	/**
+	 * Received a progressive recipe
+	 * @param aCheck The item check that has been received.
+	 */
+	void receivingProgressiveRecipe(const check_t *aCheck);
+
+
 
     /**
      * Spawn a number of recipe dish at a position in space, at a certain time.
@@ -622,7 +629,7 @@ private:
      * @param out Is the entity should spawn now.
      * @return The (last) spawned ingredient;
      */
-    Entity *spawnRecipe(Recipe *recipe, const Vector &position, int times, int out);
+    Entity *spawnRecipe(const Recipe *recipe, const Vector &position, int times, int out);
 
     /**
      * Spawn a recipe dish from an entity.
@@ -630,7 +637,7 @@ private:
      * @param recipe The recipe to spawn
      * @param ingredientData The ingredient that represent the recipe
      */
-    void spawnRecipeFromEntity(Entity *entity, Recipe *recipe, IngredientData *ingredientData);
+    void spawnRecipeFromEntity(Entity *entity, const Recipe *recipe, IngredientData *ingredientData);
 
     /**
      * Retreive a random ingredient of a certain type (or of any type)
@@ -886,6 +893,42 @@ private:
 	 */
 	bool is_muted;
 
+	/**
+	 * Where to get the next progressive Loaf in `progressiveLoafs`
+	 */
+	int progressiveLoafIndex;
+
+	/**
+	 * Where to get the next progressive Soup in `progressiveSoups`
+	 */
+	int progressiveSoupIndex;
+
+	/**
+	 * Where to get the next progressive Cake in `progressiveCakes`
+	 */
+	int progressiveCakeIndex;
+
+	/**
+	 * Where to get the next progressive Poultice in `progressivePoultices`
+	 */
+	int progressivePoulticeIndex;
+
+	/**
+	 * Where to get the next progressive Roll in `progressiveRolls`
+	 */
+	int progressiveRollIndex;
+
+	/**
+	 * Where to get the next progressive Perogi in `progressivePerogis`
+	 */
+	int progressivePerogiIndex;
+
+	/**
+	 * Where to get the next progressive Ice Cream in `progressiveIceCreams`
+	 */
+	int progressiveIceCreamIndex;
+
+
 };
 
 
@@ -920,6 +963,7 @@ const int locationsOrderFourGods[LOCATIONS_FOUR_GODS_SIZE] = {107, 108, 175, 200
                                                               121, 197, 199, 78, 76, 209, 77, 184, 0, 193, 79, 180, 80,
                                                               210, 82, 81, 157, 181, 196, 122, 94, 95, 96, 171, 91, 92,
                                                               93, 182, 17, 18, 19, 20, 203};
+
 
 
 
