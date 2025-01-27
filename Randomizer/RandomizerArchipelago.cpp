@@ -666,47 +666,49 @@ void RandomizerArchipelago::printServerText(std::vector<serverSegmentTextInfo_t 
 }
 
 void RandomizerArchipelago::updatePrintServerText() {
-    for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
-        auto lNow = std::chrono::system_clock::now();
-        auto lTime = std::chrono::system_clock::from_time_t ((*lIterator)->time);
-        auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
-        if (lDuration.count() > PRINT_SERVER_TEXT_DELAY) {
-            for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
-                if ((*lSegment)->text != nullptr) {
-                    (*lSegment)->text->safeKill();
-                    (*lSegment)->text = nullptr;
+    if (!betweenState) {
+        for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
+            auto lNow = std::chrono::system_clock::now();
+            auto lTime = std::chrono::system_clock::from_time_t ((*lIterator)->time);
+            auto lDuration = std::chrono::duration_cast<std::chrono::seconds>(lNow - lTime);
+            if (lDuration.count() > PRINT_SERVER_TEXT_DELAY) {
+                for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin(); lSegment != (*lIterator)->segments.end();) {
+                    if ((*lSegment)->text != nullptr) {
+                        (*lSegment)->text->safeKill();
+                        (*lSegment)->text = nullptr;
+                    }
+                    delete(*lSegment);
+                    (*lIterator)->segments.erase(lSegment);
                 }
-                delete(*lSegment);
-                (*lIterator)->segments.erase(lSegment);
+                if ((*lIterator)->background != nullptr) {
+                    (*lIterator)->background->safeKill();
+                    (*lIterator)->background = nullptr;
+                }
+                serverTexts->erase(lIterator);
+            } else {
+                ++lIterator;
             }
-            if ((*lIterator)->background != nullptr) {
-                (*lIterator)->background->safeKill();
-                (*lIterator)->background = nullptr;
+        }
+        for (int i = 0; i < serverTexts->size(); i = i + 1) {
+            float y = 550.0f - (i * 20.0f);
+            float x = 50.0f;
+            if (serverTexts->at(i)->background != nullptr) {
+                serverTexts->at(i)->background->position = Vector(serverTexts->at(i)->background->position.x,
+                        y - 2.0f);
             }
-            serverTexts->erase(lIterator);
-        } else {
-            ++lIterator;
+            for (auto & lSegment : (*serverTexts)[i]->segments) {
+                if (lSegment->text != nullptr) {
+                    lSegment->text->position = Vector(x, y);
+                    x = x + lSegment->width;
+                    if (!serverTexts->at(i)->shown) {
+                        dsq->getTopStateData()->addRenderObject(lSegment->text, LR_SERVER_TEXT);
+                    }
+                }
+            }
+            serverTexts->at(i)->shown = true;
         }
     }
-    for (int i = 0; i < serverTexts->size(); i = i + 1) {
-        float y = 550.0f - (i * 20.0f);
-        float x = 50.0f;
-        int height = 1;
-        if (serverTexts->at(i)->background != nullptr) {
-            serverTexts->at(i)->background->position = Vector(serverTexts->at(i)->background->position.x,
-                    y - 2.0f);
-        }
-        for (auto & lSegment : (*serverTexts)[i]->segments) {
-            if (lSegment->text != nullptr) {
-                lSegment->text->position = Vector(x, y);
-                x = x + lSegment->width;
-                if (!serverTexts->at(i)->shown) {
-                    dsq->getTopStateData()->addRenderObject(lSegment->text, LR_SERVER_TEXT);
-                }
-            }
-        }
-        serverTexts->at(i)->shown = true;
-    }
+
 }
 
 /**

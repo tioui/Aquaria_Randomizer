@@ -883,17 +883,17 @@ void Randomizer::receivingTrap(const check_t *aCheck) {
         dsq->game->pickupItemEffects("particles/bubble");
     } else if (aCheck->flag == 1321) {
         if (dsq->game->avatar != nullptr) {
-            dsq->game->avatar->setBlind(10);
+            dsq->game->avatar->setBlind((rand()%20) + 10);
         }
         dsq->game->pickupItemEffects("particles/blinder");
     } else if (aCheck->flag == 1322) {
-        dsq->continuity.setTrip(10);
+        dsq->continuity.setTrip((rand()%20) + 10);
         dsq->game->pickupItemEffects("particles/tripper");
     } else if (aCheck->flag == 1323) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->changeForm(FORM_NORMAL);
             dsq->game->avatar->setBlockSinging(true);
-            mute_timer.start(10);
+            mute_timer.start(20);
             is_muted = true;
         }
         dsq->game->pickupItemEffects("gui/SongBubbles");
