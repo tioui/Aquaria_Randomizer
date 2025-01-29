@@ -718,10 +718,6 @@ void RandomizerArchipelago::emptyServerText() {
     for (std::vector<serverText_t *>::iterator lIterator = serverTexts->begin(); lIterator != serverTexts->end();) {
         for (std::vector<serverSegmentText_t *>::iterator lSegment = (*lIterator)->segments.begin();
              lSegment != (*lIterator)->segments.end();) {
-            if ((*lSegment)->text != nullptr) {
-                (*lSegment)->text->safeKill();
-                (*lSegment)->text = nullptr;
-            }
             delete(*lSegment);
             (*lIterator)->segments.erase(lSegment);
         }
@@ -731,10 +727,6 @@ void RandomizerArchipelago::emptyServerText() {
         }
         delete((*lIterator)->segmentInfos);
         (*lIterator)->segmentInfos = nullptr;
-        if ((*lIterator)->background != nullptr) {
-            (*lIterator)->background->safeKill();
-            (*lIterator)->background = nullptr;
-        }
         serverTexts->erase(lIterator);
     }
     serverTexts->clear();
@@ -1138,6 +1130,7 @@ void RandomizerArchipelago::endingGame() {
  */
 void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
+    emptyServerText();
     lastArea = "";
     if (aNewGame) {
         if (isOffline) {
