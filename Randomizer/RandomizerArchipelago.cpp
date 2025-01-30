@@ -724,6 +724,7 @@ void RandomizerArchipelago::emptyServerText() {
         for (std::vector<serverSegmentTextInfo_t *>::iterator lSegmentInfo = (*lIterator)->segmentInfos->begin();
              lSegmentInfo != (*lIterator)->segmentInfos->end();) {
             delete(*lSegmentInfo);
+            (*lIterator)->segmentInfos->erase(lSegmentInfo);
         }
         delete((*lIterator)->segmentInfos);
         (*lIterator)->segmentInfos = nullptr;
