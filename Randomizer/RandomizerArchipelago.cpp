@@ -689,7 +689,8 @@ void RandomizerArchipelago::updatePrintServerText() {
                 ++lIterator;
             }
         }
-        for (int i = 0; i < serverTexts->size(); i = i + 1) {
+        int serverTextsSize = serverTexts->size();
+        for (int i = 0; i < std::min(serverTextsSize, 5); i = i + 1) {
             float y = 550.0f - (i * 20.0f);
             float x = 50.0f;
             if (serverTexts->at(i)->background != nullptr) {
