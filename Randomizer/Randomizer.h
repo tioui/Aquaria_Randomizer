@@ -971,7 +971,7 @@ const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 const int FLAG_ENERGYSLOT_FIRST            = 106;
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
-const int FLAG_REMOVE_TONGUE               = 920;
+const int FLAG_REMOVE_TONGUE               = 930;
 const int FLAG_MITHALAS_THRONEROOM         = 115;
 
 // Randomizer FLAGS

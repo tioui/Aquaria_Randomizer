@@ -1478,16 +1478,14 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
  */
 void Randomizer::onLoad(bool aNewGame){
     justLoading = true;
+    if (removeTongue) {
+        dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+    }
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
         } else {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
-        }
-        if (removeTongue) {
-            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
-        } else {
-            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
         if (!core->getShiftState()) {
