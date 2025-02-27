@@ -32,7 +32,10 @@ v.naija = 0
 
 function init(me)
 	if isFlag(FLAG_REMOVE_TONGUE, 1) then
+		debugLog("Tongue shoud be removed")
 		entity_setFlag(me, 1)
+	else
+		debugLog("Tongue shoud be removed")
 	end
 	setupEntity(me, "Final-Tongue", -2)
 	entity_scale(me, 4.5, 4.5)

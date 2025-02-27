@@ -137,6 +137,7 @@ local function cutScene(me)
 	setSceneColor(1,1,1,4)
 	watch(4)
 	changeForm(FORM_NORMAL)
+	randomizerCheck("beating_golem")
 	
 	--setFlag(FLAG_PET_ACTIVE, 0)
 
@@ -316,7 +317,7 @@ local function cutScene(me)
 		
 		voice("naija_likidnapped")
 		setFlag(FLAG_LI, 200)
-		setFlag(FLAG_SUNKENCITY_PUZZLE, SUNKENCITY_BOSSDONE)
+		setFlag(FLAG_SUNKENCITY_PUZZLE, SUNKENCITY_FINALTONGUE)
 		
 		
 	else

@@ -20,7 +20,6 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
     std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
     bool lBlindGoal = false;
-    bool lRemoveTongue = false;
     bool lSaveHeal = true;
     killCreatorGoal = true;
     try {
@@ -113,12 +112,8 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
             maximumIngredientAmount = 8;
         }
         if (lJsonData.contains("openBodyTongue")) {
-            lRemoveTongue = lJsonData["openBodyTongue"];
-        } else {
-            debugLog("Warning: The field 'openBodyTongue' is not present in the json file.");
-            lRemoveTongue = false;
+            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
         }
-        setRemoveTongue(lRemoveTongue);
         if (lJsonData.contains("saveHealing")) {
             lSaveHeal = lJsonData["saveHealing"];
         } else {

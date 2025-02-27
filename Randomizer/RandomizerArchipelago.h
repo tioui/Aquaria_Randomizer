@@ -531,6 +531,11 @@ private:
     bool throneAsLocationManagedByServer;
 
     /**
+     * beating golem as location is managed by the server
+     */
+    bool golemAsLocationManagedByServer;
+
+    /**
      * Every item of the Arcipelago Randomizer
      */
     std::vector<serverText_t *> *serverTexts;

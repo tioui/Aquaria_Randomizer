@@ -43,6 +43,7 @@ RandomizerArchipelago::RandomizerArchipelago(): Randomizer(){
     deathLinkPause = false;
     apClient = nullptr;
     throneAsLocationManagedByServer = false;
+    golemAsLocationManagedByServer = false;
     clearError();
     nextQuickMessages = new std::queue<std::string>();
     serverTexts = new std::vector<serverText_t *>();
@@ -348,7 +349,6 @@ void RandomizerArchipelago::initialiseGoal(const nlohmann::json& aJsonText) {
 void RandomizerArchipelago::initialiseOptions(const nlohmann::json& aJsonText) {
     int lAquarianTranslated = false;
     int lBlindGoal = false;
-    int lRemoveTongue = false;
     std::list<int64_t> locationsId;
     if (aJsonText.contains("aquarian_translate")) {
         lAquarianTranslated = aJsonText["aquarian_translate"];
@@ -376,11 +376,13 @@ void RandomizerArchipelago::initialiseOptions(const nlohmann::json& aJsonText) {
         maximumIngredientAmount = aJsonText["maximum_ingredient_amount"];
     }
     if (aJsonText.contains("open_body_tongue")) {
-        lRemoveTongue = aJsonText["open_body_tongue"];
-        setRemoveTongue(lRemoveTongue);
+        removeTongue = aJsonText["open_body_tongue"];
     }
     if (aJsonText.contains("throne_as_location")) {
         throneAsLocationManagedByServer = true;
+    }
+    if (aJsonText.contains("golem_as_location")) {
+        golemAsLocationManagedByServer = true;
     }
     if (aJsonText.contains("blind_goal")) {
         lBlindGoal = aJsonText["blind_goal"];
@@ -867,19 +869,31 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                     dsq->game->pickupItemEffects("ap/trap");
                 } else if (isOffline) {
                     apitem_t *lApItem = getApItemById(lItemType);
-                    // Todo: Removing the exception when the door to cathedral is official
+                    // Todo: Removing the exception when the doors are official
                     if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                        receivingItem(lApItem->item, lApItem->count);
+                    }
+                    if (lCheck->flag == 1320 && !dsq->continuity.getFlag(FLAG_REMOVE_TONGUE)) {
                         receivingItem(lApItem->item, lApItem->count);
                     }
                 }
             }
             if (!isOffline) {
-                // Todo: Removing the exception when the door to cathedral is official
-                if (lCheck->flag != 1319 || throneAsLocationManagedByServer) {
+                // Todo: Removing the exception when the doors are official
+                if (
+                    (lCheck->flag != 1319 && lCheck->flag != 1320) ||
+                    (lCheck->flag == 1319 && throneAsLocationManagedByServer) ||
+                    (lCheck->flag == 1320 && golemAsLocationManagedByServer)
+                    ) {
                         std::lock_guard<std::mutex> lock(apMutex);
                     apClient->LocationChecks(lIds);
                 } else {
-                    if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                    if (!throneAsLocationManagedByServer && lCheck->flag == 1319 &&
+                        !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                        receivingItem(lCheck->item, 1);
+                    }
+                    if (!golemAsLocationManagedByServer && lCheck->flag == 1320 &&
+                        !dsq->continuity.getFlag(FLAG_REMOVE_TONGUE)) {
                         receivingItem(lCheck->item, 1);
                     }
                 }
@@ -1134,6 +1148,9 @@ void RandomizerArchipelago::onLoad(bool aNewGame){
     Randomizer::onLoad(aNewGame);
     emptyServerText();
     lastArea = "";
+    if (killFourGodsGoal) {
+        dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+    }
     if (aNewGame) {
         if (isOffline) {
             dsq->toggleCursor(true);
@@ -1298,8 +1315,13 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
             if (checks->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
                 lMessageStream << "      ";
             }
+            if (checks->at(lLocationsOrder[i]).flag == 1320 && !golemAsLocationManagedByServer) {
+                lMessageStream << "      ";
+            }
             for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
-                if (checks->at(lLocationsOrder[i]).flag != 1319 || throneAsLocationManagedByServer) {
+                if ((checks->at(lLocationsOrder[i]).flag != 1319 && checks->at(lLocationsOrder[i]).flag != 1320) ||
+                    (throneAsLocationManagedByServer && checks->at(lLocationsOrder[i]).flag == 1319) ||
+                    (golemAsLocationManagedByServer && checks->at(lLocationsOrder[i]).flag == 1320)) {
                     if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
                         for (int64_t laLocation : apClient->get_checked_locations()) {
                             if (laLocation == apLocations->at(j).locationId) {
@@ -1536,6 +1558,7 @@ void RandomizerArchipelago::initialiseApItems(){
     apItems->push_back({AP_BASE + 143, "progressive_recipe_roll", 1, ITEM_TYPE_RECIPE});
     apItems->push_back({AP_BASE + 144, "progressive_recipe_perogi", 1, ITEM_TYPE_RECIPE});
     apItems->push_back({AP_BASE + 145, "progressive_recipe_ice_cream", 1, ITEM_TYPE_RECIPE});
+    apItems->push_back({AP_BASE + 146, "door_to_body", 1, ITEM_TYPE_DOOR});
 
 }
 /**
@@ -1761,4 +1784,5 @@ void RandomizerArchipelago::initialiseApLocations() {
     apLocations->push_back({AP_BASE + 216, "transturtle_forest05"});
     apLocations->push_back({AP_BASE + 217, "transturtle_seahorse"});
     apLocations->push_back({AP_BASE + 218, "sitting_on_throne"});
+    apLocations->push_back({AP_BASE + 219, "beating_golem"});
 }

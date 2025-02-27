@@ -293,7 +293,12 @@ protected:
     /**
      * A game is presently running. (not in title)
      */
-    bool inGame;
+	bool inGame;
+
+	/**
+	 * Removing body tongue
+	 */
+	bool removeTongue;
 
     /**
      * The maximum number of the same ingredients that can be stacked on the ingredient inventory
@@ -390,18 +395,6 @@ protected:
      * @return The value to assign to `blindGoal`
      */
     bool getBlindGoal() const;
-
-    /**
-     * Ste the `removeTongue` attribute
-     * @param value The value to assign to `removeTongue`
-     */
-    void setRemoveTongue(bool value);
-
-    /**
-     * True if the body tongue should be removed
-     * @return The value to assign to `removeTongue`
-     */
-    bool getRemoveTongue() const;
 
     /**
      * Every checks of the Randomizer
@@ -666,11 +659,6 @@ private:
      */
     bool blindGoal;
 
-    /**
-     * True if the body tongue should be removed
-     */
-	bool removeTongue;
-
 	/**
 	 * A health upgrade received must be apply again since the last time, naija was dead.
 	 */
@@ -932,7 +920,7 @@ private:
 };
 
 
-const int LOCATIONS_SIZE = 219;
+const int LOCATIONS_SIZE = 220;
 
 const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 59, 60, 61, 62, 63, 64, 65, 194, 213, 119, 120,
                                   206, 71, 72, 73, 74, 75, 160, 178, 162, 205, 27, 170, 28, 163, 29, 169, 195, 1, 2, 3,
@@ -944,7 +932,7 @@ const int locationsOrder[LOCATIONS_SIZE] = {107, 108, 175, 200, 21, 22, 23, 58, 
 								  168, 204, 55, 207, 56, 57, 176, 121, 197, 199, 78, 76, 209, 77, 184, 0, 193, 79, 180,
 								  80, 210, 82, 81, 157, 181, 196, 122, 94, 95, 96, 171, 91, 92, 93, 182, 17, 18, 19,
 								  20, 203, 24, 25, 166, 172, 26, 109, 110, 111, 112, 214, 83, 84, 85, 86, 87, 89, 90,
-								  161, 88, 188, 159, 154, 155, 151, 152, 153, 192, 43, 201, 97, 66, 69, 67, 68, 70,
+								  161, 88, 188, 159, 154, 155, 151, 152, 153, 192, 43, 201, 97, 219, 66, 69, 67, 68, 70,
 								  100, 98, 99, 101, 102, 190, 103, 104, 105, 215, 106};
 
 const int LOCATIONS_FOUR_GODS_SIZE = 173;
@@ -1046,8 +1034,9 @@ const int FLAG_ENERGYSLOT_MAINAREA         = 104;
 const int FLAG_ENERGYSLOT_FIRST            = 106;
 const int FLAG_VISION_ENERGYTEMPLE         = 300;
 const int FLAG_ENTER_HOMECAVE              = 654;
-const int FLAG_REMOVE_TONGUE               = 920;
+const int FLAG_REMOVE_TONGUE               = 930;
 const int FLAG_MITHALAS_THRONEROOM         = 115;
+const int STATE_OPEN                       = 201;
 
 // Randomizer FLAGS
 const int FLAG_LOCATION_START              = 1100;

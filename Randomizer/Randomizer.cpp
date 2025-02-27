@@ -21,7 +21,6 @@ Randomizer::Randomizer() : ActionMapper() {
     ingredientReplacement = new std::vector<int>();
     error = false;
     inGame = false;
-    removeTongue = false;
     transportationDone = false;
     transportationSelected = 0;
     errorMessage = "";
@@ -40,6 +39,7 @@ Randomizer::Randomizer() : ActionMapper() {
     secretsNeeded = false;
     justLoading = false;
     seedNumberText = nullptr;
+    removeTongue = false;
     saveHeal = true;
     checks = new std::vector<check_t>();
     ingredients = new std::vector<ingredient_t>();
@@ -595,27 +595,29 @@ void Randomizer::initialiseChecks() const {
         "Arnassi Ruins, Transturtle"});
     checks->push_back({1319, "sitting_on_throne","door_to_cathedral",1, "Opening door to the cathedral",
         "Mithalas City Castle, sitting on the sealed throne"});
-    checks->push_back({1320, "no_location","trap_poison",1, "Poison trap",
+    checks->push_back({1320, "beating_golem","door_to_body",1, "Removing the body's tongue",
+        "Sunken City, beating the Golem"});
+    checks->push_back({1321, "no_location","trap_poison",1, "Poison trap",
         "No Location"});
-    checks->push_back({1321, "no_location","trap_blind",1, "Blind trap",
+    checks->push_back({1322, "no_location","trap_blind",1, "Blind trap",
         "No Location"});
-    checks->push_back({1322, "no_location","trap_rainbow",1, "Rainbow trap",
+    checks->push_back({1323, "no_location","trap_rainbow",1, "Rainbow trap",
         "No Location"});
-    checks->push_back({1323, "no_location","trap_mute",1, "Mute trap",
+    checks->push_back({1324, "no_location","trap_mute",1, "Mute trap",
         "No Location"});
-    checks->push_back({1324, "no_location","progressive_recipe_loaf",1,
+    checks->push_back({1325, "no_location","progressive_recipe_loaf",1,
         "Progressive Loaf", "No Location"});
-    checks->push_back({1325, "no_location","progressive_recipe_soup",1,
+    checks->push_back({1326, "no_location","progressive_recipe_soup",1,
         "Progressive Soup", "1No Location"});
-    checks->push_back({1326, "no_location","progressive_recipe_cake",1,
+    checks->push_back({1327, "no_location","progressive_recipe_cake",1,
         "Progressive Cake", "No Location"});
-    checks->push_back({1327, "no_location","progressive_recipe_poultice",1,
+    checks->push_back({1328, "no_location","progressive_recipe_poultice",1,
         "Progressive Poultice", "No Location"});
-    checks->push_back({1328, "no_location","progressive_recipe_roll",1,
+    checks->push_back({1329, "no_location","progressive_recipe_roll",1,
         "Progressive Roll", "No Location"});
-    checks->push_back({1329, "no_location","progressive_recipe_perogi",1,
+    checks->push_back({1330, "no_location","progressive_recipe_perogi",1,
         "Progressive Perogi", "No Location"});
-    checks->push_back({1330, "no_location","progressive_recipe_ice_cream",1,
+    checks->push_back({1331, "no_location","progressive_recipe_ice_cream",1,
         "Progressive Ice Cream", "No Location"});
 }
 
@@ -869,6 +871,17 @@ void Randomizer::receivingDoorOpening(const check_t *aCheck) {
         dsq->continuity.setFlag(FLAG_MITHALAS_THRONEROOM, 1);
         dsq->game->pickupItemEffects("seal-prince");
     }
+    if (aCheck->flag == 1320 && dsq->continuity.getFlag(FLAG_REMOVE_TONGUE) != 1) {
+        dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+        dsq->game->pickupItemEffects("final-tongue");
+        for (size_t i = 0; dsq->entities[i] != nullptr; i = i + 1) {
+            if (dsq->entities[i]->name == "finaltongue") {
+                dsq->entities[i]->setState(STATE_OPEN, -1, false);
+            }
+        }
+    }
+
+
 }
 
 /**
@@ -876,20 +889,20 @@ void Randomizer::receivingDoorOpening(const check_t *aCheck) {
  * @param aCheck The item check that has been received.
  */
 void Randomizer::receivingTrap(const check_t *aCheck) {
-    if (aCheck->flag == 1320) {
+    if (aCheck->flag == 1321) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->setPoison(0.5, 10);
         }
         dsq->game->pickupItemEffects("particles/bubble");
-    } else if (aCheck->flag == 1321) {
+    } else if (aCheck->flag == 1322) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->setBlind((rand()%20) + 10);
         }
         dsq->game->pickupItemEffects("particles/blinder");
-    } else if (aCheck->flag == 1322) {
+    } else if (aCheck->flag == 1323) {
         dsq->continuity.setTrip((rand()%20) + 10);
         dsq->game->pickupItemEffects("particles/tripper");
-    } else if (aCheck->flag == 1323) {
+    } else if (aCheck->flag == 1324) {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->changeForm(FORM_NORMAL);
             dsq->game->avatar->setBlockSinging(true);
@@ -907,25 +920,25 @@ void Randomizer::receivingTrap(const check_t *aCheck) {
 void Randomizer::receivingProgressiveRecipe(const check_t *aCheck) {
     IngredientType lCategory = IT_ANYTHING;
     int *lProgressiveIndex = nullptr;
-    if (aCheck->flag == 1324) {
+    if (aCheck->flag == 1325) {
         lCategory = IT_LOAF;
         lProgressiveIndex = &progressiveLoafIndex;
-    } else if (aCheck->flag == 1325) {
+    } else if (aCheck->flag == 1326) {
         lCategory = IT_SOUP;
         lProgressiveIndex = &progressiveSoupIndex;
-    } else if (aCheck->flag == 1326) {
+    } else if (aCheck->flag == 1327) {
         lCategory = IT_CAKE;
         lProgressiveIndex = &progressiveCakeIndex;
-    } else if (aCheck->flag == 1327) {
+    } else if (aCheck->flag == 1328) {
         lCategory = IT_POULTICE;
         lProgressiveIndex = &progressivePoulticeIndex;
-    } else if (aCheck->flag == 1328) {
+    } else if (aCheck->flag == 1329) {
         lCategory = IT_ROLL;
         lProgressiveIndex = &progressiveRollIndex;
-    } else if (aCheck->flag == 1329) {
+    } else if (aCheck->flag == 1330) {
         lCategory = IT_PEROGI;
         lProgressiveIndex = &progressivePerogiIndex;
-    } else if (aCheck->flag == 1330) {
+    } else if (aCheck->flag == 1331) {
         lCategory = IT_ICECREAM;
         lProgressiveIndex = &progressiveIceCreamIndex;
     }
@@ -1355,22 +1368,6 @@ bool Randomizer::getBlindGoal() const {
 }
 
 /**
- * True if the body tongue should be removed
- * @param value The value to assign to `removeTongue`
- */
-void Randomizer::setRemoveTongue(bool value) {
-    removeTongue = value;
-}
-
-/**
- * True if the body tongue should be removed
- * @return The value to assign to `removeTongue`
- */
-bool Randomizer::getRemoveTongue() const {
-    return removeTongue;
-}
-
-/**
  * Is the Aquarian text in the game should be translated
  * @param aValue The value to assign to `isAquarianTranslated`
  */
@@ -1592,16 +1589,14 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
 void Randomizer::onLoad(bool aNewGame){
     justLoading = true;
     is_muted = false;
+    if (removeTongue) {
+        dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+    }
     if (aNewGame) {
         if (blindGoal) {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 1);
         } else {
             dsq->continuity.setFlag(FLAG_BLIND_GOAL, 0);
-        }
-        if (removeTongue) {
-            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
-        } else {
-            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 0);
         }
     } else {
         if (!core->getShiftState()) {
