@@ -595,7 +595,7 @@ void Randomizer::initialiseChecks() const {
         "Arnassi Ruins, Transturtle"});
     checks->push_back({1319, "sitting_on_throne","door_to_cathedral",1, "Opening door to the cathedral",
         "Mithalas City Castle, sitting on the sealed throne"});
-    checks->push_back({1320, "beating_golem","door_to_body",1, "Removing the body's tongue",
+    checks->push_back({1320, "beating_golem","door_to_body",1, "Body's tongue removed",
         "Sunken City, beating the Golem"});
     checks->push_back({1321, "no_location","trap_poison",1, "Poison trap",
         "No Location"});
@@ -1459,7 +1459,9 @@ void Randomizer::appendItemHelpData(std::string &aData) {
     writeHelpData(&lMessageStream, "Transport to Arnassi Ruins right area",
     dsq->continuity.getFlag(FLAG_TRANSTURTLE_SEAHORSE));
     writeHelpData(&lMessageStream, "Door to the Cathedral opened",
-        dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
+    dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM));
+    writeHelpData(&lMessageStream, "Body's tongue removed",
+        dsq->continuity.getFlag(FLAG_REMOVE_TONGUE));
     lMessageStream << "\n";
     aData += lMessageStream.str();
 }

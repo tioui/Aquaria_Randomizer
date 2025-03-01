@@ -1536,7 +1536,7 @@ void Avatar::changeForm(FormType form, bool effects, bool onInit, FormType lastF
 	}
 	*/
 
-	if (form == FORM_DUAL && !dsq->continuity.hasLi())
+	if (form == FORM_DUAL && dsq->continuity.getFlag(FLAG_LI) == 0)
 		return;
 
 	if (!canChangeForm) return;
