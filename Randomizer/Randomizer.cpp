@@ -1791,7 +1791,8 @@ int Randomizer::secretsFound() {
  * @return True if the final boss is accessible. False if not.
  */
 bool Randomizer::accessFinalBoss() {
-    return dsq->continuity.hasLi() && dsq->continuity.hasSong(SONG_DUALFORM) && dsq->continuity.hasSong(SONG_SUNFORM)
+    return dsq->continuity.hasLi() && dsq->continuity.hasSong(SONG_DUALFORM) &&
+           dsq->continuity.hasSong(SONG_ENERGYFORM) && dsq->continuity.hasSong(SONG_SUNFORM)
            && dsq->continuity.hasSong(SONG_BIND) && miniBossCount() >= miniBossesToKill &&
            (killFourGodsGoal || bigBossCount() >= bigBossesToKill) && (!secretsNeeded || (secretsFound() == 3)) &&
            (!killFourGodsGoal || dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD) &&
@@ -1876,6 +1877,8 @@ bool Randomizer::showHintFinalBoss() {
             dsq->continuity.getFlag(FLAG_BOSS_SUNWORM), "Four gods beaten");
     }
     lMessageStream << std::endl << std::endl << "Here are the songs and forms logically required to beat the creator:" << std::endl;
+    showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_ENERGYFORM),
+                                "Energy Form");
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_BIND),
                                 "Bind Song");
     showIndividualHintFinalBoss(&lMessageStream, dsq->continuity.hasSong(SONG_SUNFORM),
