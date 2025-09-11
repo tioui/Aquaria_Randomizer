@@ -90,7 +90,7 @@ jobs:
           cp -p ${{ github.workspace }}/build/aquaria_randomizer ./
           wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
-          wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+          wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --executable aquaria_randomizer --appdir AppDir --icon-file aquaria_randomizer.png  --desktop-file aquaria_randomizer.desktop
           cp -rp ../files AppDir/usr/bin/randomizer_files
