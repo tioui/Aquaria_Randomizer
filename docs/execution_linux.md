@@ -94,3 +94,14 @@ sure that your executable has executable permission:
 chmod +x aquaria_randomizer
 ```
 
+## Error that can occured
+
+### No sound
+
+If your game play without problems, but with no sound, the game probably does not use the correct
+driver for the sound system. To fix that, you can use `ALSOFT_DRIVERS=pulse` before your command
+line to make it work. Something like this (depending on the way you launch the randomizer):
+
+```bash
+ALSOFT_DRIVERS=pulse ./aquaria_randomizer --name YourName --server theServer:thePort
+```

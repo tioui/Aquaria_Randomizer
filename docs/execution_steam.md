@@ -28,3 +28,11 @@ You can set up the Steam client to easily launch a randomizer game. Here is the 
 	* Also note that you can change the game name and give it an icon with this window.
 4. Then, you can directly start the randomizer by using the `Start` button in the Aquaria_Randomizer game in the library:
 ![Menu properties](images/steam7.png)
+
+## With environment variables
+
+If you need to add environment variables (like the ALSOFT_DRIVERS variable), you can use `%command%` in the "Launch Options" field. Something like this:
+
+```bash
+ALSOFT_DRIVERS=pulse %command% --name Player1 --server archipelago.gg:34565
+```

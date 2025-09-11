@@ -1800,6 +1800,12 @@ bool Randomizer::accessFinalBoss() {
             dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
 }
 
+/**
+ *
+ * @param aCount When getting to the final boss and you don't have the requirements, show a requirements.
+ * @param aObjective The objective to validate and show
+ * @param aMessage The message to show if the requirement is not obtained.
+ */
 void Randomizer::showHint(int aCount, int aObjective, const std::string& aMessage) {
     if (aCount < aObjective) {
         std::stringstream lMessageStream;

@@ -11,7 +11,7 @@
 #include "../Aquaria/Game.h"
 #include "../Aquaria/DSQ.h"
 
-#define AP_VERSION_SUPPORT {0,5,1}
+#define AP_VERSION_SUPPORT {0,6,1}
 #define AP_BASE 698000
 #define ITEM_INDEX_FLAG 1399
 

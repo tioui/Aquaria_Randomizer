@@ -94,6 +94,18 @@ chmod +x  Aquaria_Randomizer-*.AppImage
 
 ## Errors that can occured:
 
+### No sound
+
+If your game play without problems, but with no sound, the game probably does not use the correct
+driver for the sound system. To fix that, you can use `ALSOFT_DRIVERS=pulse` before your command
+line to make it work. Something like this (depending on the way you launch the randomizer):
+
+```bash
+ALSOFT_DRIVERS=pulse ./Aquaria_Randomizer-*.AppImage --name YourName --server theServer:thePort
+```
+
+### Libfuse
+
 If, when using the appimage, you get an error like this one:
 
 ```
