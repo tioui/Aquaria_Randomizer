@@ -29,7 +29,7 @@ public:
      * Activate a randomizer check
      * @param check The check to activate
     */
-    void activateCheck(std::string check) override;
+    void activateLocation(std::string check) override;
 
 
 private:
@@ -40,8 +40,15 @@ private:
     int version;
 
     /**
-     * Replacement of every checks.
+     * Replacement of every items with count.
      */
-    std::vector<int> *checksReplacement;
+    std::vector<itemReplacement*> *itemsReplacement;
+
+    /**
+     * Add a number of item in the `itemsRemplacement` list
+     * @param item The item to add
+     * @param count The number of item to add
+     */
+    void addItemReplacement(int item, int count) const;
 
 };

@@ -469,17 +469,22 @@ void DSQ::loadFonts()
 
 	destroyFonts();
 
-	std::string file = localisePath("data/font-small.glf");
+    std::string file = localisePath("data/font-small.glf");
 
-	font.load(file, 1, false);
-	font.fontTopColor = Vector(0.9,0.9,1);
-	font.fontBtmColor = Vector(0.5,0.8,1);
-	font.overrideTexture = core->addTexture("font");
+    font.load(file, 1, false);
+    font.fontTopColor = Vector(1,1,1);
+    font.fontBtmColor = Vector(1,1,1);
+    font.overrideTexture = core->addTexture("font");
+
+    // font.load(file, 1, false);
+    // font.fontTopColor = Vector(0.9,0.9,1);
+    // font.fontBtmColor = Vector(0.5,0.8,1);
+    // font.overrideTexture = core->addTexture("font");
 
 	mediumFont.load(file, 0.7, false);
 	mediumFont.fontTopColor = Vector(0.9,0.9,1);
 	mediumFont.fontBtmColor = Vector(0.5,0.8,1);
-	mediumFont.overrideTexture = core->addTexture("font");
+    mediumFont.overrideTexture = core->addTexture("font");
 
 	smallFont.load(file, 0.6, false);
 	smallFont.fontTopColor = Vector(0.9,0.9,1);

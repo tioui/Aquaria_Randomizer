@@ -41,7 +41,8 @@ Randomizer::Randomizer() : ActionMapper() {
     seedNumberText = nullptr;
     removeTongue = false;
     saveHeal = true;
-    checks = new std::vector<check_t>();
+    locations = new std::vector<location_t>();
+    items = new std::vector<item_t>();
     ingredients = new std::vector<ingredient_t>();
     collectibles = new std::vector<collectible_t>();
     nextMessages = new std::queue<randomessage_t>();
@@ -66,7 +67,8 @@ Randomizer::Randomizer() : ActionMapper() {
     progressiveRollIndex = 0;
     progressivePerogiIndex = 0;
     progressiveIceCreamIndex = 0;
-    initialiseChecks();
+    initialiseLocations();
+    initialiseItems();
     initialiseIngredients();
     initialiseCollectibles();
 }
@@ -154,471 +156,369 @@ void Randomizer::initialiseIngredients() const {
 }
 
 /**
- * Initialize every Checks
+ * Initialize every location
  */
-void Randomizer::initialiseChecks() const {
-    checks->push_back({1101, "bulb_turtlecave","ingredient_leafpoultice",3, "Leaf poultice",
-                       "Turtle cave, bulb in Bubble Cliff"});
-    checks->push_back({1102, "bulb_openwater_tl_1","ingredient_handroll",1, "Hand roll",
-                       "Open Waters top left area, bulb under the rock in the right path"});
-    checks->push_back({1103, "bulb_openwater_tl_2","ingredient_veggiesoup",1, "Veggie soup",
-                       "Open Waters top left area, bulb under the rock in the left path"});
-    checks->push_back({1104, "bulb_openwater_tl_3","ingredient_butterysealoaf",1, "Buttery sea loaf",
-                       "Open Waters top left area, bulb to the right of the save crystal"});
-    checks->push_back({1105, "bulb_openwater_tr_1","ingredient_healingpoultice",1, "Healing poultice",
-                       "Open Waters top right area, bulb in the small path before Mithalas"});
-    checks->push_back({1106, "bulb_openwater_tr_2","ingredient_sealoaf",2, "Sea loaf",
-                       "Open Waters top right area, bulb in the path from the left entrance"});
-    checks->push_back({1107, "bulb_openwater_tr_3","ingredient_spicyroll",1, "Spicy roll",
-                       "Open Waters top right area, bulb in the clearing close to the bottom exit"});
-    checks->push_back({1108, "bulb_openwater_tr_4","ingredient_spicymeat",2, "Spicy meat",
-                       "Open Waters top right area, bulb in the big clearing close to the save crystal"});
-    checks->push_back({1109, "bulb_openwater_tr_5","ingredient_crabcake",1, "Crab cake",
-                       "Open Waters top right area, bulb in the big clearing to the top exit"});
-    checks->push_back({1110, "bulb_openwater_tr_6","ingredient_spicyroll",1, "Spicy roll",
-                       "Open Waters top right area, bulb in the turtle room"});
-    checks->push_back({1111, "bulb_openwater_bl_1","ingredient_leadershiproll",2, "Leadership roll",
-                       "Open Waters bottom left area, bulb inside the lowest fish pass"});
-    checks->push_back({1112, "bulb_openwater_bl_2","ingredient_healingpoultice",2, "Healing poultice",
-                       "Open Waters bottom left area, bulb behind the chomper fish"});
-    checks->push_back({1113, "bulb_skeleton_path_1","ingredient_tastycake",1, "Tasty cake",
-                       "Open Waters skeleton path, bulb close to the right exit"});
-    checks->push_back({1114, "bulb_skeleton_path_2","ingredient_perogi",1, "Perogi",
-                       "Open Waters skeleton path, bulb behind the chomper fish"});
-    checks->push_back({1115, "bulb_arnassi_1","ingredient_tastyroll",1, "Tasty roll",
-                       "Arnassi Ruins, bulb in the right part"});
-    checks->push_back({1116, "bulb_arnassi_2","ingredient_specialbulb",1, "Special bulb",
-                       "Arnassi Ruins, bulb in the left part"});
-    checks->push_back({1117, "bulb_arnassi_3","ingredient_specialcake",1, "Special cake",
-                       "Arnassi Ruins, bulb in the center part"});
-    checks->push_back({1118, "bulb_sunworm_1","ingredient_plantleaf",3, "Plant leaf",
-                       "Sun temple boss path, first path bulb"});
-    checks->push_back({1119, "bulb_sunworm_2","ingredient_turtlesoup",1, "Turtle soup",
-                       "Sun temple boss path, second path bulb"});
-    checks->push_back({1120, "bulb_sunworm_3","ingredient_specialcake",1, "Special cake",
-                       "Sun temple boss path, first cliff bulb"});
-    checks->push_back({1121, "bulb_sunworm_4","ingredient_specialbulb",1, "Special bulb",
-                       "Sun temple boss path, second cliff bulb"});
-    checks->push_back({1122, "bulb_tutorial_1","ingredient_handroll",1, "Hand roll",
-                       "Verse Cave left area, bulb in the center part"});
-    checks->push_back({1123, "bulb_tutorial_2","ingredient_hotsoup",1, "Hot soup",
-                       "Verse Cave left area, bulb in the right part"});
-    checks->push_back({1124, "bulb_tutorial_3","ingredient_heartysoup",1, "Hearty soup",
-                       "Verse Cave left area, bulb under the rock at the end of the path"});
-    checks->push_back({1125, "bulb_abyss_l_1","ingredient_coldborscht",1, "Cold borscht",
-                       "Abyss left area, bulb in hidden path room"});
-    checks->push_back({1126, "bulb_abyss_l_2","ingredient_healingpoultice",2, "Healing poultice",
-                       "Abyss left area, bulb in the right part"});
-    checks->push_back({1127, "bulb_abyss_l_3","ingredient_sightpoultice",1, "Sight poultice",
-                       "Abyss left area, bulb in the bottom fish pass"});
-    checks->push_back({1128, "bulb_energy_temple_1_1","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Energy Temple first area, bulb in the bottom room blocked by a rock"});
-    checks->push_back({1129, "bulb_energy_temple_2_1","ingredient_spicyroll",1, "Spicy roll",
-                       "Energy Temple second area, bulb under the rock"});
-    checks->push_back({1130, "bulb_energy_temple_3_1","ingredient_plantleaf",2, "Plant leaf",
-                       "Energy Temple third area, bulb in the bottom path"});
-    checks->push_back({1131, "bulb_mithalas_city_01","ingredient_spicyroll",1, "Spicy roll",
-                       "Mithalas City, first bulb in the left city part"});
-    checks->push_back({1132, "bulb_mithalas_city_02","ingredient_spicymeat",2, "Spicy meat",
-                       "Mithalas City, bulb in the right part"});
-    checks->push_back({1133, "bulb_mithalas_city_03","ingredient_vedhaseacrisp",1, "Vedha sea crisp",
-                       "Mithalas City, first bulb at the end of the top path"});
-    checks->push_back({1134, "bulb_mithalas_city_04","ingredient_heartysoup",1, "Hearty soup",
-                       "Mithalas City, bulb at the top of the city"});
-    checks->push_back({1135, "bulb_mithalas_city_05","ingredient_healingpoultice",1, "Healing poultice",
-                       "Mithalas City, first bulb in a broken home"});
-    checks->push_back({1136, "bulb_mithalas_city_06","ingredient_vedhaseacrisp",1, "Vedha sea crisp",
-                       "Mithalas City, second bulb in the left city part"});
-    checks->push_back({1137, "bulb_mithalas_city_07","ingredient_rottenloaf",8, "Rotten loaf",
-                       "Mithalas City, bulb in the top path"});
-    checks->push_back({1138, "bulb_mithalas_city_08","ingredient_rottenmeat",8, "Rotten meat",
-                       "Mithalas City, bulb in the bottom left part"});
-    checks->push_back({1139, "bulb_mithalas_city_09","ingredient_smalltentacle",2, "Small tentacle",
-                       "Mithalas City, first bulb in one of the homes"});
-    checks->push_back({1140, "bulb_mithalas_city_10","ingredient_seacake",1, "Sea cake",
-                       "Mithalas City, second bulb in one of the homes"});
-    checks->push_back({1141, "bulb_mithalas_city_11","ingredient_smallbone",3, "Small bone",
-                       "Mithalas City, second bulb at the end of the top path"});
-    checks->push_back({1142, "bulb_mithalas_city_12","ingredient_handroll",1, "Hand roll",
-                       "Mithalas City, second bulb in a broken home"});
-    checks->push_back({1143, "bulb_cathedral_l_2","ingredient_heartysoup",1, "Hearty soup",
-                       "Mithalas City Castle, bulb in the flesh hole"});
-    checks->push_back({1144, "bulb_boilerroom_1","ingredient_spicyroll",1, "Spicy roll",
-                       "Sunken City, bulb on top of the boss area"});
-    checks->push_back({1145, "bulb_forest_tl_1","ingredient_seacake",1, "Sea cake",
-                       "Kelp Forest top left area, bulb in the bottom left clearing"});
-    checks->push_back({1146, "bulb_forest_tl_2","ingredient_spicyroll",1, "Spicy roll",
-                       "Kelp Forest top left area, bulb in the path down from the top left clearing"});
-    checks->push_back({1147, "bulb_forest_tl_3","ingredient_leechingpoultice",1, "Leeching poultice",
-                       "Kelp Forest top left area, bulb in the top left clearing"});
-    checks->push_back({1148, "bulb_forest_tl_4","ingredient_redbulb",2, "Red bulb",
-                       "Kelp Forest top left area, bulb close to the Verse Egg"});
-    checks->push_back({1149, "bulb_forest_tr_1","ingredient_spiderroll",1, "Spider roll",
-                       "Kelp Forest top right area, bulb under the rock in the right path"});
-    checks->push_back({1150, "bulb_forest_tr_2","ingredient_veggiecake",1, "Veggie cake",
-                       "Kelp Forest top right area, bulb at the left of the center clearing"});
-    checks->push_back({1151, "bulb_forest_tr_3","ingredient_swampcake",1, "Swamp cake",
-                       "Kelp Forest top right area, bulb in the top fish pass"});
-    checks->push_back({1152, "bulb_forest_tr_4","ingredient_sharkfinsoup",1, "Shark fin soup",
-                       "Kelp Forest top right area, bulb in the left path's big room"});
-    checks->push_back({1153, "bulb_forest_tr_5","ingredient_healingpoultice",1, "Healing poultice",
-                       "Kelp Forest top right area, bulb in the left path's small room"});
-    checks->push_back({1154, "bulb_forest_tr_6","ingredient_redbulb",2, "Red bulb",
-                       "Kelp Forest top right area, bulb at the top of the center clearing"});
-    checks->push_back({1155, "bulb_forest_bl_1","ingredient_spiderroll",1, "Spider roll",
-                       "Kelp Forest bottom left area, bulb close to the spirit crystals"});
-    checks->push_back({1156, "bulb_forest_boss_room_1","ingredient_handroll",1, "Hand roll",
-                       "Kelp Forest boss room, bulb at the bottom of the area"});
-    checks->push_back({1157, "bulb_forest_sprite_cave_1","ingredient_leechingpoultice",1, "Leeching poultice",
-                       "Kelp Forest sprite cave, bulb inside the fish pass"});
-    checks->push_back({1158, "bulb_forest_sprite_cave_2","ingredient_veggiesoup",1, "Veggie soup",
-                       "Kelp Forest sprite cave, bulb in the second room"});
-    checks->push_back({1159, "bulb_home_water_1","ingredient_smallegg",2, "Small egg",
-                       "Home Waters, bulb below the grouper fish"});
-    checks->push_back({1160, "bulb_home_water_2","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Home Waters, bulb in the path below Nautilus Prime"});
-    checks->push_back({1161, "bulb_home_water_3","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Home Waters, bulb in the little room above the grouper fish"});
-    checks->push_back({1162, "bulb_home_water_4","ingredient_plantleaf",3, "Plant leaf",
-                       "Home Waters, bulb in the end of the path close to the Verse Cave"});
-    checks->push_back({1163, "bulb_home_water_5","ingredient_redbulb",2, "Red bulb",
-                       "Home Waters, bulb in the top left path"});
-    checks->push_back({1164, "bulb_home_water_6","ingredient_hotsoup",1, "Hot soup",
-                       "Home Waters, bulb in the bottom left room"});
-    checks->push_back({1165, "bulb_home_water_7","ingredient_fishmeat",2, "Fish meat",
-                       "Home Waters, bulb close to Naija's Home"});
-    checks->push_back({1166, "bulb_home_water_8","ingredient_seacake",1, "Sea cake",
-                       "Home Waters, bulb under the rock in the left path from the Verse Cave"});
-    checks->push_back({1167, "bulb_final_l_1","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "The Body left area, first bulb in the top face room"});
-    checks->push_back({1168, "bulb_final_l_2","ingredient_divinesoup",1, "Divine soup",
-                       "The Body left area, bulb below the water stream"});
-    checks->push_back({1169, "bulb_final_l_3","ingredient_spicyroll",1, "Spicy roll",
-                       "The Body left area, bulb in the top path to the top face room"});
-    checks->push_back({1170, "bulb_final_l_4","ingredient_volcanoroll",1, "Volcano roll",
-                       "The Body left area, second bulb in the top face room"});
-    checks->push_back({1171, "bulb_final_l_5","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "The Body left area, bulb in the bottom face room"});
-    checks->push_back({1172, "bulb_song_cave_1","ingredient_specialbulb",1, "Special bulb",
-                       "Song Cave, bulb in the top right part"});
-    checks->push_back({1173, "bulb_song_cave_2","ingredient_handroll",1, "Hand roll",
-                       "Song Cave, bulb in the big anemone room"});
-    checks->push_back({1174, "bulb_song_cave_3","ingredient_eeloil",2, "Eel oil",
-                       "Song Cave, bulb in the path to the singing statues"});
-    checks->push_back({1175, "bulb_song_cave_4","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Song Cave, bulb under the rock in the path to the singing statues"});
-    checks->push_back({1176, "bulb_song_cave_5","ingredient_hotsoup",1, "Hot soup",
-                       "Song Cave, bulb under the rock close to the song door"});
-    checks->push_back({1177, "bulb_veil_tl_1","ingredient_spicysoup",1, "Spicy soup",
-                       "The Veil top left area, bulb hidden behind the blocking rock"});
-    checks->push_back({1178, "bulb_veil_tl_2","ingredient_longlifesoup",1, "Long life soup",
-                       "The Veil top left area, bulb inside the fish pass"});
-    checks->push_back({1179, "bulb_veil_tl_3","ingredient_hotsoup",2, "Hot soup",
-                       "The Veil top left area, bulb under the rock in the top right path"});
-    checks->push_back({1180, "bulb_veil_tr_1","ingredient_sharkfinsoup",1, "Shark fin soup",
-                       "The Veil top right area, bulb in the middle of the wall jump cliff"});
-    checks->push_back({1181, "bulb_veil_tr_2","ingredient_legendarycake",1, "Legendary cake",
-                       "The Veil top right area, bulb at the top of the waterfall"});
-    checks->push_back({1182, "bulb_veil_b_1","ingredient_swampcake",1, "Swamp cake",
-                       "The Veil bottom area, bulb in the spirit path"});
-    checks->push_back({1183, "bulb_veil_b_2","ingredient_swampcake",1, "Swamp cake",
-                       "The Veil bottom area, bulb in the left path"});
-    checks->push_back({1184, "bulb_ice_cave_1","ingredient_icecream",1, "Ice cream",
-                       "Ice Cavern, bulb in the room to the right"});
-    checks->push_back({1185, "bulb_ice_cave_2","ingredient_berryicecream",1, "Berry ice cream",
-                       "Ice Cavern, first bulb in the top exit room"});
-    checks->push_back({1186, "bulb_ice_cave_3","ingredient_veggieicecream",1, "Veggie ice cream",
-                       "Ice Cavern, second bulb in the top exit room"});
-    checks->push_back({1187, "bulb_ice_cave_4","ingredient_dumboicecream",1, "Dumbo ice cream",
-                       "Ice Cavern, third bulb in the top exit room"});
-    checks->push_back({1188, "bulb_ice_cave_5","ingredient_icecream",1, "Ice cream",
-                       "Ice Cavern, bulb in the left room"});
-    checks->push_back({1189, "bulb_king_jellyfish_cave_1","ingredient_specialbulb",1, "Special bulb",
-                       "King Jellyfish Cave, bulb in the right path from King Jelly"});
-    checks->push_back({1190, "bulb_bubble_cave_1","ingredient_coldsoup",1, "Cold soup",
-                       "Bubble Cave, bulb in the left cave wall"});
-    checks->push_back({1191, "bulb_bubble_cave_2","ingredient_coldborscht",1, "Cold borscht",
-                       "Bubble Cave, bulb in the right cave wall (behind the ice crystal)"});
-    checks->push_back({1192, "bulb_sun_temple_1","ingredient_glowingegg",2, "Glowing egg",
-                       "Sun Temple, first bulb of the temple"});
-    checks->push_back({1193, "bulb_sun_temple_2","ingredient_magicsoup",1, "Magic soup",
-                       "Sun Temple, bulb on the right part"});
-    checks->push_back({1194, "bulb_sun_temple_3","ingredient_royalsoup",1, "Royal soup",
-                       "Sun Temple, bulb in the hidden room of the right part"});
-    checks->push_back({1195, "bulb_sun_temple_4","ingredient_leadershiproll",1, "Leadership roll",
-                       "Sun Temple, bulb in the top left part"});
-    checks->push_back({1196, "bulb_sun_temple_5","ingredient_turtlesoup",1, "Turtle soup",
-                       "Sun Temple, bulb in the top right part"});
-    checks->push_back({1197, "bulb_sun_temple_6","ingredient_heartysoup",1, "Hearty soup",
-                       "Sun Temple, bulb at the top of the high dark room"});
-    checks->push_back({1198, "bulb_final_c_1","ingredient_Zuuna'sperogi",1, "Zuuna's perogi",
-                       "The Body center area, bulb on the main path blocking tube"});
-    checks->push_back({1199, "bulb_final_r_1","ingredient_plumpperogi",1, "Plump perogi",
-                       "The Body right area, bulb in the top path to the bottom face room"});
-    checks->push_back({1200, "bulb_final_r_2","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "The Body right area, bulb in the bottom face room"});
-    checks->push_back({1201, "bulb_final_r_3","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "The Body right area, bulb in the top face room"});
-    checks->push_back({1202, "bulb_final_b_1","ingredient_longlifesoup",1, "Long life soup",
-                       "The Body bottom area, bulb in the Jelly Zap room"});
-    checks->push_back({1203, "bulb_final_b_2","ingredient_spicyroll",1, "Spicy roll",
-                       "The Body bottom area, bulb in the nautilus room"});
-    checks->push_back({1204, "bulb_final_boss_1","ingredient_Vedha'sCure-All",1, "Vedha's Cure-All",
-                       "Final Boss area, first bulb in the turtle room"});
-    checks->push_back({1205, "bulb_final_boss_2","ingredient_loafoflife",1, "Loaf of life",
-                       "Final Boss area, second bulb in the turtle room"});
-    checks->push_back({1206, "bulb_final_boss_3","ingredient_specialbulb",1, "Special bulb",
-                       "Final Boss area, third bulb in the turtle room"});
-    checks->push_back({1207, "bulb_final_boss_4","ingredient_dumboicecream",1, "Dumbo ice cream",
-                       "Final Boss area, bulb in the boss third form room"});
-    checks->push_back({1208, "bulb_starting_cave_1","ingredient_fishoil",1, "Fish oil",
-                       "Verse Cave right area, bulb in the skeleton room"});
-    checks->push_back({1209, "bulb_starting_cave_2","ingredient_smallegg",1, "Small egg",
-                       "Verse Cave right area, bulb in the path right of the skeleton room"});
-    checks->push_back({1210, "bulb_abyss_r_1","ingredient_dumboicecream",1, "Dumbo ice cream",
-                       "Abyss right area, bulb behind the rock in the whale room"});
-    checks->push_back({1211, "bulb_abyss_r_2","ingredient_tastyroll",1, "Tasty roll",
-                       "Abyss right area, bulb in the middle path"});
-    checks->push_back({1212, "bulb_abyss_r_3","ingredient_healingpoultice",1, "Healing poultice",
-                       "Abyss right area, bulb behind the rock in the middle path"});
-    checks->push_back({1213, "bulb_abyss_r_4","ingredient_hotborscht",1, "Hot borscht",
-                       "Abyss right area, bulb in the left green room"});
-    checks->push_back({1214, "bulb_cathedral_under_ground_1","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Mithalas Cathedral Underground, bulb in the center part"});
-    checks->push_back({1215, "bulb_cathedral_under_ground_2","ingredient_plantleaf",1, "Plant leaf",
-                       "Mithalas Cathedral Underground, first bulb in the top left part"});
-    checks->push_back({1216, "bulb_cathedral_under_ground_3","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Mithalas Cathedral Underground, second bulb in the top left part"});
-    checks->push_back({1217, "bulb_cathedral_under_ground_4","ingredient_redberry",1, "Red berry",
-                       "Mithalas Cathedral Underground, third bulb in the top left part"});
-    checks->push_back({1218, "bulb_cathedral_under_ground_5","ingredient_leafpoultice",1, "Leaf poultice",
-                       "Mithalas Cathedral Underground, bulb close to the save crystal"});
-    checks->push_back({1219, "bulb_cathedral_under_ground_6","ingredient_arcanepoultice",1, "Arcane poultice",
-                       "Mithalas Cathedral Underground, bulb in the bottom right path"});
-    checks->push_back({1220, "bulb_naija_home_1","ingredient_spicyroll",1, "Spicy roll",
-                       "Naija's Home, bulb after the energy door"});
-    checks->push_back({1221, "bulb_naija_home_2","ingredient_heartysoup",1, "Hearty soup",
-                       "Naija's Home, bulb under the rock at the right of the main path"});
-    checks->push_back({1222, "bulb_mermog_cave_1","ingredient_leechingpoultice",1, "Leeching poultice",
-                       "Mermog cave, bulb in the left part of the cave"});
-    checks->push_back({1223, "bulb_octo_cave_1","ingredient_sightpoultice",1, "Sight poultice",
-                       "Octopus Cave, bulb in the path below the Octopus Cave path"});
-    checks->push_back({1224, "urn_mithalas_city_1","ingredient_rottenmeat",2, "Rotten meat",
-                       "Mithalas City, first urn in one of the homes"});
-    checks->push_back({1225, "urn_mithalas_city_2","ingredient_glowingegg",1, "Glowing egg",
-                       "Mithalas City, second urn in one of the homes"});
-    checks->push_back({1226, "urn_mithalas_city_3","ingredient_rainbowmushroom",1, "Rainbow mushroom",
-                       "Mithalas City, first urn in the city reserve"});
-    checks->push_back({1227, "urn_mithalas_city_4","ingredient_rainbowmushroom",1, "Rainbow mushroom",
-                       "Mithalas City, second urn in the city reserve"});
-    checks->push_back({1228, "urn_mithalas_city_5","ingredient_rainbowmushroom",1, "Rainbow mushroom",
-                       "Mithalas City, third urn in the city reserve"});
-    checks->push_back({1229, "urn_mithalas_city_6","ingredient_plantleaf",3, "Plant leaf",
-                       "Mithalas City, urn in the Castle flower tube entrance"});
-    checks->push_back({1230, "urn_mithalas_city_7","ingredient_spicyroll",1, "Spicy roll",
-                       "Mithalas City, urn inside a home fish pass"});
-    checks->push_back({1231, "urn_cathedral_l_1","ingredient_rainbowmushroom",1, "Rainbow mushroom",
-                       "Mithalas City Castle, urn in the bedroom"});
-    checks->push_back({1232, "urn_cathedral_l_2","ingredient_smallbone",2, "Small bone",
-                       "Mithalas City Castle, first urn of the single lamp path"});
-    checks->push_back({1233, "urn_cathedral_l_3","ingredient_rottenmeat",1, "Rotten meat",
-                       "Mithalas City Castle, second urn of the single lamp path"});
-    checks->push_back({1234, "urn_cathedral_l_4","ingredient_fishoil",1, "Fish oil",
-                       "Mithalas City Castle, urn in the bottom room"});
-    checks->push_back({1235, "urn_cathedral_l_5","ingredient_rottenmeat",1, "Rotten meat",
-                       "Mithalas City Castle, first urn on the entrance path"});
-    checks->push_back({1236, "urn_cathedral_l_6","ingredient_rainbowsoup",1, "Rainbow soup",
-                       "Mithalas City Castle, second urn on the entrance path"});
-    checks->push_back({1237, "urn_cathedral_r_01","ingredient_plantleaf",1, "Plant leaf",
-                       "Mithalas Cathedral, first urn in the top right room"});
-    checks->push_back({1238, "urn_cathedral_r_02","ingredient_rottencake",1, "Rotten cake",
-                       "Mithalas Cathedral, second urn in the top right room"});
-    checks->push_back({1239, "urn_cathedral_r_03","ingredient_toughcake",1, "Tough cake",
-                       "Mithalas Cathedral, third urn in the top right room"});
-    checks->push_back({1240, "urn_cathedral_r_04","ingredient_spicyroll",1, "Spicy roll",
-                       "Mithalas Cathedral, bulb in the flesh room with fleas"});
-    checks->push_back({1241, "urn_cathedral_r_05","ingredient_rottenmeat",1, "Rotten meat",
-                       "Mithalas Cathedral, first urn in the bottom right path"});
-    checks->push_back({1242, "urn_cathedral_r_06","ingredient_plantleaf",1, "Plant leaf",
-                       "Mithalas Cathedral, second urn in the bottom right path"});
-    checks->push_back({1243, "urn_cathedral_r_07","ingredient_leechingpoultice",1, "Leeching poultice",
-                       "Mithalas Cathedral, urn behind the flesh vein"});
-    checks->push_back({1244, "urn_cathedral_r_08","ingredient_smallbone",3, "Small bone",
-                       "Mithalas Cathedral, urn in the top left eyes boss room"});
-    checks->push_back({1245, "urn_cathedral_r_09","ingredient_plantleaf",2, "Plant leaf",
-                       "Mithalas Cathedral, first urn in the path behind the flesh vein"});
-    checks->push_back({1246, "urn_cathedral_r_10","ingredient_rottenmeat",1, "Rotten meat",
-                       "Mithalas Cathedral, second urn in the path behind the flesh vein"});
-    checks->push_back({1247, "urn_cathedral_r_11","ingredient_poisonloaf",1, "Poison loaf",
-                       "Mithalas Cathedral, third urn in the path behind the flesh vein"});
-    checks->push_back({1248, "urn_cathedral_r_12","ingredient_poisonsoup",1, "Poison soup",
-                       "Mithalas Cathedral, fourth urn in the top right room"});
-    checks->push_back({1249, "urn_openwater_tr_1","ingredient_smallbone",3, "Small bone",
-                       "Open Waters top right area, first urn in the Mithalas exit"});
-    checks->push_back({1250, "urn_openwater_tr_2","ingredient_rottenmeat",1, "Rotten meat",
-                       "Open Waters top right area, second urn in the Mithalas exit"});
-    checks->push_back({1251, "urn_openwater_tr_3","ingredient_sealoaf",1, "Sea loaf",
-                       "Open Waters top right area, third urn in the Mithalas exit"});
-    checks->push_back({1252, "crate_sunkencity_2_1","ingredient_fishoil",3, "Fish oil",
-                       "Sunken City left area, crate in the little pipe room"});
-    checks->push_back({1253, "crate_sunkencity_2_2","ingredient_mushroom",2, "Mushroom",
-                       "Sunken City left area, crate close to the save crystal"});
-    checks->push_back({1254, "crate_sunkencity_2_3","ingredient_spicymeat",2, "Spicy meat",
-                       "Sunken City left area, crate before the bedroom"});
-    checks->push_back({1255, "crate_sunkencity_1_1","ingredient_seacake",1, "Sea cake",
-                       "Sunken City right area, crate close to the save crystal"});
-    checks->push_back({1256, "crate_sunkencity_1_2","ingredient_plantleaf",3, "Plant leaf",
-                       "Sunken City right area, crate in the left bottom room"});
-    checks->push_back({1257, "beating_simon","upgrade_wok",1, "Wok",
-                       "Simon Says area, beating Simon Says"});
-    checks->push_back({1258, "health_egg_1","upgrade_health_1",1, "Health",
-                       "The Veil bottom area, Verse Egg"});
-    checks->push_back({1259, "health_egg_2","upgrade_health_2",1, "Health",
-                       "Kelp Forest top left area, Verse Egg"});
-    checks->push_back({1260, "health_egg_3","upgrade_health_3",1, "Health",
-                       "The Whale, Verse Egg"});
-    checks->push_back({1261, "health_egg_4","upgrade_health_4",1, "Health",
-                       "Song Cave, Verse Egg"});
-    checks->push_back({1262, "health_egg_5","upgrade_health_5",1, "Health",
-                       "Bubble Cave, Verse Egg"});
-    checks->push_back({1263, "collect_anemone","collectible_anemone",1, "Anemone",
-                       "Song Cave, Anemone Seed"});
-    checks->push_back({1264, "collect_energy_temple","collectible_energy_temple",1, "Krotite armor",
-                       "Energy Temple bottom entrance, Krotite Armor"});
-    checks->push_back({1265, "collect_arnassi_statue","collectible_arnassi_statue",1, "Arnassi statue",
-                       "Arnassi Ruins, Arnassi Statue"});
-    checks->push_back({1266, "collect_mithalas_banner","collectible_mithalas_banner",1, "Mithalas banner",
-                       "Mithalas City Castle, Blue Banner"});
-    checks->push_back({1267, "collect_bio_seed","collectible_bio_seed",1, "Glowing seed",
-                       "Abyss left area, Glowing Seed"});
-    checks->push_back({1268, "collect_blackpearl","collectible_blackpearl",1, "Black pearl",
-                       "Kelp Forest top right area, Black Pearl"});
-    checks->push_back({1269, "collect_treasure_chest","collectible_treasure_chest",1, "Odd container",
-                       "Kelp Forest bottom right area, Odd Container"});
-    checks->push_back({1270, "collect_energy_boss","collectible_energy_boss",1, "Tooth",
-                       "Energy Temple boss area, Fallen God Tooth"});
-    checks->push_back({1271, "collect_energy_statue","collectible_energy_statue",1, "Energy statue",
-                       "Energy Temple, Energy Idol"});
-    checks->push_back({1272, "collect_golden_gear","collectible_golden_gear",1, "Golden gear",
-                       "Sun Temple, Golden Gear"});
-    checks->push_back({1273, "collect_jelly_plant","collectible_jelly_plant",1, "Jelly plant",
-                       "Abyss left area, Glowing Plant"});
-    checks->push_back({1274, "collect_mithala_doll","collectible_mithala_doll",1, "Mithalas doll",
-                       "Mithalas City, Doll"});
-    checks->push_back({1275, "collect_mithalas_pot","collectible_mithalas_pot",1, "Mithalas pot",
-                       "Mithalas City, Mithalas Pot"});
-    checks->push_back({1276, "collect_big_seed","collectible_big_seed",1, "Big seed",
-                       "Verse Cave right area, Big Seed"});
-    checks->push_back({1277, "collect_seed_bag","collectible_seed_bag",1, "Seed bag",
-                       "Kelp Forest sprite cave, Seed Bag"});
-    checks->push_back({1278, "collect_skull","collectible_skull",1, "King's Skull",
-                       "Open Waters skeleton path, King Skull"});
-    checks->push_back({1279, "collect_jelly_beacon","collectible_jelly_beacon",1, "Jelly beacon",
-                       "Song Cave, Jelly Beacon"});
-    checks->push_back({1280, "collect_spore_seed","collectible_spore_seed",1, "Song plant spore",
-                       "Arnassi Ruins, Song Plant Spore"});
-    checks->push_back({1281, "collect_gold_star","collectible_gold_star",1, "Golden starfish",
-                       "The Veil top right area, Golden Starfish"});
-    checks->push_back({1282, "collect_stone_head","collectible_stone_head",1, "Stone head",
-                       "The Veil bottom area, Stone Head"});
-    checks->push_back({1283, "collect_sun_key","collectible_sun_key",1, "Sun key",
-                       "Sun Temple, Sun Key"});
-    checks->push_back({1284, "collect_trident_head","collectible_trident_head",1, "Trident",
-                       "Mithalas City Castle, Trident Head"});
-    checks->push_back({1285, "collect_turtle_egg","collectible_turtle_egg",1, "Turtle egg",
-                       "Turtle cave, Turtle Egg"});
-    checks->push_back({1286, "collect_upsidedown_seed","collectible_upsidedown_seed",1, "Jelly egg",
-                       "Kelp Forest top left area, Jelly Egg"});
-    checks->push_back({1287, "collect_walker","collectible_walker",1, "Baby walker",
-                       "Kelp Forest bottom left area, Walker Baby"});
-    checks->push_back({1288, "collect_crab_costume","collectible_crab_costume",1, "Crab armor",
-                       "Arnassi Ruins, Crab Armor"});
-    checks->push_back({1289, "collect_jelly_costume","collectible_jelly_costume",1, "Jelly costume",
-                       "King Jellyfish Cave, Jellyfish Costume"});
-    checks->push_back({1290, "collect_mithalan_costume","collectible_mithalan_costume",1, "Mithalan dress",
-                       "Mithalas Cathedral, Mithalan Dress"});
-    checks->push_back({1291, "collect_mutant_costume","collectible_mutant_costume",1, "Mutant costume",
-                       "The Body bottom area, Mutant Costume"});
-    checks->push_back({1292, "collect_seahorse_costume","collectible_seahorse_costume",1, "Arnassi Armor",
-                       "Arnassi Ruins, Arnassi Armor"});
-    checks->push_back({1293, "collect_teen_costume","collectible_teen_costume",1, "Girl costume",
-                       "Sunken City left area, Girl Costume"});
-    checks->push_back({1294, "collect_urchin_costume","collectible_urchin_costume",1, "Urchin costume",
-                       "Turtle cave, Urchin Costume"});
-    checks->push_back({1295, "collect_nautilus","collectible_nautilus",1, "Baby nautilus",
-                       "Home Waters, Nautilus Egg"});
-    checks->push_back({1296, "collect_blaster","collectible_blaster",1, "Baby blaster",
-                       "Energy Temple blaster room, Blaster Egg"});
-    checks->push_back({1297, "collect_dumbo","collectible_dumbo",1, "Baby dumbo",
-                       "Octopus Cave, Dumbo Egg"});
-    checks->push_back({1298, "collect_piranha","collectible_piranha",1, "Baby piranha",
-                       "Mermog cave, Piranha Egg"});
-    checks->push_back({1299, "urn_cathedral_r_13","ingredient_leafpoultice",3, "Leaf poultice",
-                       "Mithalas Cathedral, urn below the left entrance"});
-    checks->push_back({1300, "li_cave","song_li",1, "Li and Li song",
-                       "The Veil top left area, In Li's cave"});
-    checks->push_back({1301, "song_shield_hint","song_shield",1, "Shield song",
-                       "Verse Cave left area, the Naija hint about the shield ability"});
-    checks->push_back({1302, "breaking_li_cage","song_dual",1, "Dual Form",
-                       "The Body center area, breaking Li's cage"});
-    checks->push_back({1303, "beating_mithalas","song_beast",1, "Beast Form",
-                       "Mithalas boss area, beating Mithalan God"});
-    checks->push_back({1304, "beating_sun_god","song_sun",1, "Sun Form",
-                       "Sun Temple boss area, beating Lumerean God"});
-    checks->push_back({1305, "beating_drunian_god","song_nature",1, "Nature Form",
-                       "Kelp Forest boss area, beating Drunian God"});
-    checks->push_back({1306, "beating_energy_statue","song_energy",1, "Energy Form",
-                       "Energy Temple first area, beating the Energy Statue"});
-    checks->push_back({1307, "erulian_spirit","song_bind",1, "Bind song",
-                       "Song Cave, Erulian spirit"});
-    checks->push_back({1308, "fish_cave_puzzle","song_fish",1, "Fish form",
-                       "Kelp Forest bottom left area, Fish Cave puzzle"});
-    checks->push_back({1309, "beating_priests","song_spirit",1, "Spirit form",
-                       "Mithalas City Castle, beating the Priests"});
-    checks->push_back({1310, "transturtle_veil01","transport_veil01",1, "Transport to The Veil top left area",
-                       "The Veil top left area, Transturtle"});
-    checks->push_back({1311, "transturtle_veil02","transport_veil02",1, "Transport to The Veil top right area",
-                       "The Veil top right area, Transturtle"});
-    checks->push_back({1312, "transturtle_openwater03","transport_openwater03",1, "Transport to Open waters top right area",
-                       "Open Waters top right area, Transturtle"});
-    checks->push_back({1313, "transturtle_forest04","transport_forest04",1, "Transport to Kelp Forest bottom left area",
-                       "Kelp Forest bottom left area, Transturtle"});
-    checks->push_back({1314, "transturtle_mainarea","transport_mainarea",1, "Transport to home waters",
-                       "Home Waters, Transturtle"});
-    checks->push_back({1315, "transturtle_abyss03","transport_abyss03",1, "Transport to The Abyss right area",
-                       "Abyss right area, Transturtle"});
-    checks->push_back({1316, "transturtle_finalboss","transport_finalboss",1, "Transport to The Creator",
-                       "Final Boss area, Transturtle"});
-    checks->push_back({1317, "transturtle_forest05","transport_forest05",1, "Transport to Simon says",
-        "Simon Says area, Transturtle"});
-    checks->push_back({1318, "transturtle_seahorse","transport_seahorse",1, "Transport to Arnassi Ruins right area",
-        "Arnassi Ruins, Transturtle"});
-    checks->push_back({1319, "sitting_on_throne","door_to_cathedral",1, "Opening door to the cathedral",
-        "Mithalas City Castle, sitting on the sealed throne"});
-    checks->push_back({1320, "beating_golem","door_to_body",1, "Body's tongue removed",
-        "Sunken City, beating the Golem"});
-    checks->push_back({1321, "no_location","trap_poison",1, "Poison trap",
-        "No Location"});
-    checks->push_back({1322, "no_location","trap_blind",1, "Blind trap",
-        "No Location"});
-    checks->push_back({1323, "no_location","trap_rainbow",1, "Rainbow trap",
-        "No Location"});
-    checks->push_back({1324, "no_location","trap_mute",1, "Mute trap",
-        "No Location"});
-    checks->push_back({1325, "no_location","progressive_recipe_loaf",1,
-        "Progressive Loaf", "No Location"});
-    checks->push_back({1326, "no_location","progressive_recipe_soup",1,
-        "Progressive Soup", "1No Location"});
-    checks->push_back({1327, "no_location","progressive_recipe_cake",1,
-        "Progressive Cake", "No Location"});
-    checks->push_back({1328, "no_location","progressive_recipe_poultice",1,
-        "Progressive Poultice", "No Location"});
-    checks->push_back({1329, "no_location","progressive_recipe_roll",1,
-        "Progressive Roll", "No Location"});
-    checks->push_back({1330, "no_location","progressive_recipe_perogi",1,
-        "Progressive Perogi", "No Location"});
-    checks->push_back({1331, "no_location","progressive_recipe_ice_cream",1,
-        "Progressive Ice Cream", "No Location"});
+void Randomizer::initialiseLocations() const {
+    locations->push_back({1101, "bulb_turtlecave","Turtle cave, bulb in Bubble Cliff"});
+    locations->push_back({1102, "bulb_openwater_tl_1","Open Waters top left area, bulb under the rock in the right path"});
+    locations->push_back({1103, "bulb_openwater_tl_2","Open Waters top left area, bulb under the rock in the left path"});
+    locations->push_back({1104, "bulb_openwater_tl_3","Open Waters top left area, bulb to the right of the save crystal"});
+    locations->push_back({1105, "bulb_openwater_tr_1","Open Waters top right area, bulb in the small path before Mithalas"});
+    locations->push_back({1106, "bulb_openwater_tr_2","Open Waters top right area, bulb in the path from the left entrance"});
+    locations->push_back({1107, "bulb_openwater_tr_3","Open Waters top right area, bulb in the clearing close to the bottom exit"});
+    locations->push_back({1108, "bulb_openwater_tr_4","Open Waters top right area, bulb in the big clearing close to the save crystal"});
+    locations->push_back({1109, "bulb_openwater_tr_5","Open Waters top right area, bulb in the big clearing to the top exit"});
+    locations->push_back({1110, "bulb_openwater_tr_6","Open Waters top right area, bulb in the turtle room"});
+    locations->push_back({1111, "bulb_openwater_bl_1","Open Waters bottom left area, bulb inside the lowest fish pass"});
+    locations->push_back({1112, "bulb_openwater_bl_2","Open Waters bottom left area, bulb behind the chomper fish"});
+    locations->push_back({1113, "bulb_skeleton_path_1","Open Waters skeleton path, bulb close to the right exit"});
+    locations->push_back({1114, "bulb_skeleton_path_2","Open Waters skeleton path, bulb behind the chomper fish"});
+    locations->push_back({1115, "bulb_arnassi_1","Arnassi Ruins, bulb in the right part"});
+    locations->push_back({1116, "bulb_arnassi_2","Arnassi Ruins, bulb in the left part"});
+    locations->push_back({1117, "bulb_arnassi_3","Arnassi Ruins, bulb in the center part"});
+    locations->push_back({1118, "bulb_sunworm_1","Sun temple boss path, first path bulb"});
+    locations->push_back({1119, "bulb_sunworm_2","Sun temple boss path, second path bulb"});
+    locations->push_back({1120, "bulb_sunworm_3","Sun temple boss path, first cliff bulb"});
+    locations->push_back({1121, "bulb_sunworm_4","Sun temple boss path, second cliff bulb"});
+    locations->push_back({1122, "bulb_tutorial_1","Verse Cave left area, bulb in the center part"});
+    locations->push_back({1123, "bulb_tutorial_2","Verse Cave left area, bulb in the right part"});
+    locations->push_back({1124, "bulb_tutorial_3","Verse Cave left area, bulb under the rock at the end of the path"});
+    locations->push_back({1125, "bulb_abyss_l_1","Abyss left area, bulb in hidden path room"});
+    locations->push_back({1126, "bulb_abyss_l_2","Abyss left area, bulb in the right part"});
+    locations->push_back({1127, "bulb_abyss_l_3","Abyss left area, bulb in the bottom fish pass"});
+    locations->push_back({1128, "bulb_energy_temple_1_1","Energy Temple first area, bulb in the bottom room blocked by a rock"});
+    locations->push_back({1129, "bulb_energy_temple_2_1","Energy Temple second area, bulb under the rock"});
+    locations->push_back({1130, "bulb_energy_temple_3_1","Energy Temple third area, bulb in the bottom path"});
+    locations->push_back({1131, "bulb_mithalas_city_01","Mithalas City, first bulb in the left city part"});
+    locations->push_back({1132, "bulb_mithalas_city_02","Mithalas City, bulb in the right part"});
+    locations->push_back({1133, "bulb_mithalas_city_03","Mithalas City, first bulb at the end of the top path"});
+    locations->push_back({1134, "bulb_mithalas_city_04","Mithalas City, bulb at the top of the city"});
+    locations->push_back({1135, "bulb_mithalas_city_05","Mithalas City, first bulb in a broken home"});
+    locations->push_back({1136, "bulb_mithalas_city_06","Mithalas City, second bulb in the left city part"});
+    locations->push_back({1137, "bulb_mithalas_city_07","Mithalas City, bulb in the top path"});
+    locations->push_back({1138, "bulb_mithalas_city_08","Mithalas City, bulb in the bottom left part"});
+    locations->push_back({1139, "bulb_mithalas_city_09","Mithalas City, first bulb in one of the homes"});
+    locations->push_back({1140, "bulb_mithalas_city_10","Mithalas City, second bulb in one of the homes"});
+    locations->push_back({1141, "bulb_mithalas_city_11","Mithalas City, second bulb at the end of the top path"});
+    locations->push_back({1142, "bulb_mithalas_city_12","Mithalas City, second bulb in a broken home"});
+    locations->push_back({1143, "bulb_cathedral_l_2","Mithalas City Castle, bulb in the flesh hole"});
+    locations->push_back({1144, "bulb_boilerroom_1","Sunken City, bulb on top of the boss area"});
+    locations->push_back({1145, "bulb_forest_tl_1","Kelp Forest top left area, bulb in the bottom left clearing"});
+    locations->push_back({1146, "bulb_forest_tl_2","Kelp Forest top left area, bulb in the path down from the top left clearing"});
+    locations->push_back({1147, "bulb_forest_tl_3","Kelp Forest top left area, bulb in the top left clearing"});
+    locations->push_back({1148, "bulb_forest_tl_4","Kelp Forest top left area, bulb close to the Verse Egg"});
+    locations->push_back({1149, "bulb_forest_tr_1","Kelp Forest top right area, bulb under the rock in the right path"});
+    locations->push_back({1150, "bulb_forest_tr_2","Kelp Forest top right area, bulb at the left of the center clearing"});
+    locations->push_back({1151, "bulb_forest_tr_3","Kelp Forest top right area, bulb in the top fish pass"});
+    locations->push_back({1152, "bulb_forest_tr_4","Kelp Forest top right area, bulb in the left path's big room"});
+    locations->push_back({1153, "bulb_forest_tr_5","Kelp Forest top right area, bulb in the left path's small room"});
+    locations->push_back({1154, "bulb_forest_tr_6","Kelp Forest top right area, bulb at the top of the center clearing"});
+    locations->push_back({1155, "bulb_forest_bl_1","Kelp Forest bottom left area, bulb close to the spirit crystals"});
+    locations->push_back({1156, "bulb_forest_boss_room_1","Kelp Forest boss room, bulb at the bottom of the area"});
+    locations->push_back({1157, "bulb_forest_sprite_cave_1","Kelp Forest sprite cave, bulb inside the fish pass"});
+    locations->push_back({1158, "bulb_forest_sprite_cave_2","Kelp Forest sprite cave, bulb in the second room"});
+    locations->push_back({1159, "bulb_home_water_1","Home Waters, bulb below the grouper fish"});
+    locations->push_back({1160, "bulb_home_water_2","Home Waters, bulb in the path below Nautilus Prime"});
+    locations->push_back({1161, "bulb_home_water_3","Home Waters, bulb in the little room above the grouper fish"});
+    locations->push_back({1162, "bulb_home_water_4","Home Waters, bulb in the end of the path close to the Verse Cave"});
+    locations->push_back({1163, "bulb_home_water_5","Home Waters, bulb in the top left path"});
+    locations->push_back({1164, "bulb_home_water_6","Home Waters, bulb in the bottom left room"});
+    locations->push_back({1165, "bulb_home_water_7","Home Waters, bulb close to Naija's Home"});
+    locations->push_back({1166, "bulb_home_water_8","Home Waters, bulb under the rock in the left path from the Verse Cave"});
+    locations->push_back({1167, "bulb_final_l_1","The Body left area, first bulb in the top face room"});
+    locations->push_back({1168, "bulb_final_l_2","The Body left area, bulb below the water stream"});
+    locations->push_back({1169, "bulb_final_l_3","The Body left area, bulb in the top path to the top face room"});
+    locations->push_back({1170, "bulb_final_l_4","The Body left area, second bulb in the top face room"});
+    locations->push_back({1171, "bulb_final_l_5","The Body left area, bulb in the bottom face room"});
+    locations->push_back({1172, "bulb_song_cave_1","Song Cave, bulb in the top right part"});
+    locations->push_back({1173, "bulb_song_cave_2","Song Cave, bulb in the big anemone room"});
+    locations->push_back({1174, "bulb_song_cave_3","Song Cave, bulb in the path to the singing statues"});
+    locations->push_back({1175, "bulb_song_cave_4","Song Cave, bulb under the rock in the path to the singing statues"});
+    locations->push_back({1176, "bulb_song_cave_5","Song Cave, bulb under the rock close to the song door"});
+    locations->push_back({1177, "bulb_veil_tl_1","The Veil top left area, bulb hidden behind the blocking rock"});
+    locations->push_back({1178, "bulb_veil_tl_2","The Veil top left area, bulb inside the fish pass"});
+    locations->push_back({1179, "bulb_veil_tl_3","The Veil top left area, bulb under the rock in the top right path"});
+    locations->push_back({1180, "bulb_veil_tr_1","The Veil top right area, bulb in the middle of the wall jump cliff"});
+    locations->push_back({1181, "bulb_veil_tr_2","The Veil top right area, bulb at the top of the waterfall"});
+    locations->push_back({1182, "bulb_veil_b_1","The Veil bottom area, bulb in the spirit path"});
+    locations->push_back({1183, "bulb_veil_b_2","The Veil bottom area, bulb in the left path"});
+    locations->push_back({1184, "bulb_ice_cave_1","Ice Cavern, bulb in the room to the right"});
+    locations->push_back({1185, "bulb_ice_cave_2","Ice Cavern, first bulb in the top exit room"});
+    locations->push_back({1186, "bulb_ice_cave_3","Ice Cavern, second bulb in the top exit room"});
+    locations->push_back({1187, "bulb_ice_cave_4","Ice Cavern, third bulb in the top exit room"});
+    locations->push_back({1188, "bulb_ice_cave_5","Ice Cavern, bulb in the left room"});
+    locations->push_back({1189, "bulb_king_jellyfish_cave_1","King Jellyfish Cave, bulb in the right path from King Jelly"});
+    locations->push_back({1190, "bulb_bubble_cave_1","Bubble Cave, bulb in the left cave wall"});
+    locations->push_back({1191, "bulb_bubble_cave_2","Bubble Cave, bulb in the right cave wall (behind the ice crystal)"});
+    locations->push_back({1192, "bulb_sun_temple_1","Sun Temple, first bulb of the temple"});
+    locations->push_back({1193, "bulb_sun_temple_2","Sun Temple, bulb on the right part"});
+    locations->push_back({1194, "bulb_sun_temple_3","Sun Temple, bulb in the hidden room of the right part"});
+    locations->push_back({1195, "bulb_sun_temple_4","Sun Temple, bulb in the top left part"});
+    locations->push_back({1196, "bulb_sun_temple_5","Sun Temple, bulb in the top right part"});
+    locations->push_back({1197, "bulb_sun_temple_6","Sun Temple, bulb at the top of the high dark room"});
+    locations->push_back({1198, "bulb_final_c_1","The Body center area, bulb on the main path blocking tube"});
+    locations->push_back({1199, "bulb_final_r_1","The Body right area, bulb in the top path to the bottom face room"});
+    locations->push_back({1200, "bulb_final_r_2","The Body right area, bulb in the bottom face room"});
+    locations->push_back({1201, "bulb_final_r_3","The Body right area, bulb in the top face room"});
+    locations->push_back({1202, "bulb_final_b_1","The Body bottom area, bulb in the Jelly Zap room"});
+    locations->push_back({1203, "bulb_final_b_2","The Body bottom area, bulb in the nautilus room"});
+    locations->push_back({1204, "bulb_final_boss_1","Final Boss area, first bulb in the turtle room"});
+    locations->push_back({1205, "bulb_final_boss_2","Final Boss area, second bulb in the turtle room"});
+    locations->push_back({1206, "bulb_final_boss_3","Final Boss area, third bulb in the turtle room"});
+    locations->push_back({1207, "bulb_final_boss_4","Final Boss area, bulb in the boss third form room"});
+    locations->push_back({1208, "bulb_starting_cave_1","Verse Cave right area, bulb in the skeleton room"});
+    locations->push_back({1209, "bulb_starting_cave_2","Verse Cave right area, bulb in the path right of the skeleton room"});
+    locations->push_back({1210, "bulb_abyss_r_1","Abyss right area, bulb behind the rock in the whale room"});
+    locations->push_back({1211, "bulb_abyss_r_2","Abyss right area, bulb in the middle path"});
+    locations->push_back({1212, "bulb_abyss_r_3","Abyss right area, bulb behind the rock in the middle path"});
+    locations->push_back({1213, "bulb_abyss_r_4","Abyss right area, bulb in the left green room"});
+    locations->push_back({1214, "bulb_cathedral_under_ground_1","Mithalas Cathedral Underground, bulb in the center part"});
+    locations->push_back({1215, "bulb_cathedral_under_ground_2","Mithalas Cathedral Underground, first bulb in the top left part"});
+    locations->push_back({1216, "bulb_cathedral_under_ground_3","Mithalas Cathedral Underground, second bulb in the top left part"});
+    locations->push_back({1217, "bulb_cathedral_under_ground_4","Mithalas Cathedral Underground, third bulb in the top left part"});
+    locations->push_back({1218, "bulb_cathedral_under_ground_5","Mithalas Cathedral Underground, bulb close to the save crystal"});
+    locations->push_back({1219, "bulb_cathedral_under_ground_6","Mithalas Cathedral Underground, bulb in the bottom right path"});
+    locations->push_back({1220, "bulb_naija_home_1","Naija's Home, bulb after the energy door"});
+    locations->push_back({1221, "bulb_naija_home_2","Naija's Home, bulb under the rock at the right of the main path"});
+    locations->push_back({1222, "bulb_mermog_cave_1","Mermog cave, bulb in the left part of the cave"});
+    locations->push_back({1223, "bulb_octo_cave_1","Octopus Cave, bulb in the path below the Octopus Cave path"});
+    locations->push_back({1224, "urn_mithalas_city_1","Mithalas City, first urn in one of the homes"});
+    locations->push_back({1225, "urn_mithalas_city_2","Mithalas City, second urn in one of the homes"});
+    locations->push_back({1226, "urn_mithalas_city_3","Mithalas City, first urn in the city reserve"});
+    locations->push_back({1227, "urn_mithalas_city_4","Mithalas City, second urn in the city reserve"});
+    locations->push_back({1228, "urn_mithalas_city_5","Mithalas City, third urn in the city reserve"});
+    locations->push_back({1229, "urn_mithalas_city_6","Mithalas City, urn in the Castle flower tube entrance"});
+    locations->push_back({1230, "urn_mithalas_city_7","Mithalas City, urn inside a home fish pass"});
+    locations->push_back({1231, "urn_cathedral_l_1","Mithalas City Castle, urn in the bedroom"});
+    locations->push_back({1232, "urn_cathedral_l_2","Mithalas City Castle, first urn of the single lamp path"});
+    locations->push_back({1233, "urn_cathedral_l_3","Mithalas City Castle, second urn of the single lamp path"});
+    locations->push_back({1234, "urn_cathedral_l_4","Mithalas City Castle, urn in the bottom room"});
+    locations->push_back({1235, "urn_cathedral_l_5","Mithalas City Castle, first urn on the entrance path"});
+    locations->push_back({1236, "urn_cathedral_l_6","Mithalas City Castle, second urn on the entrance path"});
+    locations->push_back({1237, "urn_cathedral_r_01","Mithalas Cathedral, first urn in the top right room"});
+    locations->push_back({1238, "urn_cathedral_r_02","Mithalas Cathedral, second urn in the top right room"});
+    locations->push_back({1239, "urn_cathedral_r_03","Mithalas Cathedral, third urn in the top right room"});
+    locations->push_back({1240, "urn_cathedral_r_04","Mithalas Cathedral, bulb in the flesh room with fleas"});
+    locations->push_back({1241, "urn_cathedral_r_05","Mithalas Cathedral, first urn in the bottom right path"});
+    locations->push_back({1242, "urn_cathedral_r_06","Mithalas Cathedral, second urn in the bottom right path"});
+    locations->push_back({1243, "urn_cathedral_r_07","Mithalas Cathedral, urn behind the flesh vein"});
+    locations->push_back({1244, "urn_cathedral_r_08","Mithalas Cathedral, urn in the top left eyes boss room"});
+    locations->push_back({1245, "urn_cathedral_r_09","Mithalas Cathedral, first urn in the path behind the flesh vein"});
+    locations->push_back({1246, "urn_cathedral_r_10","Mithalas Cathedral, second urn in the path behind the flesh vein"});
+    locations->push_back({1247, "urn_cathedral_r_11","Mithalas Cathedral, third urn in the path behind the flesh vein"});
+    locations->push_back({1248, "urn_cathedral_r_12","Mithalas Cathedral, fourth urn in the top right room"});
+    locations->push_back({1249, "urn_openwater_tr_1","Open Waters top right area, first urn in the Mithalas exit"});
+    locations->push_back({1250, "urn_openwater_tr_2","Open Waters top right area, second urn in the Mithalas exit"});
+    locations->push_back({1251, "urn_openwater_tr_3","Open Waters top right area, third urn in the Mithalas exit"});
+    locations->push_back({1252, "crate_sunkencity_2_1","Sunken City left area, crate in the little pipe room"});
+    locations->push_back({1253, "crate_sunkencity_2_2","Sunken City left area, crate close to the save crystal"});
+    locations->push_back({1254, "crate_sunkencity_2_3","Sunken City left area, crate before the bedroom"});
+    locations->push_back({1255, "crate_sunkencity_1_1","Sunken City right area, crate close to the save crystal"});
+    locations->push_back({1256, "crate_sunkencity_1_2","Sunken City right area, crate in the left bottom room"});
+    locations->push_back({1257, "beating_simon","Simon Says area, beating Simon Says"});
+    locations->push_back({1258, "health_egg_1","The Veil bottom area, Verse Egg"});
+    locations->push_back({1259, "health_egg_2","Kelp Forest top left area, Verse Egg"});
+    locations->push_back({1260, "health_egg_3","The Whale, Verse Egg"});
+    locations->push_back({1261, "health_egg_4","Song Cave, Verse Egg"});
+    locations->push_back({1262, "health_egg_5","Bubble Cave, Verse Egg"});
+    locations->push_back({1263, "collect_anemone","Song Cave, Anemone Seed"});
+    locations->push_back({1264, "collect_energy_temple","Energy Temple bottom entrance, Krotite Armor"});
+    locations->push_back({1265, "collect_arnassi_statue","Arnassi Ruins, Arnassi Statue"});
+    locations->push_back({1266, "collect_mithalas_banner","Mithalas City Castle, Blue Banner"});
+    locations->push_back({1267, "collect_bio_seed","Abyss left area, Glowing Seed"});
+    locations->push_back({1268, "collect_blackpearl","Kelp Forest top right area, Black Pearl"});
+    locations->push_back({1269, "collect_treasure_chest","Kelp Forest bottom right area, Odd Container"});
+    locations->push_back({1270, "collect_energy_boss","Energy Temple boss area, Fallen God Tooth"});
+    locations->push_back({1271, "collect_energy_statue","Energy Temple, Energy Idol"});
+    locations->push_back({1272, "collect_golden_gear","Sun Temple, Golden Gear"});
+    locations->push_back({1273, "collect_jelly_plant","Abyss left area, Glowing Plant"});
+    locations->push_back({1274, "collect_mithala_doll","Mithalas City, Doll"});
+    locations->push_back({1275, "collect_mithalas_pot","Mithalas City, Mithalas Pot"});
+    locations->push_back({1276, "collect_big_seed","Verse Cave right area, Big Seed"});
+    locations->push_back({1277, "collect_seed_bag","Kelp Forest sprite cave, Seed Bag"});
+    locations->push_back({1278, "collect_skull","Open Waters skeleton path, King Skull"});
+    locations->push_back({1279, "collect_jelly_beacon","Song Cave, Jelly Beacon"});
+    locations->push_back({1280, "collect_spore_seed","Arnassi Ruins, Song Plant Spore"});
+    locations->push_back({1281, "collect_gold_star","The Veil top right area, Golden Starfish"});
+    locations->push_back({1282, "collect_stone_head","The Veil bottom area, Stone Head"});
+    locations->push_back({1283, "collect_sun_key","Sun Temple, Sun Key"});
+    locations->push_back({1284, "collect_trident_head","Mithalas City Castle, Trident Head"});
+    locations->push_back({1285, "collect_turtle_egg","Turtle cave, Turtle Egg"});
+    locations->push_back({1286, "collect_upsidedown_seed","Kelp Forest top left area, Jelly Egg"});
+    locations->push_back({1287, "collect_walker","Kelp Forest bottom left area, Walker Baby"});
+    locations->push_back({1288, "collect_crab_costume","Arnassi Ruins, Crab Armor"});
+    locations->push_back({1289, "collect_jelly_costume","King Jellyfish Cave, Jellyfish Costume"});
+    locations->push_back({1290, "collect_mithalan_costume","Mithalas Cathedral, Mithalan Dress"});
+    locations->push_back({1291, "collect_mutant_costume","The Body bottom area, Mutant Costume"});
+    locations->push_back({1292, "collect_seahorse_costume","Arnassi Ruins, Arnassi Armor"});
+    locations->push_back({1293, "collect_teen_costume","Sunken City left area, Girl Costume"});
+    locations->push_back({1294, "collect_urchin_costume","Turtle cave, Urchin Costume"});
+    locations->push_back({1295, "collect_nautilus","Home Waters, Nautilus Egg"});
+    locations->push_back({1296, "collect_blaster","Energy Temple blaster room, Blaster Egg"});
+    locations->push_back({1297, "collect_dumbo","Octopus Cave, Dumbo Egg"});
+    locations->push_back({1298, "collect_piranha","Mermog cave, Piranha Egg"});
+    locations->push_back({1299, "urn_cathedral_r_13","Mithalas Cathedral, urn below the left entrance"});
+    locations->push_back({1300, "li_cave","The Veil top left area, In Li's cave"});
+    locations->push_back({1301, "song_shield_hint","Verse Cave left area, the Naija hint about the shield ability"});
+    locations->push_back({1302, "breaking_li_cage","The Body center area, breaking Li's cage"});
+    locations->push_back({1303, "beating_mithalas","Mithalas boss area, beating Mithalan God"});
+    locations->push_back({1304, "beating_sun_god","Sun Temple boss area, beating Lumerean God"});
+    locations->push_back({1305, "beating_drunian_god","Kelp Forest boss area, beating Drunian God"});
+    locations->push_back({1306, "beating_energy_statue","Energy Temple first area, beating the Energy Statue"});
+    locations->push_back({1307, "erulian_spirit","Song Cave, Erulian spirit"});
+    locations->push_back({1308, "fish_cave_puzzle","Kelp Forest bottom left area, Fish Cave puzzle"});
+    locations->push_back({1309, "beating_priests","Mithalas City Castle, beating the Priests"});
+    locations->push_back({1310, "transturtle_veil01","The Veil top left area, Transturtle"});
+    locations->push_back({1311, "transturtle_veil02","The Veil top right area, Transturtle"});
+    locations->push_back({1312, "transturtle_openwater03","Open Waters top right area, Transturtle"});
+    locations->push_back({1313, "transturtle_forest04","Kelp Forest bottom left area, Transturtle"});
+    locations->push_back({1314, "transturtle_mainarea","Home Waters, Transturtle"});
+    locations->push_back({1315, "transturtle_abyss03","Abyss right area, Transturtle"});
+    locations->push_back({1316, "transturtle_finalboss","Final Boss area, Transturtle"});
+    locations->push_back({1317, "transturtle_forest05","Simon Says area, Transturtle"});
+    locations->push_back({1318, "transturtle_seahorse","Arnassi Ruins, Transturtle"});
+    locations->push_back({1319, "sitting_on_throne","Mithalas City Castle, sitting on the sealed throne"});
+    locations->push_back({1320, "beating_golem","Sunken City, beating the Golem"});
+}
+
+/**
+ * Initialize every item
+ */
+void Randomizer::initialiseItems() const {
+    items->push_back({"ingredient_sealoaf", "Sea loaf"});
+    items->push_back({"ingredient_leafpoultice", "Leaf poultice"});
+    items->push_back({"ingredient_handroll", "Hand roll"});
+    items->push_back({"ingredient_veggiesoup", "Veggie soup"});
+    items->push_back({"ingredient_butterysealoaf", "Buttery sea loaf"});
+    items->push_back({"ingredient_healingpoultice", "Healing poultice"});
+    items->push_back({"ingredient_spicyroll", "Spicy roll"});
+    items->push_back({"ingredient_spicymeat", "Spicy meat"});
+    items->push_back({"ingredient_crabcake", "Crab cake"});
+    items->push_back({"ingredient_leadershiproll", "Leadership roll"});
+    items->push_back({"ingredient_tastycake", "Tasty cake"});
+    items->push_back({"ingredient_perogi", "Perogi"});
+    items->push_back({"ingredient_tastyroll", "Tasty roll"});
+    items->push_back({"ingredient_specialbulb", "Special bulb"});
+    items->push_back({"ingredient_specialcake", "Special cake"});
+    items->push_back({"ingredient_plantleaf", "Plant leaf"});
+    items->push_back({"ingredient_turtlesoup", "Turtle soup"});
+    items->push_back({"ingredient_hotsoup", "Hot soup"});
+    items->push_back({"ingredient_heartysoup", "Hearty soup"});
+    items->push_back({"ingredient_coldborscht", "Cold borscht"});
+    items->push_back({"ingredient_sightpoultice", "Sight poultice"});
+    items->push_back({"ingredient_vedhaseacrisp", "Vedha sea crisp"});
+    items->push_back({"ingredient_rottenloaf", "Rotten loaf"});
+    items->push_back({"ingredient_rottenmeat", "Rotten meat"});
+    items->push_back({"ingredient_smalltentacle", "Small tentacle"});
+    items->push_back({"ingredient_seacake", "Sea cake"});
+    items->push_back({"ingredient_smallbone", "Small bone"});
+    items->push_back({"ingredient_leechingpoultice", "Leeching poultice"});
+    items->push_back({"ingredient_redbulb", "Red bulb"});
+    items->push_back({"ingredient_spiderroll", "Spider roll"});
+    items->push_back({"ingredient_veggiecake", "Veggie cake"});
+    items->push_back({"ingredient_swampcake", "Swamp cake"});
+    items->push_back({"ingredient_sharkfinsoup", "Shark fin soup"});
+    items->push_back({"ingredient_smallegg", "Small egg"});
+    items->push_back({"ingredient_fishmeat", "Fish meat"});
+    items->push_back({"ingredient_arcanepoultice", "Arcane poultice"});
+    items->push_back({"ingredient_divinesoup", "Divine soup"});
+    items->push_back({"ingredient_volcanoroll", "Volcano roll"});
+    items->push_back({"ingredient_eeloil", "Eel oil"});
+    items->push_back({"ingredient_spicysoup", "Spicy soup"});
+    items->push_back({"ingredient_longlifesoup", "Long life soup"});
+    items->push_back({"ingredient_legendarycake", "Legendary cake"});
+    items->push_back({"ingredient_icecream", "Ice cream"});
+    items->push_back({"ingredient_berryicecream", "Berry ice cream"});
+    items->push_back({"ingredient_veggieicecream", "Veggie ice cream"});
+    items->push_back({"ingredient_dumboicecream", "Dumbo ice cream"});
+    items->push_back({"ingredient_coldsoup", "Cold soup"});
+    items->push_back({"ingredient_glowingegg", "Glowing egg"});
+    items->push_back({"ingredient_magicsoup", "Magic soup"});
+    items->push_back({"ingredient_royalsoup", "Royal soup"});
+    items->push_back({"ingredient_Zuuna'sperogi", "Zuuna's perogi"});
+    items->push_back({"ingredient_plumpperogi", "Plump perogi"});
+    items->push_back({"ingredient_Vedha'sCure-All", "Vedha's Cure-All"});
+    items->push_back({"ingredient_loafoflife", "Loaf of life"});
+    items->push_back({"ingredient_fishoil", "Fish oil"});
+    items->push_back({"ingredient_hotborscht", "Hot borscht"});
+    items->push_back({"ingredient_redberry", "Red berry"});
+    items->push_back({"ingredient_rainbowmushroom", "Rainbow mushroom"});
+    items->push_back({"ingredient_rainbowsoup", "Rainbow soup"});
+    items->push_back({"ingredient_rottencake", "Rotten cake"});
+    items->push_back({"ingredient_toughcake", "Tough cake"});
+    items->push_back({"ingredient_poisonloaf", "Poison loaf"});
+    items->push_back({"ingredient_poisonsoup", "Poison soup"});
+    items->push_back({"ingredient_mushroom", "Mushroom"});
+    items->push_back({"upgrade_wok", "Wok"});
+    items->push_back({"upgrade_health", "Health"});
+    items->push_back({"collectible_anemone", "Anemone"});
+    items->push_back({"collectible_energy_temple", "Krotite armor"});
+    items->push_back({"collectible_arnassi_statue", "Arnassi statue"});
+    items->push_back({"collectible_mithalas_banner", "Mithalas banner"});
+    items->push_back({"collectible_bio_seed", "Glowing seed"});
+    items->push_back({"collectible_blackpearl", "Black pearl"});
+    items->push_back({"collectible_treasure_chest", "Odd container"});
+    items->push_back({"collectible_energy_boss", "Tooth"});
+    items->push_back({"collectible_energy_statue", "Energy statue"});
+    items->push_back({"collectible_golden_gear", "Golden gear"});
+    items->push_back({"collectible_jelly_plant", "Jelly plant"});
+    items->push_back({"collectible_mithala_doll", "Mithalas doll"});
+    items->push_back({"collectible_mithalas_pot", "Mithalas pot"});
+    items->push_back({"collectible_big_seed", "Big seed"});
+    items->push_back({"collectible_seed_bag", "Seed bag"});
+    items->push_back({"collectible_skull", "King's Skull"});
+    items->push_back({"collectible_jelly_beacon", "Jelly beacon"});
+    items->push_back({"collectible_spore_seed", "Song plant spore"});
+    items->push_back({"collectible_gold_star", "Golden starfish"});
+    items->push_back({"collectible_stone_head", "Stone head"});
+    items->push_back({"collectible_sun_key", "Sun key"});
+    items->push_back({"collectible_trident_head", "Trident"});
+    items->push_back({"collectible_turtle_egg", "Turtle egg"});
+    items->push_back({"collectible_upsidedown_seed", "Jelly egg"});
+    items->push_back({"collectible_walker", "Baby walker"});
+    items->push_back({"collectible_crab_costume", "Crab armor"});
+    items->push_back({"collectible_jelly_costume", "Jelly costume"});
+    items->push_back({"collectible_mithalan_costume", "Mithalan dress"});
+    items->push_back({"collectible_mutant_costume", "Mutant costume"});
+    items->push_back({"collectible_seahorse_costume", "Arnassi Armor"});
+    items->push_back({"collectible_teen_costume", "Girl costume"});
+    items->push_back({"collectible_urchin_costume", "Urchin costume"});
+    items->push_back({"collectible_nautilus", "Baby nautilus"});
+    items->push_back({"collectible_blaster", "Baby blaster"});
+    items->push_back({"collectible_dumbo", "Baby dumbo"});
+    items->push_back({"collectible_piranha", "Baby piranha"});
+    items->push_back({"song_li", "Li and Li song"});
+    items->push_back({"song_shield", "Shield song"});
+    items->push_back({"song_dual", "Dual Form"});
+    items->push_back({"song_beast", "Beast Form"});
+    items->push_back({"song_sun", "Sun Form"});
+    items->push_back({"song_nature", "Nature Form"});
+    items->push_back({"song_energy", "Energy Form"});
+    items->push_back({"song_bind", "Bind song"});
+    items->push_back({"song_fish", "Fish form"});
+    items->push_back({"song_spirit", "Spirit form"});
+    items->push_back({"transport_veil01", "Transport to The Veil top left area"});
+    items->push_back({"transport_veil02", "Transport to The Veil top right area"});
+    items->push_back({"transport_openwater03", "Transport to Open waters top right area"});
+    items->push_back({"transport_forest04", "Transport to Kelp Forest bottom left area"});
+    items->push_back({"transport_mainarea", "Transport to home waters"});
+    items->push_back({"transport_abyss03", "Transport to The Abyss right area"});
+    items->push_back({"transport_finalboss", "Transport to The Creator"});
+    items->push_back({"transport_forest05", "Transport to Simon says"});
+    items->push_back({"transport_seahorse", "Transport to Arnassi Ruins right area"});
+    items->push_back({"door_to_cathedral", "Opening door to the cathedral"});
+    items->push_back({"door_to_body", "Body's tongue removed"});
+    items->push_back({"trap_poison", "Poison trap"});
+    items->push_back({"trap_blind", "Blind trap"});
+    items->push_back({"trap_rainbow", "Rainbow trap"});
+    items->push_back({"trap_mute", "Mute trap"});
+    items->push_back({"progressive_recipe_loaf","Progressive Loaf"});
+    items->push_back({"progressive_recipe_soup","Progressive Soup"});
+    items->push_back({"progressive_recipe_cake","Progressive Cake"});
+    items->push_back({"progressive_recipe_poultice","Progressive Poultice"});
+    items->push_back({"progressive_recipe_roll","Progressive Roll"});
+    items->push_back({"progressive_recipe_perogi","Progressive Perogi"});
+    items->push_back({"progressive_recipe_ice_cream","Progressive Ice Cream"});
 }
 
 
@@ -669,43 +569,44 @@ void Randomizer::initialiseCollectibles() const {
  */
 Randomizer::~Randomizer() {
     delete(ingredientReplacement);
-    delete(checks);
+    delete(locations);
+    delete(items);
     delete(ingredients);
     delete(collectibles);
     delete(nextMessages);
 }
 
 /**
- * Get a new transport to location
- * @param aCheck The transport item to activate
+ * Get a new transport to a game location
+ * @param aItem The transport item to activate
  */
-void Randomizer::receivingTransport(const check_t *aCheck) {
+void Randomizer::receivingTransport(const item_t *aItem) {
     int lAreaStringIndex = 0;
-    if (aCheck->flag == 1310) {
+    if (aItem->name == "transport_veil01") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL01, 1);
         lAreaStringIndex = 1014;
-    } else if (aCheck->flag == 1311) {
+    } else if (aItem->name == "transport_veil02") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_VEIL02, 1);
         lAreaStringIndex = 1014;
-    } else if (aCheck->flag == 1312) {
+    } else if (aItem->name == "transport_openwater03") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_OPENWATER03, 1);
         lAreaStringIndex = 1009;
-    } else if (aCheck->flag == 1313) {
+    } else if (aItem->name == "transport_forest04") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_FOREST04, 1);
         lAreaStringIndex = 1010;
-    } else if (aCheck->flag == 1314) {
+    } else if (aItem->name == "transport_mainarea") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_MAINAREA, 1);
         lAreaStringIndex = 1008;
-    } else if (aCheck->flag == 1315) {
+    } else if (aItem->name == "transport_abyss03") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_ABYSS03, 1);
         lAreaStringIndex = 1015;
-    } else if (aCheck->flag == 1316) {
+    } else if (aItem->name == "transport_finalboss") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_FINALBOSS, 1);
         lAreaStringIndex = 1021;
-    } else if (aCheck->flag == 1317) {
+    } else if (aItem->name == "transport_forest05") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_FOREST05, 1);
         lAreaStringIndex = 1010;
-    } else if (aCheck->flag == 1318) {
+    } else if (aItem->name == "transport_seahorse") {
         dsq->continuity.setFlag(FLAG_TRANSTURTLE_SEAHORSE, 1);
         lAreaStringIndex = 1028;
     }
@@ -717,12 +618,12 @@ void Randomizer::receivingTransport(const check_t *aCheck) {
 
 /**
  * Get a new collectible item to activate in the local game
- * @param aCheck The collectible check item to activate
+ * @param aItem The collectible item to activate
  */
-void Randomizer::receivingCollectible(const check_t *aCheck) const {
+void Randomizer::receivingCollectible(const item_t *aItem) const {
     collectible_t *lCollectible = nullptr;
     for (int i = 0; i < collectibles->size() && !lCollectible; i = i + 1) {
-        if (collectibles->at(i).name == aCheck->item) {
+        if (collectibles->at(i).name == aItem->name) {
             lCollectible = &collectibles->at(i);
         }
     }
@@ -762,12 +663,12 @@ void Randomizer::receivingCollectible(const check_t *aCheck) const {
 
 /**
  * Get a new song item to activate in the local game
- * @param aCheck The song check item to activate
+ * @param aItem The song item to activate
  */
-void Randomizer::receivingSong(const check_t *aCheck) {
+void Randomizer::receivingSong(const item_t *aItem) {
     int lSongType = 0;
     int lStrId = 0;
-    if (aCheck->flag == 1300) { // Li song
+    if (aItem->name == "song_li") { // Li song
         if (dsq->continuity.getFlag(FLAG_LI) == 0) {
             dsq->continuity.setFlag(FLAG_LI, 100);
             lSongType = SONG_LI;
@@ -777,47 +678,47 @@ void Randomizer::receivingSong(const check_t *aCheck) {
                                                         false, "Li", ET_ENEMY, true);
             }
         }
-    } else if (aCheck->flag == 1301) { // Shield song
+    } else if (aItem->name == "song_shield") { // Shield song
         if (!dsq->continuity.hasSong(SONG_SHIELDAURA)) {
             lSongType = SONG_SHIELDAURA;
             lStrId = 35;
         }
-    } else if (aCheck->flag == 1302) { // Dual song
+    } else if (aItem->name == "song_dual") { // Dual song
         if (!dsq->continuity.hasSong(SONG_DUALFORM)) {
             lSongType = SONG_DUALFORM;
             lStrId = 43;
         }
-    } else if (aCheck->flag == 1303) { // Beast song
+    } else if (aItem->name == "song_beast") { // Beast song
         if (!dsq->continuity.hasSong(SONG_BEASTFORM)) {
             lSongType = SONG_BEASTFORM;
             lStrId = 38;
         }
-    } else if (aCheck->flag == 1304) { // Sun song
+    } else if (aItem->name == "song_sun") { // Sun song
         if (!dsq->continuity.hasSong(SONG_SUNFORM)) {
             lSongType = SONG_SUNFORM;
             lStrId = 41;
         }
-    } else if (aCheck->flag == 1305) { // Nature song
+    } else if (aItem->name == "song_nature") { // Nature song
         if (!dsq->continuity.hasSong(SONG_NATUREFORM)) {
             lSongType = SONG_NATUREFORM;
             lStrId = 40;
         }
-    } else if (aCheck->flag == 1306) { // Energy song
+    } else if (aItem->name == "song_energy") { // Energy song
         if (!dsq->continuity.hasSong(SONG_ENERGYFORM)) {
             lSongType = SONG_ENERGYFORM;
             lStrId = 37;
         }
-    } else if (aCheck->flag == 1307) { // Bind song
+    } else if (aItem->name == "song_bind") { // Bind song
         if (!dsq->continuity.hasSong(SONG_BIND)) {
             lSongType = SONG_BIND;
             lStrId = 36;
         }
-    } else if (aCheck->flag == 1308) { // Fish song
+    } else if (aItem->name == "song_fish") { // Fish song
         if (!dsq->continuity.hasSong(SONG_FISHFORM)) {
             lSongType = SONG_FISHFORM;
             lStrId = 39;
         }
-    } else if (aCheck->flag == 1309) { // Fish song
+    } else if (aItem->name == "song_spirit") { // Fish song
         if (!dsq->continuity.hasSong(SONG_SPIRITFORM)) {
             lSongType = SONG_SPIRITFORM;
             lStrId = 44;
@@ -864,14 +765,14 @@ void Randomizer::receivingUpgradeHealth() {
 
 /**
  * Received a door opening item
- * @param aCheck The item check that has been received.
+ * @param aItem The item that has been received.
  */
-void Randomizer::receivingDoorOpening(const check_t *aCheck) {
-    if (aCheck->flag == 1319 && dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM) != 1) {
+void Randomizer::receivingDoorOpening(const item_t *aItem) {
+    if (aItem->name == "door_to_cathedral" && dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM) != 1) {
         dsq->continuity.setFlag(FLAG_MITHALAS_THRONEROOM, 1);
         dsq->game->pickupItemEffects("seal-prince");
     }
-    if (aCheck->flag == 1320 && dsq->continuity.getFlag(FLAG_REMOVE_TONGUE) != 1) {
+    if (aItem->name == "door_to_body" && dsq->continuity.getFlag(FLAG_REMOVE_TONGUE) != 1) {
         dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
         dsq->game->pickupItemEffects("final-tongue");
         for (size_t i = 0; dsq->entities[i] != nullptr; i = i + 1) {
@@ -886,23 +787,23 @@ void Randomizer::receivingDoorOpening(const check_t *aCheck) {
 
 /**
  * Received a trap
- * @param aCheck The item check that has been received.
+ * @param aItem The item that has been received.
  */
-void Randomizer::receivingTrap(const check_t *aCheck) {
-    if (aCheck->flag == 1321) {
+void Randomizer::receivingTrap(const item_t *aItem) {
+    if (aItem->name == "trap_poison") {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->setPoison(0.5, 10);
         }
         dsq->game->pickupItemEffects("particles/bubble");
-    } else if (aCheck->flag == 1322) {
+    } else if (aItem->name == "trap_blind") {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->setBlind((rand()%20) + 10);
         }
         dsq->game->pickupItemEffects("particles/blinder");
-    } else if (aCheck->flag == 1323) {
+    } else if (aItem->name == "trap_rainbow") {
         dsq->continuity.setTrip((rand()%20) + 10);
         dsq->game->pickupItemEffects("particles/tripper");
-    } else if (aCheck->flag == 1324) {
+    } else if (aItem->name == "trap_mute") {
         if (dsq->game->avatar != nullptr) {
             dsq->game->avatar->changeForm(FORM_NORMAL);
             dsq->game->avatar->setBlockSinging(true);
@@ -915,30 +816,30 @@ void Randomizer::receivingTrap(const check_t *aCheck) {
 
 /**
  * Received a progressive recipe
- * @param aCheck The item check that has been received.
+ * @param aItem The item that has been received.
  */
-void Randomizer::receivingProgressiveRecipe(const check_t *aCheck) {
+void Randomizer::receivingProgressiveRecipe(const item_t *aItem) {
     IngredientType lCategory = IT_ANYTHING;
     int *lProgressiveIndex = nullptr;
-    if (aCheck->flag == 1325) {
+    if (aItem->name == "progressive_recipe_loaf") {
         lCategory = IT_LOAF;
         lProgressiveIndex = &progressiveLoafIndex;
-    } else if (aCheck->flag == 1326) {
+    } else if (aItem->name == "progressive_recipe_soup") {
         lCategory = IT_SOUP;
         lProgressiveIndex = &progressiveSoupIndex;
-    } else if (aCheck->flag == 1327) {
+    } else if (aItem->name == "progressive_recipe_cake") {
         lCategory = IT_CAKE;
         lProgressiveIndex = &progressiveCakeIndex;
-    } else if (aCheck->flag == 1328) {
+    } else if (aItem->name == "progressive_recipe_poultice") {
         lCategory = IT_POULTICE;
         lProgressiveIndex = &progressivePoulticeIndex;
-    } else if (aCheck->flag == 1329) {
+    } else if (aItem->name == "progressive_recipe_roll") {
         lCategory = IT_ROLL;
         lProgressiveIndex = &progressiveRollIndex;
-    } else if (aCheck->flag == 1330) {
+    } else if (aItem->name == "progressive_recipe_perogi") {
         lCategory = IT_PEROGI;
         lProgressiveIndex = &progressivePerogiIndex;
-    } else if (aCheck->flag == 1331) {
+    } else if (aItem->name == "progressive_recipe_ice_cream") {
         lCategory = IT_ICECREAM;
         lProgressiveIndex = &progressiveIceCreamIndex;
     }
@@ -971,8 +872,8 @@ void Randomizer::receivingProgressiveRecipe(const check_t *aCheck) {
 void Randomizer::receivingItem(const std::string& aItem, int aCount) {
     std::stringstream lMessageStream;
     if (aItem.compare(0, 10, "ingredient") == 0) {
-        check_t * lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
+        item_t * lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
         if (aCount > 1) {
             lMessageStream << " x " << aCount;
         }
@@ -986,30 +887,30 @@ void Randomizer::receivingItem(const std::string& aItem, int aCount) {
         lMessageStream << "Upgrade: Health";
         receivingUpgradeHealth();
     } else if (aItem.compare(0, 11, "collectible") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingCollectible(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingCollectible(lItem);
     } else if (aItem.compare(0, 5, "song_") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingSong(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingSong(lItem);
     } else if (aItem.compare(0, 10, "transport_") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingTransport(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingTransport(lItem);
         dsq->game->pickupItemEffects("gems/turtle");
     } else if (aItem.compare(0, 5, "door_") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingDoorOpening(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingDoorOpening(lItem);
     } else if (aItem.compare(0, 5, "trap_") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingTrap(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingTrap(lItem);
     } else if (aItem.compare(0, 19, "progressive_recipe_") == 0) {
-        check_t *lCheck = getCheckByItem(aItem);
-        lMessageStream << lCheck->message;
-        receivingProgressiveRecipe(lCheck);
+        item_t *lItem = getItemByName(aItem);
+        lMessageStream << lItem->message;
+        receivingProgressiveRecipe(lItem);
     } else {
         assert(false && "The receving item is not valid!");
     }
@@ -1025,30 +926,30 @@ void Randomizer::showQuickMessage(const std::string &aText){
 }
 
 /**
- * Retreive a check structure from a check Id
- * @param aCheckId The Id of the check to retreive
- * @return A pointer to the check_t object
+ * Retreive a location from a location Id
+ * @param aId The Id of the location to retreive
+ * @return A pointer to the location_t object
  */
-check_t *Randomizer::getCheck(const std::string& aCheckId)
+location_t *Randomizer::getLocationById(const std::string& aId)
 {
-    check_t *result = nullptr;
-    int lCheckIndex = getCheckIndex(aCheckId);
-    if (lCheckIndex != -1) {
-        result = getCheckByIndex(lCheckIndex);
+    location_t *result = nullptr;
+    int lIndex = getLocationIndex(aId);
+    if (lIndex != -1) {
+        result = getLocationByIndex(lIndex);
     }
     return result;
 }
 
 /**
- * Retreive the index of a check
- * @param aCheckId The Id of the check to retreive
- * @return The index of the check in the CHECKS vector
+ * Retreive the index of a location
+ * @param id The Id of the location to retreive
+ * @return The index of the location in the location list
  */
-int Randomizer::getCheckIndex(const std::string& aCheckId)
+int Randomizer::getLocationIndex(const std::string& aId)
 {
     int result = -1;
-    for (int i = 0; i < checks->size() && result == -1; i = i + 1) {
-        if (getCheckByIndex(i)->id == aCheckId) {
+    for (int i = 0; i < locations->size() && result == -1; i = i + 1) {
+        if (getLocationByIndex(i)->id == aId) {
             result = i;
         }
     }
@@ -1056,16 +957,42 @@ int Randomizer::getCheckIndex(const std::string& aCheckId)
 }
 
 /**
- * Retreive a check structure from an item Id
- * @param aItem The item Id of the check to retreive
- * @return A pointer to the check_t object
+ * Retreive the location at a certain index
+ * @param aIndex The index of the location to retreive
+ * @return The location
  */
-check_t *Randomizer::getCheckByItem(const std::string& aItem)
+location_t *Randomizer::getLocationByIndex(int aIndex) {
+    location_t * lResult = nullptr;
+    if (aIndex >= 0 && aIndex < locations->size()) {
+        lResult = &(locations->at(aIndex));
+    }
+    return lResult;
+}
+
+/**
+ * Retreive the item at a certain index
+ * @param aIndex The index of the item to retreive
+ * @return The item
+ */
+item_t *Randomizer::getItemByIndex(int aIndex) {
+    item_t * lResult = nullptr;
+    if (aIndex >= 0 && aIndex < items->size()) {
+        lResult = &(items->at(aIndex));
+    }
+    return lResult;
+}
+
+/**
+ * Retreive an item from an item name
+ * @param aItem The item name of the item to retreive
+ * @return A pointer to the item_t object
+ */
+item_t *Randomizer::getItemByName(const std::string& aItem)
 {
-    check_t *result = nullptr;
-    for (int i = 0; i < checks->size() && !result; i = i + 1) {
-        check_t * lCheck = getCheckByIndex(i);
-        if (lCheck->item == aItem) {
+    item_t *result = nullptr;
+    for (int i = 0; i < items->size() && !result; i = i + 1) {
+        item_t * lCheck = getItemByIndex(i);
+        if (lCheck->name == aItem) {
             result = lCheck;
         }
     }
@@ -1312,20 +1239,6 @@ void Randomizer::clearError() {
     error = false;
 }
 
-
-/**
- * Retreive the check at a certain index
- * @param aIndex The index of the check to retreive
- * @return The check
- */
-check_t *Randomizer::getCheckByIndex(int aIndex) {
-    check_t * lResult = nullptr;
-    if (aIndex >= 0 && aIndex < checks->size()) {
-        lResult = &(checks->at(aIndex));
-    }
-    return lResult;
-}
-
 /**
  * Assign the unique ID for the Randomizer
  * @param aUid The ID of the Randomizer
@@ -1569,13 +1482,13 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
     lMessageStream << "[Locations obtained]\n";
     if (killFourGodsGoal) {
         for (int i = 0; i < LOCATIONS_FOUR_GODS_SIZE; i = i + 1) {
-            writeHelpData(&lMessageStream, checks->at(locationsOrderFourGods[i]).location,
-                          dsq->continuity.getFlag(checks->at(locationsOrderFourGods[i]).flag));
+            writeHelpData(&lMessageStream, locations->at(locationsOrderFourGods[i]).name,
+                          dsq->continuity.getFlag(locations->at(locationsOrderFourGods[i]).flag));
         }
     } else {
         for (int i = 0; i < LOCATIONS_SIZE; i = i + 1) {
-            writeHelpData(&lMessageStream, checks->at(locationsOrder[i]).location,
-                          dsq->continuity.getFlag(checks->at(locationsOrder[i]).flag));
+            writeHelpData(&lMessageStream, locations->at(locationsOrder[i]).name,
+                          dsq->continuity.getFlag(locations->at(locationsOrder[i]).flag));
         }
     }
     lMessageStream << "\n\n";
@@ -1585,7 +1498,7 @@ void Randomizer::appendLocationsHelpData(std::string &aData) {
 
 
 /**
- * A now or saves game has been load
+ * A new or saves game has been load
    @param aNewGame True if a new game is launched.
  */
 void Randomizer::onLoad(bool aNewGame){
@@ -1616,6 +1529,13 @@ void Randomizer::onLoad(bool aNewGame){
             }
             dsq->toggleCursor(false);
         }
+    }
+    for (int i = 0; i < dsq->continuity.worldMap.getNumWorldMapTiles(); i++) {
+        WorldMapTile *tile = dsq->continuity.worldMap.getWorldMapTile(i);
+        if (tile->stringIndex != 1020) {
+            tile->revealed = true;
+        }
+
     }
     dsq->continuity.setFlag(FLAG_ENERGYSLOT_FIRST, 15);
     if (skipFirstVision) {
@@ -1981,6 +1901,7 @@ void Randomizer::showText(const std::string &aText, float aX, float aY)
  */
 void Randomizer::onLoadScene(std::string aScene) {
     if (aScene == "title") {
+
         seedNumberText = new BitmapText(&dsq->smallFont);
         {
             std::stringstream lStream;

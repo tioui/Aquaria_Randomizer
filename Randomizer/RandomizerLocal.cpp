@@ -16,7 +16,7 @@
  * @param aFilename The json filename
  */
 RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
-    checksReplacement = new std::vector<int>();
+    itemsReplacement = new std::vector<itemReplacement*>();
     std::ifstream lFile((std::filesystem::path(aFilename)));
     bool lAquarianTranslated = false;
     bool lBlindGoal = false;
@@ -112,7 +112,7 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
             maximumIngredientAmount = 8;
         }
         if (lJsonData.contains("openBodyTongue")) {
-            dsq->continuity.setFlag(FLAG_REMOVE_TONGUE, 1);
+            removeTongue = lJsonData.contains("openBodyTongue");
         }
         if (lJsonData.contains("saveHealing")) {
             lSaveHeal = lJsonData["saveHealing"];
@@ -143,16 +143,18 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
                 ingredientReplacement->push_back(i);
             }
         }
-        if (lJsonData.contains("checksReplacement")) {
-            for (int lElement : lJsonData["checksReplacement"]) {
-                checksReplacement->push_back(lElement);
+        if (lJsonData.contains("itemsReplacement")) {
+            for (const nlohmann::json& lElement : lJsonData["itemsReplacement"]) {
+                int lItem = lElement[0];
+                int lCount = lElement[1];
+                addItemReplacement(lItem, lCount);
             }
-            for (int i = checksReplacement->size(); i < checks->size(); i = i + 1) {
-                checksReplacement->push_back(i);
+            for (int i = itemsReplacement->size(); i < locations->size(); i = i + 1) {
+                addItemReplacement(0, 1);
             }
         } else {
             setError("Randomizer JSON file " + aFilename +
-                " is not valid: 'checksReplacement' field is required.");
+                " is not valid: 'itemsReplacement' field is required.");
         }
     } catch (nlohmann::json::parse_error& lException){
         setError("Randomizer JSON file " + aFilename + " is not valid: " + lException.what());
@@ -162,30 +164,43 @@ RandomizerLocal::RandomizerLocal(const std::string& aFilename) : Randomizer() {
 
 }
 
+/**
+ * Add a number of item in the `itemsRemplacement` list
+ * @param aItem The item to add
+ * @param aCount The number of item to add
+ */
+void RandomizerLocal::addItemReplacement(int aItem, int aCount) const {
+    itemReplacement *lReplacement = new itemReplacement;
+    lReplacement->id = aItem;
+    lReplacement->count = aCount;
+    itemsReplacement->push_back(lReplacement);
+}
+
 
 /**
  * Destructor of the object.
  */
 RandomizerLocal::~RandomizerLocal() {
-    delete(checksReplacement);
+    for (std::vector<itemReplacement *>::iterator lIterator = itemsReplacement->begin(); lIterator != itemsReplacement->end();) {
+        delete *lIterator;
+    }
+    delete(itemsReplacement);
 }
 
 /**
  * Activate a randomizer check
  * @param aCheck The check to activate
  */
-void RandomizerLocal::activateCheck(std::string aCheck) {
-    int lCheckIndex =getCheckIndex(aCheck);
-    int lItemIndex = checksReplacement->at(lCheckIndex);
-
-    check_t *lLocationCheck = getCheckByIndex(lCheckIndex);
-    check_t *lItemCheck = getCheckByIndex(lItemIndex);
-    if (dsq->continuity.getFlag(lLocationCheck->flag)) {
+void RandomizerLocal::activateLocation(std::string aCheck) {
+    int lLocationIndex =getLocationIndex(aCheck);
+    location_t *lLocation = getLocationByIndex(lLocationIndex);
+    if (dsq->continuity.getFlag(lLocation->flag)) {
         dsq->screenMessage("Check already obtained.");
     } else {
-        dsq->continuity.setFlag(lLocationCheck->flag, 1);
-
-        receivingItem(lItemCheck->item, lItemCheck->count);
+        dsq->continuity.setFlag(lLocation->flag, 1);
+        itemReplacement *lItemReplacement = itemsReplacement->at(lLocationIndex);
+        item_t *lItem = getItemByIndex(lItemReplacement->id);
+        receivingItem(lItem->name, lItemReplacement->count);
     }
 
 }

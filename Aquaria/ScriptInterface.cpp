@@ -862,7 +862,7 @@ luaFunc(skipFinalBoss3rdForm)
 
 luaFunc(randomizerCheck)
 {
-    dsq->randomizer->activateCheck(getString(L, 1));
+    dsq->randomizer->activateLocation(getString(L, 1));
     luaReturnNil();
 }
 

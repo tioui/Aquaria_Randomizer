@@ -846,16 +846,16 @@ void RandomizerArchipelago::receivingUpgradeHealth() {
 }
 
 /**
- * Activate a randomizer check
- * @param aCheck The check to activate
+ * Activate a randomizer location
+ * @param aLocation The location to activate
  */
-void RandomizerArchipelago::activateCheck(std::string aCheck) {
-    check_t *lCheck = getCheck(aCheck);
-    bool lhad_flag = dsq->continuity.getFlag(lCheck->flag);
-    dsq->continuity.setFlag(lCheck->flag, 1);
+void RandomizerArchipelago::activateLocation(std::string aLocation) {
+    location_t *lLocation = getLocationById(aLocation);
+    bool lhad_flag = dsq->continuity.getFlag(lLocation->flag);
+    dsq->continuity.setFlag(lLocation->flag, 1);
     std::list<int64_t> lIds;
     for(int i = 0; i < apLocations->size() && lIds.empty(); i = i + 1) {
-        if (aCheck == apLocations->at(i).name) {
+        if (aLocation == apLocations->at(i).name) {
             lIds.push_back(apLocations->at(i).locationId);
             if (!syncing && !lhad_flag && apLocations->at(i).locationId - AP_BASE < locationsItemTypes->size()) {
                 int lItemType = locationsItemTypes->at(apLocations->at(i).locationId - AP_BASE);
@@ -870,10 +870,10 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
                 } else if (isOffline) {
                     apitem_t *lApItem = getApItemById(lItemType);
                     // Todo: Removing the exception when the doors are official
-                    if (lCheck->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
+                    if (lLocation->flag == 1319 && !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
                         receivingItem(lApItem->item, lApItem->count);
                     }
-                    if (lCheck->flag == 1320 && !dsq->continuity.getFlag(FLAG_REMOVE_TONGUE)) {
+                    if (lLocation->flag == 1320 && !dsq->continuity.getFlag(FLAG_REMOVE_TONGUE)) {
                         receivingItem(lApItem->item, lApItem->count);
                     }
                 }
@@ -881,20 +881,20 @@ void RandomizerArchipelago::activateCheck(std::string aCheck) {
             if (!isOffline) {
                 // Todo: Removing the exception when the doors are official
                 if (
-                    (lCheck->flag != 1319 && lCheck->flag != 1320) ||
-                    (lCheck->flag == 1319 && throneAsLocationManagedByServer) ||
-                    (lCheck->flag == 1320 && golemAsLocationManagedByServer)
+                    (lLocation->flag != 1319 && lLocation->flag != 1320) ||
+                    (lLocation->flag == 1319 && throneAsLocationManagedByServer) ||
+                    (lLocation->flag == 1320 && golemAsLocationManagedByServer)
                     ) {
                         std::lock_guard<std::mutex> lock(apMutex);
                     apClient->LocationChecks(lIds);
                 } else {
-                    if (!throneAsLocationManagedByServer && lCheck->flag == 1319 &&
+                    if (!throneAsLocationManagedByServer && lLocation->flag == 1319 &&
                         !dsq->continuity.getFlag(FLAG_MITHALAS_THRONEROOM)) {
-                        receivingItem(lCheck->item, 1);
+                        receivingItem("door_to_cathedral", 1);
                     }
-                    if (!golemAsLocationManagedByServer && lCheck->flag == 1320 &&
+                    if (!golemAsLocationManagedByServer && lLocation->flag == 1320 &&
                         !dsq->continuity.getFlag(FLAG_REMOVE_TONGUE)) {
-                        receivingItem(lCheck->item, 1);
+                        receivingItem("door_to_body", 1);
                     }
                 }
             }
@@ -958,9 +958,9 @@ void RandomizerArchipelago::update(){
             updatePrintServerText();
             updateDataStorage();
             if (syncing) {
-                for (const check_t& lCheck : *checks) {
-                    if (dsq->continuity.getFlag(lCheck.flag)) {
-                        activateCheck(lCheck.id);
+                for (const location_t& lLocation : *locations) {
+                    if (dsq->continuity.getFlag(lLocation.flag)) {
+                        activateLocation(lLocation.id);
                     }
                 }
                 syncing = false;
@@ -1306,23 +1306,23 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
             lLocationsOrder = locationsOrderFourGods;
         }
         for (int i = 0; i < lCount; i = i + 1) {
-            if (dsq->continuity.getFlag(checks->at(lLocationsOrder[i]).flag)) {
+            if (dsq->continuity.getFlag(locations->at(lLocationsOrder[i]).flag)) {
                 lMessageStream << "   [X]      ";
             } else {
                 lMessageStream << "    [ ]       ";
             }
             bool lFound = false;
-            if (checks->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
+            if (locations->at(lLocationsOrder[i]).flag == 1319 && !throneAsLocationManagedByServer) {
                 lMessageStream << "      ";
             }
-            if (checks->at(lLocationsOrder[i]).flag == 1320 && !golemAsLocationManagedByServer) {
+            if (locations->at(lLocationsOrder[i]).flag == 1320 && !golemAsLocationManagedByServer) {
                 lMessageStream << "      ";
             }
             for (int j = 0; j < apLocations->size() && !lFound ; j = j + 1) {
-                if ((checks->at(lLocationsOrder[i]).flag != 1319 && checks->at(lLocationsOrder[i]).flag != 1320) ||
-                    (throneAsLocationManagedByServer && checks->at(lLocationsOrder[i]).flag == 1319) ||
-                    (golemAsLocationManagedByServer && checks->at(lLocationsOrder[i]).flag == 1320)) {
-                    if (apLocations->at(j).name == checks->at(lLocationsOrder[i]).id) {
+                if ((locations->at(lLocationsOrder[i]).flag != 1319 && locations->at(lLocationsOrder[i]).flag != 1320) ||
+                    (throneAsLocationManagedByServer && locations->at(lLocationsOrder[i]).flag == 1319) ||
+                    (golemAsLocationManagedByServer && locations->at(lLocationsOrder[i]).flag == 1320)) {
+                    if (apLocations->at(j).name == locations->at(lLocationsOrder[i]).id) {
                         for (int64_t laLocation : apClient->get_checked_locations()) {
                             if (laLocation == apLocations->at(j).locationId) {
                                 lMessageStream << "(X) ";
@@ -1337,7 +1337,7 @@ void RandomizerArchipelago::appendLocationsHelpData(std::string &aData) {
                 }
 
             }
-            lMessageStream << checks->at(lLocationsOrder[i]).location;
+            lMessageStream << locations->at(lLocationsOrder[i]).name;
             lMessageStream << "\n";
         }
         lMessageStream << "\n\n";

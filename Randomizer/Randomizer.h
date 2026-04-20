@@ -14,14 +14,21 @@
 #include "../BBGE/ActionMapper.h"
 #include <chrono>
 
-typedef struct check {
+typedef struct location {
 int flag;
 std::string id;
-std::string item;
-int count;
+std::string name;
+} location_t;
+
+typedef struct item {
+std::string name;
 std::string message;
-std::string location;
-} check_t;
+} item_t;
+
+typedef struct itemReplacement {
+ int id;
+ int count;
+} itemReplacement_t;
 
 
 typedef struct ingredient {
@@ -74,10 +81,10 @@ public:
     IngredientData *getRandomizedIngredientData(IngredientData* data);
 
     /**
-     * Activate a randomizer check
-     * @param check The check to activate
+     * Activate a randomizer location
+     * @param location The location to activate
     */
-    virtual void activateCheck(std::string check) = 0;
+    virtual void activateLocation(std::string location) = 0;
 
     /**
      * True if an error occured at initialization. False means every thing is fine
@@ -333,36 +340,43 @@ protected:
     void clearError();
 
     /**
-     * Retreive the index of a check
-     * @param checkId The Id of the check to retreive
-     * @return The index of the check in the CHECKS vector
+     * Retreive the index of a location
+     * @param id The Id of the location to retreive
+     * @return The index of the location in the location list
      */
-    int getCheckIndex(const std::string& checkId);
+    int getLocationIndex(const std::string& id);
 
     /**
-     * Retreive the check at a certain index
-     * @param index The index of the check to retreive
-     * @return The check
+     * Retreive the location at a certain index
+     * @param index The index of the location to retreive
+     * @return The location
      */
-    check_t * getCheckByIndex(int index);
+    location_t * getLocationByIndex(int index);
 
     /**
-     * Retreive a check structure from a check Id
-     * @param checkId The Id of the check to retreive
-     * @return A pointer to the check_t object
+     * Retreive a location from a location Id
+     * @param id The Id of the location to retreive
+     * @return A pointer to the location_t object
      */
-    check_t *getCheck(const std::string& checkId);
+    location_t *getLocationById(const std::string& id);
 
     /**
-     * Retreive a check structure from an item Id
-     * @param item The item Id of the check to retreive
-     * @return A pointer to the check_t object
+     * Retreive the item at a certain index
+     * @param index The index of the item to retreive
+     * @return The item
      */
-    check_t *getCheckByItem(const std::string& item);
+    item_t * getItemByIndex(int index);
+
+    /**
+     * Retreive an item from an item name
+     * @param item The item name
+     * @return A pointer to the item_t object
+     */
+    item_t *getItemByName(const std::string& item);
 
     /**
      * Get a new item to activate in the local game
-     * @param item The item to activate
+     * @param item The item name
      * @param count The number of element to receive
      */
     void receivingItem(const std::string& item, int count);
@@ -397,9 +411,14 @@ protected:
     bool getBlindGoal() const;
 
     /**
-     * Every checks of the Randomizer
+     * Every location of the Randomizer
      */
-    std::vector<check_t> *checks;
+    std::vector<location_t> *locations;
+
+    /**
+     * Every items of the Randomizer
+     */
+    std::vector<item_t> *items;
 
     /**
      * Show a text in game at a certain position (with (x,y) between (0,0) and (800,600))
@@ -550,9 +569,14 @@ private:
     std::string uid;
 
     /**
-     * Initialize every Checks
+     * Initialize every location
      */
-    void initialiseChecks() const;
+    void initialiseLocations() const;
+
+    /**
+     * Initialize every item
+     */
+    void initialiseItems() const;
 
     /**
      * Initialize ingredients
@@ -577,40 +601,40 @@ private:
 
     /**
      * Get a new collectible item to activate in the local game
-     * @param check The collectible check item to activate
+     * @param check The collectible item to activate
      */
-    void receivingCollectible(const check_t *check) const;
+    void receivingCollectible(const item_t *item) const;
 
 
     /**
      * Get a new song item to activate in the local game
-     * @param check The song check item to activate
+     * @param check The song item to activate
      */
-    void receivingSong(const check_t *check);
+    void receivingSong(const item_t *item);
 
 
     /**
      * Get a new transport to location
      * @param aCheck The transport item to activate
      */
-    void receivingTransport(const check_t *aCheck);
+    void receivingTransport(const item_t *item);
 	/**
 	 * Received a door opening item
-	 * @param aCheck The item check that has been received.
+	 * @param aCheck The item that has been received.
 	 */
-	void receivingDoorOpening(const check_t *aCheck);
+	void receivingDoorOpening(const item_t *item);
 
 	/**
 	 * Received a trap
-	 * @param aCheck The item check that has been received.
+	 * @param aCheck The item that has been received.
 	 */
-	void receivingTrap(const check_t *aCheck);
+	void receivingTrap(const item_t *item);
 
 	/**
 	 * Received a progressive recipe
-	 * @param aCheck The item check that has been received.
+	 * @param aCheck The item that has been received.
 	 */
-	void receivingProgressiveRecipe(const check_t *aCheck);
+	void receivingProgressiveRecipe(const item_t *item);
 
 
 

@@ -143,10 +143,10 @@ public:
     void tryConnection(const std::string& server);
 
     /**
-     * Activate a randomizer check
-     * @param check The check to activate
+     * Activate a randomizer location
+     * @param location The location to activate
     */
-    void activateCheck(std::string check) override;
+    void activateLocation(std::string location) override;
 
     /**
      * Lunched at each game loop iteration

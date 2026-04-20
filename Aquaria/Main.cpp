@@ -113,7 +113,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 }
                 lMessageIndex = lMessageIndex + 2;
             }
-            if (argc >= lMessageIndex + 1 && strncmp(argv[lMessageIndex], "--deathlink", 1) == 0) {
+            if (argc >= lMessageIndex + 1 && strncmp(argv[lMessageIndex], "--deathlink", 11) == 0) {
                 lDeathLink = true;
                 lMessageIndex = lMessageIndex + 1;
             }
