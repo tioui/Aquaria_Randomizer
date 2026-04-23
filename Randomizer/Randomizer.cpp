@@ -1422,15 +1422,18 @@ void Randomizer::appendMiniBossHelpData(std::string &aData) {
  * @param aData Where the information about item should be put.
  */
 void Randomizer::appendBigBossHelpData(std::string &aData) {
-    if (!killFourGodsGoal) {
-        std::stringstream lMessageStream;
+    std::stringstream lMessageStream;
+    if (killFourGodsGoal) {
+        lMessageStream << "[Gods beaten]\n";
+    } else {
         lMessageStream << "[Bosses beaten]\n";
-        writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
-        writeHelpData(&lMessageStream, "Mithalan God", dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
-        writeHelpData(&lMessageStream, "Drunian God", dsq->continuity.getFlag(FLAG_BOSS_FOREST));
-        writeHelpData(&lMessageStream, "Lumerean God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
+    }
+    writeHelpData(&lMessageStream, "Fallen God", dsq->continuity.getFlag(FLAG_ENERGYBOSSDEAD));
+    writeHelpData(&lMessageStream, "Mithalan God", dsq->continuity.getFlag(FLAG_BOSS_MITHALA));
+    writeHelpData(&lMessageStream, "Drunian God", dsq->continuity.getFlag(FLAG_BOSS_FOREST));
+    writeHelpData(&lMessageStream, "Lumerean God", dsq->continuity.getFlag(FLAG_BOSS_SUNWORM));
+    if (!killFourGodsGoal) {
         writeHelpData(&lMessageStream, "Golem", dsq->continuity.getFlag(FLAG_SUNKENCITY_BOSS));
-
         lMessageStream << "\n";
         if (dsq->continuity.getFlag(FLAG_BLIND_GOAL) == 0) {
             if (bigBossesToKill > 1) {
@@ -1441,9 +1444,10 @@ void Randomizer::appendBigBossHelpData(std::string &aData) {
                 lMessageStream << "No big boss beaten are needed to access final boss.\n\n\n";
             }
         }
-
-        aData += lMessageStream.str();
+    } else {
+        lMessageStream << "\n";
     }
+    aData += lMessageStream.str();
 }
 
 /**
