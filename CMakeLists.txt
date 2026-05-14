@@ -842,7 +842,7 @@ ELSE(WIN32_TRUE)
 ENDIF(WIN32_TRUE)
 
 IF(MACOSX)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/opt/openssl/lib -L/usr/local/lib")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/local/lib")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Carbon")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Cocoa")
     #SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework OpenAL")
