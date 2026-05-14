@@ -61,7 +61,7 @@ jobs:
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
       - run: sudo apt-get update
-      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libfreetype-dev libftgl-dev libpng-dev libopenal-dev libsdl2-dev libfuse2 libwxgtk3.0-gtk3-dev libressl
+      - run: sudo apt-get install build-essential cmake liblua5.1-0-dev libogg-dev libvorbis-dev libfreetype-dev libftgl-dev libpng-dev libopenal-dev libsdl2-dev libfuse2 libwxgtk3.0-gtk3-dev
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
@@ -163,7 +163,7 @@ jobs:
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
           cmake -DAQUARIA_USE_SDL2=1 -DAQUARIA_INTERNAL_TINYXML2=1 -DAQUARIA_INTERNAL_LUA=1 -DCMAKE_BUILD_TYPE=Release ..
-          make
+          make VERBOSE=1
       - run: echo "Compiling done."
       - run: echo "Build standard packaging."
       - run: |
