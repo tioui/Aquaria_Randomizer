@@ -154,8 +154,6 @@ jobs:
       - run: git submodule update --init
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
-      - name: Install macport
-        uses: melusina-org/setup-macports@v1
       - run: brew update
       - run: brew install libpng freetype libogg libvorbis sdl2 pkgconfig ftgl wxwidgets openssl
       - run: ls -l /opt/local/lib/
