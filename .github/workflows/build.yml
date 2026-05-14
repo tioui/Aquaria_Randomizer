@@ -157,6 +157,7 @@ jobs:
       - name: Install macport
         uses: melusina-org/setup-macports@v1
       - run: port install libpng freetype libogg libvorbis libsdl2 pkgconfig ftgl wxWidgets-3.0 openssl openssl3  +static
+      - run: ls -l /opt/local/lib/
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
