@@ -156,7 +156,7 @@ jobs:
       - run: echo "Instaling development package..."
       - name: Install macport
         uses: melusina-org/setup-macports@v1
-      - run: port install libpng freetype libogg libvorbis libsdl2 pkgconfig ftgl wxWidgets-3.0 openssl
+      - run: port install libpng freetype libogg libvorbis libsdl2 pkgconfig ftgl wxWidgets-3.0 openssl openssl3
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
