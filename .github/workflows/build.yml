@@ -158,6 +158,7 @@ jobs:
         uses: melusina-org/setup-macports@v1
       - run: brew update
       - run: brew install libpng freetype libogg libvorbis sdl2 pkgconfig ftgl wxwidgets openssl
+      - run: ls -l /opt/local/lib/
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
