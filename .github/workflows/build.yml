@@ -175,7 +175,7 @@ jobs:
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
           cd Releases/
-          tar cfz aquaria_randomizer_maxos.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_macos.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf randomizer_files
