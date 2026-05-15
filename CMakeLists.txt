@@ -704,10 +704,18 @@ IF(WIN32_TRUE)
 	)
  
 ELSE(WIN32_TRUE)
-	SET_SOURCE_FILES_PROPERTIES(
-		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
-	)
+    IF(NOT MACOSX)
+        SET_SOURCE_FILES_PROPERTIES(
+            ${RANDOMIZER_SRCS}
+            PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
+        )
+    ELSE()
+        SET_SOURCE_FILES_PROPERTIES(
+            ${RANDOMIZER_SRCS}
+            PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
+        )
+
+    ENDIF()
 ENDIF(WIN32_TRUE)
 
 if(NOT OGGVORBIS_FOUND)
@@ -851,11 +859,14 @@ ENDIF(AQUARIA_USE_VFS)
 IF(WIN32_TRUE)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lwsock32 -L${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl -lssl -lcrypto -lcrypt32 -lws2_32")
 ELSE(WIN32_TRUE)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
+	IF(NOT MACOSX)
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
+    ENDIF()
 ENDIF(WIN32_TRUE)
 
 IF(MACOSX)
     message(STATUS "ON MACOS")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-Wno-deprecated-declarations")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Carbon")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Cocoa")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework AudioToolbox")
