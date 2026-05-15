@@ -316,9 +316,11 @@ IF(MACOSX)
     IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
         # Apple Silicon (M1/M2/M3)
         INCLUDE_DIRECTORIES(/opt/homebrew/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/opt/homebrew/include)
     ELSE()
         # Intel Mac
         INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/include)
     ENDIF()
 ENDIF(MACOSX)
 
