@@ -36,7 +36,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 OPTION(AQUARIA_DEMO_BUILD "Demo Build?" FALSE)
 OPTION(AQUARIA_USE_VFS "Use Virtual File System? Required for some additional features." TRUE)
 
-OPTION(AQUARIA_USE_SDL2 "Use SDL2" FALSE)
+OPTION(AQUARIA_USE_SDL2 "Use SDL2" TRUE)
 OPTION(AQUARIA_USE_GLM "Use GLM for matrix math" TRUE)
 
 # No Steamworks SDK for Linux at the moment. Roll our own achievements.
@@ -311,6 +311,18 @@ IF(WIN32_TRUE)
 	INCLUDE_DIRECTORIES(${WX_INCLUDE_DIR})
 	INCLUDE_DIRECTORIES(${WXMSW_INCLUDE_DIR})
 ENDIF(WIN32_TRUE)
+
+IF(MACOSX)
+    IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+        # Apple Silicon (M1/M2/M3)
+        INCLUDE_DIRECTORIES(/opt/homebrew/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/opt/homebrew/include)
+    ELSE()
+        # Intel Mac
+        INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/include)
+    ENDIF()
+ENDIF(MACOSX)
 
 
 
@@ -842,10 +854,25 @@ ELSE(WIN32_TRUE)
 ENDIF(WIN32_TRUE)
 
 IF(MACOSX)
+    message(STATUS "ON MACOS")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Carbon")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Cocoa")
-    #SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework OpenAL")
     SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17")
+    IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+        # Apple Silicon (M1/M2/M3)
+	message(STATUS "ON MACOS ARM64")
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/openssl")
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/opt/openssl/lib")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/lib")
+    ELSE()
+        # Intel Mac
+        message(STATUS "ON MACOS Intel")
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/openssl")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/opt/openssl/lib")
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/lib")
+    ENDIF()
 ENDIF(MACOSX)
 
 IF(HAIKU)

@@ -144,8 +144,8 @@ jobs:
           name: Release-Linux24-artefact
           path: ${{ github.workspace }}/Releases
           retention-days: 1
-  build-macos:
-    runs-on: macos-latest
+  build-macos-arm64:
+    runs-on: macos-14
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
@@ -154,8 +154,6 @@ jobs:
       - run: git submodule update --init
       - run: echo "Checkout done."
       - run: echo "Instaling development package..."
-      - name: Install macport
-        uses: melusina-org/setup-macports@v1
       - run: brew update
       - run: brew install libpng freetype libogg libvorbis sdl2 pkgconfig ftgl wxwidgets openssl
       - run: echo "Developpement package installed..."
@@ -174,15 +172,61 @@ jobs:
           cp -rp files Releases/randomizer_files
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
+          cp macos_tools/aquaria_randomizer_launch Releases/
+          chmod +x Releases/aquaria_randomizer_launch
           cd Releases/
-          tar cfz aquaria_randomizer_macos.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_maxos_arm64.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem aquaria_randomizer_launch
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf randomizer_files
           rm cacert.pem
+          rm aquaria_randomizer_launch
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: Release-Macos-artefact
+          name: Release-Macos-arm64-artefact
+          path: ${{ github.workspace }}/Releases
+          retention-days: 1
+  build-macos-intel:
+    runs-on: macos-13
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event"
+      - run: echo "Checkout the branch ${{ github.ref }} of the repository ${{ github.repository }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: git submodule update --init
+      - run: echo "Checkout done."
+      - run: echo "Instaling development package..."
+      - run: brew update
+      - run: brew install libpng freetype libogg libvorbis sdl2 pkgconfig ftgl wxwidgets openssl
+      - run: echo "Developpement package installed..."
+      - run: echo "Compiling..."
+      - run: |
+          mkdir ${{ github.workspace }}/build
+          cd ${{ github.workspace }}/build
+          cmake -DAQUARIA_USE_SDL2=1 -DAQUARIA_INTERNAL_TINYXML2=1 -DAQUARIA_INTERNAL_LUA=1 -DCMAKE_BUILD_TYPE=Release ..
+          make VERBOSE=1
+      - run: echo "Compiling done."
+      - run: echo "Build standard packaging."
+      - run: |
+          cd ${{ github.workspace }}
+          mkdir Releases
+          cp -p build/aquaria_randomizer Releases/
+          cp -rp files Releases/randomizer_files
+          cp usersettings.xml Releases/
+          cp cacert.pem Releases/
+          cp macos_tools/aquaria_randomizer_launch Releases/
+          chmod +x Releases/aquaria_randomizer_launch
+          cd Releases/
+          tar cfz aquaria_randomizer_maxos_intel.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem aquaria_randomizer_launch
+          rm usersettings.xml
+          rm aquaria_randomizer
+          rm -rf randomizer_files
+          rm cacert.pem
+          rm aquaria_randomizer_launch
+      - name: 'Upload artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-Macos-intel-artefact
           path: ${{ github.workspace }}/Releases
           retention-days: 1
