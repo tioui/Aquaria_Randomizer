@@ -175,11 +175,12 @@ jobs:
           cp macos_tools/aquaria_randomizer_launch Releases/
           chmod +x Releases/aquaria_randomizer_launch
           cd Releases/
-          tar cfz aquaria_randomizer_maxos_arm64.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_maxos_arm64.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem aquaria_randomizer_launch
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf randomizer_files
           rm cacert.pem
+          rm aquaria_randomizer_launch
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
@@ -217,11 +218,12 @@ jobs:
           cp macos_tools/aquaria_randomizer_launch Releases/
           chmod +x Releases/aquaria_randomizer_launch
           cd Releases/
-          tar cfz aquaria_randomizer_maxos_intel.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
+          tar cfz aquaria_randomizer_maxos_intel.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem aquaria_randomizer_launch
           rm usersettings.xml
           rm aquaria_randomizer
           rm -rf randomizer_files
           rm cacert.pem
+          rm aquaria_randomizer_launch
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v4
         with:
