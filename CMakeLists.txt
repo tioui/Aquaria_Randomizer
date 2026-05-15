@@ -312,6 +312,16 @@ IF(WIN32_TRUE)
 	INCLUDE_DIRECTORIES(${WXMSW_INCLUDE_DIR})
 ENDIF(WIN32_TRUE)
 
+IF(MACOSX)
+    IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+        # Apple Silicon (M1/M2/M3)
+        INCLUDE_DIRECTORIES(/opt/homebrew/opt/openssl/include)
+    ELSE()
+        # Intel Mac
+        INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
+    ENDIF()
+ENDIF(MACOSX)
+
 
 
 # Custom build ID: e.g. "-custom", " (my very own build)"
@@ -850,13 +860,11 @@ IF(MACOSX)
         # Apple Silicon (M1/M2/M3)
 	message(STATUS "ON MACOS ARM64")
         list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/openssl")
-        SET(COMPILE_FLAGS ${COMPILE_FLAGS} "-I/opt/homebrew/opt/openssl/include")
         SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/opt/openssl/lib")
     ELSE()
         # Intel Mac
 		message(STATUS "ON MACOS Intel")
         list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/openssl")
-        SET(COMPILE_FLAGS ${COMPILE_FLAGS} "-I/usr/local/opt/openssl/include")
         SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/opt/openssl/lib")
     ENDIF()
 ENDIF(MACOSX)
