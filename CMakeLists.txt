@@ -36,7 +36,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 OPTION(AQUARIA_DEMO_BUILD "Demo Build?" FALSE)
 OPTION(AQUARIA_USE_VFS "Use Virtual File System? Required for some additional features." TRUE)
 
-OPTION(AQUARIA_USE_SDL2 "Use SDL2" FALSE)
+OPTION(AQUARIA_USE_SDL2 "Use SDL2" TRUE)
 OPTION(AQUARIA_USE_GLM "Use GLM for matrix math" TRUE)
 
 # No Steamworks SDK for Linux at the moment. Roll our own achievements.
@@ -847,12 +847,12 @@ IF(MACOSX)
     SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17")
 	IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
         # Apple Silicon (M1/M2/M3)
-		SET(COMPILE_FLAGS ${COMPILE_FLAGS} "/opt/homebrew/opt/openssl")
-    	SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/openssl")
+		SET(COMPILE_FLAGS ${COMPILE_FLAGS} "-I/opt/homebrew/opt/openssl/include")
+    	SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/opt/openssl/lib")
     ELSE()
         # Intel Mac
-		SET(COMPILE_FLAGS ${COMPILE_FLAGS} "/usr/local/opt/openssl")
-    	SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/openssl")
+		SET(COMPILE_FLAGS ${COMPILE_FLAGS} "-I/usr/local/opt/openssl/include")
+    	SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/opt/openssl/lib")
     ENDIF()
 ENDIF(MACOSX)
 
