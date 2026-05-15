@@ -172,6 +172,8 @@ jobs:
           cp -rp files Releases/randomizer_files
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
+          cp macos_tools/aquaria_randomizer_launch Releases/
+          chmod +x Releases/aquaria_randomizer_launch
           cd Releases/
           tar cfz aquaria_randomizer_maxos_arm64.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
           rm usersettings.xml
@@ -212,6 +214,8 @@ jobs:
           cp -rp files Releases/randomizer_files
           cp usersettings.xml Releases/
           cp cacert.pem Releases/
+          cp macos_tools/aquaria_randomizer_launch Releases/
+          chmod +x Releases/aquaria_randomizer_launch
           cd Releases/
           tar cfz aquaria_randomizer_maxos_intel.tar.gz aquaria_randomizer randomizer_files usersettings.xml cacert.pem
           rm usersettings.xml
