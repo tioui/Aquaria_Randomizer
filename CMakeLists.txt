@@ -11,6 +11,11 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 IF(APPLE)
     SET(MACOSX TRUE)
 	SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a" ".dylib")
+	execute_process(
+        COMMAND brew --prefix libpng
+        OUTPUT_VARIABLE LIBPNG_PREFIX
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
 ENDIF(APPLE)
 
 IF(CMAKE_SYSTEM_NAME STREQUAL "Haiku")
@@ -93,6 +98,10 @@ ENDIF(NOT RANDOMIZER_NO_LAUNCHER)
 
 
 ### PNG
+IF(MACOSX)
+    SET(PNG_PNG_INCLUDE_DIR "${LIBPNG_PREFIX}/include")
+    SET(PNG_LIBRARY "${LIBPNG_PREFIX}/lib/libpng.a")
+ENDIF(MACOSX)
 OPTION(AQUARIA_INTERNAL_PNG "Always use included PNG library on Windows" ${WIN32_TRUE})
 if(NOT AQUARIA_INTERNAL_PNG)
     find_package(PNG)
@@ -320,9 +329,9 @@ IF(MACOSX)
         INCLUDE_DIRECTORIES(/opt/homebrew/include)
     ELSE()
         # Intel Mac
-        INCLUDE_DIRECTORIES(/opt/local/opt/openssl/include)
-        INCLUDE_DIRECTORIES(/opt/local/opt/include)
-        INCLUDE_DIRECTORIES(/opt/local/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/include)
+        INCLUDE_DIRECTORIES(/usr/local/include)
     ENDIF()
 ENDIF(MACOSX)
 
@@ -884,6 +893,10 @@ IF(MACOSX)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework GameController")
     SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17")
     IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+	
+
+    SET(PNG_PNG_INCLUDE_DIR "${LIBPNG_PREFIX}/include")
+    SET(PNG_LIBRARY "${LIBPNG_PREFIX}/lib/libpng.dylib")
         # Apple Silicon (M1/M2/M3)
 	message(STATUS "ON MACOS ARM64")
         list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/openssl")
