@@ -18,9 +18,5 @@ If there is a conflict between file in the original game folder and the extracte
 
 TODO: Be sure nothing have to be installed to make the randomizer work (like wxwidgets).
 
-The randomizer should worked now. But the way macOS (or finder) start executable file,if you simply double click on the `aquaria_randomizer` file, the game will not work.
-This is because the game cannot see the ressources of the Aquaria foldre because it does not search on the correct folder (it search the ressources on the user home folder).
-So, a script named `aquaria_randomizer_launch` can be used to launch the game correctly.
- 
-Once the randomizer is installed you can launch it. For details about the execution options, see: [execution_linux.md](execution_linux.md)
+Once the randomizer is installed you can launch it. For details about the execution options, see: [execution_macos.md](execution_macos.md)
 
