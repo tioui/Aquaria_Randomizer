@@ -322,6 +322,7 @@ IF(MACOSX)
         # Intel Mac
         INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
         INCLUDE_DIRECTORIES(/usr/local/opt/include)
+        INCLUDE_DIRECTORIES(/usr/local/include)
     ENDIF()
 ENDIF(MACOSX)
 
