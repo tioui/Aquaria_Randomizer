@@ -922,6 +922,7 @@ IF(MACOSX)
         SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/openssl/lib/libcrypto.a")
         SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/bzip2/lib/libbz2.a")
         SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/bzip2/lib/libz.a")
+		find_package(ZLIB required)
     ENDIF()
 ENDIF(MACOSX)
 
