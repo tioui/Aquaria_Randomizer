@@ -206,7 +206,7 @@ jobs:
       - run: |
           mkdir ${{ github.workspace }}/build
           cd ${{ github.workspace }}/build
-          cmake -DAQUARIA_USE_SDL2=1 -DAQUARIA_INTERNAL_TINYXML2=1 -DAQUARIA_INTERNAL_LUA=1 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(brew --prefix) -DCMAKE_OSX_ARCHITECTURES=x86_64 ..
+          cmake -DAQUARIA_USE_SDL2=1 -DAQUARIA_INTERNAL_TINYXML2=1 -DAQUARIA_INTERNAL_LUA=1 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(brew --prefix) -DCMAKE_OSX_ARCHITECTURES=x86_64 -DZLIB_ROOT=$(brew --prefix zlib) ..
           make VERBOSE=1
       - run: echo "Compiling done."
       - run: echo "Build standard packaging."
