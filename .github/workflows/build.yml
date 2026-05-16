@@ -199,7 +199,8 @@ jobs:
       - run: echo "Instaling development package..."
       - run: brew update
       - run: brew install libpng freetype libogg libvorbis sdl2 pkgconfig ftgl wxwidgets openssl bzip2
-      - run: ls -la /usr/local/lib/
+      - run: ls -la /usr/local/include
+      - run: ls -la /usr/local/Cellar/libpng/1.6.58/lib/
       - run: echo "Developpement package installed..."
       - run: echo "Compiling..."
       - run: |
