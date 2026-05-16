@@ -320,9 +320,9 @@ IF(MACOSX)
         INCLUDE_DIRECTORIES(/opt/homebrew/include)
     ELSE()
         # Intel Mac
-        INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
-        INCLUDE_DIRECTORIES(/usr/local/opt/include)
-        INCLUDE_DIRECTORIES(/usr/local/include)
+        INCLUDE_DIRECTORIES(/opt/local/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/opt/local/opt/include)
+        INCLUDE_DIRECTORIES(/opt/local/include)
     ENDIF()
 ENDIF(MACOSX)
 
