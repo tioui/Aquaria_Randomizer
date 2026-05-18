@@ -10,6 +10,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 
 IF(APPLE)
     SET(MACOSX TRUE)
+	SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a" ".dylib")
 ENDIF(APPLE)
 
 IF(CMAKE_SYSTEM_NAME STREQUAL "Haiku")
@@ -36,7 +37,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 OPTION(AQUARIA_DEMO_BUILD "Demo Build?" FALSE)
 OPTION(AQUARIA_USE_VFS "Use Virtual File System? Required for some additional features." TRUE)
 
-OPTION(AQUARIA_USE_SDL2 "Use SDL2" FALSE)
+OPTION(AQUARIA_USE_SDL2 "Use SDL2" TRUE)
 OPTION(AQUARIA_USE_GLM "Use GLM for matrix math" TRUE)
 
 # No Steamworks SDK for Linux at the moment. Roll our own achievements.
@@ -311,6 +312,20 @@ IF(WIN32_TRUE)
 	INCLUDE_DIRECTORIES(${WX_INCLUDE_DIR})
 	INCLUDE_DIRECTORIES(${WXMSW_INCLUDE_DIR})
 ENDIF(WIN32_TRUE)
+
+IF(MACOSX)
+    IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+        # Apple Silicon (M1/M2/M3)
+        INCLUDE_DIRECTORIES(/opt/homebrew/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/opt/homebrew/include)
+    ELSE()
+        # Intel Mac
+        INCLUDE_DIRECTORIES(/usr/local/opt/openssl/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/include)
+        INCLUDE_DIRECTORIES(/usr/local/include)
+        INCLUDE_DIRECTORIES(/usr/local/opt/zlib/include)
+    ENDIF()
+ENDIF(MACOSX)
 
 
 
@@ -691,10 +706,18 @@ IF(WIN32_TRUE)
 	)
  
 ELSE(WIN32_TRUE)
-	SET_SOURCE_FILES_PROPERTIES(
-		${RANDOMIZER_SRCS}
-		PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
-	)
+    IF(NOT MACOSX)
+        SET_SOURCE_FILES_PROPERTIES(
+            ${RANDOMIZER_SRCS}
+            PROPERTIES COMPILE_FLAGS "-lssl -lcrypto -Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
+        )
+    ELSE()
+        SET_SOURCE_FILES_PROPERTIES(
+            ${RANDOMIZER_SRCS}
+            PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fexceptions -DASIO_STANDALONE"
+        )
+
+    ENDIF()
 ENDIF(WIN32_TRUE)
 
 if(NOT OGGVORBIS_FOUND)
@@ -838,13 +861,56 @@ ENDIF(AQUARIA_USE_VFS)
 IF(WIN32_TRUE)
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lwsock32 -L${CMAKE_CURRENT_SOURCE_DIR}/Randomizer/subprojects/openssl -lssl -lcrypto -lcrypt32 -lws2_32")
 ELSE(WIN32_TRUE)
-    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
+	IF(NOT MACOSX)
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-lssl -lcrypto -Wno-deprecated-declarations")
+    ENDIF()
 ENDIF(WIN32_TRUE)
 
 IF(MACOSX)
+    message(STATUS "ON MACOS")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-Wno-deprecated-declarations")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Carbon")
     SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Cocoa")
-    #SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework OpenAL")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework AudioToolbox")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework AudioUnit")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework CoreAudio")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework CoreFoundation")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework CoreVideo")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework IOKit")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework ForceFeedback")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework GameController")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework Metal")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework QuartzCore")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework CoreHaptics")
+    SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-framework GameController")
+    SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17")
+    IF(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+        # Apple Silicon (M1/M2/M3)
+        message(STATUS "ON MACOS ARM64")
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/openssl")
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/opt/openssl/lib")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/opt/homebrew/lib")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/ftgl/lib/libftgl.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/freetype/lib/libfreetype.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/openssl/lib/libssl.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/openssl/lib/libcrypto.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/opt/homebrew/opt/bzip2/lib/libbz2.a")
+    ELSE()
+        # Intel Mac
+        message(STATUS "ON MACOS Intel")
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/openssl")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/opt/openssl/lib")
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "-L/usr/local/lib")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/ftgl/lib/libftgl.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/freetype/lib/libfreetype.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/openssl/lib/libssl.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/openssl/lib/libcrypto.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/bzip2/lib/libbz2.a")
+        SET(OPTIONAL_LIBS ${OPTIONAL_LIBS} "/usr/local/opt/zlib/lib/libz.a")
+		find_package(ZLIB)
+    ENDIF()
 ENDIF(MACOSX)
 
 IF(HAIKU)
